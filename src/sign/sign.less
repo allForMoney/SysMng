@@ -1,0 +1,48 @@
+@import "../less/base";
+//按钮样式
+.buttonStyle{margin: 20px 40px;}
+.container{width: 900px;height:1000px;background-color: #fff;}
+.errorText{color: #f04134;}
+// 通知icon和内容
+.noticeIcon{float: left; font-size: 22px;line-height: 22px;}
+.noticeContent{margin-left: 24px;text-align: center}
+.infos{ color: #DB7C22;}
+// 整个页面内容
+.content{ height: 600px;font-size: 16px;padding: 80px;}
+.infoIcon{font-size: 16px; color: #108ee9;}
+// ----step2 的样式----
+//右侧静态图片
+.titleStyle{margin-left: 80px;margin-bottom: 40px;}
+.separator{width: 1px;height: 600px;background-color: #e4e4e4;}
+.staticpic{ background-size: 250px 500px; width:250px;height: 500px;background-image: url('https://demo.alibaba-inc.com/system/ids_extracted/b6/9c/89/60/033166edc5f8ccf23982e3ca/%E7%94%9F%E6%B4%BB%E5%8F%B7%E5%90%8E%E5%8F%B0%E4%BA%A4%E4%BA%92%E6%9B%B4%E6%96%B0_170525/images/%E5%A1%AB%E5%86%99%E5%9F%BA%E7%A1%80%E4%BF%A1%E6%81%AF/u11955.png') }
+.baseInfoForm{background-color: #f2f2f2;font-size: 16px;width: 500px;padding: 15px;}
+.publicDescInfo{position: absolute;right: 5px;top: 60px}
+.jcrop_pic{ margin-left: 40px; }
+
+.bgPicStyles{
+  :global {
+    .ant-upload-list-item {
+      width: 320px !important; 
+      height: 200px !important;
+      margin-right: 8px;
+    }
+    .ant-upload-animate-enter {
+      animation-name: uploadAnimateInlineIn;
+    }
+    .ant-upload-animate-leave {
+      animation-name: uploadAnimateInlineOut;
+    }
+  }
+}
+
+:global {
+.ant-upload-list-picture-card .ant-upload-list-item {
+    float: none;   
+    display: inline-block;
+    width: 96px;
+    height: 96px;
+    margin: 0 8px 8px 0;
+}
+.ant-popover-inner { background-color: rgba(229,169,107, .15);}
+.ant-popover-content { background-color: #FFFCEF}
+}

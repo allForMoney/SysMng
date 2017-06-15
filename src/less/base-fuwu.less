@@ -1,0 +1,41 @@
+// 生活号后台（fuwu.alipay.com）基础样式
+
+// 覆盖 AntD 中的样式
+html,
+body {
+  height: auto;
+  background-color: #f6f6f6;
+}
+
+// 处理引入 AntD 样式以后跟原有样式冲突问题
+:global {
+  // header logo
+  .mi-header-cnt .logo-word {
+    width: 232px;
+  }
+
+  .login-info {
+    // margin-top: 5px;
+    font-size: 14px;
+  }
+
+  // sidebar
+  .mi-sidebar {
+    &,
+    * {
+      line-height: 1;
+      box-sizing: content-box;
+    }
+  }
+
+  .section-content {
+    box-sizing: border-box;
+    padding: 20px 40px 40px;
+    width: 967px;
+    // box-sizing: content-box;
+  }
+
+  .server {
+    color: #f6f6f6 !important;
+  }
+}
