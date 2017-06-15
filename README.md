@@ -1,5 +1,5 @@
 # Install
-// 有先使用 淘宝的 tnpm 
+// 优先使用 淘宝的 tnpm 
 npm install tnpm 
 $ npm install dva-cli -g
 
