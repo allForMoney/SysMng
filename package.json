@@ -38,6 +38,6 @@
     "start": "dora --verbose --plugins \"proxy?watchDirs=./mock,webpack,webpack-hmr\"",
     "build": "atool-build",
     "test": "atool-test-mocha ./src/**/*-test.js",
-    "lint": "eslint src/sign"
+    "lint": "eslint"
   }
 }

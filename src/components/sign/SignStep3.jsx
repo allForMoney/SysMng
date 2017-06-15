@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react';
 import { Form, Alert, Button, Upload, Icon, Modal, Row, Col, message, Select } from 'antd';
-import { SIGN_NAMESPACE, API_UPLOAD_FILES, FILE_NEED_QULIFI } from '../configs/signConfigs';
-import { CHANGE_STEP, SUBMIT, GET_CLASSIFY } from '../actions/signActions';
-import styles from '../sign.less';
+import { SIGN_NAMESPACE, API_UPLOAD_FILES, FILE_NEED_QULIFI } from '../../configs/signConfigs';
+import { CHANGE_STEP, SUBMIT, GET_CLASSIFY } from '../../actions/signActions';
+import styles from '../../less/sign.less';
 
 const Option = Select.Option;
 

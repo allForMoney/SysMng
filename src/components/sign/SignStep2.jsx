@@ -15,9 +15,9 @@ import {
   SIGN_NAMESPACE,
   PUBLICNAMEREG,
   API_UPLOAD_FILES,
-} from '../configs/signConfigs';
-import { CHANGE_STEP, CHECK_PUBLICNAME, JCROP_PIC } from '../actions/signActions';
-import styles from '../sign.less';
+} from '../../configs/signConfigs';
+import { CHANGE_STEP, CHECK_PUBLICNAME, JCROP_PIC } from '../../actions/signActions';
+import styles from '../../less/sign.less';
 
 // 图片裁剪实例对象
 let jcropIns = null;

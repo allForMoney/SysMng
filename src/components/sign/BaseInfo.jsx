@@ -1,9 +1,9 @@
 import { Form, Input, Button, Row, Col } from 'antd';
 import React, { PropTypes } from 'react';
-import LinkBtn from '../../components/LinkBtn';
-import styles from '../sign.less';
-import { SIGN_NAMESPACE, ASKCODEINTERVAL, ASKCODEREG, PHONENUMREG, EMAILREG, CONCATNAMEREG } from '../configs/signConfigs';
-import { SEND_SMSCODE } from '../actions/signActions';
+import LinkBtn from '../common/LinkBtn';
+import styles from '../../less/sign.less';
+import { SIGN_NAMESPACE, ASKCODEINTERVAL, ASKCODEREG, PHONENUMREG, CONCATNAMEREG } from '../../configs/signConfigs';
+import { SEND_SMSCODE } from '../../actions/signActions';
 
 const FormItem = Form.Item;
 

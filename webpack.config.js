@@ -82,7 +82,7 @@ module.exports = function (webpackConfig, env) {
   // webpackConfig.externals.zepto = 'Zepto';
 
   // 自动注入 src 下目录的入口文件
-  const files = glob.sync('./src/**/*-{index,entry}.js');
+  const files = glob.sync('./src/*-{index,entry}.js');
 
   const newEntries = files.reduce((cache, file) => {
     // console.log('--->', file, path.basename(file, '.js'));

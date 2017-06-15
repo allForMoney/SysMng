@@ -7,7 +7,7 @@ import {
 import {
   REQUEST_TIMEOUT,
   ERROR_CODE,
-} from '../config';
+} from '../configs';
 
 export function checkLoginStatus(response) {
   if (response && response.stat === 'deny') {

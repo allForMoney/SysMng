@@ -8,7 +8,7 @@ import {
   API_JCROP_PIC,
   API_SUBMIT,
 } from '../configs/signConfigs';
-import request from '../../utils/request';
+import request from '../utils/request';
 import getCookie from '../utils/signUtils';
 
 export function getBaseInfo(params) {

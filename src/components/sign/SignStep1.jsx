@@ -13,10 +13,10 @@ import {
 import {
   SIGN_NAMESPACE,
   API_UPLOAD_FILES
-} from '../configs/signConfigs';
+} from '../../configs/signConfigs';
 import BaseInfo from './BaseInfo';
-import { CHANGE_STEP, CHECK_SMSCODE } from '../actions/signActions';
-import styles from '../sign.less';
+import { CHANGE_STEP, CHECK_SMSCODE } from '../../actions/signActions';
+import styles from '../../less/sign.less';
 
 
 class SignStep1 extends React.Component {

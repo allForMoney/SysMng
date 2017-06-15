@@ -34,6 +34,7 @@ module.exports = {
       res.json({
         stat: 'ok',
         msg: '处理成功',
+        openForm: {},
         mccCategories1:[{
           categoryCode:'201',
           categoryDesc:'二级1',

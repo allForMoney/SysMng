@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'dva';
 import { Alert, Steps } from 'antd';
-import SignStep1 from './components/SignStep1';
-import SignStep2 from './components/SignStep2';
-import SignStep3 from './components/SignStep3';
-import { SIGN_NAMESPACE, STEPCONFIG } from './configs/signConfigs';
-import styles from './sign.less';
-import FrameContent from '../components/FrameContent';
+import SignStep1 from '../components/sign/SignStep1';
+import SignStep2 from '../components/sign/SignStep2';
+import SignStep3 from '../components/sign/SignStep3';
+import { SIGN_NAMESPACE, STEPCONFIG } from '../configs/signConfigs';
+import styles from '../less/sign.less';
+import FrameContent from '../components/common/FrameContent';
 
 const Step = Steps.Step;
 
@@ -20,7 +20,7 @@ function Sign(props) {
   };
 
   return (
-    <FrameContent>
+    <FrameContent >
       <div className={styles.container}>
         {renderErrorMsg()}
         <Steps current={props.currentStep}>
