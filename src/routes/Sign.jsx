@@ -12,7 +12,7 @@ const Step = Steps.Step;
 
 function Sign(props) {
   return (
-    <FrameContent location={props.location}>
+    <FrameContent location={props.location} {...props} >
       <div className={styles.container}>
         <Steps current={props.currentStep}>
           {STEPCONFIG.map(item => <Step key={item.title} title={item.title} />)}
