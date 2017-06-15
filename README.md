@@ -9,3 +9,6 @@ npm install
 $ npm start
 # 构建
 npm run build
+
+# 测试
+npm run test
