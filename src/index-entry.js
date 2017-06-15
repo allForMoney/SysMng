@@ -1,9 +1,13 @@
 import dva from 'dva';
 import createLoading from 'dva-loading';
 import './index.html';
+import { browserHistory } from 'dva/router';
 
-
-const app = dva();
+const app = dva({
+  onError(error) {
+    console.error(error.stack);
+  },
+});
 
 
 app.use(createLoading());

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'dva';
-import { Alert, Steps } from 'antd';
+import { Steps } from 'antd';
 import SignStep1 from '../components/sign/SignStep1';
 import SignStep2 from '../components/sign/SignStep2';
 import SignStep3 from '../components/sign/SignStep3';
@@ -11,18 +11,9 @@ import FrameContent from '../components/common/FrameContent';
 const Step = Steps.Step;
 
 function Sign(props) {
-  const renderErrorMsg = () => {
-    const { error } = props;
-
-    return error ?
-    (<Alert message={error.message} type="error" showIcon />)
-    : null;
-  };
-
   return (
-    <FrameContent >
+    <FrameContent location={props.location}>
       <div className={styles.container}>
-        {renderErrorMsg()}
         <Steps current={props.currentStep}>
           {STEPCONFIG.map(item => <Step key={item.title} title={item.title} />)}
         </Steps>
