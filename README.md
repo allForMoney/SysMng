@@ -10,5 +10,4 @@ cnpm install
 $ cnpm start
 # 构建
 cnpm run build
-# 测试
-npm run test
+
