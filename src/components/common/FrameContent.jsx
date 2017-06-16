@@ -113,18 +113,18 @@ class FrameContent extends React.Component {
           />
         </Header>
         <Layout>
-          <Sider width={200} style={{ background: '#fff' }}>
+          <Sider width={250} style={{ background: '#fff', overflow: 'auto' }}>
             {isSchool &&
             <Menu
               mode="inline"
-              defaultSelectedKeys={['项目基本情况']}
-              defaultOpenKeys={['预算']}
-              style={{ height: '100%' }}
+              defaultSelectedKeys={['']}
+              defaultOpenKeys={['预算', '系统设置', '绩效']}
+              style={{ height: '80%' }}
               onClick={this.onMenuClicked}
             >
               <SubMenu key="预算" title={<span><Icon type="user" />预算</span>}>
                 <Menu.Item key="项目基本情况">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />项目基本情况</Link>
+                  <Link to="/budget/base" ><Icon type="bars" />项目基本情况</Link>
                 </Menu.Item>
                 <SubMenu key="项目预算" title={<span><Icon type="user" />项目预算</span>} >
                   <Menu.Item key="项目预算表">

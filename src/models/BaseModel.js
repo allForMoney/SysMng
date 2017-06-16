@@ -2,7 +2,7 @@ export default {
   namespace: 'baseModel',
 
   state: {
-    userType: 'inputer',  // inputer/finan/manager/admin/ministry
+    userType: 'manager',  // inputer/finan/manager/admin/ministry
     userName: '12345'
   },
   effects: {

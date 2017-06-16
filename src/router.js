@@ -5,6 +5,7 @@ import List from './routes/List';
 import Blank from './routes/Blank';
 import ModifyConcat from './components/sysConfig/ModifyConcat';
 import Advice from './components/sysConfig/Advice';
+import BudgetBaseInfo from './components/budget/BudgetBaseInfo';
 
 function RouterConfig({ history }) {
   return (
@@ -12,6 +13,7 @@ function RouterConfig({ history }) {
       <Route path="/" component={Sign} />
       <Route path="/sign" component={List} />
       <Route path="/blank" component={Blank} />
+      <Route path="/budget/base" component={BudgetBaseInfo} />
       <Route path="/sys/concat" component={ModifyConcat} />
       <Route path="/sys/advice" component={Advice} />
     </Router>
