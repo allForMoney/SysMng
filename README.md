@@ -10,5 +10,5 @@ cnpm install
 $ cnpm start
 # 构建
 cnpm run build
-# 测试
+# 测试333
 npm run test
