@@ -3,6 +3,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'dva';
 import { Link } from 'dva/router';
 import styles from './FrameContent.less';
+import ModifyPass from '../sysConfig/ModifyPass';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -11,12 +12,38 @@ class FrameContent extends React.Component {
   state = {
     cookie1: 'Home',
     cookie2: 'index',
-    cookie3: ''
+    cookie3: '',
+    showModiPass: false,
   }
 
   onMenuClicked = ({ keyPath }) => {
     const [cookie3, cookie2, cookie1] = keyPath;
     this.setState({ cookie1, cookie2, cookie3 });
+  }
+  
+  onCreateBtnClicked = () => {
+    const form = this.form;
+
+    form.validateFields((err, values) => {
+      if (err) {
+        return;
+      }
+      this.props.dispatch({
+        type: 'baseModel/modifyPass',
+        payload: values
+      });
+      form.resetFields();
+      this.setState({ popWinVisible: false });
+    });
+  }
+
+  onCancelBtnClicked = () => {
+    this.form.resetFields();
+    this.setState({ showModiPass: false });
+  }
+
+  modifyPass = () => {
+    this.setState({ showModiPass: true });
   }
 
   logoOut = () => {
@@ -30,7 +57,12 @@ class FrameContent extends React.Component {
   doLogoOut = () => {
     // TODO
   }
-  
+
+  saveFormRef = (form) => {
+    this.form = form;
+  }
+
+
   render() {
     const { cookie1, cookie2, cookie3 } = this.state;
     const { userType, userName } = this.props;
@@ -72,6 +104,13 @@ class FrameContent extends React.Component {
             <span>用户名：{userName} 身份： {identity}</span>
             <Button type="primary" onClick={this.logoOut}>退出登录</Button>
           </Card>
+          <ModifyPass
+            visible={this.state.showModiPass}
+            ref={this.saveFormRef}
+            userName={userName}
+            onCancel={this.onCancelBtnClicked}
+            onCreate={this.onCreateBtnClicked}
+          />
         </Header>
         <Layout>
           <Sider width={200} style={{ background: '#fff' }}>
@@ -104,6 +143,9 @@ class FrameContent extends React.Component {
                 <Menu.Item key="预算执行季报查询">
                   <Link to="/budget_baseinfo" ><Icon type="bars" />预算执行季报查询</Link>
                 </Menu.Item>
+                <Menu.Item key="支出预算处理结果">
+                  <Link to="/blank" ><Icon type="bars" />支出预算处理结果</Link>
+                </Menu.Item>
                 <Menu.Item key="预算留言处理情况">
                   <Link to="/budget_baseinfo" ><Icon type="bars" />预算留言处理情况</Link>
                 </Menu.Item>
@@ -118,27 +160,27 @@ class FrameContent extends React.Component {
                   </Menu.Item>
                 </SubMenu>
                 <Menu.Item key="项目支出绩效目标自评表">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />项目支出绩效目标自评表</Link>
+                  <Link to="/blank" ><Icon type="bars" />项目支出绩效目标自评表</Link>
                 </Menu.Item>
                 <Menu.Item key="绩效运行存在问题纠正情况">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />绩效运行存在问题纠正情况</Link>
+                  <Link to="/blank" ><Icon type="bars" />绩效运行存在问题纠正情况</Link>
                 </Menu.Item>
                 <Menu.Item key="年度绩效自评报告">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />年度绩效自评报告</Link>
+                  <Link to="/blank" ><Icon type="bars" />年度绩效自评报告</Link>
                 </Menu.Item>
                 <Menu.Item key="绩效留言处理情况">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />绩效留言处理情况</Link>
+                  <Link to="/blank" ><Icon type="bars" />绩效留言处理情况</Link>
                 </Menu.Item>
               </SubMenu>
               <SubMenu key="系统设置" title={<span><Icon type="user" />系统设置</span>}>
                 <Menu.Item key="修改联系方式">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />修改联系方式</Link>
+                  <Link to="/sys/concat" ><Icon type="bars" />修改联系方式</Link>
                 </Menu.Item>
                 <Menu.Item key="系统使用建议">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />系统使用建议</Link>
+                  <Link to="/sys/advice" ><Icon type="bars" />系统使用建议</Link>
                 </Menu.Item>
                 <Menu.Item key="修改密码">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />修改密码</Link>
+                  <Link onClick={this.modifyPass}><Icon type="bars" />修改密码</Link>
                 </Menu.Item>
                 <Menu.Item key="退出登录">
                   <Link to="/budget_baseinfo" ><Icon type="bars" />退出登录</Link>

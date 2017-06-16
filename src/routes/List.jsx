@@ -5,7 +5,6 @@ import { routerRedux } from 'dva/router';
 import FrameContent from '../components/common/FrameContent';
 
 function Users({ dispatch, list: dataSource, loading, total, page: current }) {
-
   function pageChangeHandler(page) {
     dispatch(routerRedux.push({
       pathname: '/users',

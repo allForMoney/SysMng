@@ -2,12 +2,18 @@ import React from 'react';
 import { Router, Route } from 'dva/router';
 import Sign from './routes/Sign';
 import List from './routes/List';
+import Blank from './routes/Blank';
+import ModifyConcat from './components/sysConfig/ModifyConcat';
+import Advice from './components/sysConfig/Advice';
 
 function RouterConfig({ history }) {
   return (
     <Router history={history}>
       <Route path="/" component={Sign} />
       <Route path="/sign" component={List} />
+      <Route path="/blank" component={Blank} />
+      <Route path="/sys/concat" component={ModifyConcat} />
+      <Route path="/sys/advice" component={Advice} />
     </Router>
   );
 }
