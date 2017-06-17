@@ -1,4 +1,6 @@
-import { Layout, Menu, Breadcrumb, Icon, Card, Button, Modal } from 'antd';
+import { Layout, Menu, Breadcrumb,
+  Input,
+  Icon, Card, Button, Modal } from 'antd';
 import React, { PropTypes } from 'react';
 import { connect } from 'dva';
 import { Link } from 'dva/router';
@@ -14,11 +16,23 @@ class FrameContent extends React.Component {
     cookie2: 'index',
     cookie3: '',
     showModiPass: false,
+    msgValue: '',
+    selectKeys: [],
+    openKeys: [],
   }
 
   onMenuClicked = ({ keyPath }) => {
     const [cookie3, cookie2, cookie1] = keyPath;
-    this.setState({ cookie1, cookie2, cookie3 });
+    const selectKeys = [];
+    const openKeys = [];
+    if (cookie1) {
+      selectKeys.push(cookie3);
+      openKeys.push(cookie2, cookie1);
+    } else {
+      selectKeys.push(cookie3);
+      openKeys.push(cookie2);
+    }
+    this.setState({ cookie1, cookie2, cookie3, openKeys, selectKeys });
   }
   
   onCreateBtnClicked = () => {
@@ -62,10 +76,29 @@ class FrameContent extends React.Component {
     this.form = form;
   }
 
+  cancelMsg= () => {
+    this.props.dispatch({
+      type: 'baseModel/setState',
+      payload: { showMsgModal: false }
+    });
+  }
 
+  saveMsg= () => {
+    const { msgValue } = this.state;
+    console.log(msgValue);
+    this.props.dispatch({
+      type: 'baseModel/saveMsg',
+      payload: { msgValue }
+    });
+    this.cancelMsg();
+  }
+  
   render() {
-    const { cookie1, cookie2, cookie3 } = this.state;
-    const { userType, userName } = this.props;
+    const { cookie1, cookie2, cookie3, msgValue,
+    selectKeys,
+    openKeys,
+   } = this.state;
+    const { userType, userName, showMsgModal } = this.props;
 
     const isAdmin = userType === 'admin';
     const isMinistry = userType === 'ministry';
@@ -98,6 +131,20 @@ class FrameContent extends React.Component {
 
     return (
       <Layout>
+        <Modal
+          title="留言信息"
+          visible={showMsgModal}
+          onOk={this.saveMsg}
+          onCancel={this.cancelMsg}
+        >
+          <Input
+            type="textarea"
+            rows={8}
+            placeholder="你的留言"
+            value={msgValue}
+            onChange={e => this.setState({ msgValue: e.target.value })}
+          />
+        </Modal>
         <Header className="header">
           <div className={styles.logo} />
           <Card style={{ float: 'right', width: 300, height: 64, backgroundColor: '#404040' }} >
@@ -117,24 +164,24 @@ class FrameContent extends React.Component {
             {isSchool &&
             <Menu
               mode="inline"
-              defaultSelectedKeys={['']}
-              defaultOpenKeys={['预算', '系统设置', '绩效']}
+              defaultSelectedKeys={selectKeys}
+              defaultOpenKeys={openKeys}
               style={{ height: '80%' }}
               onClick={this.onMenuClicked}
             >
-              <SubMenu key="预算" title={<span><Icon type="user" />预算</span>}>
-                <Menu.Item key="项目基本情况">
+              <SubMenu key="budget" title={<span><Icon type="user" />预算</span>}>
+                <Menu.Item key="base">
                   <Link to="/budget/base" ><Icon type="bars" />项目基本情况</Link>
                 </Menu.Item>
-                <SubMenu key="项目预算" title={<span><Icon type="user" />项目预算</span>} >
-                  <Menu.Item key="项目预算表">
-                    <Link to="/budget_baseinfo" ><Icon type="bars" />项目预算表</Link>
+                <SubMenu key="projectBudget" title={<span><Icon type="user" />项目预算</span>} >
+                  <Menu.Item key="project">
+                    <Link to="/budget/project" ><Icon type="bars" />项目预算表</Link>
                   </Menu.Item>
-                  <Menu.Item key="项目预算调整">
-                    <Link to="/budget_baseinfo" ><Icon type="bars" />项目预算调整</Link>
+                  <Menu.Item key="justify">
+                    <Link to="/budget/justify" ><Icon type="bars" />项目预算调整</Link>
                   </Menu.Item>
-                  <Menu.Item key="预算调整记录">
-                    <Link to="/budget_baseinfo" ><Icon type="bars" />预算调整记录</Link>
+                  <Menu.Item key="justifyRec">
+                    <Link to="/budget/justifyRec" ><Icon type="bars" />预算调整记录</Link>
                   </Menu.Item>
                 </SubMenu>
                 <Menu.Item key="预算执行季报">
@@ -374,7 +421,7 @@ FrameContent.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const { userType, userName } = state.baseModel;
-  return { userType, userName };
+  const { userType, userName, showMsgModal } = state.baseModel;
+  return { userType, userName, showMsgModal };
 }
 export default connect(mapStateToProps)(FrameContent);

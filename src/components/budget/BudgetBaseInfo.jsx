@@ -9,6 +9,9 @@ import {
   Card,
   Modal,
   Input,
+  Upload,
+  Icon,
+
 } from 'antd';
 
 import FrameContent from '../common/FrameContent';
@@ -18,8 +21,8 @@ class BudgetBaseInfo extends React.Component {
   state={
     showAllUnit: false,
     buildUnit: [1,2,3,4], // this.props.buildUnit,
-    showMsgModal: false,
     showChangeModal: false,
+    promise: null,
   }
 
   getBuildUnit = () => {
@@ -82,17 +85,11 @@ class BudgetBaseInfo extends React.Component {
     this.setState({ showAllUnit: false });
   }
 
-  cancelMsg= () => {
-    this.setState({ showMsgModal: false, msgValue: '' });
-  }
-
   cancelChange= () => {
     this.setState({ showChangeModal: false, uploadFile: '' });
   }
 
-  saveMsg= () => {
-    const { msgValue } = this.state;
-    console.log(msgValue);
+  saveChange= () => {
     this.cancelMsg();
   }
 
@@ -108,44 +105,35 @@ class BudgetBaseInfo extends React.Component {
     const buildUnitTags = this.getBuildUnit();
     const {
       showAllUnit,
-      showMsgModal,
       showChangeModal,
-      msgValue,
-      uploadFile,
      } = this.state;
     return (
       <FrameContent>
-        <Modal
-          title="留言信息"
-          visible={showMsgModal}
-          onOk={this.saveMsg}
-          onCancel={this.cancelMsg}
-        >
-          <Input
-            type="textarea"
-            rows={8}
-            placeholder="你的留言"
-            value={msgValue}
-            onChange={e => this.setState({ msgValue: e.target.value })}
-          />
-        </Modal>
         <Modal
           title="变更申请"
           visible={showChangeModal}
           onOk={this.saveChange}
           onCancel={this.cancelChange}
         >
-          <Input
-            type="textarea"
-            rows={8}
-            placeholder="你的留言"
-            value={msgValue}
-            onChange={e => this.setState({ msgValue: e.target.value })}
-          />
+          <Upload
+            action={'//jsonplaceholder.typicode.com/posts/'}
+            beforeUpload={this.beforeUpload}
+          >
+            <Button>
+              <Icon type="upload" /> 上传文件
+            </Button>
+          </Upload>
         </Modal>
         <Card>
-          该信息为只读信e息，如有疑义，请
-          <Button onClick={() => this.setState({ showMsgModal: true })}>留言</Button>
+          该信息为只读信息，如有疑义，请
+          <Button
+            onClick={
+            () => this.props.dispatch({
+              type: 'baseModel/setState',
+              payload: { showMsgModal: true }
+            })
+            }
+          >留言</Button>
           。 如须变更，请点击
           <Button onClick={() => this.setState({ showChangeModal: true })}>变更申请</Button>办理手续。
         </Card>
