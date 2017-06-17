@@ -10,7 +10,7 @@ export default {
     projectId: 72,
     projectList: [],
     projectTotal: 34,
-    projectPage: 1,
+    projectPage : 1,
   },
   effects: {
 
