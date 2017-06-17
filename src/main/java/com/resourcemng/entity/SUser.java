@@ -1,9 +1,6 @@
 package com.resourcemng.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * @author 程序猿DD
@@ -12,10 +9,11 @@ import javax.persistence.Id;
  * @blog http://blog.didispace.com
  */
 @Entity
-public class User {
+@Table(name = "s_user")
+public class SUser {
 
     @Id
-    @GeneratedValue
+    //@GeneratedValue
     private Long id;
 
     @Column(nullable = false)
@@ -24,9 +22,9 @@ public class User {
     @Column(nullable = false)
     private Integer age;
 
-    public User(){}
+    public SUser(){}
 
-    public User(String name, Integer age) {
+    public SUser(String name, Integer age) {
         this.name = name;
         this.age = age;
     }

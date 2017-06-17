@@ -1,7 +1,9 @@
 package com.resourcemng.repository;
 
+import com.resourcemng.entity.Project;
 import com.resourcemng.entity.TUser;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -12,9 +14,9 @@ import java.util.List;
  * @date 16/3/23 下午2:34.
  * @blog http://blog.didispace.com
  */
-public interface TUserRepository extends JpaRepository<TUser, Long> {
-
-    List<TUser> findByUserName(String userName);
+public interface ProjectRepository extends JpaRepository<Project, Long> {
+   @Query("from Project p where p.schoolName=:schoolName")
+    List<Project> findByParams(String schoolName);
 
 
 //    @Query("from User u where u.name=:name")

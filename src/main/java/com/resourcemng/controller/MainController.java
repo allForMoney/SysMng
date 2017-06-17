@@ -1,6 +1,6 @@
 package com.resourcemng.controller;
 
-import com.resourcemng.service.UserService;
+import com.resourcemng.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +16,7 @@ import java.util.Map;
 public class MainController {
 
     @Autowired
-    public MainController(UserService service) {
+    public MainController(ProjectService service) {
     }
 
     @RequestMapping("/")

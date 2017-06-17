@@ -1,15 +1,14 @@
 package com.resourcemng;
 
+import com.resourcemng.controller.ProjectController;
+import com.resourcemng.entity.Project;
 import com.resourcemng.entity.SUser;
-import com.resourcemng.entity.TUser;
 import com.resourcemng.repository.SUserRepository;
 import com.resourcemng.repository.TUserRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -22,14 +21,14 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.List;
 
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
 @SpringBootTest
-public class ApplicationTests {
+public class ProjectControllerTests {
   private MockMvc mvc;
   @Before
   public void setUp() throws Exception {
@@ -37,36 +36,13 @@ public class ApplicationTests {
   }
   //@Test
   public void getHello() throws Exception {
-    mvc.perform(MockMvcRequestBuilders.get("/hello").accept(MediaType.APPLICATION_JSON))
-      .andExpect(status().isOk())
-      .andExpect(content().string(equalTo("Hello World!")));
   }
   @Autowired
-  private SUserRepository userRepository;
-  @Autowired
-  private TUserRepository tUserRepository;
+  private ProjectController projectController;
   @Test
   public void test() throws Exception {
-
-    // 创建10条记录
-    SUser entity = new SUser();
-    entity.setId(12l);
-    entity.setName("AAAAA");
-    entity.setAge(444);
-    userRepository.save(entity);
-
-//    TUser s = new TUser();
-//    s.setUserId(4444);
-//    s.setUserName("ssss");
-//    s.setUserNo("SSS");
-//    s.setMajorName("DDDD");
-//    s.setUserPassword("DSDWE");
-//    s.setUserRole(1);
-//    s.setIsDelete(1);
-//    tUserRepository.save(s);
-
-    List<SUser> u=userRepository.findByName("AAAAA");
-    Assert.assertEquals(1, u.size());
-
+    Project project = new Project();
+    project.setId(3);
+    projectController.create(project);
   }
 }
