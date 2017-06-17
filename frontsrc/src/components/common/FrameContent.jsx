@@ -23,16 +23,7 @@ class FrameContent extends React.Component {
 
   onMenuClicked = ({ keyPath }) => {
     const [cookie3, cookie2, cookie1] = keyPath;
-    const selectKeys = [];
-    const openKeys = [];
-    if (cookie1) {
-      selectKeys.push(cookie3);
-      openKeys.push(cookie2, cookie1);
-    } else {
-      selectKeys.push(cookie3);
-      openKeys.push(cookie2);
-    }
-    this.setState({ cookie1, cookie2, cookie3, openKeys, selectKeys });
+    this.setState({ cookie1, cookie2, cookie3, selectKeys: cookie3 });
   }
   
   onCreateBtnClicked = () => {
@@ -129,6 +120,14 @@ class FrameContent extends React.Component {
         break;
     }
 
+    const cookiePath = (
+      <Breadcrumb style={{ margin: '12px 0' }}>
+        <Breadcrumb.Item>{cookie1}</Breadcrumb.Item>
+        <Breadcrumb.Item>{cookie2}</Breadcrumb.Item>
+        <Breadcrumb.Item>{cookie3}</Breadcrumb.Item>
+      </Breadcrumb>
+      );
+
     return (
       <Layout>
         <Modal
@@ -147,10 +146,10 @@ class FrameContent extends React.Component {
         </Modal>
         <Header className="header">
           <div className={styles.logo} />
-          <Card style={{ float: 'right', width: 300, height: 64, backgroundColor: '#404040' }} >
+          <div style={{ float: 'right'}} >
             <span>用户名：{userName} 身份： {identity}</span>
-            <Button type="primary" onClick={this.logoOut}>退出登录</Button>
-          </Card>
+            <Button typdive="primary" onClick={this.logoOut}>退出登录</Button>
+          </div>
           <ModifyPass
             visible={this.state.showModiPass}
             ref={this.saveFormRef}
@@ -159,13 +158,12 @@ class FrameContent extends React.Component {
             onCreate={this.onCreateBtnClicked}
           />
         </Header>
-        <Layout>
+        <Layout style={{ height: '100vh' }}>
           <Sider width={250} style={{ background: '#fff', overflow: 'auto' }}>
             {isSchool &&
             <Menu
               mode="inline"
-              defaultSelectedKeys={selectKeys}
-              defaultOpenKeys={openKeys}
+              defaultOpenKeys={['budget', 'projectBudget', '绩效', '绩效目标设定', '系统设置']}
               style={{ height: '80%' }}
               onClick={this.onMenuClicked}
             >
@@ -194,7 +192,7 @@ class FrameContent extends React.Component {
                   <Link to="/blank" ><Icon type="bars" />支出预算处理结果</Link>
                 </Menu.Item>
                 <Menu.Item key="预算留言处理情况">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />预算留言处理情况</Link>
+                  <Link to="/budget/msg" ><Icon type="bars" />预算留言处理情况</Link>
                 </Menu.Item>
               </SubMenu>
               <SubMenu key="绩效" title={<span><Icon type="user" />绩效</span>}>
@@ -400,11 +398,6 @@ class FrameContent extends React.Component {
             }
           </Sider>
           <Layout style={{ padding: '0 24px 24px' }}>
-            <Breadcrumb style={{ margin: '12px 0' }}>
-              <Breadcrumb.Item>{cookie1}</Breadcrumb.Item>
-              <Breadcrumb.Item>{cookie2}</Breadcrumb.Item>
-              <Breadcrumb.Item>{cookie3}</Breadcrumb.Item>
-            </Breadcrumb>
             <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280 }}>
               {this.props.children}
             </Content>
