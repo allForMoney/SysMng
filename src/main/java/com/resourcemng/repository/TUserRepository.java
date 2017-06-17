@@ -1,6 +1,6 @@
 package com.resourcemng.repository;
 
-import com.resourcemng.entity.TUserEntity;
+import com.resourcemng.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -12,11 +12,11 @@ import java.util.List;
  * @date 16/3/23 下午2:34.
  * @blog http://blog.didispace.com
  */
-public interface TUserRepository /*extends JpaRepository<TUserEntity, Long>*/ {
+public interface TUserRepository extends JpaRepository<User, Long> {
 
-    List<TUserEntity> findByName(String name);
+    List<User> findByName(String name);
 
-    List <TUserEntity> findByNameAndAge(String name, Integer age);
+    List <User> findByNameAndAge(String name, Integer age);
 
 //    @Query("from User u where u.name=:name")
 //    List<TUserEntity> findUser(@Param("name") String name);
