@@ -8,6 +8,8 @@ import Advice from './components/sysConfig/Advice';
 import BudgetBaseInfo from './components/budget/BudgetBaseInfo';
 import ProjectBudget from './components/budget/ProjectBudget';
 import BudgetJustify from './components/budget/BudgetJustify';
+import BudgetJustifyRec from './components/budget/BudgetJustifyRec';
+import BudgetMsgTable from './components/budget/BudgetMsgTable';
 
 function RouterConfig({ history }) {
   return (
@@ -18,6 +20,8 @@ function RouterConfig({ history }) {
       <Route path="/budget/base" component={BudgetBaseInfo} />
       <Route path="/budget/project" component={ProjectBudget} />
       <Route path="/budget/justify" component={BudgetJustify} />
+      <Route path="/budget/justifyRec" component={BudgetJustifyRec} />
+      <Route path="/budget/msg" component={BudgetMsgTable} />
       <Route path="/sys/concat" component={ModifyConcat} />
       <Route path="/sys/advice" component={Advice} />
     </Router>

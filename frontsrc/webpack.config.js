@@ -94,5 +94,6 @@ module.exports = function (webpackConfig, env) {
   webpackConfig.entry = Object.assign({}, webpackConfig.entry, newEntries);
 
   webpackConfig.output.path = path.join(__dirname, '../src/main/resources/static');
+
   return webpackConfig;
 };
