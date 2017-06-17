@@ -1,11 +1,9 @@
 package com.resourcemng.entity;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
-
-/**
- * Created by 燕子 on 2017/6/17.
- */
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
  * @author 程序猿DD
@@ -14,7 +12,7 @@ import java.sql.Timestamp;
  * @blog http://blog.didispace.com
  */
 @Entity
-public class TUserEntity {
+public class User {
 
     @Id
     @GeneratedValue
@@ -26,9 +24,9 @@ public class TUserEntity {
     @Column(nullable = false)
     private Integer age;
 
-    public TUserEntity(){}
+    public User(){}
 
-    public TUserEntity(String name, Integer age) {
+    public User(String name, Integer age) {
         this.name = name;
         this.age = age;
     }
@@ -58,4 +56,3 @@ public class TUserEntity {
     }
 
 }
-
