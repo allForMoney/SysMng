@@ -148,7 +148,7 @@ class FrameContent extends React.Component {
           <div className={styles.logo} />
           <div style={{ float: 'right'}} >
             <span>用户名：{userName} 身份： {identity}</span>
-            <Button typdive="primary" onClick={this.logoOut}>退出登录</Button>
+            <Button type="primary" onClick={this.logoOut}>退出登录</Button>
           </div>
           <ModifyPass
             visible={this.state.showModiPass}
@@ -183,10 +183,10 @@ class FrameContent extends React.Component {
                   </Menu.Item>
                 </SubMenu>
                 <Menu.Item key="预算执行季报">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />预算执行季报</Link>
+                  <Link to="/budget/addbudgetseason" ><Icon type="bars" />预算执行季报</Link>
                 </Menu.Item>
                 <Menu.Item key="预算执行季报查询">
-                  <Link to="/budget/budgetseason" ><Icon type="bars" />预算执行季报查询</Link>
+                  <Link to="/budget/budgetSeasonList" ><Icon type="bars" />预算执行季报查询</Link>
                 </Menu.Item>
                 <Menu.Item key="支出预算处理结果">
                   <Link to="/blank" ><Icon type="bars" />支出预算处理结果</Link>
