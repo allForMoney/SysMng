@@ -186,7 +186,7 @@ class FrameContent extends React.Component {
                   <Link to="/budget_baseinfo" ><Icon type="bars" />预算执行季报</Link>
                 </Menu.Item>
                 <Menu.Item key="预算执行季报查询">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />预算执行季报查询</Link>
+                  <Link to="/budget/budgetseason" ><Icon type="bars" />预算执行季报查询</Link>
                 </Menu.Item>
                 <Menu.Item key="支出预算处理结果">
                   <Link to="/blank" ><Icon type="bars" />支出预算处理结果</Link>
