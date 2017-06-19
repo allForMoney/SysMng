@@ -46,6 +46,7 @@ class Achive extends React.Component {
       target3,
       projectId,
       projectName,
+      achiveList,
     } = this.props;
     const {
       showChangeModal,
@@ -85,6 +86,7 @@ class Achive extends React.Component {
             <Card title={`绩效指标[编号:${projectId}, 名称:${projectName}]`}>
               <AchiveTargetList
                 // editable={editable}
+                sourcedata={achiveList}
                 editable
               />
             </Card>
@@ -108,11 +110,21 @@ function mapStateToProps(state) {
     projectId,
     projectName
    } = state.baseModel;
+  const {
+     achiveList,
+     target1,
+     target2,
+     target3,
+   } = state.achiveModel;
   return {
     userType,
     userName,
     projectId,
     projectName,
+    achiveList,
+    target1,
+    target2,
+    target3,
   };
 }
 
