@@ -3,15 +3,12 @@ import { connect } from 'dva';
 
 import {
   Button,
-  Tag,
   Row,
   Col,
   Card,
   Modal,
-  Input,
   Upload,
   Icon,
-
 } from 'antd';
 import FrameContent from '../common/FrameContent';
 

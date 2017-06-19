@@ -238,7 +238,7 @@ class FrameContent extends React.Component {
             >
               <SubMenu key="数据导入" title={<span><Icon type="user" />数据导入</span>}>
                 <Menu.Item key="项目基本信息列表">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />项目基本信息列表</Link>
+                  <Link to="/base/projectList" ><Icon type="bars" />项目基本信息列表</Link>
                 </Menu.Item>
                 <Menu.Item key="项目基本信息导入">
                   <Link to="/budget_baseinfo" ><Icon type="bars" />项目基本信息导入</Link>
