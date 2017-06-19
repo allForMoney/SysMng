@@ -1,41 +1,37 @@
 package com.resourcemng.entity;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
- * Created by 燕子 on 2017/6/17.
+ * Created by 燕子 on 2017/6/20.
  */
 @Entity
-@Table(name = "TUser" )
-public class TUser {
-  private int userId;
-  private String userNo ="1";
-  private String majorName =null;
-  private String userPassword =null;
-  private int userRole;
-  private String note =null;
-  private int isDelete;
-  private String reserve1 =null;
-  private String reserve2 =null;
-  private String reserve3 =null;
-  private String telephone =null;
-  private Date expireDate;
-  private String userName =null;
+public class Tuser {
+  private String userId;
+  private String userNo;
+  private String majorName;
+  private String userPassword;
+  private String userRole;
+  private String note;
+  private String isDelete;
+  private String telephone;
+  private String userName;
 
   @Id
-  @Column(name = "UserID", nullable = false)
-  public int getUserId() {
+  @Column(name = "UserID", nullable = false, length = 20)
+  public String getUserId() {
     return userId;
   }
 
-  public void setUserId(int userId) {
+  public void setUserId(String userId) {
     this.userId = userId;
   }
 
   @Basic
-  @Column(name = "UserNo",/* nullable = false,*/ length = 100)
+  @Column(name = "UserNo", nullable = false, length = 100)
   public String getUserNo() {
     return userNo;
   }
@@ -65,12 +61,12 @@ public class TUser {
   }
 
   @Basic
-  @Column(name = "UserRole", nullable = false)
-  public int getUserRole() {
+  @Column(name = "UserRole", nullable = false, length = 1)
+  public String getUserRole() {
     return userRole;
   }
 
-  public void setUserRole(int userRole) {
+  public void setUserRole(String userRole) {
     this.userRole = userRole;
   }
 
@@ -85,43 +81,13 @@ public class TUser {
   }
 
   @Basic
-  @Column(name = "IsDelete", nullable = false)
-  public int getIsDelete() {
+  @Column(name = "IsDelete", nullable = false, length = 1)
+  public String getIsDelete() {
     return isDelete;
   }
 
-  public void setIsDelete(int isDelete) {
+  public void setIsDelete(String isDelete) {
     this.isDelete = isDelete;
-  }
-
-  @Basic
-  @Column(name = "Reserve1", nullable = true, length = 50)
-  public String getReserve1() {
-    return reserve1;
-  }
-
-  public void setReserve1(String reserve1) {
-    this.reserve1 = reserve1;
-  }
-
-  @Basic
-  @Column(name = "Reserve2", nullable = true, length = 50)
-  public String getReserve2() {
-    return reserve2;
-  }
-
-  public void setReserve2(String reserve2) {
-    this.reserve2 = reserve2;
-  }
-
-  @Basic
-  @Column(name = "Reserve3", nullable = true, length = 50)
-  public String getReserve3() {
-    return reserve3;
-  }
-
-  public void setReserve3(String reserve3) {
-    this.reserve3 = reserve3;
   }
 
   @Basic
@@ -132,16 +98,6 @@ public class TUser {
 
   public void setTelephone(String telephone) {
     this.telephone = telephone;
-  }
-
-  @Temporal(TemporalType.TIMESTAMP)
-  @Column(name = "expiredate", nullable = true)
-  public Date getExpireDate() {
-    return expireDate;
-  }
-
-  public void setExpireDate(Date expireDate) {
-    this.expireDate = expireDate;
   }
 
   @Basic
@@ -159,39 +115,31 @@ public class TUser {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    TUser tUser = (TUser) o;
+    Tuser tuser = (Tuser) o;
 
-    if (userId != tUser.userId) return false;
-    if (userRole != tUser.userRole) return false;
-    if (isDelete != tUser.isDelete) return false;
-    if (userNo != null ? !userNo.equals(tUser.userNo) : tUser.userNo != null) return false;
-    if (majorName != null ? !majorName.equals(tUser.majorName) : tUser.majorName != null) return false;
-    if (userPassword != null ? !userPassword.equals(tUser.userPassword) : tUser.userPassword != null) return false;
-    if (note != null ? !note.equals(tUser.note) : tUser.note != null) return false;
-    if (reserve1 != null ? !reserve1.equals(tUser.reserve1) : tUser.reserve1 != null) return false;
-    if (reserve2 != null ? !reserve2.equals(tUser.reserve2) : tUser.reserve2 != null) return false;
-    if (reserve3 != null ? !reserve3.equals(tUser.reserve3) : tUser.reserve3 != null) return false;
-    if (telephone != null ? !telephone.equals(tUser.telephone) : tUser.telephone != null) return false;
-    if (expireDate != null ? !expireDate.equals(tUser.expireDate) : tUser.expireDate != null) return false;
-    if (userName != null ? !userName.equals(tUser.userName) : tUser.userName != null) return false;
+    if (userId != null ? !userId.equals(tuser.userId) : tuser.userId != null) return false;
+    if (userNo != null ? !userNo.equals(tuser.userNo) : tuser.userNo != null) return false;
+    if (majorName != null ? !majorName.equals(tuser.majorName) : tuser.majorName != null) return false;
+    if (userPassword != null ? !userPassword.equals(tuser.userPassword) : tuser.userPassword != null) return false;
+    if (userRole != null ? !userRole.equals(tuser.userRole) : tuser.userRole != null) return false;
+    if (note != null ? !note.equals(tuser.note) : tuser.note != null) return false;
+    if (isDelete != null ? !isDelete.equals(tuser.isDelete) : tuser.isDelete != null) return false;
+    if (telephone != null ? !telephone.equals(tuser.telephone) : tuser.telephone != null) return false;
+    if (userName != null ? !userName.equals(tuser.userName) : tuser.userName != null) return false;
 
     return true;
   }
 
   @Override
   public int hashCode() {
-    int result = userId;
+    int result = userId != null ? userId.hashCode() : 0;
     result = 31 * result + (userNo != null ? userNo.hashCode() : 0);
     result = 31 * result + (majorName != null ? majorName.hashCode() : 0);
     result = 31 * result + (userPassword != null ? userPassword.hashCode() : 0);
-    result = 31 * result + userRole;
+    result = 31 * result + (userRole != null ? userRole.hashCode() : 0);
     result = 31 * result + (note != null ? note.hashCode() : 0);
-    result = 31 * result + isDelete;
-    result = 31 * result + (reserve1 != null ? reserve1.hashCode() : 0);
-    result = 31 * result + (reserve2 != null ? reserve2.hashCode() : 0);
-    result = 31 * result + (reserve3 != null ? reserve3.hashCode() : 0);
+    result = 31 * result + (isDelete != null ? isDelete.hashCode() : 0);
     result = 31 * result + (telephone != null ? telephone.hashCode() : 0);
-    result = 31 * result + (expireDate != null ? expireDate.hashCode() : 0);
     result = 31 * result + (userName != null ? userName.hashCode() : 0);
     return result;
   }

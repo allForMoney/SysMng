@@ -1,7 +1,5 @@
 package com.resourcemng.basic;
 
-import com.resourcemng.entity.Project;
-
 /**
  * Created by 燕子 on 2017/6/17.
  */

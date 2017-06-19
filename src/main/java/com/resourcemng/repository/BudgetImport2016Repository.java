@@ -1,11 +1,7 @@
 package com.resourcemng.repository;
 
-import com.resourcemng.entity.BudgetImportDetail2016;
-import com.resourcemng.entity.Project;
+import com.resourcemng.entity.Budgetimportdetail2016;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-
-import java.util.List;
 
 
 /**
@@ -14,7 +10,7 @@ import java.util.List;
  * @date 16/3/23 下午2:34.
  * @blog http://blog.didispace.com
  */
-public interface BudgetImport2016Repository extends JpaRepository<BudgetImportDetail2016, Long> {
+public interface BudgetImport2016Repository extends JpaRepository<Budgetimportdetail2016, Long> {
 
 
 }

@@ -2,14 +2,13 @@ package com.resourcemng.service;
 
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
-import com.resourcemng.entity.BudgetImportDetail2016;
+import com.resourcemng.entity.Budgetimportdetail2016;
 import com.resourcemng.repository.BudgetImport2016Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class BudgetService {
@@ -27,8 +26,8 @@ public class BudgetService {
     params.setTitleRows(1);
     params.setHeadRows(1);
 //    long start = new Date().getTime();
-    List<BudgetImportDetail2016> list = ExcelImportUtil.importExcel(new File(
-      filePath), BudgetImportDetail2016.class, params);
+    List<Budgetimportdetail2016> list = ExcelImportUtil.importExcel(new File(
+      filePath), Budgetimportdetail2016.class, params);
 //    repository.saveAll(list);
   }
 

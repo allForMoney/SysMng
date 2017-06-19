@@ -1,15 +1,9 @@
 package com.resourcemng;
 
-import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
-import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
-import com.resourcemng.controller.ProjectController;
 import com.resourcemng.entity.Project;
 import com.resourcemng.service.BudgetService;
-import net.minidev.json.JSONUtil;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +15,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.util.*;
 
 
@@ -51,7 +44,7 @@ public class BudgetServiceTests {
     System.out.println();
 
     Project project = new Project();
-    project.setId(5);
+    project.setId("4");
     service.importService("E:\\项目资料\\新建文件夹\\预算2016模板.xlsx");
   }
 

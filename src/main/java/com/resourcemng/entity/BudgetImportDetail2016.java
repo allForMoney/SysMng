@@ -1,23 +1,18 @@
 package com.resourcemng.entity;
 
-import cn.afterturn.easypoi.excel.annotation.Excel;
-import cn.afterturn.easypoi.excel.annotation.ExcelTarget;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
- * Created by 燕子 on 2017/6/18.
+ * Created by 燕子 on 2017/6/20.
  */
 @Entity
-@ExcelTarget("BudgetImportDetail2016")
-public class BudgetImportDetail2016 {
-  private int id;
-  @Excel(name = "课程名称", orderNum = "1", needMerge = true)
-  private String sequence;
-  private String usage;
+public class Budgetimportdetail2016 {
+  private String id;
+  private String sequenceNo;
+  private String usedFor;
   private String consult;
   private String print;
   private String travel;
@@ -35,38 +30,37 @@ public class BudgetImportDetail2016 {
   private String projectPercent;
   private String local;
   private String enterprise;
-  private String university;
-  private Integer originalId;
-  private int budgetYear;
+  private String university1;
+  private String budgetYear1;
 
   @Id
-  @Column(name = "Id", nullable = false)
-  public int getId() {
+  @Column(name = "Id", nullable = false, length = 20)
+  public String getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(String id) {
     this.id = id;
   }
 
   @Basic
-  @Column(name = "Sequence", nullable = true, length = 10)
-  public String getSequence() {
-    return sequence;
+  @Column(name = "SequenceNo", nullable = true, length = 10)
+  public String getSequenceNo() {
+    return sequenceNo;
   }
 
-  public void setSequence(String sequence) {
-    this.sequence = sequence;
+  public void setSequenceNo(String sequenceNo) {
+    this.sequenceNo = sequenceNo;
   }
 
   @Basic
-  @Column(name = "Usage", nullable = true, length = 50)
-  public String getUsage() {
-    return usage;
+  @Column(name = "UsedFor", nullable = true, length = 50)
+  public String getUsedFor() {
+    return usedFor;
   }
 
-  public void setUsage(String usage) {
-    this.usage = usage;
+  public void setUsedFor(String usedFor) {
+    this.usedFor = usedFor;
   }
 
   @Basic
@@ -240,33 +234,23 @@ public class BudgetImportDetail2016 {
   }
 
   @Basic
-  @Column(name = "University", nullable = true, length = 50)
-  public String getUniversity() {
-    return university;
+  @Column(name = "University1", nullable = true, length = 50)
+  public String getUniversity1() {
+    return university1;
   }
 
-  public void setUniversity(String university) {
-    this.university = university;
-  }
-
-  @Basic
-  @Column(name = "OriginalId", nullable = true)
-  public Integer getOriginalId() {
-    return originalId;
-  }
-
-  public void setOriginalId(Integer originalId) {
-    this.originalId = originalId;
+  public void setUniversity1(String university1) {
+    this.university1 = university1;
   }
 
   @Basic
-  @Column(name = "BudgetYear", nullable = false)
-  public int getBudgetYear() {
-    return budgetYear;
+  @Column(name = "BudgetYear1", nullable = false, length = 10)
+  public String getBudgetYear1() {
+    return budgetYear1;
   }
 
-  public void setBudgetYear(int budgetYear) {
-    this.budgetYear = budgetYear;
+  public void setBudgetYear1(String budgetYear1) {
+    this.budgetYear1 = budgetYear1;
   }
 
   @Override
@@ -274,12 +258,11 @@ public class BudgetImportDetail2016 {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
 
-    BudgetImportDetail2016 that = (BudgetImportDetail2016) o;
+    Budgetimportdetail2016 that = (Budgetimportdetail2016) o;
 
-    if (id != that.id) return false;
-    if (budgetYear != that.budgetYear) return false;
-    if (sequence != null ? !sequence.equals(that.sequence) : that.sequence != null) return false;
-    if (usage != null ? !usage.equals(that.usage) : that.usage != null) return false;
+    if (id != null ? !id.equals(that.id) : that.id != null) return false;
+    if (sequenceNo != null ? !sequenceNo.equals(that.sequenceNo) : that.sequenceNo != null) return false;
+    if (usedFor != null ? !usedFor.equals(that.usedFor) : that.usedFor != null) return false;
     if (consult != null ? !consult.equals(that.consult) : that.consult != null) return false;
     if (print != null ? !print.equals(that.print) : that.print != null) return false;
     if (travel != null ? !travel.equals(that.travel) : that.travel != null) return false;
@@ -301,17 +284,17 @@ public class BudgetImportDetail2016 {
       return false;
     if (local != null ? !local.equals(that.local) : that.local != null) return false;
     if (enterprise != null ? !enterprise.equals(that.enterprise) : that.enterprise != null) return false;
-    if (university != null ? !university.equals(that.university) : that.university != null) return false;
-    if (originalId != null ? !originalId.equals(that.originalId) : that.originalId != null) return false;
+    if (university1 != null ? !university1.equals(that.university1) : that.university1 != null) return false;
+    if (budgetYear1 != null ? !budgetYear1.equals(that.budgetYear1) : that.budgetYear1 != null) return false;
 
     return true;
   }
 
   @Override
   public int hashCode() {
-    int result = id;
-    result = 31 * result + (sequence != null ? sequence.hashCode() : 0);
-    result = 31 * result + (usage != null ? usage.hashCode() : 0);
+    int result = id != null ? id.hashCode() : 0;
+    result = 31 * result + (sequenceNo != null ? sequenceNo.hashCode() : 0);
+    result = 31 * result + (usedFor != null ? usedFor.hashCode() : 0);
     result = 31 * result + (consult != null ? consult.hashCode() : 0);
     result = 31 * result + (print != null ? print.hashCode() : 0);
     result = 31 * result + (travel != null ? travel.hashCode() : 0);
@@ -329,9 +312,8 @@ public class BudgetImportDetail2016 {
     result = 31 * result + (projectPercent != null ? projectPercent.hashCode() : 0);
     result = 31 * result + (local != null ? local.hashCode() : 0);
     result = 31 * result + (enterprise != null ? enterprise.hashCode() : 0);
-    result = 31 * result + (university != null ? university.hashCode() : 0);
-    result = 31 * result + (originalId != null ? originalId.hashCode() : 0);
-    result = 31 * result + budgetYear;
+    result = 31 * result + (university1 != null ? university1.hashCode() : 0);
+    result = 31 * result + (budgetYear1 != null ? budgetYear1.hashCode() : 0);
     return result;
   }
 }
