@@ -1,5 +1,5 @@
 export default {
-  namespace: 'baseModel',
+  namespace: 'achiveModel',
 
   state: {
     loading: false,

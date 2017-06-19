@@ -13,9 +13,7 @@ import {
   Icon,
 
 } from 'antd';
-
 import FrameContent from '../common/FrameContent';
-import LinkBtn from '../common/LinkBtn';
 
 class BudgetBaseInfo extends React.Component {
   state={
@@ -23,70 +21,6 @@ class BudgetBaseInfo extends React.Component {
     buildUnit: [1,2,3,4], // this.props.buildUnit,
     showChangeModal: false,
     promise: null,
-  }
-
-  getBuildUnit = () => {
-    const { showAllUnit, buildUnit } = this.state;
-    const buildUnitTags = [];
-    const length = buildUnit.length;
-    if (showAllUnit) { // 展示所有
-      for (let i = 0; i < length; i= i + 3) {
-        buildUnitTags.push(
-          <Row>
-            <Col span={6}>
-              <Tag>
-                {buildUnit[i]}
-              </Tag>
-            </Col>
-            <Col span={6}>
-              <Tag>
-                {buildUnit[i + 1]}
-              </Tag>
-            </Col>
-            <Col span={6}>
-              <Tag>
-                {buildUnit[i + 2]}
-              </Tag>
-            </Col>
-          </Row>
-        );
-      }
-    } else {
-      const [a, b, c] = buildUnit;
-      buildUnitTags.push(
-        <Row>
-          <Col span={6}>
-            <Tag>
-              {a}
-            </Tag>
-          </Col>
-          <Col span={6}>
-            <Tag>
-              {b}
-            </Tag>
-          </Col>
-          <Col span={6}>
-            <Tag>
-              {c}
-            </Tag>
-          </Col>
-        </Row>
-      );
-
-    }
-    return buildUnitTags;
-  }
-  
-  showMorebuild = () => {
-    this.setState({ showAllUnit: true });
-  }
-
-  hideMorebuild= () => {
-    this.setState({ showAllUnit: false });
-  }
-
-  cancelChange= () => {
-    this.setState({ showChangeModal: false, uploadFile: '' });
   }
 
   saveChange= () => {
@@ -102,7 +36,6 @@ class BudgetBaseInfo extends React.Component {
       rename,userName,
       phone,
     } = this.props;
-    const buildUnitTags = this.getBuildUnit();
     const {
       showAllUnit,
       showChangeModal,

@@ -15,6 +15,7 @@ app.use(createLoading());
 app.model(require('./models/signModel'));
 app.model(require('./models/listModel'));
 app.model(require('./models/BaseModel'));
+app.model(require('./models/AchiveModel'));
 
 // 4. Router
 app.router(require('./router'));
