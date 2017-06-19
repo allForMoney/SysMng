@@ -1,5 +1,8 @@
 package com.resourcemng.entity;
 
+
+import cn.afterturn.easypoi.excel.annotation.Excel;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,28 +15,50 @@ import java.sql.Timestamp;
 @Entity
 public class Project {
   private int id;
+  @Excel(name = "项目编号", orderNum = "1")
+  private String projectNo;
+  @Excel(name = "专业名称", orderNum = "2")
+  private String majorName;
+  @Excel(name = "立项年度", orderNum = "3")
+  private int createYear;
+  @Excel(name = "学校名称", orderNum = "4")
+
+
   private String schoolName;
+  @Excel(name = "省份", orderNum = "5")
+  private String provinceId;
+  @Excel(name = "法定代表人", orderNum = "6")
   private String schoolHead;
+  @Excel(name = "财务部门负责人", orderNum = "7")
   private String financeHead;
+  @Excel(name = "财务部门负责人电话", orderNum = "8")
   private String fhTel;
+  @Excel(name = "财务负责人QQ", orderNum = "9")
   private String fhqq;
+  @Excel(name = "项目负责人", orderNum = "10")
   private String projectHead;
+  @Excel(name = "项目负责人电话", orderNum = "11")
+
   private String phTel;
+  @Excel(name = "填报人", orderNum = "12")
   private String reportHead;
+  @Excel(name = "填报人电话", orderNum = "13")
   private String rhTel;
+  @Excel(name = "填报人QQ", orderNum = "14")
   private String rhqq;
+  @Excel(name = "备注", orderNum = "15")
   private String note;
+  @Excel(name = "联合主持单位", orderNum = "16")
+  private String school2;
+  @Excel(name = "参与建设单位", orderNum = "17")
+  private String school3;
   private Timestamp submitTime;
   private int isDelete;
   private int uiStatus;
   private String reserve1;
   private String reserve2;
   private String reserve3;
-  private String projectNo;
-  private String majorName;
-  private int createYear;
-  private String school2;
-  private String school3;
+
   private Integer smallNo;
 
   @Id
