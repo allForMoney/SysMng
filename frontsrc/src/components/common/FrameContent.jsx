@@ -163,7 +163,7 @@ class FrameContent extends React.Component {
             {isSchool &&
             <Menu
               mode="inline"
-              defaultOpenKeys={['budget', 'projectBudget', '绩效', '绩效目标设定', '系统设置']}
+              defaultOpenKeys={['budget', 'projectBudget', '绩效', '系统设置']}
               style={{ height: '80%' }}
               onClick={this.onMenuClicked}
             >
@@ -196,14 +196,9 @@ class FrameContent extends React.Component {
                 </Menu.Item>
               </SubMenu>
               <SubMenu key="绩效" title={<span><Icon type="user" />绩效</span>}>
-                <SubMenu key="绩效目标设定" title={<span><Icon type="user" />项目预算</span>} >
-                  <Menu.Item key="目标查看">
-                    <Link to="/budget_baseinfo" ><Icon type="bars" />目标查看</Link>
-                  </Menu.Item>
-                  <Menu.Item key="绩效指标">
-                    <Link to="/budget_baseinfo" ><Icon type="bars" />绩效指标</Link>
-                  </Menu.Item>
-                </SubMenu>
+                <Menu.Item key="绩效目标设定">
+                  <Link to="/achive/add" ><Icon type="bars" />绩效目标设定</Link>
+                </Menu.Item>
                 <Menu.Item key="项目支出绩效目标自评表">
                   <Link to="/blank" ><Icon type="bars" />项目支出绩效目标自评表</Link>
                 </Menu.Item>

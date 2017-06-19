@@ -2,12 +2,12 @@ import React from 'react';
 import {
   Table,
   Card,
-   Modal, Form, Input,
+   Modal, Form, Input,Row,Col,
 } from 'antd';
 
 const FormItem = Form.Item;
 
-class BudgetSeasonIncome extends React.Component {
+class AchiveTargetList extends React.Component {
   state={
     modalVisible: false,
     currentEditIndex: 0,
@@ -18,7 +18,7 @@ class BudgetSeasonIncome extends React.Component {
     this.setState({ modalVisible: false });
   }
 
-  saveBudgetInCome= () => {
+  saveAchiveTarget= () => {
     const { currentEditIndex } = this.state;
     this.props.form.validateFields((err,values) => {
       if (err) {
@@ -33,11 +33,6 @@ class BudgetSeasonIncome extends React.Component {
     if (!this.props.editable) {
       return;
     }
-    if (![2, 6, 8, 10].includes(index)) {
-      return;
-    }
-
-    console.log(record);
     const { setFieldsValue } = this.props.form;
     setFieldsValue(record);
     this.setState({ modalVisible: true, currentEditIndex: index });
@@ -108,63 +103,34 @@ class BudgetSeasonIncome extends React.Component {
     }];
 
     const columns = [{
-      title: '资金来源',
+      title: '一级指标',
       dataIndex: 'source2',
       colSpan: 2,
       key: 'source2',
-      render: (value, row, index) => {
-        const obj = {
-          children: value,
-          props: {},
-        };
-        if (index < 4) {
-          if (index % 2 === 0) {
-            obj.props.rowSpan = 2;
-            obj.props.colSpan = 2;
-          } else {
-            obj.props.rowSpan = 0;
-          }
-        }
-
-        if (index === 4) {
-          obj.props.rowSpan = 8;
-        }
-        if (index > 4) {
-          obj.props.rowSpan = 0;
-        }
-        return obj;
-      },
     }, {
-      title: '项目',
+      title: '二级指标',
       dataIndex: 'source',
       colSpan: 0,
       key: 'source',
-      render: (value, row, index) => {
-        const obj = {
-          children: value,
-          props: {},
-        };
-        if (index < 4) {
-          obj.props.rowSpan = 0;
-        }
-        if (index >= 4) {
-          if (index % 2 === 0) {
-            obj.props.rowSpan = 2;
-          } else {
-            obj.props.rowSpan = 0;
-          }
-        }
-        return obj;
-      },
-      
     }, {
-      title: '项目',
+      title: '三级指标',
       dataIndex: 'pname',
       key: 'pname',
     }, {
-      title: '总额/到位率',
-      dataIndex: 'money',
-      key: 'money',
+      title: '计划指标值',
+      children: [{
+        title: '总体值',
+        dataIndex: 'pna6me',
+        key: 'pnam0e',
+      }, {
+        title: '第一年',
+        dataIndex: 'pna1me',
+        key: 'pna-me',
+      }, {
+        title: '第二年',
+        dataIndex: 'pna1m4e',
+        key: 'pn8ame',
+      }]
     }];
 
     const { modalVisible } = this.state;
@@ -172,6 +138,11 @@ class BudgetSeasonIncome extends React.Component {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 },
     };
+    const formItemLayout2 = {
+      labelCol: { span: 4 },
+      wrapperCol: { span: 14 },
+    };
+
 
     const filterRules = {
       required: true,
@@ -182,21 +153,47 @@ class BudgetSeasonIncome extends React.Component {
       <Card>
         <Modal
           visible={modalVisible}
-          title="收入预算执行情况"
+          title="填写具体目标"
           okText="保存"
           onCancel={this.onCancel}
-          onOk={this.saveBudgetInCome}
+          onOk={this.saveAchiveTarget}
         >
           <Form layout="vertical">
-            <FormItem label="资金来源" {...formItemLayout} >
+            <FormItem label="二级指标" {...formItemLayout} >
               {getFieldDecorator('pname', {
               })(<Input />)}
             </FormItem>
-            <FormItem label="金额" {...formItemLayout}>
+            <FormItem label="三级指标" {...formItemLayout}>
               {getFieldDecorator('money', {
                 rules: [filterRules],
               })(<Input />)}
             </FormItem>
+            <Row>
+              <Col span={3} style={{lineHeight: 13 }}>计划指标值</Col>
+              <Col span={20}>
+                <Row>
+                  <FormItem label="总体值" {...formItemLayout2}>
+                    {getFieldDecorator('money', {
+                      rules: [filterRules],
+                    })(<Input />)}
+                  </FormItem>
+                </Row>
+                <Row>
+                  <FormItem label="第一年" {...formItemLayout2}>
+                    {getFieldDecorator('money', {
+                      rules: [filterRules],
+                    })(<Input />)}
+                  </FormItem>
+                </Row>
+                <Row>
+                  <FormItem label="第二年" {...formItemLayout2}>
+                    {getFieldDecorator('money', {
+                      rules: [filterRules],
+                    })(<Input />)}
+                  </FormItem>
+                </Row>
+              </Col>
+            </Row>
           </Form>
         </Modal>
         <Table
@@ -212,4 +209,4 @@ class BudgetSeasonIncome extends React.Component {
   }
 }
 
-export default Form.create({})(BudgetSeasonIncome);
+export default Form.create({})(AchiveTargetList);

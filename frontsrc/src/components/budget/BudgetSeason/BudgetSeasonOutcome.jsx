@@ -33,6 +33,11 @@ class BudgetSeasonOutcome extends React.Component {
     if (!this.props.editable) {
       return;
     }
+    if (![2, 6, 8, 10].includes(index)) {
+      return;
+    }
+
+    console.log(record);
     const { setFieldsValue } = this.props.form;
     setFieldsValue(record);
     this.setState({ modalVisible: true, currentEditIndex: index });
@@ -41,25 +46,65 @@ class BudgetSeasonOutcome extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const dataSource = [{
-      source: '123',
-      source2: 444,
-      pname: 456,
-      money: 3333,
+      source2: '101',
+      source: 102,
+      pname: 103,
+      money: 104,
     }, {
-      source2: 44554,
-      source: '1323',
-      pname: 4536,
-      money: 33333,
+      source2: 201,
+      source: '202',
+      pname: 203,
+      money: 204,
     }, {
-      source2: 544554,
-      source: '51323',
-      pname: 45536,
-      money: 353333,
+      source2: 301,
+      source: '302',
+      pname: 303,
+      money: 304,
     }, {
-      source2: 445954,
-      source: '13923',
-      pname: 45306,
-      money: 333633,
+      source2: 401,
+      source: '402',
+      pname: 403,
+      money: 404,
+    }, {
+      source2: 501,
+      source: '502',
+      pname: 503,
+      money: 504,
+    }, {
+      source2: 601,
+      source: '602',
+      pname: 603,
+      money: 604,
+    }, {
+      source2: 701,
+      source: '702',
+      pname: 703,
+      money: 704,
+    }, {
+      source2: 801,
+      source: '802',
+      pname: 803,
+      money: 804,
+    }, {
+      source2: 901,
+      source: '902',
+      pname: 903,
+      money: 904,
+    }, {
+      source2: 1001,
+      source: '1002',
+      pname: 1003,
+      money: 1004,
+    }, {
+      source2: 1001,
+      source: '1002',
+      pname: 1003,
+      money: 1004,
+    }, {
+      source2: 1001,
+      source: '1002',
+      pname: 1003,
+      money: 1004,
     }];
 
     const columns = [{
@@ -67,11 +112,50 @@ class BudgetSeasonOutcome extends React.Component {
       dataIndex: 'source',
       colSpan: 2,
       key: 'source',
+      render: (value, row, index) => {
+        const obj = {
+          children: value,
+          props: {},
+        };
+        if (index < 4) {
+          if (index % 2 === 0) {
+            obj.props.rowSpan = 2;
+            obj.props.colSpan = 2;
+          } else {
+            obj.props.rowSpan = 0;
+          }
+        }
+
+        if (index === 4) {
+          obj.props.rowSpan = 8;
+        }
+        if (index > 4) {
+          obj.props.rowSpan = 0;
+        }
+        return obj;
+      },
     }, {
       title: '项目',
       dataIndex: 'source2',
       colSpan: 0,
       key: 'source2',
+      render: (value, row, index) => {
+        const obj = {
+          children: value,
+          props: {},
+        };
+        if (index < 4) {
+          obj.props.rowSpan = 0;
+        }
+        if (index >= 4) {
+          if (index % 2 === 0) {
+            obj.props.rowSpan = 2;
+          } else {
+            obj.props.rowSpan = 0;
+          }
+        }
+        return obj;
+      },
     }, {
       title: '总额',
       dataIndex: 'pname',

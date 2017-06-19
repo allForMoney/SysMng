@@ -10,7 +10,7 @@ import {
 import BudgetSeasonIncome from './BudgetSeasonIncome';
 import BudgetSeasonOutcome from './BudgetSeasonOutcome';
 import FrameContent from '../../common/FrameContent';
-import styles from './BudgetSeason.less';
+import styles from '../../../index.less';
 
 const Option = Select.Option;
 
@@ -18,15 +18,23 @@ class BudgetSeason extends React.Component {
   state= {
     year: 2017,
     season: 1,
-    steps: 1,
+    steps: 0,
+    editable: this.props.userType === 'inputer', // 是否可编辑
+    showCheckBtn: this.props.userType === 'finan' || this.props.userType === 'manager', // 是否展示审批菜单
+
   }
 
   onYearChange= (value) => {
     this.setState({ year: value });
   }
+  
   onSeaSonChange= (value) => {
     const { year } = this.state;
     // this.props.dispatch   请求获取数据
+  }
+
+  doCheck= (flag) => {// flag=true,通过审核
+    
   }
 
   goNext = () => {
@@ -51,8 +59,7 @@ class BudgetSeason extends React.Component {
       SeasonSelection.push(<Option key={i}>{i}</Option>);
     }
 
-    const { steps } = this.state;
-    console.log(steps);
+    const { steps, editable, showCheckBtn } = this.state;
 
     return (
       <FrameContent>
@@ -77,7 +84,7 @@ class BudgetSeason extends React.Component {
                 {SeasonSelection}
               </Select>
               <BudgetSeasonIncome
-                editable
+                editable={editable}
               />
               <Col className={styles.btnContainer}>
                 <Button className={styles.btnClass} type="primary" onClick={this.goNext}>下一步</Button>
@@ -86,12 +93,20 @@ class BudgetSeason extends React.Component {
           }
           { steps === 1 &&
             <div className="">
+                {showCheckBtn &&
+                <Col className={styles.btnContainer}>
+                  <Button className={styles.btnClass} type="primary" onClick={this.doCheck.bind(this, false)}>返回上一级</Button>
+                  <Button className={styles.btnClass} type="primary" onClick={this.doCheck.bind(this, true)}>通过审核</Button>
+                </Col>
+                }
               <BudgetSeasonOutcome
-                editable
+                editable={editable}
               />
               <Col className={styles.btnContainer}>
                 <Button className={styles.btnClass} type="primary" onClick={() => this.setState({ steps: 0 })}>返回</Button>
-                <Button className={styles.btnClass} type="primary" onClick={this.submit}>保存</Button>
+                {!showCheckBtn &&
+                  <Button className={styles.btnClass} type="primary" onClick={this.submit}>保存</Button>
+                }
               </Col>
             </div>
           }
@@ -104,12 +119,14 @@ class BudgetSeason extends React.Component {
 function mapStateToProps(state) {
   const {
       budgetMsgList,
+      userType,
       loading,
       budgetMsgNum,
       budgetMsgage,
     projectId } = state.baseModel;
   return {
     budgetMsgList,
+    userType,
     loading,
     budgetMsgNum,
     budgetMsgage,

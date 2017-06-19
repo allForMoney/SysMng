@@ -11,6 +11,7 @@ import BudgetJustify from './components/budget/BudgetJustify';
 import BudgetJustifyRec from './components/budget/BudgetJustifyRec';
 import BudgetMsgTable from './components/budget/BudgetMsgTable';
 import AddBudgetSeason from './components/budget/BudgetSeason/AddBudgetSeason';
+import Achive from './components/achive/Achive';
 
 function RouterConfig({ history }) {
   return (
@@ -24,6 +25,7 @@ function RouterConfig({ history }) {
       <Route path="/budget/justifyRec" component={BudgetJustifyRec} />
       <Route path="/budget/addbudgetseason" component={AddBudgetSeason} />
       <Route path="/budget/msg" component={BudgetMsgTable} />
+      <Route path="/achive/add" component={Achive} />
       <Route path="/sys/concat" component={ModifyConcat} />
       <Route path="/sys/advice" component={Advice} />
     </Router>
