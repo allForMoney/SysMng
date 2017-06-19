@@ -11,7 +11,6 @@ class BudgetSeasonOutcome extends React.Component {
   state={
     modalVisible: false,
     currentEditIndex: 0,
-
   }
 
   onCancel= () => {
@@ -34,17 +33,12 @@ class BudgetSeasonOutcome extends React.Component {
     if (!this.props.editable) {
       return;
     }
-
-    console.log(record);
     const { setFieldsValue } = this.props.form;
     setFieldsValue(record);
     this.setState({ modalVisible: true, currentEditIndex: index });
   }
   
   render() {
-    const {
-      editable,
-    } = this.props;
     const { getFieldDecorator } = this.props.form;
     const dataSource = [{
       source: '123',
