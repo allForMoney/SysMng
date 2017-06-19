@@ -8,9 +8,9 @@ import FrameContent from '../common/FrameContent';
 
 class BudgetMsgTable extends React.Component {
   onBudgetMsgChange= () => {
-    
+
   }
-  
+
   render() {
     const {
       budgetMsgList,

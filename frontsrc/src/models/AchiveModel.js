@@ -1,18 +1,13 @@
 export default {
-  namespace: 'baseModel',
+  namespace: 'achiveModel',
 
   state: {
     loading: false,
-    userType: 'admin',  // inputer/finan/manager/admin/ministry
-    userName: '12345',
-    showMsgModal: false,
-    projectName: 'kfkkfkfkfkfkfkfk',
-    projectId: 72,
-    projectInfo: {}, // 单个项目基本信息
-    projectList: [],
+    target1: '',
+    target2: '',
+    target3: '',
+    achiveList: [],
 
-    projectTotal: 34,
-    projectPage: 1,
   },
   effects: {
 
