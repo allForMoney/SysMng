@@ -1,9 +1,8 @@
 package com.resourcemng.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 
 /**
  * Created by 燕子 on 2017/6/20.
@@ -21,6 +20,8 @@ public class Tuser {
   private String userName;
 
   @Id
+  @GeneratedValue(generator = "uuid")
+  @GenericGenerator(name = "uuid", strategy = "uuid")
   @Column(name = "UserID", nullable = false, length = 20)
   public String getUserId() {
     return userId;

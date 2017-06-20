@@ -2,6 +2,7 @@ package com.resourcemng.repository;
 
 import com.resourcemng.entity.Tuser;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -13,8 +14,11 @@ import java.util.List;
  * @blog http://blog.didispace.com
  */
 public interface TUserRepository extends JpaRepository<Tuser, Long> {
+  @Query("from User u where u.userNo like CONCAT('%',:projectNo,'%')")
+    List<Tuser> findByProject(String projectNo);
 
-    List<Tuser> findByUserName(String userName);
+  @Query("delete from User u where u.userNo like CONCAT('%',:projectNo,'%')")
+    List<Tuser> deleteByProject(String projectNo);
 
 
 //    @Query("from User u where u.name=:name")

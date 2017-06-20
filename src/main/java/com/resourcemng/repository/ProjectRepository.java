@@ -13,9 +13,12 @@ import java.util.List;
  * @date 16/3/23 下午2:34.
  * @blog http://blog.didispace.com
  */
-public interface ProjectRepository extends JpaRepository<Project, Long> {
+public interface ProjectRepository extends JpaRepository<Project, String> {
    @Query("from Project p where p.schoolName=:schoolName")
     List<Project> findByParams(String schoolName);
+
+//   @Query("delete from Project p where p.projectNo=:projectNo")
+//    List<Project> deleteByProjectNo(String projectNo);
 
 
 //    @Query("from User u where u.name=:name")
