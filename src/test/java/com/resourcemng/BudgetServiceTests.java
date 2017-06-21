@@ -45,7 +45,7 @@ public class BudgetServiceTests {
 
     Project project = new Project();
     project.setId("4");
-    service.importService("E:\\项目资料\\新建文件夹\\预算2016模板.xlsx");
+//    service.importService("E:\\项目资料\\新建文件夹\\预算2016模板.xlsx");
   }
 
   @Test

@@ -1,34 +1,29 @@
 package com.resourcemng.controller;
 
 import com.resourcemng.FileUitl;
-import com.resourcemng.basic.RequestResult;
-import com.resourcemng.basic.ResultCode;
+import com.resourcemng.entity.Budgetimportdetail2016;
 import com.resourcemng.entity.Project;
+import com.resourcemng.service.BudgetService;
 import com.resourcemng.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * @author Benjamin Winterberg
  */
 @Controller
-@RequestMapping("/project")
-public class ProjectController {
+@RequestMapping("/budget")
+public class BudgetController {
   @Autowired
-  ProjectService service;
+  BudgetService service;
   //文件上传保存路径
 
-
-    @RequestMapping(method = RequestMethod.POST)
-    @ResponseBody
-    public Object create(@ModelAttribute  Project project) throws Exception {
-       return service.createPorject(project);
-    }
 
   /**
    * 上传项目文件
@@ -36,9 +31,9 @@ public class ProjectController {
    * @return
    * @throws Exception
    */
-  @RequestMapping(value = "/uploadProject" ,method = RequestMethod.POST)
+  @RequestMapping(value = "/uploadFile" ,method = RequestMethod.POST)
   @ResponseBody
-  public Object uploadProject(@RequestParam("file")
+  public Object uploadProject(@RequestParam String projectId,@RequestParam String importUser,@RequestParam("file")
   MultipartFile file ) throws Exception {
     if (!file.isEmpty()) {
       try {
@@ -46,7 +41,7 @@ public class ProjectController {
         // 实际项目中，文件需要输出到指定位置，需要在增加代码处理。
         // 还有关于文件格式限制、文件大小限制，详见：中配置。
         File uploadFile = FileUitl.saveUploadFile(file );
-        service.importPorjectByFile(uploadFile);
+        service.importBudgetFormFile(projectId,importUser,uploadFile);
       } catch (FileNotFoundException e) {
         e.printStackTrace();
         return "上传失败," + e.getMessage();
@@ -63,21 +58,21 @@ public class ProjectController {
 
     @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
-    public Object update(@ModelAttribute Project project) throws Exception {
-    return service.updatePorject(project);
+    public Object update(@ModelAttribute Budgetimportdetail2016 budgetimportdetail2016) throws Exception {
+    return service.update(budgetimportdetail2016);
     }
 
   @RequestMapping(method = RequestMethod.DELETE)
   @ResponseBody
-  public Object delete(@RequestParam String projectNo) throws Exception {
-    service.deletePorject(projectNo);
+  public Object delete(@RequestParam String id) throws Exception {
+    service.delete(id);
     return "删除成功";
   }
 
   @RequestMapping(method = RequestMethod.GET)
   @ResponseBody
-  public Object get(@RequestParam String projectNo) throws Exception {
-    return service.get(projectNo);
+  public Object get(@RequestParam String id) throws Exception {
+    return service.get(id);
   }
 
 }

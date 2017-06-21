@@ -1,9 +1,10 @@
 package com.resourcemng.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import cn.afterturn.easypoi.excel.annotation.Excel;
+import com.resourcemng.Enum.IsDelete;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
@@ -12,26 +13,46 @@ import java.sql.Timestamp;
 @Entity
 public class Project {
   private String id;
+  @Excel(name="学校名称")
   private String schoolName;
+  @Excel(name="法定代表人")
   private String schoolHead;
+  @Excel(name="财务部门负责人")
   private String financeHead;
+  @Excel(name="财务部门负责人电话")
   private String fhTel;
+  @Excel(name="财务负责人QQ")
   private String fhqq;
+  @Excel(name="项目负责人")
   private String projectHead;
+  @Excel(name="项目负责人电话")
   private String phTel;
+  @Excel(name="填报人")
   private String reportHead;
+  @Excel(name="填报人电话")
   private String rhTel;
+  @Excel(name="填报人QQ")
   private String rhqq;
+  @Excel(name="备注")
   private String note;
   private Timestamp submitTime;
-  private String isDelete;
+  private String isDelete = IsDelete.UN_DELETE;
+  @Excel(name="项目编号")
   private String projectNo;
+  @Excel(name="专业名称")
   private String majorName;
+  @Excel(name="立项年度")
   private String createYear;
+  @Excel(name="联合主持单位")
   private String school2;
+  @Excel(name="参与建设单位")
   private String school3;
 
-  @Id
+  private String userId;
+
+
+  @GeneratedValue(generator = "uuid")
+  @GenericGenerator(name = "uuid", strategy = "uuid")
   @Column(name = "Id", nullable = false, length = 20)
   public String getId() {
     return id;
@@ -171,7 +192,7 @@ public class Project {
     this.isDelete = isDelete;
   }
 
-  @Basic
+  @Id
   @Column(name = "ProjectNo", nullable = false, length = 100)
   public String getProjectNo() {
     return projectNo;
@@ -219,6 +240,15 @@ public class Project {
 
   public void setSchool3(String school3) {
     this.school3 = school3;
+  }
+  @Basic
+  @Column(name = "UserID", nullable = true)
+  public String getUserId() {
+    return userId;
+  }
+
+  public void setUserId(String userId) {
+    this.userId = userId;
   }
 
   @Override
