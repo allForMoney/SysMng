@@ -50,7 +50,7 @@ public class Project {
 
   private String userId;
 
-
+  @Id
   @GeneratedValue(generator = "uuid")
   @GenericGenerator(name = "uuid", strategy = "uuid")
   @Column(name = "Id", nullable = false, length = 20)
@@ -192,7 +192,7 @@ public class Project {
     this.isDelete = isDelete;
   }
 
-  @Id
+
   @Column(name = "ProjectNo", nullable = false, length = 100)
   public String getProjectNo() {
     return projectNo;
