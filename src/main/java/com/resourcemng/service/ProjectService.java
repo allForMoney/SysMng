@@ -74,7 +74,7 @@ public class ProjectService {
    */
   public void  deletePorject(String projectNo){
     //删除关联用户
-    userRepository.deleteByProject(projectNo);
+    userRepository.deleteById(projectNo);
     //删除项目信息
     projectRepository.deleteById(projectNo);
   }
@@ -100,8 +100,7 @@ public class ProjectService {
     if(list == null){
       throw new MyException("您的文件中没用任何项目信息，请确认文件");
     }
-    List<Project> addList = new ArrayList<>();
-    for(Project p:addList){
+    for(Project p:list){
       if (p.getProjectNo() != null){
        this.createPorject(p);
       }

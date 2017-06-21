@@ -8,6 +8,7 @@ import javax.persistence.*;
  * Created by 燕子 on 2017/6/20.
  */
 @Entity
+@Table(name="tuser")
 public class Tuser {
   private String userId;
   private String userNo;
