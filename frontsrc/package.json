@@ -9,7 +9,6 @@
     "dva-loading": "^0.2.1",
     "prop-types": "~15.5.8",
     "qs": "~6.4.0",
-    "rc-cropping": "0.1.16",
     "react": "~15.5.0",
     "react-dom": "~15.5.0"
   },
