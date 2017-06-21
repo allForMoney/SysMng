@@ -140,3 +140,4 @@ fabric.properties
 # User
 .idea
 dist
+/target/
