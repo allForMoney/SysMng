@@ -22,39 +22,46 @@ public class ProjectService {
   ProjectRepository projectRepository;
   @Autowired
   TUserRepository userRepository;
-   public Project createPorject(Project project){
-     //TODO 创建三个关联用户
-     Tuser reportUser = new Tuser();
-     // 可以不要
-//     reportUser.setMajorName(project.getMajorName());
-     reportUser.setUserRole(UserRole.REPORT);
-     reportUser.setUserNo(project.getProjectNo()+"-1");
-     reportUser.setUserPassword("654321");
-     //用户名空字段，可以不要
+   public Project createPorject(Project project) throws MyException {
+     try {
+       //TODO 创建三个关联用户
+       Tuser reportUser = new Tuser();
+       // 可以不要
+       reportUser.setMajorName(project.getMajorName());
+       reportUser.setUserRole(UserRole.REPORT);
+       reportUser.setUserNo(project.getProjectNo() + "-1");
+       reportUser.setUserPassword("654321");
+       //用户名空字段，可以不要
 //     reportUser.setUserName(project.getReportHead());
-     reportUser.setTelephone(project.getRhTel());
-     //用户名空字段，可以不要
+       reportUser.setTelephone(project.getRhTel());
+       //用户名空字段，可以不要
 //     reportUser.setIsDelete();
-     Tuser  reportUserA = userRepository.save(reportUser);
+       Tuser reportUserA = userRepository.save(reportUser);
 
-    //财务
-     Tuser financeUser = new Tuser();
-     financeUser.setUserRole(UserRole.FINANCE);
-     financeUser.setUserNo(project.getProjectNo()+"-2");
-     financeUser.setUserPassword("654321");
-     financeUser.setTelephone(project.getFhTel());
-     userRepository.save(financeUser);
-    //项目负责人
-     Tuser projectUser = new Tuser();
-     projectUser.setUserRole(UserRole.PROJECTHEADER);
-     projectUser.setUserNo(project.getProjectNo()+"-3");
-     projectUser.setUserPassword("654321");
-     projectUser.setTelephone(project.getPhTel());
-     userRepository.save(projectUser);
+       //财务
+       Tuser financeUser = new Tuser();
+       financeUser.setUserRole(UserRole.FINANCE);
+       financeUser.setMajorName(project.getMajorName());
+       financeUser.setUserNo(project.getProjectNo() + "-2");
+       financeUser.setUserPassword("654321");
+       financeUser.setTelephone(project.getFhTel());
+       userRepository.save(financeUser);
+       //项目负责人
+       Tuser projectUser = new Tuser();
+       projectUser.setUserRole(UserRole.PROJECTHEADER);
+       projectUser.setMajorName(project.getMajorName());
+       projectUser.setUserNo(project.getProjectNo() + "-3");
+       projectUser.setUserPassword("654321");
+       projectUser.setTelephone(project.getPhTel());
+       userRepository.save(projectUser);
 
-    //设置项目报告人ID
-     project.setUserId(reportUserA.getUserId());
-     return projectRepository.save(project);
+       //设置项目报告人ID
+       project.setUserId(reportUserA.getUserId());
+       return projectRepository.save(project);
+     }catch (Exception e) {
+       e.printStackTrace();
+       throw new MyException(e);
+     }
    }
 
   /**
@@ -62,7 +69,7 @@ public class ProjectService {
    * @param project
    * @return
    */
-  public Project  updatePorject(Project project){
+  public Project  updatePorject(Project project) throws MyException {
     //删除关联用户
     this.deletePorject(project.getProjectNo());
     return this.createPorject(project);

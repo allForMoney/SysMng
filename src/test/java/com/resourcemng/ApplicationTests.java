@@ -43,7 +43,7 @@ public class ApplicationTests {
   private TUserRepository tUserRepository;
   @Test
   public void test() throws Exception {
-
+  try {
     // 创建10条记录
     Tuser entity = new Tuser();
     entity.setUserId("12l");
@@ -54,7 +54,9 @@ public class ApplicationTests {
     entity.setUserRole("2");
     entity.setIsDelete("1");
     tUserRepository.save(entity);
-
+  }catch (Exception e){
+    e.printStackTrace();
+  }
 //    TUser s = new TUser();
 //    s.setUserId(4444);
 //    s.setUserName("ssss");
