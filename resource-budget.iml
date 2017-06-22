@@ -15,16 +15,6 @@
     <facet type="Spring" name="Spring">
       <configuration />
     </facet>
-    <facet type="jpa" name="JPA">
-      <configuration>
-        <setting name="validation-enabled" value="true" />
-        <setting name="provider-name" value="" />
-        <datasource-mapping>
-          <factory-entry name="entityManagerFactory" />
-          <factory-entry name="noname-a.xml@0" value="30dd6eba-5fd2-483b-b320-77e3523cbc86" />
-        </datasource-mapping>
-      </configuration>
-    </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
     <output url="file://$MODULE_DIR$/target/classes" />
@@ -124,5 +114,7 @@
     <orderEntry type="library" name="Maven: javax.validation:validation-api:1.1.0.Final" level="project" />
     <orderEntry type="library" name="Maven: cn.afterturn:easypoi-web:3.0.1-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: cn.afterturn:easypoi-annotation:3.0.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils:1.6" level="project" />
+    <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.2" level="project" />
   </component>
 </module>

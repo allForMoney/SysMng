@@ -7,12 +7,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="resource-budget" />
-        <module name="spring-react-example" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="resource-budget" target="1.8" />
-      <module name="spring-react-example" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
