@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const rules = {
-  
+  '/index.js': '/index.js'
 };
 
 require('fs').readdirSync(require('path').join(`${__dirname}/mock`))

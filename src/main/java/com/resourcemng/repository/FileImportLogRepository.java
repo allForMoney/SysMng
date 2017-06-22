@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @date 16/3/23 下午2:34.
  * @blog http://blog.didispace.com
  */
-public interface FileImportLogRepository extends JpaRepository<Fileimportlog, Long> {
+public interface FileImportLogRepository extends JpaRepository<Fileimportlog, String> {
 
 
 }

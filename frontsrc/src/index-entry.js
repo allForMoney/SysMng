@@ -9,7 +9,7 @@ const app = dva({
   },
 });
 
-
+alert(123)
 app.use(createLoading());
 
 app.model(require('./models/signModel'));

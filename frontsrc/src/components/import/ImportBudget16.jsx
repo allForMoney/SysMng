@@ -54,7 +54,7 @@ class ImportBudget16 extends React.Component {
      } = this.state;
     const uploadProps = {
       name: 'file',
-      action: '//jsonplaceholder.typicode.com/posts/',
+      action: '/project/uploadProject',
       headers: {
         authorization: 'authorization-text',
       },

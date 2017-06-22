@@ -74,10 +74,17 @@ public class ProjectController {
     return "删除成功";
   }
 
+ /**
   @RequestMapping(method = RequestMethod.GET)
   @ResponseBody
   public Object get(@RequestParam String projectNo) throws Exception {
     return service.get(projectNo);
   }
+**/
 
+  @RequestMapping(method = RequestMethod.GET)
+  @ResponseBody
+  public Object get() throws Exception {
+    return "hehe";
+  }
 }
