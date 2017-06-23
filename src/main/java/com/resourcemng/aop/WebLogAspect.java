@@ -29,24 +29,29 @@ public class WebLogAspect {
 
   @Before("webLog()")
   public void doBefore(JoinPoint joinPoint) throws Throwable {
-    // 接收到请求，记录请求内容
-    ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-    HttpServletRequest request = attributes.getRequest();
+    try {
+      // 接收到请求，记录请求内容
+      ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+      HttpServletRequest request = attributes.getRequest();
 
-    // 记录下请求内容
-    logger.info("URL : " + request.getRequestURL().toString());
-    logger.info("HTTP_METHOD : " + request.getMethod());
-    logger.info("IP : " + request.getRemoteAddr());
-    logger.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
-    logger.info("ARGS : " + Arrays.toString(joinPoint.getArgs()));
-    Sitelog sitelog = new Sitelog();
-    //TODO 设置用户信息
-    sitelog.setIp(request.getRemoteAddr());
-    sitelog.setAction(request.getMethod());
-    sitelog.setUrl(request.getRequestURL().toString());
-    sitelog.setController(joinPoint.getSignature().getDeclaringTypeName());
-    sitelog.setOperateTime(new Date());
-    sitLogRepository.save(sitelog);
+      // 记录下请求内容
+      logger.info("URL : " + request.getRequestURL().toString());
+      logger.info("HTTP_METHOD : " + request.getMethod());
+      logger.info("IP : " + request.getRemoteAddr());
+      logger.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
+      logger.info("ARGS : " + Arrays.toString(joinPoint.getArgs()));
+      Sitelog sitelog = new Sitelog();
+      //TODO 设置用户信息
+      sitelog.setIp(request.getRemoteAddr());
+      sitelog.setAction(request.getMethod());
+      sitelog.setUrl(request.getRequestURL().toString());
+      sitelog.setController(joinPoint.getSignature().getDeclaringTypeName());
+      sitelog.setOperateTime(new Date());
+      sitLogRepository.save(sitelog);
+    }catch(Throwable e){
+      logger.info(e.getMessage());
+
+    }
 
   }
 

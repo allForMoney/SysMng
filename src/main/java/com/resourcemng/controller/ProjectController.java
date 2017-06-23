@@ -80,4 +80,11 @@ public class ProjectController {
     return service.get(projectNo);
   }
 
+  @RequestMapping(value = "/test", method = RequestMethod.GET)
+  @ResponseBody
+  public Object test() throws Exception {
+    System.out.println(123);
+    return "hhhhhh";
+  }
+
 }

@@ -22,7 +22,6 @@ class ImportBudget16 extends React.Component {
   state={
     showUpload: false,
     projectNo: '',
-
   }
 
   onProjectValueChanged= (e) => {

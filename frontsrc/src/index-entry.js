@@ -1,7 +1,6 @@
 import dva from 'dva';
 import createLoading from 'dva-loading';
 import './index.html';
-import { browserHistory } from 'dva/router';
 
 const app = dva({
   onError(error) {
@@ -9,7 +8,6 @@ const app = dva({
   },
 });
 
-alert(123)
 app.use(createLoading());
 
 app.model(require('./models/signModel'));
