@@ -2,7 +2,8 @@ package com.resourcemng;
 
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
-import com.resourcemng.entity.Project;
+import com.resourcemng.Enum.ImportFileType;
+import com.resourcemng.entitys.Project;
 import com.resourcemng.service.BudgetService;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,6 +33,12 @@ public class BudgetServiceTests {
   }
   @Autowired
   private BudgetService service;
+  @Test
+  public void testUploadFile() throws Exception {
+    service.importBudgetFormFile("ddd","ddw", ImportFileType.BUDGET2016,new File("E:\\项目资料\\新建文件夹\\模板\\预算2016.xlsx"));
+  }
+
+
   @Test
   public void test() throws Exception {
     ImportParams params = new ImportParams();

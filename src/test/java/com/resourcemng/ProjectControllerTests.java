@@ -1,7 +1,7 @@
 package com.resourcemng;
 
 import com.resourcemng.controller.ProjectController;
-import com.resourcemng.entity.Project;
+import com.resourcemng.entitys.Project;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

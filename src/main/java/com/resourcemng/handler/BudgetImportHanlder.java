@@ -28,7 +28,7 @@ public class BudgetImportHanlder extends ExcelDataHandlerDefaultImpl<Map<String,
         case "0":
           return "sequenceNo";
         case "1":
-          return "usedFor";
+          return "useFor";
         case "2":
           return "consult";
         case "3":

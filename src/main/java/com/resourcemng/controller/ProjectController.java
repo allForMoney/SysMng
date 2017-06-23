@@ -3,7 +3,7 @@ package com.resourcemng.controller;
 import com.resourcemng.FileUitl;
 import com.resourcemng.basic.RequestResult;
 import com.resourcemng.basic.ResultCode;
-import com.resourcemng.entity.Project;
+import com.resourcemng.entitys.Project;
 import com.resourcemng.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,7 +26,7 @@ public class ProjectController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public Object create(@ModelAttribute  Project project) throws Exception {
+    public Object create(@ModelAttribute Project project) throws Exception {
        return service.createPorject(project);
     }
 

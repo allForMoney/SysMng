@@ -1,6 +1,6 @@
 package com.resourcemng.repository;
 
-import com.resourcemng.entity.Tuser;
+import com.resourcemng.entitys.Tuser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

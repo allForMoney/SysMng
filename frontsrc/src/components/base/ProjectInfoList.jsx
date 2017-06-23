@@ -20,7 +20,7 @@ class ProjectInfoList extends React.Component {
   }
 
   addNew =() => {
-    
+
   }
 
   editProject =() => {
@@ -119,7 +119,11 @@ class ProjectInfoList extends React.Component {
               <Button style={{marginLeft:5}} type="primary" onClick={this.addNew}><Icon type="plus" />添加</Button>
               <Button style={{marginLeft:5}} type="primary" onClick={this.editProject}><Icon type="edit" />编辑</Button>
               <Button style={{marginLeft:5}} type="primary" onClick={this.deletePro}><Icon type="close" />删除</Button>
-              <Button style={{marginLeft:5}} type="primary" onClick={this.importPro}><Icon type="cloud-download-o" />导入</Button>
+              <Upload action={'//project/uploadProject'}>
+                <Button>
+                  <Icon type="upload" /> 上传文件
+                </Button>
+              </Upload>
             </Form.Item>
           </Form>
           <Table

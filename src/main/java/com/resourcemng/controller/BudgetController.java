@@ -1,8 +1,7 @@
 package com.resourcemng.controller;
 
 import com.resourcemng.FileUitl;
-import com.resourcemng.entity.Budgetimportdetail2016;
-import com.resourcemng.entity.Project;
+import com.resourcemng.entitys.BudgetImportDetailNew;
 import com.resourcemng.service.BudgetService;
 import com.resourcemng.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,7 @@ public class BudgetController {
    */
   @RequestMapping(value = "/uploadFile" ,method = RequestMethod.POST)
   @ResponseBody
-  public Object uploadProject(@RequestParam String projectId,@RequestParam String importUser,@RequestParam("file")
+  public Object uploadBudget(@RequestParam String projectId,@RequestParam String importUser,@RequestParam String importType,@RequestParam("file")
   MultipartFile file ) throws Exception {
     if (!file.isEmpty()) {
       try {
@@ -41,7 +40,7 @@ public class BudgetController {
         // 实际项目中，文件需要输出到指定位置，需要在增加代码处理。
         // 还有关于文件格式限制、文件大小限制，详见：中配置。
         File uploadFile = FileUitl.saveUploadFile(file );
-        service.importBudgetFormFile(projectId,importUser,uploadFile);
+        service.importBudgetFormFile(projectId,importUser,importType,uploadFile);
       } catch (FileNotFoundException e) {
         e.printStackTrace();
         return "上传失败," + e.getMessage();
@@ -58,8 +57,8 @@ public class BudgetController {
 
     @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
-    public Object update(@ModelAttribute Budgetimportdetail2016 budgetimportdetail2016) throws Exception {
-    return service.update(budgetimportdetail2016);
+    public Object update(@ModelAttribute BudgetImportDetailNew budgetImportDetailNew) throws Exception {
+    return service.update(budgetImportDetailNew);
     }
 
   @RequestMapping(method = RequestMethod.DELETE)

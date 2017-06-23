@@ -4,17 +4,16 @@ import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import com.resourcemng.Enum.UserRole;
 import com.resourcemng.basic.MyException;
-import com.resourcemng.entity.Project;
-import com.resourcemng.entity.Tuser;
+import com.resourcemng.entitys.Project;
+import com.resourcemng.entitys.Tuser;
 import com.resourcemng.repository.ProjectRepository;
 import com.resourcemng.repository.TUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class ProjectService {
@@ -22,6 +21,7 @@ public class ProjectService {
   ProjectRepository projectRepository;
   @Autowired
   TUserRepository userRepository;
+  @Transactional
    public Project createPorject(Project project) throws MyException {
      try {
        //TODO 创建三个关联用户
@@ -33,7 +33,7 @@ public class ProjectService {
        reportUser.setUserPassword("654321");
        //用户名空字段，可以不要
 //     reportUser.setUserName(project.getReportHead());
-       reportUser.setTelephone(project.getRhTel());
+       reportUser.setTelephoneNum(project.getReporterTel());
        //用户名空字段，可以不要
 //     reportUser.setIsDelete();
        Tuser reportUserA = userRepository.save(reportUser);
@@ -44,7 +44,7 @@ public class ProjectService {
        financeUser.setMajorName(project.getMajorName());
        financeUser.setUserNo(project.getProjectNo() + "-2");
        financeUser.setUserPassword("654321");
-       financeUser.setTelephone(project.getFhTel());
+       financeUser.setTelephoneNum(project.getFinaceHeaderTel());
        userRepository.save(financeUser);
        //项目负责人
        Tuser projectUser = new Tuser();
@@ -52,11 +52,11 @@ public class ProjectService {
        projectUser.setMajorName(project.getMajorName());
        projectUser.setUserNo(project.getProjectNo() + "-3");
        projectUser.setUserPassword("654321");
-       projectUser.setTelephone(project.getPhTel());
+       projectUser.setTelephoneNum(project.getProjectHeaderTel());
        userRepository.save(projectUser);
 
        //设置项目报告人ID
-       project.setUserId(reportUserA.getUserId());
+       project.setImportUserId(reportUserA.getId());
        return projectRepository.save(project);
      }catch (Exception e) {
        e.printStackTrace();

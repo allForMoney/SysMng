@@ -16,7 +16,7 @@ export const API_UPLOAD_PICS = '/home/uploadOriginalPic.htm';
 // 裁剪图片
 export const API_JCROP_PIC = '/platform/uploadPic.json';
 // 上传文件
-export const API_UPLOAD_FILES = '/home/uploadPicAjax.json';
+export const API_UPLOAD_FILES = '/project/uploadProject';
 // 保存,即提交表单接口
 export const API_SUBMIT = '/platform/open.htm';
 /** ---API 接口结束 --- */
