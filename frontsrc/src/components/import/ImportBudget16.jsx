@@ -3,14 +3,13 @@ import { connect } from 'dva';
 
 import {
   Button,
-  Tag,
   Row,
   Col,
   Card,
-  Modal,
   Input,
   Upload,
   Icon,
+  message,
 
 } from 'antd';
 
@@ -20,35 +19,33 @@ import styles from '../../index.less';
 
 class ImportBudget16 extends React.Component {
   state={
-    showUpload: false,
     projectNo: '',
   }
 
   onProjectValueChanged= (e) => {
     const projectNo = e.target.value;
-    this.setState(projectNo);
+    this.setState({ projectNo });
   }
 
   doSeachPro = () => {
     const { projectNo } = this.state;
     console.log(projectNo);
-    this.setState({ showUpload: true });
+    this.props.dispatch({
+      type: 'ImportData/getProjectInfo',
+      payload: projectNo,
+    });
   }
+  
   saveForm = (form) => {
     this.form = form;
   }
 
   render() {
     const {
-      target1,
-      target2,
-      target3,
-      projectId,
-      projectName,
-      achiveList,
+      showUpload16,
+      projectInfo,
     } = this.props;
     const {
-      showUpload,
       projectNo,
      } = this.state;
     const uploadProps = {
@@ -80,15 +77,15 @@ class ImportBudget16 extends React.Component {
             <Input value={projectNo} onChange={this.onProjectValueChanged} />
           </Col>
           <Col span={2}>
-            <Button style={{marginLeft: 10 }} type="primary" icon="search" onClick={this.doSeachPro}>查询</Button>
+            <Button style={{ marginLeft: 10 }} type="primary" icon="search" onClick={this.doSeachPro}>查询</Button>
           </Col>
         </Row>
         <Row className={styles.baseRow}>
           <Card title="项目基本情况">
-            <ProjectInfo ref={this.saveForm} />
+            <ProjectInfo ref={this.saveForm} {...projectInfo} />
           </Card>
         </Row>
-        {showUpload &&
+        {showUpload16 &&
         <Row className="">
           <Upload {...uploadProps}>
             <Button>
@@ -110,20 +107,19 @@ function mapStateToProps(state) {
     projectName
    } = state.baseModel;
   const {
-     achiveList,
-     target1,
-     target2,
-     target3,
-   } = state.achiveModel;
+    projectInfo,
+    showUpload16,
+    loading,
+   } = state.ImportData;
+
   return {
     userType,
     userName,
     projectId,
     projectName,
-    achiveList,
-    target1,
-    target2,
-    target3,
+    projectInfo,
+    showUpload16,
+    loading,
   };
 }
 

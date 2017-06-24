@@ -12,6 +12,7 @@ app.use(createLoading());
 
 app.model(require('./models/signModel'));
 app.model(require('./models/listModel'));
+app.model(require('./models/ImportDataModel'));
 app.model(require('./models/BaseModel'));
 app.model(require('./models/BudgetModel'));
 app.model(require('./models/AchiveModel'));
