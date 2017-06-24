@@ -3,7 +3,7 @@ export default {
 
   state: {
     loading: false,
-    userType: 'admin',  // inputer/finan/manager/admin/ministry
+    userType: 'ministry',  // inputer/finan/manager/admin/ministry
     userName: '12345',
     showMsgModal: false,
     projectName: 'kfkkfkfkfkfkfkfk',

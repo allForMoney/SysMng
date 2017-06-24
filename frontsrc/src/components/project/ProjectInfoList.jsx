@@ -109,6 +109,7 @@ class ProjectInfoList extends React.Component {
 
   render() {
     const {
+      userType,
       loading,
       projectList,
       projectListNum,
@@ -218,16 +219,20 @@ class ProjectInfoList extends React.Component {
             <Form.Item >
               <Button size="small" type="primary" htmlType="submit" icon="search" onClick={this.doSearch}>查询</Button>
               <Button size="small" style={{marginLeft:5}} type="primary" onClick={() => this.props.form.resetFields()}><Icon type="rollback" />重置</Button>
-              <Button size="small" style={{marginLeft:5}} type="primary" onClick={this.addNew}><Icon type="plus" />添加</Button>
-              <Button size="small" style={{marginLeft:5}} type="primary" onClick={this.editProject}><Icon type="edit" />编辑</Button>
-              <Popconfirm title="确认删除选中的数据吗?" onConfirm={this.deletePro} okText="是" cancelText="否">
-                <Button size="small" style={{ marginLeft: 5 }} type="primary"><Icon type="close" />删除</Button>
-              </Popconfirm>
-              <Upload action={'//project/uploadProject'}>
-                <Button>
-                  <Icon type="upload" /> 上传文件
-                </Button>
-              </Upload>
+              {userType === 'admin' &&
+              <div className="">
+                <Button size="small" style={{marginLeft:5}} type="primary" onClick={this.addNew}><Icon type="plus" />添加</Button>
+                <Button size="small" style={{marginLeft:5}} type="primary" onClick={this.editProject}><Icon type="edit" />编辑</Button>
+                <Popconfirm title="确认删除选中的数据吗?" onConfirm={this.deletePro} okText="是" cancelText="否">
+                  <Button size="small" style={{ marginLeft: 5 }} type="primary"><Icon type="close" />删除</Button>
+                </Popconfirm>
+                <Upload action={'//project/uploadProject'}>
+                  <Button>
+                    <Icon type="upload" /> 上传文件
+                  </Button>
+                </Upload>
+              </div>
+              }
             </Form.Item>
           </Form>
           <Table
