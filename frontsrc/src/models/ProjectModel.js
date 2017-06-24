@@ -9,6 +9,7 @@ export default {
     projectListNum: 32,
     projectListPage: 1,
     filterParam: {},
+    projectInfo: { partnerSchool: '1,2,3,4,5' }, // 项目基本信息
   },
   effects: {
 

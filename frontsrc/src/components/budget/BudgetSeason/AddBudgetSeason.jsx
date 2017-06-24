@@ -16,56 +16,78 @@ const Option = Select.Option;
 
 class BudgetSeason extends React.Component {
   state= {
-    year: 2017,
-    season: 1,
-    steps: 0,
     editable: this.props.userType === 'inputer', // 是否可编辑
     showCheckBtn: this.props.userType === 'finan' || this.props.userType === 'manager', // 是否展示审批菜单
-
   }
 
   onYearChange= (value) => {
-    this.setState({ year: value });
+    this.props.dispatch({
+      type: 'budgetModel/setState',
+      payload: {
+        year: value
+      }
+    });
   }
   
   onSeaSonChange= (value) => {
-    const { year } = this.state;
-    // this.props.dispatch   请求获取数据
+    this.props.dispatch({
+      type: 'budgetModel/getIncomeBudget',
+      payload: {
+        season: value,
+      }
+    });
   }
 
   doCheck= (flag) => {// flag=true,通过审核
-    
+    const { projectId, userType } = this.props;
+    this.props.dispatch({
+      type: 'budgetModel/changeCheckStatus',
+      payload: {
+        projectId,
+        userType,
+        status: flag
+      }
+    });
   }
 
   goNext = () => {
-    this.setState({ steps: 1 });
+    this.props.dispatch({
+      type: 'budgetModel/getOutcomeBudget',
+    });
   }
 
   submit = () => {
-    // 提交修改
+    this.props.dispatch({
+      type: 'budgetModel/updateSeasonBudget',
+    });
   }
 
   render() {
     const {
       projectName,
       projectNo,
+      editBudgetSteps,
+      buggetInComeList,
+      buggetOutComeList,
+      dispatch,
     } = this.props;
     const YearSelection = [];
-    for (let i = 2015; i < 2018; i++) {
+    for (let i = 2015; i < 2019; i++) {
       YearSelection.push(<Option key={i}>{i}</Option>);
     }
     const SeasonSelection = [];
     for (let i = 1; i < 5; i++) {
-      SeasonSelection.push(<Option key={i}>{i}</Option>);
+      SeasonSelection.push(<Option key={i}>{`第${i}季度`}</Option>);
     }
 
-    const { steps, editable, showCheckBtn } = this.state;
+    const { editable, showCheckBtn } = this.state;
 
     return (
       <FrameContent>
         <Card title={`收入预算执行情况[编号: ${projectNo},名称:${projectName}]`}>
-          { steps === 0 &&
+          { editBudgetSteps === 0 &&
             <Row className="">
+              年度
               <Select
                 placeholder="Please select"
                 size={'default'}
@@ -75,6 +97,7 @@ class BudgetSeason extends React.Component {
               >
                 {YearSelection}
               </Select>
+              季度
               <Select
                 placeholder="Please select"
                 defaultValue={['1']}
@@ -85,13 +108,15 @@ class BudgetSeason extends React.Component {
               </Select>
               <BudgetSeasonIncome
                 editable={editable}
+                dispatch={dispatch}
+                dataSource={buggetInComeList}
               />
               <Col className={styles.btnContainer}>
                 <Button className={styles.btnClass} type="primary" onClick={this.goNext}>下一步</Button>
               </Col>
             </Row>
           }
-          { steps === 1 &&
+          { editBudgetSteps === 1 &&
             <div className="">
                 {showCheckBtn &&
                 <Col className={styles.btnContainer}>
@@ -101,9 +126,26 @@ class BudgetSeason extends React.Component {
                 }
               <BudgetSeasonOutcome
                 editable={editable}
+                dataSource={buggetOutComeList}
+                dispatch={dispatch}
               />
               <Col className={styles.btnContainer}>
-                <Button className={styles.btnClass} type="primary" onClick={() => this.setState({ steps: 0 })}>返回</Button>
+                <Button
+                  className={styles.btnClass}
+                  type="primary"
+                  onClick={() => {
+                    console.log(4564);
+                    this.props.dispatch({
+                      type: 'budgetModel/setState',
+                      payload: {
+                        editBudgetSteps: 0
+                      }
+                    });
+                  }
+                  }
+                >
+                  返回
+                </Button>
                 {!showCheckBtn &&
                   <Button className={styles.btnClass} type="primary" onClick={this.submit}>保存</Button>
                 }
@@ -123,14 +165,28 @@ function mapStateToProps(state) {
       loading,
       budgetMsgNum,
       budgetMsgage,
-    projectId } = state.baseModel;
+      projectId,
+  } = state.baseModel;
+  const {
+    editBudgetSteps,
+    buggetInComeList,
+    buggetOutComeList,
+    year,
+    season,
+    } = state.budgetModel;
   return {
     budgetMsgList,
     userType,
     loading,
     budgetMsgNum,
     budgetMsgage,
-    projectId };
+    editBudgetSteps,
+    buggetInComeList,
+    year,
+    season,
+    buggetOutComeList,
+    projectId
+  };
 }
 
 export default connect(mapStateToProps)(BudgetSeason);

@@ -3,6 +3,7 @@ import {
   Table,
   Card,
    Modal, Form, Input,
+   InputNumber,
 } from 'antd';
 
 const FormItem = Form.Item;
@@ -11,22 +12,6 @@ class BudgetSeasonOutcome extends React.Component {
   state={
     modalVisible: false,
     currentEditIndex: 0,
-  }
-
-  onCancel= () => {
-    this.props.form.resetFields();
-    this.setState({ modalVisible: false });
-  }
-
-  saveBudgetInCome= () => {
-    const { currentEditIndex } = this.state;
-    this.props.form.validateFields((err,values) => {
-      if (err) {
-        return;
-      }
-      // TODO genju currentEditIndex 更新list 
-    });
-    this.onCancel();
   }
 
   onRowClicked= (record, index) => {
@@ -41,6 +26,32 @@ class BudgetSeasonOutcome extends React.Component {
     const { setFieldsValue } = this.props.form;
     setFieldsValue(record);
     this.setState({ modalVisible: true, currentEditIndex: index });
+  }
+
+  onCancel= () => {
+    this.props.form.resetFields();
+    this.setState({ modalVisible: false });
+  }
+
+  saveBudgetOutCome= () => {
+    const { currentEditIndex } = this.state;
+    const { dataSource } = this.props;
+    this.props.form.validateFields((err, values) => {
+      if (err) {
+        return;
+      }
+      const oldData = dataSource[currentEditIndex];
+
+      dataSource.splice(currentEditIndex, 1, Object.assign(oldData, values));
+
+      this.props.dispatch({
+        type: 'budgetModel/setState',
+        payload: {
+          buggetOutComeList: dataSource
+        }
+      });
+      this.onCancel();
+    });
   }
   
   render() {
@@ -209,26 +220,62 @@ class BudgetSeasonOutcome extends React.Component {
       <Card>
         <Modal
           visible={modalVisible}
-          title="收入预算执行情况"
+          title="修改支出预算信息"
           okText="保存"
           onCancel={this.onCancel}
-          onOk={this.saveBudgetInCome}
+          onOk={this.saveBudgetOutCome}
         >
-          <Form layout="vertical">
+          <Form layout="vertical" size="small">
             <FormItem label="资金来源" {...formItemLayout} >
               {getFieldDecorator('pname', {
-              })(<Input />)}
+              })(<Input disabled />)}
             </FormItem>
-            <FormItem label="金额" {...formItemLayout}>
+            <FormItem label="素材制作" {...formItemLayout}>
               {getFieldDecorator('money', {
                 rules: [filterRules],
-              })(<Input />)}
+              })(<InputNumber />)}
+            </FormItem>
+            <FormItem label="企业案例收集制作" {...formItemLayout}>
+              {getFieldDecorator('money', {
+                rules: [filterRules],
+              })(<InputNumber />)}
+            </FormItem>
+            <FormItem label="课程开发" {...formItemLayout}>
+              {getFieldDecorator('money', {
+                rules: [filterRules],
+              })(<InputNumber />)}
+            </FormItem>
+            <FormItem label="特殊工具软件制作" {...formItemLayout}>
+              {getFieldDecorator('money', {
+                rules: [filterRules],
+              })(<InputNumber />)}
+            </FormItem>
+            <FormItem label="应用推广" {...formItemLayout}>
+              {getFieldDecorator('money', {
+                rules: [filterRules],
+              })(<InputNumber />)}
+            </FormItem>
+            <FormItem label="调研论证" {...formItemLayout}>
+              {getFieldDecorator('money', {
+                rules: [filterRules],
+              })(<InputNumber />)}
+            </FormItem>
+            <FormItem label="专家咨询" {...formItemLayout}>
+              {getFieldDecorator('money', {
+                rules: [filterRules],
+              })(<InputNumber />)}
+            </FormItem>
+            <FormItem label="其他" {...formItemLayout}>
+              {getFieldDecorator('money', {
+                rules: [filterRules],
+              })(<InputNumber />)}
             </FormItem>
           </Form>
         </Modal>
         <Table
           title={() => '留言处理情况'}
           columns={columns}
+          size="small"
           dataSource={dataSource}
           rowKey={record => record.id}
           onRowClick={this.onRowClicked}

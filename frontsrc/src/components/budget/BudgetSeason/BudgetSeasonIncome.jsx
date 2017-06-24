@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Table,
   Card,
-   Modal, Form, Input,
+   Modal, Form, Input,InputNumber
 } from 'antd';
 
 const FormItem = Form.Item;
@@ -17,18 +17,7 @@ class BudgetSeasonIncome extends React.Component {
     this.props.form.resetFields();
     this.setState({ modalVisible: false });
   }
-
-  saveBudgetInCome= () => {
-    const { currentEditIndex } = this.state;
-    this.props.form.validateFields((err,values) => {
-      if (err) {
-        return;
-      }
-      // TODO genju currentEditIndex 更新list 
-    });
-    this.onCancel();
-  }
-
+  
   onRowClicked= (record, index) => {
     if (!this.props.editable) {
       return;
@@ -36,11 +25,31 @@ class BudgetSeasonIncome extends React.Component {
     if (![2, 6, 8, 10].includes(index)) {
       return;
     }
-
     console.log(record);
     const { setFieldsValue } = this.props.form;
     setFieldsValue(record);
     this.setState({ modalVisible: true, currentEditIndex: index });
+  }
+
+  saveBudgetInCome= () => {
+    const { currentEditIndex } = this.state;
+    const { dataSource } = this.props;
+    this.props.form.validateFields((err,values) => {
+      if (err) {
+        return;
+      }
+      const oldData = dataSource[currentEditIndex];
+
+      dataSource.splice(currentEditIndex, 1, Object.assign(oldData, values));
+
+      this.props.dispatch({
+        type: 'budgetModel/setState',
+        payload: {
+          buggetInComeList: dataSource
+        }
+      });
+      this.onCancel();
+    });
   }
   
   render() {
@@ -190,18 +199,19 @@ class BudgetSeasonIncome extends React.Component {
           <Form layout="vertical">
             <FormItem label="资金来源" {...formItemLayout} >
               {getFieldDecorator('pname', {
-              })(<Input />)}
+              })(<Input disabled />)}
             </FormItem>
             <FormItem label="金额" {...formItemLayout}>
               {getFieldDecorator('money', {
                 rules: [filterRules],
-              })(<Input />)}
+              })(<InputNumber />)}
             </FormItem>
           </Form>
         </Modal>
         <Table
           title={() => '留言处理情况'}
           columns={columns}
+          size="small"
           dataSource={dataSource}
           rowKey={record => record.id}
           onRowClick={this.onRowClicked}
