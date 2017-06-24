@@ -18,27 +18,34 @@ function AchiveTarget(props) {
     labelCol: { span: 6 },
     wrapperCol: { span: 14 },
   };
+
+  const {
+     targetImplement,
+     targetFirstYear,
+     targetSecondYear,
+     editable,
+  } = props;
   return (
     <Row>
       <Col>
         <Form layout="horizontal">
           <FormItem label="实施期目标" {...formItemLayout} >
-            {getFieldDecorator('target1', {
+            {getFieldDecorator('targetImplement', {
               rules: [filterRules],
-              initialValue: props.target1
-            })(<Input type="textarea" rows={4} />)}
+              initialValue: targetImplement
+            })(<Input type="textarea" rows={4} disabled={!editable} />)}
           </FormItem>
           <FormItem label="年度目标(第一年)" {...formItemLayout}>
-            {getFieldDecorator('target2', {
+            {getFieldDecorator('targetFirstYear', {
               rules: [filterRules],
-              initialValue: props.target2
-            })(<Input type="textarea" rows={4} />)}
+              initialValue: targetFirstYear
+            })(<Input type="textarea" rows={4} disabled={!editable} />)}
           </FormItem>
           <FormItem label="年度目标(第二年)" {...formItemLayout}>
-            {getFieldDecorator('target3', {
+            {getFieldDecorator('targetSecondYear', {
               rules: [filterRules],
-              initialValue: props.target3
-            })(<Input type="textarea" rows={4} />)}
+              initialValue: targetSecondYear
+            })(<Input type="textarea" rows={4} disabled={!editable} />)}
           </FormItem>
         </Form>
       </Col>

@@ -11,7 +11,6 @@ import {
   Input,
   Upload,
   Icon,
-
 } from 'antd';
 
 import FrameContent from '../common/FrameContent';
@@ -22,7 +21,7 @@ import styles from '../../index.less';
 class Achive extends React.Component {
   state={
     showChangeModal: false,
-    steps: 1,
+    steps: 0,
     editable: this.props.userType === 'inputer', // 是否可编辑
     showCheckBtn: this.props.userType === 'finan' || this.props.userType === 'manager', // 是否展示审批菜单
   }
@@ -31,44 +30,62 @@ class Achive extends React.Component {
     this.cancelMsg();
   }
 
-  doCheck= (flag) => {// flag=true,通过审核
-    
+  doCheck= (flag) => { // flag=true,通过审核
+    const { projectId, userType } = this.props;
+    this.props.dispatch({
+      type: 'achiveModel/changeCheckStatus',
+      payload: {
+        projectId,
+        userType,
+        status: flag
+      }
+    });
+  }
+
+  submit= () => {
+    this.props.dispatch({
+      type: 'achiveModel/saveAchiveTarget',
+    });
   }
 
   goNext = () => {
-    this.setState({ steps: 1 });
+    const { validateFields } = this.targetForm;
+    validateFields((err, values) => {
+      if (err) {
+        return;
+      }
+      this.props.dispatch({
+        type: 'achiveModel/setState',
+        payload: values,
+      });
+      this.setState({ steps: 1 });
+    });
   }
 
   render() {
     const {
-      target1,
-      target2,
-      target3,
+      targetImplement,
+      targetFirstYear,
+      targetSecondYear,
       projectId,
       projectName,
-      achiveList,
+      achiveTargetList,
     } = this.props;
     const {
-      showChangeModal,
       steps,
       showCheckBtn,
       editable,
      } = this.state;
     return (
       <FrameContent>
-        <Modal
-          title="填写具体目标"
-          visible={showChangeModal}
-          onOk={this.saveChange}
-          onCancel={this.cancelChange}
-        >222
-        </Modal>
         {steps === 0 &&
           <Card title="目标设定">
             <AchiveTarget
-              target1={target1}
-              target2={target2}
-              target3={target3}
+              ref={(form) => { this.targetForm = form; }}
+              editable={editable}
+              targetImplement={targetImplement}
+              targetFirstYear={targetFirstYear}
+              targetSecondYear={targetSecondYear}
             />
             <Col className={styles.btnContainer}>
               <Button className={styles.btnClass} type="primary" onClick={this.goNext}>下一步</Button>
@@ -85,9 +102,8 @@ class Achive extends React.Component {
             }
             <Card title={`绩效指标[编号:${projectId}, 名称:${projectName}]`}>
               <AchiveTargetList
-                // editable={editable}
-                sourcedata={achiveList}
-                editable
+                editable={editable}
+                dataSource={achiveTargetList}
               />
             </Card>
             <Col className={styles.btnContainer}>
@@ -111,20 +127,20 @@ function mapStateToProps(state) {
     projectName
    } = state.baseModel;
   const {
-     achiveList,
-     target1,
-     target2,
-     target3,
+     achiveTargetList,
+     targetImplement,
+     targetFirstYear,
+     targetSecondYear,
    } = state.achiveModel;
   return {
     userType,
     userName,
     projectId,
     projectName,
-    achiveList,
-    target1,
-    target2,
-    target3,
+    achiveTargetList,
+    targetImplement,
+    targetFirstYear,
+    targetSecondYear,
   };
 }
 

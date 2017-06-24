@@ -4,6 +4,7 @@ import {
   Card,
    Modal, Form, Input,Row,Col,
 } from 'antd';
+import AchiveTarget from './AchiveTarget';
 
 const FormItem = Form.Item;
 
@@ -18,17 +19,6 @@ class AchiveTargetList extends React.Component {
     this.setState({ modalVisible: false });
   }
 
-  saveAchiveTarget= () => {
-    const { currentEditIndex } = this.state;
-    this.props.form.validateFields((err,values) => {
-      if (err) {
-        return;
-      }
-      // TODO genju currentEditIndex 更新list 
-    });
-    this.onCancel();
-  }
-
   onRowClicked= (record, index) => {
     if (!this.props.editable) {
       return;
@@ -36,6 +26,25 @@ class AchiveTargetList extends React.Component {
     const { setFieldsValue } = this.props.form;
     setFieldsValue(record);
     this.setState({ modalVisible: true, currentEditIndex: index });
+  }
+
+  saveAchiveTarget = () => {
+    const { currentEditIndex } = this.state;
+    const { dataSource } = this.props;
+    this.props.form.validateFields((err,values) => {
+      if (err) {
+        return;
+      }
+      const oldData = dataSource[currentEditIndex];
+      dataSource.splice(currentEditIndex, 1, Object.assign(oldData, values));
+      this.props.dispatch({
+        type: 'achiveModel/setState',
+        payload: {
+          buggetInComeList: dataSource
+        }
+      });
+      this.onCancel();
+    });
   }
   
   render() {
@@ -197,7 +206,7 @@ class AchiveTargetList extends React.Component {
           </Form>
         </Modal>
         <Table
-          title={() => '留言处理情况'}
+          title={() => '绩效指标'}
           columns={columns}
           dataSource={dataSource}
           rowKey={record => record.id}
