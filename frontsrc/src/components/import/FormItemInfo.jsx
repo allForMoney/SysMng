@@ -4,13 +4,15 @@ import { Card, Form, Icon, Input, Button } from 'antd';
 const FormItem = Form.Item;
 
 function FormItemInfo(props) {
-  const { getFieldDecorator, label, initValue } = props;
+  const { getFieldDecorator, label, initValue, attr } = props;
   return (
     <FormItem label={label}>
-      {getFieldDecorator('schoolName', {
+      {getFieldDecorator(attr, {
         initialValue: initValue
       })(
-        <Input />
+        <Input
+          key={attr}
+        />
       )}
     </FormItem>
   );

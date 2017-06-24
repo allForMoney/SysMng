@@ -15,7 +15,7 @@ import AddBudgetSeason from './components/budget/BudgetSeason/AddBudgetSeason';
 import Achive from './components/achive/Achive';
 
 import ImportBudget16 from './components/import/ImportBudget16';
-import ProjectInfoList from './components/base/ProjectInfoList';
+import ProjectInfoList from './components/project/ProjectInfoList';
 
 function RouterConfig({ history }) {
   return (
