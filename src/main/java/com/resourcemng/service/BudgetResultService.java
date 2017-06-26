@@ -63,7 +63,7 @@ public class BudgetResultService {
     log.setProjectId(view.getProjectId());
     log.setYear(view.getProjectYear());
     log.setQuarter(view.getQuarterNum());
-
+    reportAuditLogRepository.save(log);
     //提交保存季报收入
     List<FundsIn> fundsIns = view.getFundsIns();
     for(FundsIn fundsIn:fundsIns){
@@ -88,6 +88,7 @@ public class BudgetResultService {
    Project project =  projectRepository.findById(projectId).get();
    //查找关联的用户
     Tuser user = tUserRepository.findByUserNo(project.getProjectNo() +"-1");
+    //审核记录
     ReportAuditLog log = reportAuditLogRepository.findByParam(projectId,quarterNum,projectYear);
     BudgetReportView view = new BudgetReportView();
     view.setProjectYear(projectYear);
