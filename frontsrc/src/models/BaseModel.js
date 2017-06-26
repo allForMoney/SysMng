@@ -15,7 +15,6 @@ export default {
     projectPage: 1,
   },
   effects: {
-
     * updateConcat({ payload }, { call, put }) {
       console.log(payload);
     },
