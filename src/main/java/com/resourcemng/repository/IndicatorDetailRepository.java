@@ -1,8 +1,12 @@
 package com.resourcemng.repository;
 
-import com.resourcemng.entitys.Experts;
+
 import com.resourcemng.entitys.IndicatorDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 
 /**
@@ -12,4 +16,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @blog http://blog.didispace.com
  */
 public interface IndicatorDetailRepository extends JpaRepository<IndicatorDetail, String> {
+
+  @Query("from IndicatorDetail p where p.id=:projectId")
+  List<IndicatorDetail> findByProjectId(@Param("projectId") String projectId);
 }
