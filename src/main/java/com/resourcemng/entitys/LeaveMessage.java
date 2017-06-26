@@ -1,7 +1,9 @@
 package com.resourcemng.entitys;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Created by Administrator on 2017-6-23.
@@ -14,13 +16,15 @@ public class LeaveMessage {
   private String contents;
   private String projectId;
   private String submitUserId;
-  private Timestamp submitDate;
+  private Date submitDate;
   private String replyUserId;
-  private Timestamp replyDate;
+  private Date replyDate;
   private String replyContents;
   private String refFile;
 
   @Id
+  @GeneratedValue(generator = "uuid")
+  @GenericGenerator(name = "uuid", strategy = "uuid")
   @Column(name = "ID", nullable = false, length = 50)
   public String getId() {
     return id;
@@ -72,11 +76,11 @@ public class LeaveMessage {
 
   @Basic
   @Column(name = "SUBMIT_DATE", nullable = true)
-  public Timestamp getSubmitDate() {
+  public Date getSubmitDate() {
     return submitDate;
   }
 
-  public void setSubmitDate(Timestamp submitDate) {
+  public void setSubmitDate(Date submitDate) {
     this.submitDate = submitDate;
   }
 
@@ -92,11 +96,11 @@ public class LeaveMessage {
 
   @Basic
   @Column(name = "REPLY_DATE", nullable = true)
-  public Timestamp getReplyDate() {
+  public Date getReplyDate() {
     return replyDate;
   }
 
-  public void setReplyDate(Timestamp replyDate) {
+  public void setReplyDate(Date replyDate) {
     this.replyDate = replyDate;
   }
 

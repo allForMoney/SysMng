@@ -4,6 +4,7 @@ import com.resourcemng.FileUitl;
 import com.resourcemng.basic.RequestResult;
 import com.resourcemng.basic.ResultCode;
 import com.resourcemng.entitys.Project;
+import com.resourcemng.entitys.Tuser;
 import com.resourcemng.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,10 +24,15 @@ public class ProjectController {
   ProjectService service;
   //文件上传保存路径
 
-
+  /**
+   * 添加项目
+   * @param project
+   * @return
+   * @throws Exception
+   */
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public Object create(@ModelAttribute Project project) throws Exception {
+    public Object create(@RequestBody Project project) throws Exception {
        return service.createPorject(project);
     }
 
@@ -36,7 +42,7 @@ public class ProjectController {
    * @return
    * @throws Exception
    */
-  @RequestMapping(value = "/uploadProject" ,method = RequestMethod.POST)
+  @RequestMapping(value = "/import" ,method = RequestMethod.POST)
   @ResponseBody
   public Object uploadProject(@RequestParam("file")
   MultipartFile file ) throws Exception {
@@ -60,31 +66,67 @@ public class ProjectController {
     }
   }
 
-
-    @RequestMapping(method = RequestMethod.PUT)
+  /**
+   * 修改项目信息
+   * @param project
+   * @return
+   * @throws Exception
+   */
+    @RequestMapping(value = "/{projectNo}",method = RequestMethod.PUT)
     @ResponseBody
-    public Object update(@ModelAttribute Project project) throws Exception {
+    public Object update(@PathVariable("projectNo") String projectNo,@RequestBody Project project) throws Exception {
     return service.updatePorject(project);
     }
 
-  @RequestMapping(method = RequestMethod.DELETE)
+  /**
+   * 删除项目信息
+   * @param projectNo
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "/{projectNo}",method = RequestMethod.DELETE)
   @ResponseBody
-  public Object delete(@RequestParam String projectNo) throws Exception {
+  public Object delete(@PathVariable("projectNo") String projectNo) throws Exception {
     service.deletePorject(projectNo);
     return "删除成功";
   }
 
-  @RequestMapping(method = RequestMethod.GET)
+  /**
+   * 删除项目信息
+   * @param projectNo
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "/all",method = RequestMethod.GET)
   @ResponseBody
-  public Object get(@RequestParam String projectNo) throws Exception {
+  public Object find(String projectNo,String majorName,String schoolName) throws Exception {
+    service.find(projectNo,majorName,schoolName);
+    return "删除成功";
+  }
+
+  /**
+   * 获取项目详细信息
+   * @param projectNo
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "/{projectNo}", method = RequestMethod.GET)
+  @ResponseBody
+  public Object get(@PathVariable("projectNo") String projectNo) throws Exception {
     return service.get(projectNo);
   }
 
-  @RequestMapping(value = "/test", method = RequestMethod.GET)
+  /**
+   * 更新联系人信息
+   * @param user
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "/contacter/change", method = RequestMethod.POST)
   @ResponseBody
-  public Object test() throws Exception {
-    System.out.println(123);
-    return "hhhhhh";
+  public Object changePorjectUser(@ModelAttribute Tuser user) throws Exception {
+     service.changePorjectUser(user);
+     return "保存成功";
   }
 
 }

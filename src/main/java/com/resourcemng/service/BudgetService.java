@@ -3,15 +3,14 @@ package com.resourcemng.service;
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import com.resourcemng.Enum.ImportFileType;
+import com.resourcemng.Enum.LeaveMessageType;
 import com.resourcemng.basic.MyException;
 import com.resourcemng.entitys.BudgetImportDetailNew;
 import com.resourcemng.entitys.BudgetImportDetailOld;
 import com.resourcemng.entitys.FileImportLog;
+import com.resourcemng.entitys.LeaveMessage;
 import com.resourcemng.handler.BudgetImportHanlder;
-import com.resourcemng.repository.BudgetImport2016Repository;
-import com.resourcemng.repository.BudgetImportRepository;
-import com.resourcemng.repository.FileImportLogRepository;
-import com.resourcemng.repository.ProjectRepository;
+import com.resourcemng.repository.*;
 import com.resourcemng.view.BudgetImportView;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +35,8 @@ public class BudgetService {
   FileImportLogRepository fileImportLogRepository;
   @Autowired
   ProjectRepository projectRepository;
+  @Autowired
+  LeaveMessageRepository leaveMessageRepository;
 
   /**
    *
@@ -125,5 +126,16 @@ public class BudgetService {
     } catch (InvocationTargetException e) {
       throw new MyException(e);
     }
+  }
+
+  /**
+   *
+   * @param leaveMessage
+   * @return
+   */
+  public Object comment(LeaveMessage leaveMessage) {
+    leaveMessage.setMesType(LeaveMessageType.BUDGET);
+    leaveMessage.setSubmitDate(new Date());
+   return leaveMessageRepository.save(leaveMessage);
   }
 }

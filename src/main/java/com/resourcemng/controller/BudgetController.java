@@ -2,6 +2,7 @@ package com.resourcemng.controller;
 
 import com.resourcemng.FileUitl;
 import com.resourcemng.entitys.BudgetImportDetailNew;
+import com.resourcemng.entitys.LeaveMessage;
 import com.resourcemng.service.BudgetService;
 import com.resourcemng.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,9 @@ public class BudgetController {
    * @return
    * @throws Exception
    */
-  @RequestMapping(value = "/uploadFile" ,method = RequestMethod.POST)
+  @RequestMapping(value = "/import/{projectId}" ,method = RequestMethod.POST)
   @ResponseBody
-  public Object uploadBudget(@RequestParam String projectId,@RequestParam String importUser,@RequestParam String importType,@RequestParam("file")
+  public Object uploadBudget(@PathVariable String projectId,@RequestParam String importUser,@RequestParam String importType,@RequestParam("file")
   MultipartFile file ) throws Exception {
     if (!file.isEmpty()) {
       try {
@@ -54,6 +55,17 @@ public class BudgetController {
     }
   }
 
+  /**
+   * 添加预算留言
+   * @param leaveMessage
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "/{id}/comment" ,method = RequestMethod.POST)
+  @ResponseBody
+  public Object comment(@RequestBody LeaveMessage leaveMessage) throws Exception {
+    return service.comment(leaveMessage);
+  }
 
     @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
