@@ -3,6 +3,10 @@ package com.resourcemng.repository;
 import com.resourcemng.entitys.Experts;
 import com.resourcemng.entitys.LeaveMessage;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 
 /**
@@ -12,4 +16,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @blog http://blog.didispace.com
  */
 public interface LeaveMessageRepository extends JpaRepository<LeaveMessage, String> {
+  @Query("from LeaveMessage p where p.mesType=:mesType")
+  List findByType( @Param("mesType")String mesType);
 }

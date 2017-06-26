@@ -1,8 +1,11 @@
 package com.resourcemng.entitys;
 
+import com.resourcemng.Enum.IsDelete;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Created by Administrator on 2017-6-23.
@@ -14,8 +17,8 @@ public class FundsIn {
   private BigDecimal amountMoney;
   private String projectYear;
   private String quarterNum;
-  private Timestamp submitTime;
-  private String isDelete;
+  private Date submitTime;
+  private String isDelete = IsDelete.UN_DELETE;
   private String note;
   private String userId;
   private String pid;
@@ -62,11 +65,11 @@ public class FundsIn {
 
   @Basic
   @Column(name = "SUBMIT_TIME", nullable = true)
-  public Timestamp getSubmitTime() {
+  public Date getSubmitTime() {
     return submitTime;
   }
 
-  public void setSubmitTime(Timestamp submitTime) {
+  public void setSubmitTime(Date submitTime) {
     this.submitTime = submitTime;
   }
 

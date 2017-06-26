@@ -15,15 +15,14 @@ import java.util.List;
  * @blog http://blog.didispace.com
  */
 public interface ProjectRepository extends JpaRepository<Project, String> {
-   @Query("from Project p where p.schoolName=:schoolName")
-    List<Project> findByParams(@Param("schoolName")String schoolName);
+   @Query("from Project p where p.projectNo like CONCAT('%',:projectNo,'%') and  p.majorName like CONCAT('%',:majorName,'%') and  p.schoolName like CONCAT('%',:schoolName,'%')")
+    List<Project> findByParams( @Param("projectNo")String projectNo,  @Param("majorName")String majorName, @Param("schoolName") String schoolName);
 
-//   @Query("delete from Project p where p.projectNo=:projectNo")
-//    List<Project> deleteByProjectNo(String projectNo);
+  @Query("from Project p where p.projectNo=:projectNo")
+  Project findByProjectNo( @Param("projectNo")String projectNo);
 
-
-//    @Query("from User u where u.name=:name")
-//    List<TUserEntity> findUser(@Param("name") String name);
+  @Query("delete from Project p where p.projectNo=:projectNo")
+  Project deleteByNo( @Param("projectNo")String projectNo);
 
 
 }

@@ -24,7 +24,7 @@ public class ProjectService {
   @Transactional
    public Project createPorject(Project project) throws MyException {
      try {
-       //TODO 创建三个关联用户
+       // 创建三个关联用户
        Tuser reportUser = new Tuser();
        // 可以不要
        reportUser.setMajorName(project.getMajorName());
@@ -81,9 +81,9 @@ public class ProjectService {
    */
   public void  deletePorject(String projectNo){
     //删除关联用户
-    userRepository.deleteById(projectNo);
+    userRepository.deleteByProject(projectNo);
     //删除项目信息
-    projectRepository.deleteById(projectNo);
+    projectRepository.deleteByNo(projectNo);
   }
   /**
    *
@@ -121,6 +121,49 @@ public class ProjectService {
    * @return
    */
   public Object get(String projectNo) {
-    return this.projectRepository.findById(projectNo);
+    return this.projectRepository.findByProjectNo(projectNo);
+  }
+
+  /**
+   * 查询
+   * @param projectNo
+   * @param majorName
+   * @param schoolName
+   */
+  public  List<Project> find(String projectNo, String majorName, String schoolName) {
+      return this.projectRepository.findByParams(projectNo,majorName,schoolName);
+   }
+
+  /**
+   * 修改项目联系人电话
+   * @param user
+   * @return
+   */
+  public void changePorjectUser(Tuser user) throws MyException {
+    try {
+      String userNo = user.getUserNo();
+      String projectNo = userNo.substring(0, userNo.lastIndexOf('-') - 1);
+      String lastIndex = userNo.substring(userNo.length() - 1, userNo.length());
+      Tuser tuser = this.userRepository.findByUserNo(userNo);
+      Project project = this.projectRepository.findByProjectNo(projectNo);
+      tuser.setTelephoneNum(user.getTelephoneNum());
+      switch (lastIndex) {
+        case "1"://修改填报人信息
+          project.setReporterTel(user.getTelephoneNum());
+          break;
+        case "2"://修改财务信息
+          project.setFinaceHeaderTel(user.getTelephoneNum());
+          break;
+        case "3"://修改项目负责人信息
+          project.setProjectHeaderTel(user.getTelephoneNum());
+          break;
+        default:
+          break;
+      }
+      this.userRepository.save(tuser);//更新用户信息
+      this.projectRepository.save(project);//更新项目信息
+    }catch (Exception e){
+        throw new MyException(e);
+    }
   }
 }
