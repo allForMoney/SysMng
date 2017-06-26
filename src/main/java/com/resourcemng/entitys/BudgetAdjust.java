@@ -1,5 +1,7 @@
 package com.resourcemng.entitys;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -18,6 +20,8 @@ public class BudgetAdjust {
   private String projectId;
 
   @Id
+  @GeneratedValue(generator = "uuid")
+  @GenericGenerator(name = "uuid", strategy = "uuid")
   @Column(name = "Id", nullable = false, length = 50)
   public String getId() {
     return id;

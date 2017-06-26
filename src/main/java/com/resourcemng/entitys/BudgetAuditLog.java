@@ -1,5 +1,7 @@
 package com.resourcemng.entitys;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -23,6 +25,8 @@ public class BudgetAuditLog {
   private String auditOpinion;
 
   @Id
+  @GeneratedValue(generator = "uuid")
+  @GenericGenerator(name = "uuid", strategy = "uuid")
   @Column(name = "ID", nullable = false, length = 50)
   public String getId() {
     return id;

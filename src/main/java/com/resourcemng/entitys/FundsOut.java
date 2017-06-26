@@ -1,6 +1,7 @@
 package com.resourcemng.entitys;
 
 import com.resourcemng.Enum.IsDelete;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -31,6 +32,8 @@ public class FundsOut {
   private String pid;
 
   @Id
+  @GeneratedValue(generator = "uuid")
+  @GenericGenerator(name = "uuid", strategy = "uuid")
   @Column(name = "ID", nullable = false, length = 50)
   public String getId() {
     return id;

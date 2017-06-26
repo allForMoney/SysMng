@@ -1,5 +1,7 @@
 package com.resourcemng.entitys;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -24,6 +26,8 @@ public class ReportAuditLog {
   private String projectId;
 
   @Id
+  @GeneratedValue(generator = "uuid")
+  @GenericGenerator(name = "uuid", strategy = "uuid")
   @Column(name = "ID", nullable = false, length = 50)
   public String getId() {
     return id;

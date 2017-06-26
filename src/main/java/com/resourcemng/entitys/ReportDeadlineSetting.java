@@ -1,5 +1,7 @@
 package com.resourcemng.entitys;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 /**
@@ -13,6 +15,8 @@ public class ReportDeadlineSetting {
   private String remark;
 
   @Id
+  @GeneratedValue(generator = "uuid")
+  @GenericGenerator(name = "uuid", strategy = "uuid")
   @Column(name = "ID", nullable = false, length = 50)
   public String getId() {
     return id;
