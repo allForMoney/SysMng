@@ -1,8 +1,13 @@
 package com.resourcemng.repository;
 
+import com.resourcemng.entitys.FundsIn;
 import com.resourcemng.entitys.ReportAuditLog;
 import com.resourcemng.entitys.Sitelog;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 
 /**
@@ -12,4 +17,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @blog http://blog.didispace.com
  */
 public interface ReportAuditLogRepository extends JpaRepository<ReportAuditLog, String> {
+  @Query("from ReportAuditLog p where p.projectId=:projectId and  p.quarter=:quarter and  p.year=:year")
+  ReportAuditLog findByParam(@Param("projectId")String projectId, @Param("quarter")String quarter, @Param("year")String year);
+
 }
