@@ -4,7 +4,7 @@ import com.resourcemng.entitys.FileImportLog;
 import com.resourcemng.entitys.Project;
 
 /**
- * 项目执行结果下载用视图
+ * 项目执行结果下载用视图，预算金额视图
  * Created by Administrator on 2017-6-22.
  */
 public class ProjectBudgetInfoView  {

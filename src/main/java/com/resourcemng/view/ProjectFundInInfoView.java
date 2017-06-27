@@ -5,7 +5,7 @@ import com.resourcemng.entitys.FileImportLog;
 import java.math.BigDecimal;
 
 /**
- * 项目执行结果下载用视图
+ * 项目执行结果下载用视图，季报收入视图
  * Created by Administrator on 2017-6-22.
  */
 public class ProjectFundInInfoView extends FileImportLog {
