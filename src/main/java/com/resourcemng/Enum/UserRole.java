@@ -24,5 +24,9 @@ public class UserRole {
    * 教育厅
    */
   public static String COUNTRY = "6";
+  /**
+   * 教育厅
+   */
+  public static String PROVENCE = "5";
 
 }
