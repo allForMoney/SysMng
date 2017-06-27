@@ -90,6 +90,15 @@ public class BudgetResultController {
     budgetResultService.quarterlyReportAudit(projectId,projectYear,quarterNum,auditType,auditContent);
     return "报告成功";
   }
+
+  /**
+   * 季报下载
+   * @param projectId
+   * @param projectYear
+   * @param quarterNum
+   * @param response
+   * @throws Exception
+   */
   @RequestMapping(value = "/quarterly/download" ,method = RequestMethod.POST)
   @ResponseBody
   public void quarterlyReportDownload(@RequestParam String projectId,@RequestParam String projectYear,@RequestParam String quarterNum, HttpServletResponse response) throws Exception {
