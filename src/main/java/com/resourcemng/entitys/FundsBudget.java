@@ -1,8 +1,11 @@
 package com.resourcemng.entitys;
 
+import com.resourcemng.Enum.IsDelete;
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Created by Administrator on 2017-6-23.
@@ -10,6 +13,7 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "funds_budget", schema = "budget_resource", catalog = "")
 public class FundsBudget {
+  private String id;
   private String userId;
   private BigDecimal materialMake;
   private BigDecimal companyCase;
@@ -20,12 +24,23 @@ public class FundsBudget {
   private BigDecimal expertConsult;
   private BigDecimal otherFee;
   private String budgetYear;
-  private Timestamp submitTime;
-  private String isDelete;
+  private Date submitTime;
+  private String isDelete = IsDelete.UN_DELETE;
   private String note;
   private String pid;
 
   @Id
+  @GeneratedValue(generator = "uuid")
+  @GenericGenerator(name = "uuid", strategy = "uuid")
+  @Column(name = "ID", nullable = false, length = 50)
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
   @Column(name = "UserID", nullable = false, length = 50)
   public String getUserId() {
     return userId;
@@ -127,11 +142,11 @@ public class FundsBudget {
 
   @Basic
   @Column(name = "SubmitTime", nullable = true)
-  public Timestamp getSubmitTime() {
+  public Date getSubmitTime() {
     return submitTime;
   }
 
-  public void setSubmitTime(Timestamp submitTime) {
+  public void setSubmitTime(Date submitTime) {
     this.submitTime = submitTime;
   }
 

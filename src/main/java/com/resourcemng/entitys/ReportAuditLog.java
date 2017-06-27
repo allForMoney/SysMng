@@ -1,5 +1,6 @@
 package com.resourcemng.entitys;
 
+import com.resourcemng.Enum.AuditStatus;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -14,14 +15,14 @@ public class ReportAuditLog {
   private String id;
   private String year;
   private String quarter;
-  private String status;
+  private String status= AuditStatus.UN_PASS;
   private Date reportTime;
   private Date financeAuditTime;
   private Date schoolAuditTime;
   private Date conutryAuditTime;
-  private String financeAuditState;
-  private String schoolAuditState;
-  private String conutryAuditState;
+  private String financeAuditState= AuditStatus.UN_PASS;
+  private String schoolAuditState= AuditStatus.UN_PASS;
+  private String conutryAuditState = AuditStatus.UN_PASS;
   private String auditOpinion;
   private String projectId;
 

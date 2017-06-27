@@ -72,9 +72,9 @@ public class ProjectController {
    * @return
    * @throws Exception
    */
-    @RequestMapping(value = "/{projectNo}",method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
-    public Object update(@PathVariable("projectNo") String projectNo,@RequestBody Project project) throws Exception {
+    public Object update(@RequestBody Project project) throws Exception {
     return service.updatePorject(project);
     }
 

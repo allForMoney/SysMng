@@ -87,11 +87,13 @@ public class BudgetReportView extends FileImportLog {
   public void update(){
     for(FundsIn fundsIn:fundsIns){
       fundsIn.setUserId(this.getUserId());
+      fundsIn.setProjectYear(this.getProjectYear());
       fundsIn.setSubmitTime(new Date());
       fundsIn.setQuarterNum(this.quarterNum);
     }
     for(FundsOut fundsOut:fundsOuts){
       fundsOut.setUserId(this.getUserId());
+      fundsOut.setProjectYear(this.getProjectYear());
       fundsOut.setSubmitTime(new Date());
       fundsOut.setQuarterNum(this.quarterNum);
     }

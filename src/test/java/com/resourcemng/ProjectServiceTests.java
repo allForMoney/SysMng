@@ -2,8 +2,10 @@ package com.resourcemng;
 
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
+import com.resourcemng.entitys.Project;
 import com.resourcemng.service.BudgetService;
 import com.resourcemng.service.ProjectService;
+import net.minidev.json.JSONUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,9 +39,20 @@ public class ProjectServiceTests {
   private ProjectService service;
   @Test
   public void test() throws Exception {
-    service.importPorjectByFile(new File("E:\\项目资料\\新建文件夹\\模板\\项目模板.xlsx"));
+    service.importPorjectByFile(new File("F:\\个人文件夹\\workspace\\项目模板.xlsx"));
   }
 
+  @Test
+  public void testGet() throws Exception {
+    Project project =  service.get("2016-02");
+    System.out.println();
 
+  }
+  @Test
+  public void testGetAll() throws Exception {
+    List<Project>  project =  service.find(null,null,null);
+    System.out.println();
+
+  }
 
 }

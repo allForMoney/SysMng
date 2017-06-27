@@ -62,9 +62,9 @@ public class BudgetImportHanlder extends ExcelDataHandlerDefaultImpl<Map<String,
         case "17":
           return "local";
         case "18":
-          return "university1";
+          return "enterprise";
         case "19":
-          return "budgetYear1";
+          return "university";
       }
       return null;
     }

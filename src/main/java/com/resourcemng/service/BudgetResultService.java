@@ -57,12 +57,14 @@ public class BudgetResultService {
     view.update();
     Tuser user = tUserRepository.findById(view.getUserId()).get();
     //获取项目ID
-    String projectId = user.getUserNo().substring(0,user.getUserNo().lastIndexOf("_")-1);
-    view.setProjectId(projectId);
+    String projectNo = user.getUserNo().substring(0,user.getUserNo().lastIndexOf("-"));
+    Project project = projectRepository.findByProjectNo(projectNo);
+    view.setProjectId(project.getId());
     ReportAuditLog log = new ReportAuditLog();
     log.setProjectId(view.getProjectId());
     log.setYear(view.getProjectYear());
     log.setQuarter(view.getQuarterNum());
+    log.setReportTime(new Date());
     reportAuditLogRepository.save(log);
     //提交保存季报收入
     List<FundsIn> fundsIns = view.getFundsIns();

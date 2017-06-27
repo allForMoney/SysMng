@@ -81,7 +81,7 @@ public class ProjectService {
    */
   public void  deletePorject(String projectNo){
     //删除关联用户
-    userRepository.deleteByProject(projectNo);
+    userRepository.deleteByProjectNo(projectNo);
     //删除项目信息
     projectRepository.deleteByNo(projectNo);
   }
@@ -120,7 +120,7 @@ public class ProjectService {
    * @param projectNo
    * @return
    */
-  public Object get(String projectNo) {
+  public Project get(String projectNo) {
     return this.projectRepository.findByProjectNo(projectNo);
   }
 
@@ -131,6 +131,9 @@ public class ProjectService {
    * @param schoolName
    */
   public  List<Project> find(String projectNo, String majorName, String schoolName) {
+    projectNo = projectNo ==null?"":projectNo;
+    majorName = majorName ==null?"":majorName;
+    schoolName = schoolName ==null?"":schoolName;
       return this.projectRepository.findByParams(projectNo,majorName,schoolName);
    }
 
@@ -142,7 +145,7 @@ public class ProjectService {
   public void changePorjectUser(Tuser user) throws MyException {
     try {
       String userNo = user.getUserNo();
-      String projectNo = userNo.substring(0, userNo.lastIndexOf('-') - 1);
+      String projectNo = userNo.substring(0, userNo.lastIndexOf('-') );
       String lastIndex = userNo.substring(userNo.length() - 1, userNo.length());
       Tuser tuser = this.userRepository.findByUserNo(userNo);
       Project project = this.projectRepository.findByProjectNo(projectNo);
