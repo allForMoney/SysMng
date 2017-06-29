@@ -23,9 +23,7 @@ public class AuthController {
 
   /**
    * 登录
-   * @param userNo
-   * @param password
-   * @param session
+   * @param tuser
    * @return
    */
   @RequestMapping (value = "/login",method =  RequestMethod.POST)
