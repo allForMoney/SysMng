@@ -13,7 +13,7 @@ import java.util.Collection;
  * Created by Administrator on 2017-6-23.
  */
 @Entity
-public class Tuser implements UserDetails {
+public class Tuser  {
   private String id;
   private String username;
   private String majorName;
@@ -150,30 +150,30 @@ public class Tuser implements UserDetails {
 //    result = 31 * result + (userName != null ? userName.hashCode() : 0);
     return result;
   }
-  @Transient
-  @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    return null;
-  }
-
-  @Transient
-  @Override
-  public boolean isAccountNonExpired() {
-    return true;
-  }
-  @Transient
-  @Override
-  public boolean isAccountNonLocked() {
-    return true;
-  }
-  @Transient
-  @Override
-  public boolean isCredentialsNonExpired() {
-    return true;
-  }
-  @Transient
-  @Override
-  public boolean isEnabled() {
-    return true;
-  }
+//  @Transient
+//  @Override
+//  public Collection<? extends GrantedAuthority> getAuthorities() {
+//    return null;
+//  }
+//
+//  @Transient
+//  @Override
+//  public boolean isAccountNonExpired() {
+//    return true;
+//  }
+//  @Transient
+//  @Override
+//  public boolean isAccountNonLocked() {
+//    return true;
+//  }
+//  @Transient
+//  @Override
+//  public boolean isCredentialsNonExpired() {
+//    return true;
+//  }
+//  @Transient
+//  @Override
+//  public boolean isEnabled() {
+//    return true;
+//  }
 }

@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 @Service
 @Transactional
-public class UserService  implements  UserDetailsService{
+public class UserService  /*implements  UserDetailsService*/{
   @Autowired
   TUserRepository userRepository;
 
@@ -41,15 +41,15 @@ public class UserService  implements  UserDetailsService{
     return  userRepository.findByUserNo(userNo);
   }
 
-  @Override
-  public UserDetails loadUserByUsername(String userNo) throws UsernameNotFoundException {
-    if (StringUtils.isBlank(userNo)) {
-      throw new UsernameNotFoundException("用户名为空");
-    }
-
-    Tuser user = userRepository.findByUserNo(userNo);
-    return user;
-  }
+//  @Override
+//  public UserDetails loadUserByUsername(String userNo) throws UsernameNotFoundException {
+//    if (StringUtils.isBlank(userNo)) {
+//      throw new UsernameNotFoundException("用户名为空");
+//    }
+//
+//    Tuser user = userRepository.findByUserNo(userNo);
+//    return user;
+//  }
 }
 
 
