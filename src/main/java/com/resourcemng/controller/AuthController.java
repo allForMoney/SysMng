@@ -30,10 +30,10 @@ public class AuthController {
    */
   @RequestMapping (value = "/login",method =  RequestMethod.POST)
   public @ResponseBody
-  Object loginPost(String userNo, String password, HttpSession session) {
+  Object loginPost(String year, String userNo, String password, HttpSession session) {
     Map<String, Object> map = new HashMap<>();
     Tuser user =  service.getUser(userNo);
-    if (!user.getPassword().equals(password)) {
+    if (user == null ||!user.getPassword().equals(password)) {
      return new MyException("用户名密码不正确");
     }
     // 设置session
