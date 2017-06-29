@@ -21,6 +21,6 @@ export function getProjectList(params) {
 export function changeCheckStatus(params) {
   return request('/achive/checkstatus', {
     method: 'post',
-    data: params,
+    body: params,
   });
 }

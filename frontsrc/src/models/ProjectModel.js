@@ -1,4 +1,4 @@
-import { getProjectList, addProjectInfo, deletePro } from '../services/ProjectService';
+import { getProjectList, AddProject, deletePro } from '../services/ProjectService';
 
 export default {
   namespace: 'ProjectModel',
@@ -31,7 +31,7 @@ export default {
 
     * AddProject({ payload }, { call, put }) {
       console.log(payload);
-      const data = yield call(addProjectInfo, payload);
+      const data = yield call(AddProject, payload);
       if (data && data.code === 1) {
         yield put({
           type: 'setState',

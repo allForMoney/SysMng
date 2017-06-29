@@ -14,6 +14,7 @@ import AddBudgetSeason from './components/budget/BudgetSeason/AddBudgetSeason';
 import Achive from './components/achive/Achive';
 
 import ImportBudget16 from './components/import/ImportBudget16';
+import ImportProjet from './components/import/ImportProjet';
 import ProjectInfoList from './components/project/ProjectInfoList';
 import ProjectBaseInfo from './components/project/ProjectBaseInfo';
 
@@ -34,6 +35,7 @@ function RouterConfig({ history }) {
       <Route path="/achive/add" component={Achive} />
       
       <Route path="/import/budget16" component={ImportBudget16} />
+      <Route path="/import/importProjet" component={ImportProjet} />
       <Route path="/base/projectList" component={ProjectInfoList} />
 
       <Route path="/sys/concat" component={ModifyConcat} />

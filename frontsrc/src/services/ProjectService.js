@@ -19,8 +19,9 @@ export function deletePro(params) {
 }
 
 export function AddProject(params) {
-  return request('...', {
+  console.log(params);
+  return request('/project', {
     method: 'post',
-    data: params,
+    data: qs.stringify(params),
   });
 }
