@@ -1,3 +1,4 @@
+import { logout, login } from '../services/BaseService';
 export default {
   namespace: 'baseModel',
 
@@ -10,25 +11,20 @@ export default {
     projectId: 72,
     projectInfo: {}, // 单个项目基本信息
     projectList: [],
-
     projectTotal: 34,
     projectPage: 1,
   },
   effects: {
-    * updateConcat({ payload }, { call, put }) {
-      console.log(payload);
+    * login({ payload }, { call, put }) {
+      const data =yield call(login, payload);
+      console.log(data);
     },
 
-    * updateAdvice({ payload }, { call, put }) {
-      console.log(payload);
+    * logout({ payload }, { call, put }) {
+      const data =yield call(login, payload);
+      console.log(data);
     },
 
-    * modifyPass({ payload }, { call, put }) {
-      console.log(payload);
-    },
-    * saveMsg({ payload }, { call, put }) {
-      console.log(payload);
-    },
   },
 
   reducers: {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Router, Route } from 'dva/router';
-import List from './routes/List';
 import Blank from './routes/Blank';
+import LoginForm from './routes/LoginForm';
 import ModifyConcat from './components/sysConfig/ModifyConcat';
 import Advice from './components/sysConfig/Advice';
 import ProjectBudget from './components/budget/ProjectBudget';
@@ -21,8 +21,7 @@ import ProjectBaseInfo from './components/project/ProjectBaseInfo';
 function RouterConfig({ history }) {
   return (
     <Router history={history}>
-      <Route path="/" component={Blank} />
-      <Route path="/sign" component={List} />
+      <Route path="/" component={LoginForm} />
       <Route path="/blank" component={Blank} />
       <Route path="/budget/base" component={ProjectBaseInfo} />
       <Route path="/budget/project" component={ProjectBudget} />
