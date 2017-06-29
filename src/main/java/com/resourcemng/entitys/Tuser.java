@@ -1,5 +1,6 @@
 package com.resourcemng.entitys;
 
+import org.apache.tomcat.util.security.MD5Encoder;
 import org.apache.xmlbeans.impl.util.Base64;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
@@ -58,12 +59,12 @@ public class Tuser implements UserDetails {
   @Basic
   @Column(name = "USER_PASSWORD", nullable = false, length = 200)
   public String getPassword() {
-  return new String(Base64.encode(this.password.getBytes()));
+  return this.password;
   }
 
   public void setPassword(String password) {
 
-    this.password =  new String(Base64.encode(password.getBytes()));
+    this.password =  password;
   }
 
   @Basic
