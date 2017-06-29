@@ -16,7 +16,7 @@ export default {
     * getProjectList({ payload }, { call, put, select }) {
       console.log('getProjectList');
       const { filterParam, projectListPage } = yield select(state => state.ProjectModel);
-      const data = yield call(getProjectList, { filterParam, projectListPage });
+      const data = yield call(getProjectList, { filterParam  });
       if (data && data.code === 1) {
         yield put({
           type: 'setState',

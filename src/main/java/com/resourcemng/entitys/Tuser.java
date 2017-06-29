@@ -3,9 +3,6 @@ package com.resourcemng.entitys;
 import org.apache.tomcat.util.security.MD5Encoder;
 import org.apache.xmlbeans.impl.util.Base64;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
 import java.util.Collection;
 
