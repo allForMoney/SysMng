@@ -14,7 +14,7 @@ import java.util.Date;
 @Table(name = "funds_budget", schema = "budget_resource", catalog = "")
 public class FundsBudget {
   private String id;
-  private String userId;
+  private String projectId;
   private BigDecimal materialMake;
   private BigDecimal companyCase;
   private BigDecimal courseDevelopment;
@@ -41,13 +41,13 @@ public class FundsBudget {
     this.id = id;
   }
 
-  @Column(name = "UserID", nullable = false, length = 50)
-  public String getUserId() {
-    return userId;
+  @Column(name = "ProjectId", nullable = false, length = 50)
+  public String getProjectId() {
+    return projectId;
   }
 
-  public void setUserId(String userId) {
-    this.userId = userId;
+  public void setProjectId(String projectId) {
+    this.projectId = projectId;
   }
 
   @Basic
@@ -187,7 +187,7 @@ public class FundsBudget {
 
     FundsBudget that = (FundsBudget) o;
 
-    if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
+    if (projectId != null ? !projectId.equals(that.projectId) : that.projectId != null) return false;
     if (materialMake != null ? !materialMake.equals(that.materialMake) : that.materialMake != null) return false;
     if (companyCase != null ? !companyCase.equals(that.companyCase) : that.companyCase != null) return false;
     if (courseDevelopment != null ? !courseDevelopment.equals(that.courseDevelopment) : that.courseDevelopment != null)
@@ -209,7 +209,7 @@ public class FundsBudget {
 
   @Override
   public int hashCode() {
-    int result = userId != null ? userId.hashCode() : 0;
+    int result = projectId != null ? projectId.hashCode() : 0;
     result = 31 * result + (materialMake != null ? materialMake.hashCode() : 0);
     result = 31 * result + (companyCase != null ? companyCase.hashCode() : 0);
     result = 31 * result + (courseDevelopment != null ? courseDevelopment.hashCode() : 0);

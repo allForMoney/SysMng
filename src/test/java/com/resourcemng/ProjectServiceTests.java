@@ -39,7 +39,7 @@ public class ProjectServiceTests {
   private ProjectService service;
   @Test
   public void test() throws Exception {
-    service.importPorjectByFile(new File("F:\\个人文件夹\\workspace\\项目模板.xlsx"));
+    service.importPorjectByFile(new File("E:\\项目资料\\新建文件夹\\模板\\项目模板.xlsx"));
   }
 
   @Test

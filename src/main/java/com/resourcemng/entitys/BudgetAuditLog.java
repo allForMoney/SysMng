@@ -3,7 +3,7 @@ package com.resourcemng.entitys;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Created by Administrator on 2017-6-23.
@@ -15,10 +15,10 @@ public class BudgetAuditLog {
   private String year;
   private String adjustId;
   private String status;
-  private Timestamp reportTime;
-  private Timestamp financeAuditTime;
-  private Timestamp schoolAuditTime;
-  private Timestamp conutryAuditTime;
+  private Date reportTime;
+  private Date financeAuditTime;
+  private Date schoolAuditTime;
+  private Date conutryAuditTime;
   private String financeAuditState;
   private String schoolAuditState;
   private String conutryAuditState;
@@ -68,41 +68,41 @@ public class BudgetAuditLog {
 
   @Basic
   @Column(name = "REPORT_TIME", nullable = true)
-  public Timestamp getReportTime() {
+  public Date getReportTime() {
     return reportTime;
   }
 
-  public void setReportTime(Timestamp reportTime) {
+  public void setReportTime(Date reportTime) {
     this.reportTime = reportTime;
   }
 
   @Basic
   @Column(name = "FINANCE_AUDIT_TIME", nullable = true)
-  public Timestamp getFinanceAuditTime() {
+  public Date getFinanceAuditTime() {
     return financeAuditTime;
   }
 
-  public void setFinanceAuditTime(Timestamp financeAuditTime) {
+  public void setFinanceAuditTime(Date financeAuditTime) {
     this.financeAuditTime = financeAuditTime;
   }
 
   @Basic
   @Column(name = "SCHOOL_AUDIT_TIME", nullable = true)
-  public Timestamp getSchoolAuditTime() {
+  public Date getSchoolAuditTime() {
     return schoolAuditTime;
   }
 
-  public void setSchoolAuditTime(Timestamp schoolAuditTime) {
+  public void setSchoolAuditTime(Date schoolAuditTime) {
     this.schoolAuditTime = schoolAuditTime;
   }
 
   @Basic
   @Column(name = "CONUTRY_AUDIT_TIME", nullable = true)
-  public Timestamp getConutryAuditTime() {
+  public Date getConutryAuditTime() {
     return conutryAuditTime;
   }
 
-  public void setConutryAuditTime(Timestamp conutryAuditTime) {
+  public void setConutryAuditTime(Date conutryAuditTime) {
     this.conutryAuditTime = conutryAuditTime;
   }
 

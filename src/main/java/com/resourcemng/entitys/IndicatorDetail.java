@@ -12,6 +12,7 @@ import javax.persistence.*;
 public class IndicatorDetail {
   private String id;
   private String fileImportId;
+  private String projectId;
   private String indicatorThreeLevel;
   private String planTotal;
   private String planFirstYear;
@@ -39,6 +40,16 @@ public class IndicatorDetail {
 
   public void setFileImportId(String fileImportId) {
     this.fileImportId = fileImportId;
+  }
+
+  @Basic
+  @Column(name = "PROJECT_ID", nullable = false, length = 50)
+  public String getProjectId() {
+    return projectId;
+  }
+
+  public void setProjectId(String projectId) {
+    this.projectId = projectId;
   }
 
   @Basic
@@ -110,6 +121,7 @@ public class IndicatorDetail {
 
     if (id != null ? !id.equals(that.id) : that.id != null) return false;
     if (fileImportId != null ? !fileImportId.equals(that.fileImportId) : that.fileImportId != null) return false;
+    if (projectId != null ? !projectId.equals(that.projectId) : that.projectId != null) return false;
     if (indicatorThreeLevel != null ? !indicatorThreeLevel.equals(that.indicatorThreeLevel) : that.indicatorThreeLevel != null)
       return false;
     if (planTotal != null ? !planTotal.equals(that.planTotal) : that.planTotal != null) return false;
@@ -128,6 +140,7 @@ public class IndicatorDetail {
   public int hashCode() {
     int result = id != null ? id.hashCode() : 0;
     result = 31 * result + (fileImportId != null ? fileImportId.hashCode() : 0);
+    result = 31 * result + (projectId != null ? projectId.hashCode() : 0);
     result = 31 * result + (indicatorThreeLevel != null ? indicatorThreeLevel.hashCode() : 0);
     result = 31 * result + (planTotal != null ? planTotal.hashCode() : 0);
     result = 31 * result + (planFirstYear != null ? planFirstYear.hashCode() : 0);

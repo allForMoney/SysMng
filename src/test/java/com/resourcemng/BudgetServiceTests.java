@@ -35,7 +35,7 @@ public class BudgetServiceTests {
   private BudgetService service;
   @Test
   public void testUploadFile() throws Exception {
-    service.importBudgetFormFile("ddd","ddw", ImportFileType.BUDGET2016,new File("F:\\个人文件夹\\workspace\\预算2016.xlsx"));
+    service.importBudgetFormFile("ddd","ddw", ImportFileType.BUDGET2016,"2016",new File("F:\\个人文件夹\\workspace\\预算2016.xlsx"));
   }
 
 

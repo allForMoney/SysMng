@@ -1,30 +1,17 @@
 package com.resourcemng.service;
 
-import cn.afterturn.easypoi.excel.ExcelImportUtil;
-import cn.afterturn.easypoi.excel.entity.ImportParams;
-import com.resourcemng.Enum.AuditStatus;
-import com.resourcemng.Enum.AuditType;
-import com.resourcemng.Enum.ImportFileType;
-import com.resourcemng.Enum.LeaveMessageType;
-import com.resourcemng.basic.MyException;
+import com.resourcemng.Enum.*;
 import com.resourcemng.entitys.*;
-import com.resourcemng.handler.BudgetImportHanlder;
 import com.resourcemng.repository.*;
-import com.resourcemng.view.BudgetImportView;
 import com.resourcemng.view.BudgetReportView;
 import com.resourcemng.view.EntityUitl;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @Transactional
@@ -44,8 +31,8 @@ public class BudgetResultService {
    *
    * @return
    */
-  public Object findAll() {
-    return null;
+  public Object findByParam(String projectId,String year,String quarter) {
+    return this.reportAuditLogRepository.findByParam(projectId,year,quarter);
   }
 
   /**
@@ -57,7 +44,7 @@ public class BudgetResultService {
     view.update();
     Tuser user = tUserRepository.findById(view.getUserId()).get();
     //获取项目ID
-    String projectNo = user.getUserNo().substring(0,user.getUserNo().lastIndexOf("-"));
+    String projectNo = user.getUsername().substring(0,user.getUsername().lastIndexOf("-"));
     Project project = projectRepository.findByProjectNo(projectNo);
     view.setProjectId(project.getId());
     ReportAuditLog log = new ReportAuditLog();
@@ -140,15 +127,18 @@ public class BudgetResultService {
       case AuditType.FINACE_AUDIT:
         log.setFinanceAuditState(AuditStatus.PASS);
         log.setFinanceAuditTime(new Date());
+        log.setStatus(ReportStatus.F_PASS);
         break;
       case AuditType.SCHOOL_AUDIT:
         log.setSchoolAuditState(AuditStatus.PASS);
         log.setSchoolAuditTime(new Date());
+        log.setStatus(ReportStatus.P_PASS);
         break;
       case AuditType.COUNTRY_AUDIT:
         log.setConutryAuditState(AuditStatus.PASS);
         log.setConutryAuditTime(new Date());
         log.setAuditOpinion(auditContent);
+        log.setStatus(ReportStatus.COUNTRY_PASS);
 
         break;
 

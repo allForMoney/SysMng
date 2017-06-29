@@ -1,13 +1,10 @@
 package com.resourcemng.controller;
 
-import com.resourcemng.FileUitl;
-import com.resourcemng.basic.RequestResult;
-import com.resourcemng.basic.ResultCode;
+import com.resourcemng.util.FileUitl;
 import com.resourcemng.entitys.Project;
 import com.resourcemng.entitys.Tuser;
 import com.resourcemng.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

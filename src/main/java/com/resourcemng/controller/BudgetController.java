@@ -1,10 +1,9 @@
 package com.resourcemng.controller;
 
-import com.resourcemng.FileUitl;
+import com.resourcemng.util.FileUitl;
 import com.resourcemng.entitys.BudgetImportDetailNew;
 import com.resourcemng.entitys.LeaveMessage;
 import com.resourcemng.service.BudgetService;
-import com.resourcemng.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -27,13 +26,19 @@ public class BudgetController {
 
   /**
    * 上传项目文件
+   * @param projectId
+   * @param importUser
+   * 导入用户，一般是管理员
+   * @param importType
+   * @param budgetYear
+   * 导入类型，是2015还是2016
    * @param file
    * @return
    * @throws Exception
    */
   @RequestMapping(value = "/import/{projectId}" ,method = RequestMethod.POST)
   @ResponseBody
-  public Object uploadBudget(@PathVariable String projectId,@RequestParam String importUser,@RequestParam String importType,@RequestParam("file")
+  public Object uploadBudget(@PathVariable String projectId,@RequestParam String importUser,@RequestParam String importType,@RequestParam String budgetYear,@RequestParam("file")
   MultipartFile file ) throws Exception {
     if (!file.isEmpty()) {
       try {
@@ -41,7 +46,7 @@ public class BudgetController {
         // 实际项目中，文件需要输出到指定位置，需要在增加代码处理。
         // 还有关于文件格式限制、文件大小限制，详见：中配置。
         File uploadFile = FileUitl.saveUploadFile(file );
-        service.importBudgetFormFile(projectId,importUser,importType,uploadFile);
+        service.importBudgetFormFile(projectId,importUser,importType,budgetYear,uploadFile);
       } catch (FileNotFoundException e) {
         e.printStackTrace();
         return "上传失败," + e.getMessage();
@@ -73,6 +78,23 @@ public class BudgetController {
     return service.update(budgetImportDetailNew);
     }
 
+  /**
+   * 查看所有的导入，支持根据项目ID进行过滤
+   * @param projectId
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "all" ,method = RequestMethod.GET)
+  @ResponseBody
+  public Object getAll(@RequestParam String projectId) throws Exception {
+    return service.getImportByProject(projectId);
+  }
+  /**
+   * 根据导入ID获取预算
+   * @param id
+   * @return
+   * @throws Exception
+   */
   @RequestMapping(method = RequestMethod.DELETE)
   @ResponseBody
   public Object delete(@RequestParam String id) throws Exception {
@@ -80,10 +102,28 @@ public class BudgetController {
     return "删除成功";
   }
 
-  @RequestMapping(method = RequestMethod.GET)
+  /**
+   * 根据导入ID获取预算
+   * @param importId
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "/{importId}" ,method = RequestMethod.GET)
   @ResponseBody
-  public Object get(@RequestParam String id) throws Exception {
-    return service.get(id);
+  public Object get(@PathVariable String importId) throws Exception {
+    return service.get(importId);
+  }
+
+  /**
+   * 获取某个项目的预算
+   * @param projectId
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "/project/{projectId}" ,method = RequestMethod.GET)
+  @ResponseBody
+  public Object getByProject(@RequestParam String projectId) throws Exception {
+    return service.getByProject(projectId);
   }
 
 }

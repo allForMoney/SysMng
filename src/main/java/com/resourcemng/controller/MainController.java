@@ -23,9 +23,4 @@ public class MainController {
     public String index(Map<String, Object> model) throws Exception {
         return "index";
     }
-    @RequestMapping(value = "/login" ,method = RequestMethod.POST)
-    @ResponseBody
-    public String login(Map<String, Object> model) throws Exception {
-        return "success";
-    }
 }

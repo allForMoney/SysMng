@@ -55,14 +55,16 @@ public class IndicatorService {
 
       }
       params.setTitlemap(map);
-
-
+      //绩效对象
+      IndicatorView view = new IndicatorView();
+      List<IndicatorDetail> details = new ArrayList<>();
+      view.setIndicatorDetails(details);
 
       //转换标题
       params.setDataHanlder(new IndicatorImportHanlder());
       List<Map<String, Object>> list = ExcelImportUtil.importExcel(uploadFile, Map.class, params);
-      IndicatorView view = new IndicatorView();
-      List<IndicatorDetail> details = new ArrayList<>();
+
+
       String indicatorLevelOneName = null;
       String indicatorLevelTwoName = null;
       for (Map dateMap : list) {
@@ -80,7 +82,9 @@ public class IndicatorService {
         }
 
         indicatorImportDetailNew.setFileImportId(log.getId());
-        indicatorDetailRepository.save(indicatorImportDetailNew);
+        indicatorImportDetailNew.setProjectId(projectId);
+        //添加
+        details.add(indicatorImportDetailNew);
       }
 
 
@@ -102,9 +106,32 @@ public class IndicatorService {
       IndicatorBase indicatorBase = new IndicatorBase();
       BeanUtils.populate(indicatorBase, baseInfo);
       indicatorBase.setFileImportId(log.getId());
-      indicatorBaseRepository.save(indicatorBase);
+      view.setIndicatorBase(indicatorBase);
+
+      //保存
+      this.saveIndicator(view);
     }catch (Exception e){
       throw new MyException(e);
     }
+  }
+
+  /**
+   * 保存
+   * @param view
+   */
+  public void saveIndicator(IndicatorView view) {
+    List<IndicatorDetail> details  = view.getIndicatorDetails();
+    for (IndicatorDetail indicatorDetail : details) {
+      indicatorDetailRepository.save(indicatorDetail);
+    }
+    indicatorBaseRepository.save(view.getIndicatorBase());
+  }
+
+  /**
+   * 更新单个指标
+   * @param detail
+   */
+  public void updateIndicatorDetail(IndicatorDetail detail) {
+    indicatorDetailRepository.save(detail);
   }
 }

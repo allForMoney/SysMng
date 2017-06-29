@@ -1,23 +1,27 @@
 package com.resourcemng.entitys;
 
+import org.apache.xmlbeans.impl.util.Base64;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 /**
  * Created by Administrator on 2017-6-23.
  */
 @Entity
-public class Tuser {
+public class Tuser implements UserDetails {
   private String id;
-  private String userNo;
+  private String username;
   private String majorName;
-  private String userPassword;
+  private String password;
   private String userRole;
   private String note;
   private String isDelete;
   private String telephoneNum;
-  private String userName;
+//  private String userName;
 
   @Id
   @GeneratedValue(generator = "uuid")
@@ -33,12 +37,12 @@ public class Tuser {
 
   @Basic
   @Column(name = "USER_NO", nullable = false, length = 100)
-  public String getUserNo() {
-    return userNo;
+  public String getUsername() {
+    return username;
   }
 
-  public void setUserNo(String userNo) {
-    this.userNo = userNo;
+  public void setUsername(String username) {
+    this.username = username;
   }
 
   @Basic
@@ -53,12 +57,13 @@ public class Tuser {
 
   @Basic
   @Column(name = "USER_PASSWORD", nullable = false, length = 200)
-  public String getUserPassword() {
-    return userPassword;
+  public String getPassword() {
+  return new String(Base64.encode(this.password.getBytes()));
   }
 
-  public void setUserPassword(String userPassword) {
-    this.userPassword = userPassword;
+  public void setPassword(String password) {
+
+    this.password =  new String(Base64.encode(password.getBytes()));
   }
 
   @Basic
@@ -101,15 +106,15 @@ public class Tuser {
     this.telephoneNum = telephoneNum;
   }
 
-  @Basic
-  @Column(name = "USER_NAME", nullable = true, length = 20)
-  public String getUserName() {
-    return userName;
-  }
-
-  public void setUserName(String userName) {
-    this.userName = userName;
-  }
+//  @Basic
+//  @Column(name = "USER_NAME", nullable = true, length = 20)
+//  public String getUserName() {
+//    return userName;
+//  }
+//
+//  public void setUserName(String userName) {
+//    this.userName = userName;
+//  }
 
   @Override
   public boolean equals(Object o) {
@@ -119,14 +124,14 @@ public class Tuser {
     Tuser tuser = (Tuser) o;
 
     if (id != null ? !id.equals(tuser.id) : tuser.id != null) return false;
-    if (userNo != null ? !userNo.equals(tuser.userNo) : tuser.userNo != null) return false;
+    if (username != null ? !username.equals(tuser.username) : tuser.username != null) return false;
     if (majorName != null ? !majorName.equals(tuser.majorName) : tuser.majorName != null) return false;
-    if (userPassword != null ? !userPassword.equals(tuser.userPassword) : tuser.userPassword != null) return false;
+    if (password != null ? !password.equals(tuser.password) : tuser.password != null) return false;
     if (userRole != null ? !userRole.equals(tuser.userRole) : tuser.userRole != null) return false;
     if (note != null ? !note.equals(tuser.note) : tuser.note != null) return false;
     if (isDelete != null ? !isDelete.equals(tuser.isDelete) : tuser.isDelete != null) return false;
     if (telephoneNum != null ? !telephoneNum.equals(tuser.telephoneNum) : tuser.telephoneNum != null) return false;
-    if (userName != null ? !userName.equals(tuser.userName) : tuser.userName != null) return false;
+//    if (userName != null ? !userName.equals(tuser.userName) : tuser.userName != null) return false;
 
     return true;
   }
@@ -134,14 +139,40 @@ public class Tuser {
   @Override
   public int hashCode() {
     int result = id != null ? id.hashCode() : 0;
-    result = 31 * result + (userNo != null ? userNo.hashCode() : 0);
+    result = 31 * result + (username != null ? username.hashCode() : 0);
     result = 31 * result + (majorName != null ? majorName.hashCode() : 0);
-    result = 31 * result + (userPassword != null ? userPassword.hashCode() : 0);
+    result = 31 * result + (password != null ? password.hashCode() : 0);
     result = 31 * result + (userRole != null ? userRole.hashCode() : 0);
     result = 31 * result + (note != null ? note.hashCode() : 0);
     result = 31 * result + (isDelete != null ? isDelete.hashCode() : 0);
     result = 31 * result + (telephoneNum != null ? telephoneNum.hashCode() : 0);
-    result = 31 * result + (userName != null ? userName.hashCode() : 0);
+//    result = 31 * result + (userName != null ? userName.hashCode() : 0);
     return result;
+  }
+  @Transient
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return null;
+  }
+
+  @Transient
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
+  }
+  @Transient
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
+  }
+  @Transient
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
+  @Transient
+  @Override
+  public boolean isEnabled() {
+    return true;
   }
 }

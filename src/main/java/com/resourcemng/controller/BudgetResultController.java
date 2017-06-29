@@ -1,22 +1,12 @@
 package com.resourcemng.controller;
 
-import cn.afterturn.easypoi.excel.ExcelExportUtil;
-import cn.afterturn.easypoi.excel.entity.ExportParams;
-import com.resourcemng.FileUitl;
-import com.resourcemng.entitys.LeaveMessage;
-import com.resourcemng.entitys.Project;
-import com.resourcemng.entitys.Tuser;
 import com.resourcemng.service.BudgetResultService;
-import com.resourcemng.service.ProjectService;
 import com.resourcemng.view.BudgetReportView;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
 
 /**
  * 季报
@@ -25,10 +15,16 @@ import java.io.*;
 @RequestMapping("/budgetresult")
 public class BudgetResultController {
   BudgetResultService budgetResultService;
+
+  /**
+   * 查看所有项目的季报
+   * @return
+   * @throws Exception
+   */
   @RequestMapping(value = "all" ,method = RequestMethod.GET)
   @ResponseBody
-  public Object findAll() throws Exception {
-    return budgetResultService.findAll();
+  public Object getAll(@RequestParam String projectId,String year,String quarter) throws Exception {
+    return budgetResultService.findByParam(projectId,year,quarter);
   }
 
   /**
@@ -59,7 +55,7 @@ public class BudgetResultController {
 
   /**
    * 获取季报信息
-   * @param projectNo
+   * @param projectId
    * @param projectYear
    * @param quarterNum
    * @return
@@ -67,10 +63,10 @@ public class BudgetResultController {
    */
   @RequestMapping(value = "/quarterly/detail" ,method = RequestMethod.GET)
   @ResponseBody
-  public Object getQuarterlyDetail(@RequestParam String projectNo,@RequestParam String projectYear,@RequestParam String quarterNum) throws Exception {
+  public Object getQuarterlyDetail(@RequestParam String projectId,@RequestParam String projectYear,@RequestParam String quarterNum) throws Exception {
 
-    budgetResultService.getQuarterlyDetail(projectNo,projectYear,quarterNum);
-    return "报告成功";
+    budgetResultService.getQuarterlyDetail(projectId,projectYear,quarterNum);
+    return "查询成功";
   }
 
   /**

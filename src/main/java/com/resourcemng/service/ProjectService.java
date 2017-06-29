@@ -8,7 +8,9 @@ import com.resourcemng.entitys.Project;
 import com.resourcemng.entitys.Tuser;
 import com.resourcemng.repository.ProjectRepository;
 import com.resourcemng.repository.TUserRepository;
+import com.resourcemng.util.ApplicationUitl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,10 @@ public class ProjectService {
   ProjectRepository projectRepository;
   @Autowired
   TUserRepository userRepository;
+
+  @Value("${app.user.defaultpassword}")
+  private String defaultPass = "654321";
+
   @Transactional
    public Project createPorject(Project project) throws MyException {
      try {
@@ -29,8 +35,8 @@ public class ProjectService {
        // 可以不要
        reportUser.setMajorName(project.getMajorName());
        reportUser.setUserRole(UserRole.REPORT);
-       reportUser.setUserNo(project.getProjectNo() + "-1");
-       reportUser.setUserPassword("654321");
+       reportUser.setUsername(project.getProjectNo() + "-1");
+       reportUser.setPassword(defaultPass);
        //用户名空字段，可以不要
 //     reportUser.setUserName(project.getReportHead());
        reportUser.setTelephoneNum(project.getReporterTel());
@@ -42,16 +48,16 @@ public class ProjectService {
        Tuser financeUser = new Tuser();
        financeUser.setUserRole(UserRole.FINANCE);
        financeUser.setMajorName(project.getMajorName());
-       financeUser.setUserNo(project.getProjectNo() + "-2");
-       financeUser.setUserPassword("654321");
+       financeUser.setUsername(project.getProjectNo() + "-2");
+       financeUser.setPassword(defaultPass);
        financeUser.setTelephoneNum(project.getFinaceHeaderTel());
        userRepository.save(financeUser);
        //项目负责人
        Tuser projectUser = new Tuser();
        projectUser.setUserRole(UserRole.PROJECTHEADER);
        projectUser.setMajorName(project.getMajorName());
-       projectUser.setUserNo(project.getProjectNo() + "-3");
-       projectUser.setUserPassword("654321");
+       projectUser.setUsername(project.getProjectNo() + "-3");
+       projectUser.setPassword(defaultPass);
        projectUser.setTelephoneNum(project.getProjectHeaderTel());
        userRepository.save(projectUser);
 
@@ -108,7 +114,7 @@ public class ProjectService {
       throw new MyException("您的文件中没用任何项目信息，请确认文件");
     }
     for(Project p:list){
-      if (p.getProjectNo() != null){
+      if (p.getProjectNo() != null){//项目编号不能为空
        this.createPorject(p);
       }
     }
@@ -144,8 +150,8 @@ public class ProjectService {
    */
   public void changePorjectUser(Tuser user) throws MyException {
     try {
-      String userNo = user.getUserNo();
-      String projectNo = userNo.substring(0, userNo.lastIndexOf('-') );
+      String userNo = user.getUsername();
+      String projectNo = ApplicationUitl.getPorjectNoByReportUserNo(userNo);
       String lastIndex = userNo.substring(userNo.length() - 1, userNo.length());
       Tuser tuser = this.userRepository.findByUserNo(userNo);
       Project project = this.projectRepository.findByProjectNo(projectNo);

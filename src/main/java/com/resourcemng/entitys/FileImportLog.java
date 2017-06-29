@@ -35,6 +35,7 @@ public class FileImportLog {
   @Temporal(TemporalType.TIMESTAMP)
   @org.hibernate.annotations.CreationTimestamp
   @Column(name = "IMPORT_DATE", nullable = false)
+  @OrderBy("importDate ASC")
   public Date getImportDate() {
     return importDate;
   }

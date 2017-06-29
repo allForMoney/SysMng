@@ -3,7 +3,7 @@ package com.resourcemng.entitys;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Created by Administrator on 2017-6-23.
@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 @Table(name = "budget_adjust", schema = "budget_resource", catalog = "")
 public class BudgetAdjust {
   private String id;
-  private Timestamp importDate;
+  private Date importDate;
   private String fileName;
   private String attachment1;
   private String attachment2;
@@ -33,11 +33,11 @@ public class BudgetAdjust {
 
   @Basic
   @Column(name = "ImportDate", nullable = false)
-  public Timestamp getImportDate() {
+  public Date getImportDate() {
     return importDate;
   }
 
-  public void setImportDate(Timestamp importDate) {
+  public void setImportDate(Date importDate) {
     this.importDate = importDate;
   }
 

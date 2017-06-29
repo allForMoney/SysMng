@@ -16,14 +16,14 @@ import java.util.List;
  * @blog http://blog.didispace.com
  */
 public interface TUserRepository extends JpaRepository<Tuser, String> {
-  @Query("from Tuser u where u.userNo like CONCAT('%',:projectNo,'%')")
+  @Query("from Tuser u where u.username like CONCAT('%',:projectNo,'%')")
     List<Tuser> findByProject(@Param("projectNo") String projectNo);
 
   @Modifying
-  @Query("delete from Tuser u where u.userNo like CONCAT('%',:projectNo,'%')")
+  @Query("delete from Tuser u where u.username like CONCAT('%',:projectNo,'%')")
     void deleteByProjectNo(@Param("projectNo")String projectNo);
 
-  @Query("from Tuser u where u.userNo=:userNo")
+  @Query("from Tuser u where u.username=:userNo")
   Tuser findByUserNo(@Param("userNo")String userNo);
 
 //    @Query("from User u where u.name=:name")

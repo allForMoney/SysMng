@@ -1,10 +1,9 @@
 package com.resourcemng.controller;
 
-import com.resourcemng.FileUitl;
-import com.resourcemng.entitys.BudgetImportDetailNew;
-import com.resourcemng.entitys.LeaveMessage;
-import com.resourcemng.service.BudgetService;
+import com.resourcemng.entitys.IndicatorDetail;
+import com.resourcemng.util.FileUitl;
 import com.resourcemng.service.IndicatorService;
+import com.resourcemng.view.IndicatorView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -52,5 +51,27 @@ public class IndicatorController {
     }
   }
 
+  /**
+   * 绩效手动填写
+   * @param view
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "/updatedetail" ,method = RequestMethod.POST)
+  @ResponseBody
+  public void updateIndicatorDetail(IndicatorDetail detail) throws Exception {
+     service.updateIndicatorDetail(detail);
+  }
+  /**
+   * 绩效手动填写
+   * @param view
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(method = RequestMethod.POST)
+  @ResponseBody
+  public void updateIndicatorDetail(IndicatorView view) throws Exception {
+     service.saveIndicator(view);
+  }
 
 }
