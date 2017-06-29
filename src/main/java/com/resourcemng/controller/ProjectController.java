@@ -97,8 +97,8 @@ public class ProjectController {
   @RequestMapping(value = "/all",method = RequestMethod.GET)
   @ResponseBody
   public Object find(String projectNo,String majorName,String schoolName) throws Exception {
-    service.find(projectNo,majorName,schoolName);
-    return "删除成功";
+    return service.find(projectNo,majorName,schoolName);
+
   }
 
   /**

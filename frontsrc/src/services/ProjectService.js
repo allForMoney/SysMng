@@ -7,7 +7,7 @@ export function getProjectInfoById(params) {
 }
 
 export function getProjectList(params) {
-  return request(`/project/getProjectList?${qs.stringify(params)}`);
+  return request(`/project/all?${qs.stringify(params)}`);
 }
 
 export function getBudgetRecList(params) {

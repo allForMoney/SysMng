@@ -13,7 +13,7 @@ import java.io.IOException;
 public class FileUitl {
   //文件上传路径，在配置文件中配置
   @Value("${app.file.upload-path}")
-  private static String path;
+  private static String path="/Users/heyuqing/Desktop/ws/SysMng/uploadFiles";
 
   /**
    *
