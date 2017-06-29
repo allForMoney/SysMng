@@ -25,15 +25,17 @@ import java.util.List;
 public class BudgetAdjustController {
   @Autowired
   BudgetAdjustService service;
+  @Autowired
+  FileUitl fileUitl;
   @RequestMapping(value = "/import/{projectId}" ,method = RequestMethod.POST)
   @ResponseBody
   public Object uploadBudget(@PathVariable String projectId,@RequestParam String year,HttpServletRequest request) throws Exception {
     List<MultipartFile> files =((MultipartHttpServletRequest)request).getFiles("file");
     if (!files.isEmpty() && files.size() >=3) {
       try {
-        File requestFile = FileUitl.saveUploadFile(files.get(0) );
-        File adjustFile = FileUitl.saveUploadFile(files.get(1) );
-        File descriptionFile = FileUitl.saveUploadFile(files.get(2) );
+        File requestFile = fileUitl.saveUploadFile(files.get(0) );
+        File adjustFile = fileUitl.saveUploadFile(files.get(1) );
+        File descriptionFile = fileUitl.saveUploadFile(files.get(2) );
         service.adjust(projectId,year,requestFile,adjustFile,descriptionFile);
       } catch (FileNotFoundException e) {
         e.printStackTrace();

@@ -5,6 +5,7 @@ import cn.afterturn.easypoi.excel.entity.ImportParams;
 import com.resourcemng.entitys.Project;
 import com.resourcemng.service.BudgetService;
 import com.resourcemng.service.ProjectService;
+import com.resourcemng.util.FileUitl;
 import net.minidev.json.JSONUtil;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,6 +38,8 @@ public class ProjectServiceTests {
   }
   @Autowired
   private ProjectService service;
+  @Autowired
+  private FileUitl util;
   @Test
   public void test() throws Exception {
     service.importPorjectByFile(new File("E:\\项目资料\\新建文件夹\\模板\\项目模板.xlsx"));
@@ -44,6 +47,7 @@ public class ProjectServiceTests {
 
   @Test
   public void testGet() throws Exception {
+    util.getPath();
     Project project =  service.get("2016-02");
     System.out.println();
 

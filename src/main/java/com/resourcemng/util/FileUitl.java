@@ -2,6 +2,7 @@ package com.resourcemng.util;
 
 import com.resourcemng.basic.MyException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -10,10 +11,11 @@ import java.io.IOException;
 /**
  * Created by 燕子 on 2017/6/20.
  */
+@Component
 public class FileUitl {
   //文件上传路径，在配置文件中配置
   @Value("${app.file.upload-path}")
-  private static String path;
+  private  String path;
 
   /**
    *
@@ -22,7 +24,7 @@ public class FileUitl {
    * @throws MyException
    * @throws IOException
    */
- public static File saveUploadFile(MultipartFile uploadFile ) throws MyException, IOException {
+ public  File saveUploadFile(MultipartFile uploadFile ) throws MyException, IOException {
     if(checkUploadFolderExit() == false){
       throw new MyException("创建上传目录失败，请联系管理员");
     }
@@ -35,7 +37,7 @@ public class FileUitl {
    *
    * @return
    */
-  public static boolean checkUploadFolderExit(){
+  public  boolean checkUploadFolderExit(){
     File file = new File(getPath());
     if(file.exists()){
       return true;
@@ -45,7 +47,7 @@ public class FileUitl {
 
   }
 
-  public static String getPath() {
+  public  String getPath() {
     return path;
   }
 

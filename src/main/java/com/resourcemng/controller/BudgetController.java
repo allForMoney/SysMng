@@ -21,6 +21,8 @@ import java.io.IOException;
 public class BudgetController {
   @Autowired
   BudgetService service;
+  @Autowired
+  FileUitl fileUitl;
   //文件上传保存路径
 
 
@@ -45,7 +47,7 @@ public class BudgetController {
         // 这里只是简单例子，文件直接输出到项目路径下。
         // 实际项目中，文件需要输出到指定位置，需要在增加代码处理。
         // 还有关于文件格式限制、文件大小限制，详见：中配置。
-        File uploadFile = FileUitl.saveUploadFile(file );
+        File uploadFile = fileUitl.saveUploadFile(file );
         service.importBudgetFormFile(projectId,importUser,importType,budgetYear,uploadFile);
       } catch (FileNotFoundException e) {
         e.printStackTrace();

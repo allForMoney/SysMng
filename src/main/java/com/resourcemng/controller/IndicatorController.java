@@ -21,6 +21,8 @@ import java.io.IOException;
 public class IndicatorController {
   @Autowired
   IndicatorService service;
+  @Autowired
+  FileUitl fileUitl;
   //文件上传保存路径
 
 
@@ -36,7 +38,7 @@ public class IndicatorController {
   MultipartFile file ) throws Exception {
     if (!file.isEmpty()) {
       try {
-        File uploadFile = FileUitl.saveUploadFile(file );
+        File uploadFile = fileUitl.saveUploadFile(file );
         service.importFormFile(projectId,importUser,uploadFile);
       } catch (FileNotFoundException e) {
         e.printStackTrace();
@@ -53,7 +55,7 @@ public class IndicatorController {
 
   /**
    * 绩效手动填写
-   * @param view
+   * @param detail
    * @return
    * @throws Exception
    */

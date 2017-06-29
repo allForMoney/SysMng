@@ -30,14 +30,14 @@ public class AuthController {
    */
   @RequestMapping (value = "/login",method =  RequestMethod.POST)
   public @ResponseBody
-  Object loginPost(String year, String userNo, String password, HttpSession session) {
+  Object loginPost(Tuser tuser ) {
     Map<String, Object> map = new HashMap<>();
-    Tuser user =  service.getUser(userNo);
-    if (user == null ||!user.getPassword().equals(password)) {
+    Tuser user =  service.getUser(tuser.getUsername());
+    if (user == null ||!user.getPassword().equals(tuser.getPassword())) {
      return new MyException("用户名密码不正确");
     }
     // 设置session
-    session.setAttribute(SESSION_KEY, user);
+//    session.setAttribute(SESSION_KEY, user);
     return user;
   }
 

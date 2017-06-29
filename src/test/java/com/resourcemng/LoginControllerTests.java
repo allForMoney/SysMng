@@ -28,9 +28,9 @@ public class LoginControllerTests {
   }
   @Autowired
   private AuthController authController;
-  @Test
-  public void test() throws Exception {
-    System.out.println( new String(Base64.encode("654321".getBytes())));
-    authController.loginPost("","cws666","654321",null);
-  }
+//  @Test
+//  public void test() throws Exception {
+//    System.out.println( new String(Base64.encode("654321".getBytes())));
+//    authController.loginPost("","cws666","654321",null);
+//  }
 }
