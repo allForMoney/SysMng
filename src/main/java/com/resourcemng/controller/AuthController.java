@@ -20,7 +20,16 @@ public class AuthController {
   @Autowired
   UserService service;
   String SESSION_KEY = "user";
-
+  /**
+   * 登录
+   * @param tuser
+   * @return
+   */
+  @RequestMapping (value = "/aa",method =  RequestMethod.GET)
+  public @ResponseBody
+  Object test(Tuser tuser ) {
+   return "HDDD AHA";
+  }
   /**
    * 登录
    * @param tuser
