@@ -28,7 +28,7 @@ public class AuthController {
   @RequestMapping (value = "/aa",method =  RequestMethod.GET)
   public @ResponseBody
   Object test(Tuser tuser ) {
-   return "HDDD AHA";
+   return "H ddddd AHA";
   }
   /**
    * 登录
