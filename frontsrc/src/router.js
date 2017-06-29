@@ -21,7 +21,7 @@ import ProjectBaseInfo from './components/project/ProjectBaseInfo';
 function RouterConfig({ history }) {
   return (
     <Router history={history}>
-      <Route path="/" component={LoginForm} />
+      <Route path="/" component={Blank} />
       <Route path="/blank" component={Blank} />
       <Route path="/budget/base" component={ProjectBaseInfo} />
       <Route path="/budget/project" component={ProjectBudget} />

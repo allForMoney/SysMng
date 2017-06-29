@@ -72,7 +72,7 @@ class LoginForm extends React.Component {
           )}
         </FormItem>
         <FormItem label="账号" {...formWraper}>
-          {getFieldDecorator('login', {
+          {getFieldDecorator('username', {
             rules: [{ required: true, message: '请输入您的账号' }],
           })(
             <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="Username" />

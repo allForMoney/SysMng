@@ -10,7 +10,7 @@ import fetch from 'dva/fetch';
 export default async function request(url, options) {
   if (options && options.method) {
     options.headers = { 
-      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+      "Content-Type": "application/json; charset=UTF-8"
     },
     options.body = options.data
 
