@@ -62,7 +62,7 @@ public class ProjectController {
         throw new MyException(e);
       }
     } else {
-      return new RequestResult(ResultCode.SUCCESS, "上传失败，因为文件是空的.",   null);
+      return new RequestResult(ResultCode.FAILED, "上传失败，因为文件是空的.",   null);
     }
   }
 
