@@ -50,7 +50,7 @@ class ImportBudget16 extends React.Component {
       projectNo,
      } = this.state;
 
-    const action = `/budget/import/${projectInfo.id}?importUser=${userType}&importType=1`;
+    const action = `/budget/import/${projectInfo.id}?importUser=${userType}&importType=1&budgetYear=2016`;
 
     const uploadProps = {
       name: 'file',
