@@ -19,9 +19,8 @@ public interface TUserRepository extends JpaRepository<Tuser, String> {
   @Query("from Tuser u where u.username like CONCAT('%',:projectNo,'%')")
     List<Tuser> findByProject(@Param("projectNo") String projectNo);
 
-  @Modifying
-  @Query("delete from Tuser u where u.username like CONCAT('%',:projectNo,'%')")
-    void deleteByProjectNo(@Param("projectNo")String projectNo);
+//  @Query("delete from Tuser u where u.username like CONCAT('%',:projectNo,'%')")
+    void deleteByUsernameLike(/*@Param("projectNo")*/String username);
 
   @Query("from Tuser u where u.username=:userNo")
   Tuser findByUserNo(@Param("userNo")String userNo);
