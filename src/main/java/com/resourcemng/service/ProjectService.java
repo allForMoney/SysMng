@@ -11,6 +11,8 @@ import com.resourcemng.repository.TUserRepository;
 import com.resourcemng.util.ApplicationUitl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -136,11 +138,11 @@ public class ProjectService {
    * @param majorName
    * @param schoolName
    */
-  public  List<Project> find(String projectNo, String majorName, String schoolName) {
+  public Page find(String projectNo, String majorName, String schoolName, Pageable pageable) {
     projectNo = projectNo ==null?"":projectNo;
     majorName = majorName ==null?"":majorName;
     schoolName = schoolName ==null?"":schoolName;
-      return this.projectRepository.findByParams(projectNo,majorName,schoolName);
+      return this.projectRepository.findByProjectNoLikeAndMajorNameLikeAndSchoolNameLike(projectNo,majorName,schoolName,pageable);
    }
 
   /**

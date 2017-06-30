@@ -12,6 +12,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.List;
+
 
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
@@ -33,5 +35,13 @@ public class ProjectControllerTests {
     project.setId("2");
     projectController.create(project);
   }
+
+  @Test
+  public void testGetAll() throws Exception {
+   Object project =  projectController.find(null,null,null,"0","2");
+    System.out.println();
+
+  }
+
 
 }

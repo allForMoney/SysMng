@@ -52,11 +52,6 @@ public class ProjectServiceTests {
     System.out.println();
 
   }
-  @Test
-  public void testGetAll() throws Exception {
-    List<Project>  project =  service.find(null,null,null);
-    System.out.println();
 
-  }
 
 }
