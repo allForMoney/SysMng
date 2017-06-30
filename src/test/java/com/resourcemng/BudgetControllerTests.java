@@ -29,5 +29,6 @@ public class BudgetControllerTests {
   private BudgetController budgetController;
   @Test
   public void test() throws Exception {
+    Object obj = budgetController.getByProject("402881f05cf98f57015cf98f68030003");
   }
 }
