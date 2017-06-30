@@ -1,10 +1,15 @@
 package com.resourcemng.controller;
 
+import com.resourcemng.basic.MyException;
+import com.resourcemng.basic.RequestResult;
+import com.resourcemng.basic.ResultCode;
 import com.resourcemng.util.FileUitl;
 import com.resourcemng.entitys.Project;
 import com.resourcemng.entitys.Tuser;
 import com.resourcemng.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,10 +34,10 @@ public class ProjectController {
    * @return
    * @throws Exception
    */
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/create" ,method = RequestMethod.POST)
     @ResponseBody
     public Object create(@RequestBody Project project) throws Exception {
-       return service.createPorject(project);
+      return new RequestResult(ResultCode.SUCCESS, "创建项目成功.",   service.createPorject(project));
     }
 
   /**
@@ -50,18 +55,14 @@ public class ProjectController {
         // 这里只是简单例子，文件直接输出到项目路径下。
         // 实际项目中，文件需要输出到指定位置，需要在增加代码处理。
         // 还有关于文件格式限制、文件大小限制，详见：中配置。
-        File uploadFile = fileUitl.saveUploadFile(file );
+        File uploadFile = fileUitl.saveUploadFile(file);
         service.importPorjectByFile(uploadFile);
-      } catch (FileNotFoundException e) {
-        e.printStackTrace();
-        return "上传失败," + e.getMessage();
-      } catch (IOException e) {
-        e.printStackTrace();
-        return "上传失败," + e.getMessage();
+        return new RequestResult(ResultCode.SUCCESS, "上传成功", null);
+      }catch (Exception e){
+        throw new MyException(e);
       }
-      return "上传成功";
     } else {
-      return "上传失败，因为文件是空的.";
+      return new RequestResult(ResultCode.SUCCESS, "上传失败，因为文件是空的.",   null);
     }
   }
 
@@ -71,10 +72,10 @@ public class ProjectController {
    * @return
    * @throws Exception
    */
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(value = "/update" ,method = RequestMethod.POST)
     @ResponseBody
     public Object update(@RequestBody Project project) throws Exception {
-    return service.updatePorject(project);
+      return new RequestResult(ResultCode.SUCCESS, "更新成功",   service.updatePorject(project));
     }
 
   /**
@@ -83,11 +84,11 @@ public class ProjectController {
    * @return
    * @throws Exception
    */
-  @RequestMapping(value = "/{projectNo}",method = RequestMethod.DELETE)
+  @RequestMapping(value = "/delete" ,method = RequestMethod.POST)
   @ResponseBody
-  public Object delete(@PathVariable("projectNo") String projectNo) throws Exception {
+  public Object delete(@RequestParam("projectNo") String projectNo) throws Exception {
     service.deletePorject(projectNo);
-    return "删除成功";
+    return new RequestResult(ResultCode.SUCCESS, "删除成功",  null );
   }
 
   /**
@@ -98,9 +99,9 @@ public class ProjectController {
    */
   @RequestMapping(value = "/all",method = RequestMethod.GET)
   @ResponseBody
-  public Object find(String projectNo,String majorName,String schoolName) throws Exception {
-    return service.find(projectNo,majorName,schoolName);
-
+  public Object find(String projectNo,String majorName,String schoolName,String page,String size) throws Exception {
+    Pageable pageable = new PageRequest(Integer.parseInt(page),Integer.parseInt(size));
+    return new RequestResult(ResultCode.SUCCESS, "获取成功",  service.find(projectNo,majorName,schoolName,pageable));
   }
 
   /**
@@ -109,10 +110,11 @@ public class ProjectController {
    * @return
    * @throws Exception
    */
-  @RequestMapping(value = "/{projectNo}", method = RequestMethod.GET)
+  @RequestMapping(value = "/get", method = RequestMethod.GET)
   @ResponseBody
-  public Object get(@PathVariable("projectNo") String projectNo) throws Exception {
-    return service.get(projectNo);
+  public Object get(@RequestParam("projectNo") String projectNo) throws Exception {
+
+    return new RequestResult(ResultCode.SUCCESS, "获取明细成功",  service.get(projectNo));
   }
 
   /**
@@ -125,7 +127,7 @@ public class ProjectController {
   @ResponseBody
   public Object changePorjectUser(@ModelAttribute Tuser user) throws Exception {
      service.changePorjectUser(user);
-     return "保存成功";
+    return new RequestResult(ResultCode.SUCCESS, "保存成功", "保存成功");
   }
 
 }
