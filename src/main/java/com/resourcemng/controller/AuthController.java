@@ -1,6 +1,8 @@
 package com.resourcemng.controller;
 
 import com.resourcemng.basic.MyException;
+import com.resourcemng.basic.RequestResult;
+import com.resourcemng.basic.ResultCode;
 import com.resourcemng.entitys.Tuser;
 import com.resourcemng.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +46,7 @@ public class AuthController {
      return new MyException("用户名密码不正确");
     }
     // 设置session
-//    session.setAttribute(SESSION_KEY, user);
-    return user;
+    return new RequestResult(ResultCode.SUCCESS, "登录成功.",   user);
   }
 
   /**

@@ -1,5 +1,7 @@
 package com.resourcemng.controller;
 
+import com.resourcemng.basic.RequestResult;
+import com.resourcemng.basic.ResultCode;
 import com.resourcemng.service.BudgetResultService;
 import com.resourcemng.view.BudgetReportView;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -12,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  * 季报
  */
 @Controller
-@RequestMapping("/budgetresult")
+@RequestMapping("/budget/report")
 public class BudgetResultController {
   BudgetResultService budgetResultService;
 
@@ -24,7 +26,8 @@ public class BudgetResultController {
   @RequestMapping(value = "all" ,method = RequestMethod.GET)
   @ResponseBody
   public Object getAll(@RequestParam String projectId,String year,String quarter) throws Exception {
-    return budgetResultService.findByParam(projectId,year,quarter);
+    return new RequestResult(ResultCode.SUCCESS, "获取成功.",   budgetResultService.findByParam(projectId,year,quarter));
+
   }
 
   /**
@@ -33,11 +36,12 @@ public class BudgetResultController {
    * @return
    * @throws Exception
    */
-  @RequestMapping(value = "/quarterly" ,method = RequestMethod.POST)
+  @RequestMapping(value = "/create" ,method = RequestMethod.POST)
   @ResponseBody
   public Object quarterlyReport(@RequestBody BudgetReportView view) throws Exception {
     budgetResultService.quarterlyReport(view);
-    return "报告成功";
+    return new RequestResult(ResultCode.SUCCESS, "创建报告成功.",   null);
+
   }
 
   /**
@@ -46,11 +50,11 @@ public class BudgetResultController {
    * @return
    * @throws Exception
    */
-  @RequestMapping(value = "/quarterly" ,method = RequestMethod.PUT)
+  @RequestMapping(value = "/update" ,method = RequestMethod.POST)
   @ResponseBody
   public Object quarterlyReportUpdate(@RequestBody BudgetReportView view) throws Exception {
     budgetResultService.quarterlyReportUpdate(view);
-    return "更新报告成功";
+    return new RequestResult(ResultCode.SUCCESS, "更新报告成功.",   null);
   }
 
   /**
@@ -65,8 +69,7 @@ public class BudgetResultController {
   @ResponseBody
   public Object getQuarterlyDetail(@RequestParam String projectId,@RequestParam String projectYear,@RequestParam String quarterNum) throws Exception {
 
-    budgetResultService.getQuarterlyDetail(projectId,projectYear,quarterNum);
-    return "查询成功";
+    return new RequestResult(ResultCode.SUCCESS, "获取明细成功.",   budgetResultService.getQuarterlyDetail(projectId,projectYear,quarterNum));
   }
 
   /**
@@ -84,7 +87,7 @@ public class BudgetResultController {
   public Object quarterlyReportAudit(@RequestParam String projectId,@RequestParam String projectYear,@RequestParam String quarterNum,@RequestParam String auditType, String auditContent) throws Exception {
 
     budgetResultService.quarterlyReportAudit(projectId,projectYear,quarterNum,auditType,auditContent);
-    return "报告成功";
+    return new RequestResult(ResultCode.SUCCESS, "提交审批成功.",   null);
   }
 
   /**
@@ -95,7 +98,7 @@ public class BudgetResultController {
    * @param response
    * @throws Exception
    */
-  @RequestMapping(value = "/quarterly/download" ,method = RequestMethod.POST)
+  @RequestMapping(value = "/quarterly/download" ,method = RequestMethod.GET)
   @ResponseBody
   public void quarterlyReportDownload(@RequestParam String projectId,@RequestParam String projectYear,@RequestParam String quarterNum, HttpServletResponse response) throws Exception {
 
