@@ -62,7 +62,7 @@ public class ProjectController {
         throw new MyException(e);
       }
     } else {
-      return new RequestResult(ResultCode.SUCCESS, "上传失败，因为文件是空的.",   null);
+      return new RequestResult(ResultCode.FAILED, "上传失败，因为文件是空的.",   null);
     }
   }
 
@@ -100,7 +100,7 @@ public class ProjectController {
   @RequestMapping(value = "/all",method = RequestMethod.GET)
   @ResponseBody
   public Object find(String projectNo,String majorName,String schoolName,String page,String size) throws Exception {
-    Pageable pageable = new PageRequest(Integer.parseInt(page),Integer.parseInt(size));
+    Pageable pageable = new PageRequest(Integer.parseInt(page)-1,Integer.parseInt(size));
     return new RequestResult(ResultCode.SUCCESS, "获取成功",  service.find(projectNo,majorName,schoolName,pageable));
   }
 

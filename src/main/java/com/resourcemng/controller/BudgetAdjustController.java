@@ -1,5 +1,7 @@
 package com.resourcemng.controller;
 
+import com.resourcemng.basic.RequestResult;
+import com.resourcemng.basic.ResultCode;
 import com.resourcemng.entitys.BudgetImportDetailNew;
 import com.resourcemng.entitys.LeaveMessage;
 import com.resourcemng.service.BudgetAdjustService;
@@ -32,21 +34,13 @@ public class BudgetAdjustController {
   public Object uploadBudget(@PathVariable String projectId,@RequestParam String year,HttpServletRequest request) throws Exception {
     List<MultipartFile> files =((MultipartHttpServletRequest)request).getFiles("file");
     if (!files.isEmpty() && files.size() >=3) {
-      try {
         File requestFile = fileUitl.saveUploadFile(files.get(0) );
         File adjustFile = fileUitl.saveUploadFile(files.get(1) );
         File descriptionFile = fileUitl.saveUploadFile(files.get(2) );
         service.adjust(projectId,year,requestFile,adjustFile,descriptionFile);
-      } catch (FileNotFoundException e) {
-        e.printStackTrace();
-        return "上传失败," + e.getMessage();
-      } catch (IOException e) {
-        e.printStackTrace();
-        return "上传失败," + e.getMessage();
-      }
-      return "上传成功";
+      return new RequestResult(ResultCode.SUCCESS, "上传成功",   null);
     } else {
-      return "上传失败，因为文件是空的.";
+      return new RequestResult(ResultCode.FAILED, "上传成功",   null);
     }
   }
 }
