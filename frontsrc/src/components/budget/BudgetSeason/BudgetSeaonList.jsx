@@ -12,6 +12,7 @@ class BudgetSeaonList extends React.Component {
       type: 'budgetModel/getBudgetRecList',
     });
   }
+
   onPageChanged = (page) => {
     this.props.dispatch({
       type: 'budgetModel/setState',
