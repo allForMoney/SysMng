@@ -3,12 +3,13 @@ package com.resourcemng.entitys;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by Administrator on 2017-6-23.
  */
 @Entity
-public class Commoncode {
+public class Commoncode implements Serializable {
   private String id;
   private String name;
   private String remark;

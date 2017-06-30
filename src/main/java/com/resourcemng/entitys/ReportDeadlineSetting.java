@@ -3,13 +3,14 @@ package com.resourcemng.entitys;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by Administrator on 2017-6-23.
  */
 @Entity
 @Table(name = "report_deadline_setting", schema = "budget_resource", catalog = "")
-public class ReportDeadlineSetting {
+public class ReportDeadlineSetting implements Serializable {
   private String id;
   private String value;
   private String remark;

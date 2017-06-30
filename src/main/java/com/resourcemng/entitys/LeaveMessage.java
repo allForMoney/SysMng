@@ -3,6 +3,7 @@ package com.resourcemng.entitys;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "leave_message", schema = "budget_resource", catalog = "")
-public class LeaveMessage {
+public class LeaveMessage implements Serializable {
   private String id;
   private String mesType;
   private String contents;

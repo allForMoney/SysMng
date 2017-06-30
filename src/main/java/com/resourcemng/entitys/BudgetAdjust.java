@@ -3,6 +3,7 @@ package com.resourcemng.entitys;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "budget_adjust", schema = "budget_resource", catalog = "")
-public class BudgetAdjust {
+public class BudgetAdjust implements Serializable {
   private String id;
   private Date importDate;
   private String fileName;
