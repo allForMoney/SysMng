@@ -3,13 +3,14 @@ package com.resourcemng.entitys;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by Administrator on 2017-6-23.
  */
 @Entity
 @Table(name = "budget_import_detail_old", schema = "budget_resource", catalog = "")
-public class BudgetImportDetailOld {
+public class BudgetImportDetailOld implements Serializable {
   private String id;
   private String sequenceNo;
   private String useFor;

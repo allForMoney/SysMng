@@ -5,13 +5,14 @@ import com.resourcemng.Enum.IsDelete;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
  * Created by Administrator on 2017-6-23.
  */
 @Entity
-public class Project {
+public class Project implements Serializable{
   private String id;
   @Excel(name="学校名称")
   private String schoolName;

@@ -3,13 +3,14 @@ package com.resourcemng.entitys;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by Administrator on 2017-6-23.
  */
 @Entity
 @Table(name = "indicator_detail", schema = "budget_resource", catalog = "")
-public class IndicatorDetail {
+public class IndicatorDetail implements Serializable {
   private String id;
   private String fileImportId;
   private String projectId;

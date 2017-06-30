@@ -3,6 +3,7 @@ package com.resourcemng.entitys;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -10,7 +11,7 @@ import java.util.Date;
  * Created by Administrator on 2017-6-23.
  */
 @Entity
-public class Sitelog {
+public class Sitelog implements Serializable {
   private String id;
   private String url;
   private String action;

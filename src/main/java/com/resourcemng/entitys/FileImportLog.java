@@ -3,6 +3,7 @@ package com.resourcemng.entitys;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -11,7 +12,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "file_import_log", schema = "budget_resource", catalog = "")
-public class FileImportLog {
+public class FileImportLog implements Serializable {
   private String id;
   private Date importDate = new Date();;
   private String fileName;

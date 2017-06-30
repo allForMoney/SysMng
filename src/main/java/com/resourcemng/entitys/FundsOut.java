@@ -4,6 +4,7 @@ import com.resourcemng.Enum.IsDelete;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -13,7 +14,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "funds_out", schema = "budget_resource", catalog = "")
-public class FundsOut {
+public class FundsOut implements Serializable {
   private String id;
   private BigDecimal materialMake;
   private BigDecimal companyCase;

@@ -5,6 +5,7 @@ import com.resourcemng.Enum.ReportStatus;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "report_audit_log", schema = "budget_resource", catalog = "")
-public class ReportAuditLog {
+public class ReportAuditLog implements Serializable {
   private String id;
   private String year;
   private String quarter;

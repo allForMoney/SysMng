@@ -4,13 +4,14 @@ import org.apache.tomcat.util.security.MD5Encoder;
 import org.apache.xmlbeans.impl.util.Base64;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 
 /**
  * Created by Administrator on 2017-6-23.
  */
 @Entity
-public class Tuser  {
+public class Tuser implements Serializable {
   private String id;
   private String username;
   private String majorName;
