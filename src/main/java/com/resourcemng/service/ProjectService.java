@@ -85,11 +85,23 @@ public class ProjectService {
 
   /**
    *
+   * @param projectNos
+   */
+  public void  deletePorjects(List<String> projectNos){
+   if(projectNos == null){
+    return;
+   }
+   for(String projectNo:projectNos){
+      this.deletePorject(projectNo);
+   }
+  }
+  /**
+   *
    * @param projectNo
    */
   public void  deletePorject(String projectNo){
     //删除关联用户
-    userRepository.deleteByProjectNo(projectNo);
+    userRepository.deleteByUsernameLike(projectNo);
     //删除项目信息
     projectRepository.deleteByNo(projectNo);
   }
