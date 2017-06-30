@@ -36,6 +36,27 @@ class AddProjectModal extends React.Component  {
       <Form layout="horizontal">
         <FormItemInfo
           getFieldDecorator={getFieldDecorator}
+          label="项目编号"
+          initValue={projectNo}
+          attr={'projectNo'}
+          {...formItemLayout}
+        />
+        <FormItemInfo
+          getFieldDecorator={getFieldDecorator}
+          label="专业名称"
+          initValue={schoolName}
+          attr={'schoolName'}
+          {...formItemLayout}
+        />
+        <FormItemInfo
+          getFieldDecorator={getFieldDecorator}
+          label="立项年度"
+          initValue={schoolName}
+          attr={'schoolName'}
+          {...formItemLayout}
+        />
+        <FormItemInfo
+          getFieldDecorator={getFieldDecorator}
           label="第一主持单位"
           initValue={schoolName}
           attr={'schoolName'}

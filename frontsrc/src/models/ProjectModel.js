@@ -5,11 +5,11 @@ export default {
 
   state: {
     loading: false,
-    projectList: [{ projectNo: 321, finaceHeaderQq: 999 }],
+    projectList: [],
     projectListNum: 32,
     projectListPage: 1,
     filterParam: {},
-    projectInfo: { partnerSchool: '1,2,3,4,5' }, // 项目基本信息
+    projectInfo: { }, // 项目基本信息
   },
   effects: {
 

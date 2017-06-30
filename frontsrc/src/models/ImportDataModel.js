@@ -6,7 +6,7 @@ export default {
   state: {
     loading: false,
     projectInfo: {
-      schoolName: '4314'
+      
     },
     showUpload16: false,
   },
@@ -24,7 +24,7 @@ export default {
         });
       }
     },
-    
+
   },
 
   reducers: {
