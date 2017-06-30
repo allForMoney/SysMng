@@ -1,9 +1,11 @@
+import { connect } from 'dva';
 import React from 'react';
 import { Form, Input, Button, Icon, Card, Table, Upload, message, Modal, Popconfirm } from 'antd';
 import FrameContent from '../common/FrameContent';
 import AddProjectForm from './AddProjectForm';
 import styles from '../../index.less';
-import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
+
 
 class ProjectInfoList extends React.Component {
   state = {
@@ -61,6 +63,7 @@ class ProjectInfoList extends React.Component {
       modalTitle: '修改',
       selectObj
     });
+    this.addForm.setFieldsValue(selectObj);
   }
 
   deletePro = () => {
@@ -80,7 +83,11 @@ class ProjectInfoList extends React.Component {
   }
 
   importPro =() => {
-
+    console.log(2341)
+    this.props.dispatch(routerRedux.push({
+      pathname: '/import/budget16',
+    })
+    );
   }
 
   addFormRdf =(form) => {
@@ -202,7 +209,7 @@ class ProjectInfoList extends React.Component {
             onOk={this.handleOk}
             onCancel={this.handleCancel}
           >
-            <AddProjectForm {...selectObj} ref={this.addFormRdf} />
+            <AddProjectForm ref={this.addFormRdf} />
           </Modal>
           <Form onSubmit={this.onSearchSubmit} layout="inline">
             <Form.Item label="项目编号 ：">
@@ -233,11 +240,7 @@ class ProjectInfoList extends React.Component {
                 <Popconfirm title="确认删除选中的数据吗?" onConfirm={this.deletePro} okText="是" cancelText="否">
                   <Button size="small" style={{ marginLeft: 5 }} type="primary"><Icon type="close" />删除</Button>
                 </Popconfirm>
-                <Upload action={'//project/uploadProject'}>
-                  <Button>
-                    <Icon type="upload" /> 上传文件
-                  </Button>
-                </Upload>
+                <Button size="small" style={{marginLeft:5}} type="primary" onClick={this.importPro}>导入</Button>
               </span>
               }
             </Form.Item>

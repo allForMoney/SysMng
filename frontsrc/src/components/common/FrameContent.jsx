@@ -120,14 +120,6 @@ class FrameContent extends React.Component {
         break;
     }
 
-    const cookiePath = (
-      <Breadcrumb style={{ margin: '12px 0' }}>
-        <Breadcrumb.Item>{cookie1}</Breadcrumb.Item>
-        <Breadcrumb.Item>{cookie2}</Breadcrumb.Item>
-        <Breadcrumb.Item>{cookie3}</Breadcrumb.Item>
-      </Breadcrumb>
-      );
-
     return (
       <Layout>
         <Modal
@@ -291,7 +283,7 @@ class FrameContent extends React.Component {
             >
               <SubMenu key="预算" title={<span><Icon type="user" />预算</span>}>
                 <Menu.Item key="项目基本情况_mini">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />项目基本情况</Link>
+                  <Link to="/base/projectList" ><Icon type="bars" />项目基本情况</Link>
                 </Menu.Item>
                 <Menu.Item key="项目预算">
                   <Link to="/budget_baseinfo" ><Icon type="bars" />项目预算</Link>

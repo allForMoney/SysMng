@@ -6,7 +6,7 @@ export default {
   state: {
     loading: false,
     projectList: [],
-    projectListNum: 32,
+    projectListNum: 0,
     projectListPage: 1,
     filterParam: {},
     projectInfo: { }, // 项目基本信息

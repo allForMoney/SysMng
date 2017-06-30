@@ -1,7 +1,9 @@
 import React from 'react';
-import { Modal, Form, Icon, Input, Button } from 'antd';
+import { Select, Form, Icon, Input, Button } from 'antd';
 
 import FormItemInfo from './FormItemInfo';
+
+const Option = Select.Option;
 
 class AddProjectModal extends React.Component  {
   render() {
@@ -19,6 +21,9 @@ class AddProjectModal extends React.Component  {
       reporterQq,
       unionSchool,
       partnerSchool,
+      projectNo,
+      majorName,
+      createYear,
     } = this.props;
 
     const formItemLayout = {
@@ -32,6 +37,7 @@ class AddProjectModal extends React.Component  {
       },
     };
 
+
     return (
       <Form layout="horizontal">
         <FormItemInfo
@@ -44,20 +50,30 @@ class AddProjectModal extends React.Component  {
         <FormItemInfo
           getFieldDecorator={getFieldDecorator}
           label="专业名称"
-          initValue={schoolName}
-          attr={'schoolName'}
+          initValue={majorName}
+          attr={'majorName'}
           {...formItemLayout}
         />
         <FormItemInfo
           getFieldDecorator={getFieldDecorator}
           label="立项年度"
-          initValue={schoolName}
-          attr={'schoolName'}
+          initValue={createYear}
+          attr={'createYear'}
           {...formItemLayout}
         />
+        <Form.Item label="省份" {...formItemLayout}>
+          {getFieldDecorator('proviceId', {
+            rules: [],
+          })(
+            <Select>
+              <Option value="rmb">fdas</Option>
+              <Option value="dollar">fadsfas</Option>
+            </Select>
+          )}
+        </Form.Item>
         <FormItemInfo
           getFieldDecorator={getFieldDecorator}
-          label="第一主持单位"
+          label="主持单位"
           initValue={schoolName}
           attr={'schoolName'}
           {...formItemLayout}
