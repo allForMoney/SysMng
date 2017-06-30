@@ -17,7 +17,7 @@ export function getBudgetRecList(params) {
 export function deletePro(params) {
   return request('/project/delete', {
     method: 'post',
-    data: qs.stringify(params),
+    data: JSON.stringify(params),
   });
 }
 
@@ -25,7 +25,7 @@ export function AddProject(params) {
   console.log(params);
   return request('/project/create', {
     method: 'post',
-    data: qs.stringify(params),
+    data: JSON.stringify(params),
   });
 }
 
@@ -33,6 +33,6 @@ export function UpdateProject(params) {
   console.log(params);
   return request('/project/update', {
     method: 'post',
-    data: qs.stringify(params),
+    data: JSON.stringify(params),
   });
 }

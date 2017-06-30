@@ -8,7 +8,7 @@ export default {
     projectInfo: {
       schoolName: '4314'
     },
-    showUpload16: true,
+    showUpload16: false,
   },
   effects: {
 
@@ -24,17 +24,7 @@ export default {
         });
       }
     },
-
-    * updateAdvice({ payload }, { call, put }) {
-      console.log(payload);
-    },
-
-    * modifyPass({ payload }, { call, put }) {
-      console.log(payload);
-    },
-    * saveMsg({ payload }, { call, put }) {
-      console.log(payload);
-    },
+    
   },
 
   reducers: {
