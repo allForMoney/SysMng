@@ -1,4 +1,6 @@
 import { logout, login } from '../services/BaseService';
+import { routerRedux } from 'dva/router';
+
 export default {
   namespace: 'baseModel',
 
@@ -16,22 +18,28 @@ export default {
   },
   effects: {
     * login({ payload }, { call, put }) {
-      const data =yield call(login, payload);
+      const data = yield call(login, payload);
       console.log(data);
     },
 
     * logout({ payload }, { call, put }) {
-      const data =yield call(login, payload);
+      const data = yield call(login, payload);
       console.log(data);
     },
-
+    * doRouter({ payload }, { put }) {
+      // TODO 根据用户角色不同,跳转到不同 的界面
+      let pathname = '/base/projectList'; // 管理员的默认界面
+      yield put(routerRedux.push({
+        pathname
+      }));
+    },
   },
 
   reducers: {
+
     setState(state, action) {
       return { ...state, ...action.payload };
     },
-
 
     setLoading(state, action) {
       return { ...state, loading: action.payload };
