@@ -14,19 +14,16 @@ export default {
   effects: {
 
     * getProjectList({ payload }, { call, put, select }) {
-      console.log('getProjectList');
       const { filterParam, projectListPage } = yield select(state => state.ProjectModel);
       const data = yield call(getProjectList, { ...filterParam  });
-      if (data && data.code === 1) {
-        yield put({
-          type: 'setState',
-          payload: {
-            projectList: data.result,
-            projectListPage: 1,
-            projectListNum: data.result.length, // TODO 属性再议
-          }
-        });
-      }
+      yield put({
+        type: 'setState',
+        payload: {
+          projectList: data,
+          // projectListPage: 1,
+          // projectListNum: data.result.length, // TODO 属性再议
+        }
+      });
     },
 
     * AddProject({ payload }, { call, put }) {

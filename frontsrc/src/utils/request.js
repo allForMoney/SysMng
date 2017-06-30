@@ -13,20 +13,12 @@ export default async function request(url, options) {
       "Content-Type": "application/json; charset=UTF-8"
     },
     options.body = options.data
-
   }
   const response = await fetch(url, options);
+  console.log(response);
 
   const data = await response.json();
-
-  const ret = {
-    data,
-    headers: { 'Content-Type': 'application/json' },
-  };
-
-  if (response.headers.get('x-total-count')) {
-    ret.headers['x-total-count'] = response.headers.get('x-total-count');
-  }
-
+  console.log(data);
+  
   return data;
 }
