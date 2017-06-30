@@ -1,5 +1,7 @@
 package com.resourcemng.controller;
 
+import com.resourcemng.basic.RequestResult;
+import com.resourcemng.basic.ResultCode;
 import com.resourcemng.entitys.IndicatorDetail;
 import com.resourcemng.util.FileUitl;
 import com.resourcemng.service.IndicatorService;
@@ -32,37 +34,32 @@ public class IndicatorController {
    * @return
    * @throws Exception
    */
-  @RequestMapping(value = "/import/{projectId}" ,method = RequestMethod.POST)
+  @RequestMapping(value = "/import" ,method = RequestMethod.POST)
   @ResponseBody
-  public Object uploadBudget(@PathVariable String projectId,@RequestParam String importUser,@RequestParam String importType,@RequestParam("file")
+  public Object uploadBudget(@RequestParam String projectId,@RequestParam String importUser,@RequestParam String importType,@RequestParam("file")
   MultipartFile file ) throws Exception {
     if (!file.isEmpty()) {
-      try {
         File uploadFile = fileUitl.saveUploadFile(file );
         service.importFormFile(projectId,importUser,uploadFile);
-      } catch (FileNotFoundException e) {
-        e.printStackTrace();
-        return "上传失败," + e.getMessage();
-      } catch (IOException e) {
-        e.printStackTrace();
-        return "上传失败," + e.getMessage();
-      }
-      return "上传成功";
+      return new RequestResult(ResultCode.SUCCESS, "上传成功.",   null);
     } else {
-      return "上传失败，因为文件是空的.";
+      return new RequestResult(ResultCode.SUCCESS, "上传失败，因为文件是空的.",   null);
     }
+
   }
 
   /**
-   * 绩效手动填写
+   * 绩效修改明细
    * @param detail
    * @return
    * @throws Exception
    */
-  @RequestMapping(value = "/updatedetail" ,method = RequestMethod.POST)
+  @RequestMapping(value = "/update/detail" ,method = RequestMethod.POST)
   @ResponseBody
-  public void updateIndicatorDetail(IndicatorDetail detail) throws Exception {
+  public Object updateIndicatorDetail(IndicatorDetail detail) throws Exception {
      service.updateIndicatorDetail(detail);
+    return new RequestResult(ResultCode.SUCCESS, "获取明细成功",   null);
+
   }
   /**
    * 绩效手动填写
@@ -70,10 +67,11 @@ public class IndicatorController {
    * @return
    * @throws Exception
    */
-  @RequestMapping(method = RequestMethod.POST)
+  @RequestMapping(value = "/create" ,method = RequestMethod.POST)
   @ResponseBody
-  public void updateIndicatorDetail(IndicatorView view) throws Exception {
-     service.saveIndicator(view);
+  public Object updateIndicatorDetail(IndicatorView view) throws Exception {
+    service.saveIndicator(view);
+    return new RequestResult(ResultCode.SUCCESS, "绩效添加成功",   null);
   }
 
 }

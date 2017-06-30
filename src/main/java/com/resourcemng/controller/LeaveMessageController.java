@@ -1,6 +1,8 @@
 package com.resourcemng.controller;
 
 import com.resourcemng.Enum.LeaveMessageType;
+import com.resourcemng.basic.RequestResult;
+import com.resourcemng.basic.ResultCode;
 import com.resourcemng.service.LeaveMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +26,7 @@ public class LeaveMessageController {
     @RequestMapping(value = "/budget/all" ,method = RequestMethod.POST)
     @ResponseBody
     public Object create() throws Exception {
-      return this.leaveMessageService.findByType(LeaveMessageType.BUDGET);
+      return new RequestResult(ResultCode.SUCCESS, "获取成功",   this.leaveMessageService.findByType(LeaveMessageType.BUDGET));
     }
 
   /**
@@ -32,9 +34,10 @@ public class LeaveMessageController {
    * @return
    * @throws Exception
    */
-  @RequestMapping(value = "/reply/{id}" ,method = RequestMethod.POST)
+  @RequestMapping(value = "/reply" ,method = RequestMethod.POST)
   @ResponseBody
-  public Object replyCommont(@PathVariable String id,@RequestParam String content,@RequestParam String userId) throws Exception {
-    return this.leaveMessageService.replyCommont(id,content,userId);
+  public Object replyCommont(@RequestParam String id,@RequestParam String content,@RequestParam String userId) throws Exception {
+    return new RequestResult(ResultCode.SUCCESS, "获取成功",  this.leaveMessageService.replyCommont(id,content,userId));
+
   }
 }

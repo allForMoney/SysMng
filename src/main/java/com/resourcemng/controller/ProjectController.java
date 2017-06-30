@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.util.List;
 
 /**
  * @author Benjamin Winterberg
@@ -80,14 +81,14 @@ public class ProjectController {
 
   /**
    * 删除项目信息
-   * @param projectNo
+   * @param projectNos
    * @return
    * @throws Exception
    */
   @RequestMapping(value = "/delete" ,method = RequestMethod.POST)
   @ResponseBody
-  public Object delete(@RequestParam("projectNo") String projectNo) throws Exception {
-    service.deletePorject(projectNo);
+  public Object delete(@RequestParam("projectNo") List<String> projectNos) throws Exception {
+    service.deletePorjects(projectNos);
     return new RequestResult(ResultCode.SUCCESS, "删除成功",  null );
   }
 
