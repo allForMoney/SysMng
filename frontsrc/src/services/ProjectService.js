@@ -3,7 +3,7 @@ import qs from 'qs';
 import request from '../utils/request';
 
 export function getProjectInfoById(params) {
-  return request(`/project/?${qs.stringify(params)}`);
+  return request(`/project/get?${qs.stringify(params)}`);
 }
 
 export function getProjectList(params) {
@@ -15,12 +15,23 @@ export function getBudgetRecList(params) {
 }
 
 export function deletePro(params) {
-  return request(`/project/deletePro?${qs.stringify(params)}`);
+  return request('/project/delete', {
+    method: 'post',
+    data: qs.stringify(params),
+  });
 }
 
 export function AddProject(params) {
   console.log(params);
-  return request('/project', {
+  return request('/project/create', {
+    method: 'post',
+    data: qs.stringify(params),
+  });
+}
+
+export function UpdateProject(params) {
+  console.log(params);
+  return request('/project/update', {
     method: 'post',
     data: qs.stringify(params),
   });

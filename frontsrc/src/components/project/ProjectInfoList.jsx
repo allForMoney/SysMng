@@ -82,6 +82,7 @@ class ProjectInfoList extends React.Component {
   importPro =() => {
 
   }
+
   addFormRdf =(form) => {
     this.addForm = form;
   }
@@ -95,8 +96,12 @@ class ProjectInfoList extends React.Component {
       }
       const payload = Object.assign({}, selectObj, values);
       console.log(payload);
+      let type = 'ProjectModel/AddProject';
+      if (payload.id) {
+        type = 'ProjectModel/UpdateProject';
+      }
       this.props.dispatch({
-        type: 'ProjectModel/AddProject',
+        type,
         payload
       });
     });

@@ -15,15 +15,17 @@ export default {
 
     * getProjectList({ payload }, { call, put, select }) {
       const { filterParam, projectListPage } = yield select(state => state.ProjectModel);
-      const data = yield call(getProjectList, { ...filterParam  });
-      yield put({
-        type: 'setState',
-        payload: {
-          projectList: data,
-          // projectListPage: 1,
-          // projectListNum: data.result.length, // TODO 属性再议
-        }
-      });
+      const data = yield call(getProjectList, { ...filterParam, page: projectListPage, size: 20 });
+      if (data.code === 1) {
+        yield put({
+          type: 'setState',
+          payload: {
+            projectList: data.result.content,
+            projectListPage: data.result.number,
+            projectListNum: data.result.totalElements,
+          }
+        });
+      }
     },
 
     * AddProject({ payload }, { call, put }) {
@@ -42,6 +44,24 @@ export default {
         });
       }
     },
+
+    * UpdateProject({ payload }, { call, put }) {
+      console.log(payload);
+      const data = yield call(AddProject, payload);
+      if (data && data.code === 1) {
+        yield put({
+          type: 'setState',
+          payload: {
+            projectListPage: 1,
+          }
+        });
+
+        yield put({
+          type: 'getProjectList',
+        });
+      }
+    },
+
     * deletePro({ payload }, { call, put }) {
       console.log(payload);
       const data = yield call(deletePro, payload);

@@ -32,7 +32,7 @@ class ImportBudget16 extends React.Component {
     console.log(projectNo);
     this.props.dispatch({
       type: 'ImportData/getProjectInfo',
-      payload: projectNo,
+      payload: { projectNo },
     });
   }
   
