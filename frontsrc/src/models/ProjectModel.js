@@ -1,4 +1,4 @@
-import { getProjectList, AddProject, deletePro } from '../services/ProjectService';
+import { getProjectList, AddProject, deletePro, UpdateProject } from '../services/ProjectService';
 
 export default {
   namespace: 'ProjectModel',
@@ -16,7 +16,7 @@ export default {
     * getProjectList({ payload }, { call, put, select }) {
       const { filterParam, projectListPage } = yield select(state => state.ProjectModel);
       const data = yield call(getProjectList, { ...filterParam, page: projectListPage, size: 20 });
-      if (data.code === 1) {
+      if (data.code === '1') {
         yield put({
           type: 'setState',
           payload: {
@@ -31,7 +31,7 @@ export default {
     * AddProject({ payload }, { call, put }) {
       console.log(payload);
       const data = yield call(AddProject, payload);
-      if (data && data.code === 1) {
+      if (data && data.code === '1') {
         yield put({
           type: 'setState',
           payload: {
@@ -47,8 +47,8 @@ export default {
 
     * UpdateProject({ payload }, { call, put }) {
       console.log(payload);
-      const data = yield call(AddProject, payload);
-      if (data && data.code === 1) {
+      const data = yield call(UpdateProject, payload);
+      if (data && data.code === '1') {
         yield put({
           type: 'setState',
           payload: {
@@ -65,7 +65,7 @@ export default {
     * deletePro({ payload }, { call, put }) {
       console.log(payload);
       const data = yield call(deletePro, payload);
-      if (data && data.code === 1) {
+      if (data && data.code === '1') {
         yield put({
           type: 'setState',
           payload: {

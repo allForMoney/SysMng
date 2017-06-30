@@ -14,7 +14,7 @@ export default {
 
     * getProjectInfo({ payload }, { call, put }) {
       const data = yield call(getProjectInfoById, payload);
-      if (data && data.code === 1) {
+      if (data && data.code === '1') {
         yield put({
           type: 'setState',
           payload: {
