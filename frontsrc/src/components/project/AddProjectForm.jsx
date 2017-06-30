@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Form, Icon, Input, Button } from 'antd';
 
-import FormItemInfo from '../import/FormItemInfo';
+import FormItemInfo from './FormItemInfo';
 
 class AddProjectModal extends React.Component  {
   render() {
@@ -21,34 +21,50 @@ class AddProjectModal extends React.Component  {
       partnerSchool,
     } = this.props;
 
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 6 },
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 14 },
+      },
+    };
+
     return (
-      <Form layout="inline">
+      <Form layout="horizontal">
         <FormItemInfo
           getFieldDecorator={getFieldDecorator}
           label="第一主持单位"
           initValue={schoolName}
           attr={'schoolName'}
+          {...formItemLayout}
         />
         <FormItemInfo
           getFieldDecorator={getFieldDecorator}
           label="法定代表人"
           initValue={schoolHead}
+          {...formItemLayout}
           attr={'schoolHead'}
         />
         <FormItemInfo
           getFieldDecorator={getFieldDecorator}
           label="财务部门负责人"
+          {...formItemLayout}
           initValue={finaceHeader}
           attr={'finaceHeader'}
         />
         <FormItemInfo
           getFieldDecorator={getFieldDecorator}
           label="联系电话"
+          {...formItemLayout}
           initValue={finaceHeaderTel}
           attr={'finaceHeaderTel'}
         />
         <FormItemInfo
           getFieldDecorator={getFieldDecorator}
+          {...formItemLayout}
           label="QQ号码"
           initValue={finaceHeaderQq}
           attr={'finaceHeaderQq'}
@@ -56,16 +72,19 @@ class AddProjectModal extends React.Component  {
         <FormItemInfo
           getFieldDecorator={getFieldDecorator}
           label="项目负责人"
+          {...formItemLayout}
           initValue={projectHeader}
           attr={'projectHeader'}
         />
         <FormItemInfo
           getFieldDecorator={getFieldDecorator}
           label="联系电话"
+          {...formItemLayout}
           initValue={projectHeaderTel}
           attr={'projectHeaderTel'}
         />
         <FormItemInfo
+          {...formItemLayout}
           getFieldDecorator={getFieldDecorator}
           label="填表人"
           initValue={reporter}
@@ -74,10 +93,12 @@ class AddProjectModal extends React.Component  {
         <FormItemInfo
           getFieldDecorator={getFieldDecorator}
           label="联系电话"
+          {...formItemLayout}
           initValue={reporterTel}
           attr={'reporterTel'}
         />
         <FormItemInfo
+          {...formItemLayout}
           getFieldDecorator={getFieldDecorator}
           label="QQ号码"
           initValue={reporterQq}
@@ -85,6 +106,7 @@ class AddProjectModal extends React.Component  {
         />
         <FormItemInfo
           getFieldDecorator={getFieldDecorator}
+          {...formItemLayout}
           label="联合主持单位"
           initValue={unionSchool}
           attr={'unionSchool'}
@@ -92,6 +114,7 @@ class AddProjectModal extends React.Component  {
         <FormItemInfo
           getFieldDecorator={getFieldDecorator}
           label="参与建设单位"
+          {...formItemLayout}
           initValue={partnerSchool}
           attr={'partnerSchool'}
         />

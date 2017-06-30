@@ -88,14 +88,16 @@ class ProjectInfoList extends React.Component {
     
   handleOk = () => {
     const { validateFields } = this.addForm;
-
+    const { selectObj } = this.state;
     validateFields((err, values) => {
       if (err) {
         return;
       }
+      const payload = Object.assign({}, selectObj, values);
+      console.log(payload);
       this.props.dispatch({
         type: 'ProjectModel/AddProject',
-        payload: values
+        payload
       });
     });
 
@@ -201,26 +203,26 @@ class ProjectInfoList extends React.Component {
             <Form.Item label="项目编号 ：">
               { getFieldDecorator('projectNo', {
               })(
-                <Input />
+                <Input size="small" width="100"/>
               )}
             </Form.Item>
             <Form.Item label="专业名称 ：">
               { getFieldDecorator('majorName', {
               })(
-                <Input />
+                <Input size="small" />
               )}
             </Form.Item>
             <Form.Item label="主持单位 ：">
               { getFieldDecorator('schoolName', {
               })(
-                <Input />
+                <Input size="small" />
               )}
             </Form.Item>
             <Form.Item >
               <Button size="small" type="primary" htmlType="submit" icon="search" onClick={this.doSearch}>查询</Button>
               <Button size="small" style={{marginLeft:5}} type="primary" onClick={() => this.props.form.resetFields()}><Icon type="rollback" />重置</Button>
               {userType === 'admin' &&
-              <div className="">
+              <span className="">
                 <Button size="small" style={{marginLeft:5}} type="primary" onClick={this.addNew}><Icon type="plus" />添加</Button>
                 <Button size="small" style={{marginLeft:5}} type="primary" onClick={this.editProject}><Icon type="edit" />编辑</Button>
                 <Popconfirm title="确认删除选中的数据吗?" onConfirm={this.deletePro} okText="是" cancelText="否">
@@ -231,7 +233,7 @@ class ProjectInfoList extends React.Component {
                     <Icon type="upload" /> 上传文件
                   </Button>
                 </Upload>
-              </div>
+              </span>
               }
             </Form.Item>
           </Form>

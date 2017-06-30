@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Form, Icon, Input, Button } from 'antd';
+import { Row, Form, Icon, Input, Button } from 'antd';
 
 import FormItemInfo from './FormItemInfo';
 
@@ -23,25 +23,27 @@ function ProjectInfo(props) {
   } = props;
 
   return (
-    <Form layout="inline">
-      <FormItemInfo
-        getFieldDecorator={getFieldDecorator}
-        label="第一主持单位"
-        initValue={schoolName}
-        attr={'schoolName'}
-      />
-      <FormItemInfo
-        getFieldDecorator={getFieldDecorator}
-        label="法定代表人"
-        initValue={schoolHead}
-        attr={'schoolHead'}
-      />
+    <Form layout="horizontal">
+      <Row span={24}>
+        <FormItemInfo
+          getFieldDecorator={getFieldDecorator}
+          label="第一主持单位"
+          initValue={schoolName}
+          attr={'schoolName'}
+        />
+        <FormItemInfo
+          getFieldDecorator={getFieldDecorator}
+          label="法定代表人"
+          initValue={schoolHead}
+          attr={'schoolHead'}
+        />
       <FormItemInfo
         getFieldDecorator={getFieldDecorator}
         label="财务部门负责人"
         initValue={finaceHeader}
         attr={'finaceHeader'}
       />
+      </Row>
       <FormItemInfo
         getFieldDecorator={getFieldDecorator}
         label="联系电话"
