@@ -249,7 +249,7 @@ public class BudgetService {
       //TODO 预算如果导入多次怎么办,取最新的？
     List<FileImportLog>  list  = this.fileImportLogRepository.findByProject(projetId);
     FileImportLog log = null;
-    if(list !=null && list.size()>1){
+    if(list !=null && list.size()>0){
       log =  list.get(list.size()-1);
 
       return this.getDetail(log);

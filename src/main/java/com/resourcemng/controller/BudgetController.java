@@ -120,7 +120,7 @@ public class BudgetController {
   @RequestMapping(value = "/getByProjectId" ,method = RequestMethod.GET)
   @ResponseBody
   public Object getByProject(@RequestParam String projectId) throws Exception {
-    return new RequestResult(ResultCode.SUCCESS, "删除成功",  service.getByProject(projectId));
+    return new RequestResult(ResultCode.SUCCESS, "获取成功",  service.getByProject(projectId));
   }
 
 }

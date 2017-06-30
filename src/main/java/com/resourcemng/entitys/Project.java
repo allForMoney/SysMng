@@ -48,6 +48,8 @@ public class Project implements Serializable{
   private String unionSchool;
   @Excel(name="参与建设单位")
   private String partnerSchool;
+  @Excel(name="省份")
+  private String provenceId;
   private String importUserId;
 
   @Id
@@ -251,6 +253,16 @@ public class Project implements Serializable{
   public void setImportUserId(String importUserId) {
     this.importUserId = importUserId;
   }
+  @Basic
+  @Column(name = "PROVENCE_ID", nullable = true, length = -1)
+  public String getProvenceId() {
+    return provenceId;
+  }
+
+  public void setProvenceId(String provenceId) {
+    this.provenceId = provenceId;
+  }
+
 
   @Override
   public boolean equals(Object o) {
