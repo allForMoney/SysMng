@@ -11,6 +11,6 @@ export function login(params) {
   console.log(params);
   return request('/login', {
     method: 'post',
-    data: qs.stringify(params),
+    data: JSON.stringify(params),
   });
 }
