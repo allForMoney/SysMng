@@ -38,6 +38,9 @@ export default {
       if (data && data.code === '1') {
         const result = data.result;
         if (!result) {
+          yield put(routerRedux.push({
+            pathname: '/login'
+          }));
           return;
         }
         let userType = 'admin';
