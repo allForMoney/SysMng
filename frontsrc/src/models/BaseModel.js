@@ -65,6 +65,8 @@ export default {
             break;
         }
 
+        console.log(result.id);
+
         yield put({
           type: 'setState',
           payload: {
@@ -111,7 +113,7 @@ export default {
         yield put({
           type: 'setState',
           payload: {
-            projectId: result.id,
+            userId: result.id,
             projectNo: result.username,
             userType,
             projectInfo: result.project,

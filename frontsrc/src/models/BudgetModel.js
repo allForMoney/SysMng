@@ -77,16 +77,15 @@ export default {
     },
     /** 更新项目执行季报  */
     * updateSeasonBudget({ payload }, { call, select }) {
-
       const { buggetOutComeList, buggetInComeList, quarterNum, projectYear } = yield select(state => state.budgetModel);
-      const { userName, projectInfo } = yield select(state => state.baseModel);
+      const { userId, projectInfo } = yield select(state => state.baseModel);
       const data = yield call(updateSeasonBudget, {
         fundsOuts: buggetOutComeList,
         fundsIns: buggetInComeList,
         quarterNum,
         projectId: projectInfo.id,
         projectYear,
-        userId: userName,
+        userId,
       });
       if (data && data.code === 1) {
         message('更新成功');
