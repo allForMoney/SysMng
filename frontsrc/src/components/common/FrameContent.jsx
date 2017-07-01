@@ -140,7 +140,7 @@ class FrameContent extends React.Component {
           <div className={styles.logo} />
           <div style={{ float: 'right'}} >
             <span>用户名：{userName} 身份： {identity}</span>
-            <Button type="primary" onClick={this.logoOut}>退出登录</Button>
+            <Button type="primary" size="small" onClick={this.logoOut} style={{ marginLeft: 10 }}>退出登录</Button>
           </div>
           <ModifyPass
             visible={this.state.showModiPass}

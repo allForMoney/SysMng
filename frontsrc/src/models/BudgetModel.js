@@ -5,6 +5,7 @@ import {
   updateSeasonBudget,
   changeCheckStatus,
   getBudgetRecList,
+  getBudgetProjectList
 } from '../services/BudgetService';
 import { message } from 'antd';
 
@@ -22,9 +23,23 @@ export default {
     budgetRecordList: [],
     budgetRecordPage: 1,
     budgetRecordNum: 45,
-
+    budgetProjectList: []
   },
   effects: {
+
+    * getBudgetProjectList({ payload }, { call, put, select }) {
+      const data = yield call(getBudgetProjectList, payload);
+      if (data.code === '1') {
+        yield put({
+          type: 'setState',
+          payload: {
+            budgetProjectList: data.result.content,
+            projectListPage: data.result.number,
+            projectListNum: data.result.totalElements,
+          }
+        });
+      }
+    },
 
     * getIncomeBudget({ payload }, { call, put, select }) {
       const { year } = yield select(state => state.budgetModel);

@@ -6,23 +6,24 @@ export default {
 
   state: {
     loading: false,
-    userType: 'admin',  // inputer/finan/manager/admin/ministry
+    userType: 'inputer',  // inputer/finan/manager/admin/ministry
     userName: '12345',
     showMsgModal: false,
     projectName: 'kfkkfkfkfkfkfkfk',
-    projectId: 72,
+    projectId: '4028a1765cf97115015cf98f6f01006a',
+    projectNo: '2016-02',
     projectInfo: {}, // 单个项目基本信息
     projectList: [],
     projectTotal: 34,
     projectPage: 1,
   },
   effects: {
-    * login({ payload }, { call, put }) {
+    * login({ payload }, { call }) {
       const data = yield call(login, payload);
       console.log(data);
     },
 
-    * logout({ payload }, { call, put }) {
+    * logout({ payload }, { call }) {
       const data = yield call(login, payload);
       console.log(data);
     },
