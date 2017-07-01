@@ -6,8 +6,15 @@ export default {
   state: {
     loading: false,
     projectInfo: {
-      
     },
+    budgetRecList: [],
+    budgetRecPageNum: 0,
+    budgetRecPageTotal: 0,
+    budgetRecPageSize: 20,
+    achiveRecList: [],
+    achiveRecPageNum: 0,
+    achiveRecPageTotal: 0,
+    achiveRecPageSize: 20,
     showUpload16: false,
   },
   effects: {

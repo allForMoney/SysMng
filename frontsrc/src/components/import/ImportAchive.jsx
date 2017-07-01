@@ -1,5 +1,5 @@
 /**
- * 预算导入16年版本
+ * 绩效目标导入
  */
 import React from 'react';
 import { connect } from 'dva';
@@ -20,7 +20,7 @@ import FrameContent from '../common/FrameContent';
 import ProjectInfo from './ProjectInfo';
 import styles from '../../index.less';
 
-class ImportBudget16 extends React.Component {
+class ImportAchive extends React.Component {
   state={
     projectNo: '',
   }
@@ -53,7 +53,11 @@ class ImportBudget16 extends React.Component {
       projectNo,
      } = this.state;
 
-    const action = `/budget/import/${projectInfo.id}?importUser=${userType}&importType=1&budgetYear=2016`;
+    const action = `
+    /indicator/import?
+    projectId=${projectInfo.id}&
+    importUser=${userType}&
+    importType=1`;
 
     const uploadProps = {
       name: 'file',
@@ -79,7 +83,7 @@ class ImportBudget16 extends React.Component {
           说明：先输入项目编号，点查询，查询出来项目信息后，再选择文件并上传导入。 <a href="/template/importJXMB.xlsx">导入模板下载</a>
         </Row>
         <Row className={styles.baseRow}>
-          <Col span={4}>要导入预算的项目编号</Col>
+          <Col span={4}>要导入绩效的项目编号</Col>
           <Col span={6}>
             <Input value={projectNo} onChange={this.onProjectValueChanged} />
           </Col>
@@ -130,4 +134,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(ImportBudget16);
+export default connect(mapStateToProps)(ImportAchive);

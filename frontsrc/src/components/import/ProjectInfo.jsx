@@ -1,3 +1,6 @@
+/**
+ * 用来展示项目基本信息,可以在导入界面中展示项目基本信息
+ */
 import React from 'react';
 import { Row, Form, Icon, Input, Button } from 'antd';
 

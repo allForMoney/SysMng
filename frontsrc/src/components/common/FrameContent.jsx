@@ -242,13 +242,13 @@ class FrameContent extends React.Component {
                   <Link to="/import/budget16" ><Icon type="bars" />预算导入（2016年后）</Link>
                 </Menu.Item>
                 <Menu.Item key="项目预算导入查询">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />项目预算导入查询</Link>
+                  <Link to="/import/budgetImportRec" ><Icon type="bars" />项目预算导入查询</Link>
                 </Menu.Item>
                 <Menu.Item key="绩效目标导入">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />绩效目标导入</Link>
+                  <Link to="/import/importAchive" ><Icon type="bars" />绩效目标导入</Link>
                 </Menu.Item>
                 <Menu.Item key="绩效目标导入查询">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />绩效目标导入查询</Link>
+                  <Link to="/import/achiveImportRec" ><Icon type="bars" />绩效目标导入查询</Link>
                 </Menu.Item>
               </SubMenu>
               <SubMenu key="其他功能" title={<span><Icon type="user" />其他功能</span>}>
