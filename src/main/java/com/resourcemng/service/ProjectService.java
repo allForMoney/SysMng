@@ -103,7 +103,7 @@ public class ProjectService {
     //删除关联用户
     userRepository.deleteByUsernameLike(projectNo);
     //删除项目信息
-    projectRepository.deleteByNo(projectNo);
+    projectRepository.deleteByProjectNo(projectNo);
   }
   /**
    *

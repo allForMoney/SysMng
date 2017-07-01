@@ -4,6 +4,7 @@ import com.resourcemng.entitys.Project;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -25,8 +26,8 @@ public interface ProjectRepository extends JpaRepository<Project, String> {
   @Query("from Project p where p.projectNo=:projectNo")
   Project findByProjectNo( @Param("projectNo")String projectNo);
 
-  @Query("delete from Project p where p.projectNo=:projectNo")
-  Project deleteByNo( @Param("projectNo")String projectNo);
+//  @Query("delete from Project p where p.projectNo=:projectNo")
+  Project deleteByProjectNo(@Param("projectNo")String projectNo);
 
 
 }

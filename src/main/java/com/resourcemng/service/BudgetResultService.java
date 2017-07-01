@@ -3,9 +3,9 @@ package com.resourcemng.service;
 import com.resourcemng.Enum.*;
 import com.resourcemng.entitys.*;
 import com.resourcemng.repository.*;
-import com.resourcemng.view.BudgetReportView;
-import com.resourcemng.view.EntityUitl;
+import com.resourcemng.view.*;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +20,8 @@ public class BudgetResultService {
   FundsInRepository fundsInRepository;
   @Autowired
   FundsOutRepository fundsOutRepository;
+  @Autowired
+  FundsBudgetRepository fundsBudgetRepository;
   @Autowired
   ProjectRepository projectRepository;
   @Autowired
@@ -77,16 +79,20 @@ public class BudgetResultService {
    Project project =  projectRepository.findById(projectId).get();
    //查找关联的用户
     Tuser user = tUserRepository.findByUserNo(project.getProjectNo() +"-1");
-    //审核记录
-    ReportAuditLog log = reportAuditLogRepository.findByParam(projectId,quarterNum,projectYear);
+
+    //查找数据
     BudgetReportView view = new BudgetReportView();
     view.setProjectYear(projectYear);
     view.setQuarterNum(quarterNum);
     view.setProjectId(project.getId());
-    view.setAuditStatus(EntityUitl.getReportAuditLogStatus(log));//返回状态
-    //查找数据
+
     List<FundsIn>  fundsIns =  fundsInRepository.findByParams(user.getId(),quarterNum,projectYear);
     List<FundsOut>  fundsOuts =  fundsOutRepository.findByParams(user.getId(),quarterNum,projectYear);
+    //审核记录
+    ReportAuditLog log = reportAuditLogRepository.findByParam(projectId,quarterNum,projectYear);
+
+    view.setAuditStatus(EntityUitl.getReportAuditLogStatus(log));//返回状态
+
     view.setFundsIns(fundsIns);
     view.setFundsOuts(fundsOuts);
     view.setUserId(user.getId());
@@ -103,8 +109,8 @@ public class BudgetResultService {
    * @param view
    */
   public void quarterlyReportDelete(BudgetReportView view) {
-    fundsInRepository.deleteByParams(view.getUserId(),view.getQuarterNum(),view.getProjectYear());
-    fundsOutRepository.deleteByParams(view.getUserId(),view.getQuarterNum(),view.getProjectYear());
+    fundsInRepository.deleteByUserIdAndQuarterNumAndProjectYear(view.getUserId(),view.getQuarterNum(),view.getProjectYear());
+    fundsOutRepository.deleteByUserIdAndQuarterNumAndProjectYear(view.getUserId(),view.getQuarterNum(),view.getProjectYear());
   }
 
   /**
@@ -154,6 +160,33 @@ public class BudgetResultService {
    * @return
    */
   public Workbook exportFile(String projectId, String projectYear, String quarterNum) {
+    ProjectResultDownloadView view= new ProjectResultDownloadView();
+    //项目信息
+    Project project = projectRepository.findById(projectId).get();
+
+    //预算信息
+    ProjectBudgetInfoView projectBudgetInfoView = new ProjectBudgetInfoView();
+    List<FundsBudget> fundsBudgets = fundsBudgetRepository.findByProjectId(projectId);
+    for(FundsBudget foundsBudget:fundsBudgets){
+      if(FoundSourceType.COUNTRY.equals(foundsBudget.getPid())){
+        ResultInfoView resultInfoView = new ResultInfoView();
+        BeanUtils.copyProperties(foundsBudget,resultInfoView);
+        projectBudgetInfoView.setCountryTotal(resultInfoView);
+      }else if(FoundSourceType.LOCAL.equals(foundsBudget.getPid())){
+        ResultInfoView resultInfoView = new ResultInfoView();
+        BeanUtils.copyProperties(foundsBudget,resultInfoView);
+        projectBudgetInfoView.setLocal(resultInfoView);
+      }else if(FoundSourceType.ENTERPRICE.equals(foundsBudget.getPid())){
+        ResultInfoView resultInfoView = new ResultInfoView();
+        BeanUtils.copyProperties(foundsBudget,resultInfoView);
+        projectBudgetInfoView.setEnterprise(resultInfoView);
+      }else if(FoundSourceType.UNIVERSITY.equals(foundsBudget.getPid())){
+        ResultInfoView resultInfoView = new ResultInfoView();
+        BeanUtils.copyProperties(foundsBudget,resultInfoView);
+        projectBudgetInfoView.setUniversity(resultInfoView);
+      }
+    }
     return null;
+
   }
 }

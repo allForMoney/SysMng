@@ -37,6 +37,10 @@ public class BudgetServiceTests {
   public void testUploadFile() throws Exception {
     service.importBudgetFormFile("ddd","ddw", ImportFileType.BUDGET2016,"2016",new File("E:\\项目资料\\新建文件夹\\模板\\预算2016.xlsx"));
   }
+  @Test
+  public void getBudgetForProject() throws Exception {
+    Object obj = service.getBudgetForProject("402881f05cf98f57015cf98f68030003");
+  }
 
 
 }

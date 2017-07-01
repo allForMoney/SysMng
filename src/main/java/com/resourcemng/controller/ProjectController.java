@@ -7,6 +7,7 @@ import com.resourcemng.util.FileUitl;
 import com.resourcemng.entitys.Project;
 import com.resourcemng.entitys.Tuser;
 import com.resourcemng.service.ProjectService;
+import com.resourcemng.view.DeleteProjectView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -81,14 +83,14 @@ public class ProjectController {
 
   /**
    * 删除项目信息
-   * @param projectNos
+   * @param view
    * @return
    * @throws Exception
    */
   @RequestMapping(value = "/delete" ,method = RequestMethod.POST)
   @ResponseBody
-  public Object delete(@RequestParam("projectNo") List<String> projectNos) throws Exception {
-    service.deletePorjects(projectNos);
+  public Object delete(@RequestBody DeleteProjectView view) throws Exception {
+    service.deletePorjects(Arrays.asList(view.getProjectNos()));
     return new RequestResult(ResultCode.SUCCESS, "删除成功",  null );
   }
 
