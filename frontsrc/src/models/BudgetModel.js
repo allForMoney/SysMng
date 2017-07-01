@@ -79,6 +79,12 @@ export default {
     * updateSeasonBudget({ payload }, { call, select }) {
       const { buggetOutComeList, buggetInComeList, quarterNum, projectYear } = yield select(state => state.budgetModel);
       const { userId, projectInfo } = yield select(state => state.baseModel);
+      if (buggetInComeList.length < 1) {
+        message.info('收入预算不可为空');
+      }
+      if (buggetOutComeList.length < 1) {
+        message.info('收入预算不可为空');
+      }
       const data = yield call(updateSeasonBudget, {
         fundsOuts: buggetOutComeList,
         fundsIns: buggetInComeList,
