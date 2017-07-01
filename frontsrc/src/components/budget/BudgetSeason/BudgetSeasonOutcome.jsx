@@ -113,6 +113,14 @@ class BudgetSeasonOutcome extends React.Component {
     item.researchProve + item.expertConsult + item.otherFee);
     return totalMoney;
   }
+
+  getItemSingleTotalMoney = (attr, [ item1, item2, item3, item4], flag) => {
+    let totalMoney = (item1[attr] + item2[attr] + item3[attr] + item4[attr]);
+    if (flag) {
+      totalMoney = totalMoney- item1[attr];
+    }
+    return totalMoney;
+  }
   
   getDetailSource = (item) => {
     const totalMoney = this.getItemTotalMoney(item);
@@ -147,6 +155,14 @@ class BudgetSeasonOutcome extends React.Component {
         moneySource: '合计',
         project: '金额(元)',
         totalMoney: sumMoney,
+        materialMake: this.getItemSingleTotalMoney('materialMake',sourceData),
+        companyCase: this.getItemSingleTotalMoney('companyCase',sourceData),
+        courseDevelopment: this.getItemSingleTotalMoney('courseDevelopment',sourceData),
+        specialTool: this.getItemSingleTotalMoney('specialTool',sourceData),
+        applicationPromete: this.getItemSingleTotalMoney('applicationPromete',sourceData),
+        researchProve: this.getItemSingleTotalMoney('researchProve',sourceData),
+        expertConsult: this.getItemSingleTotalMoney('expertConsult',sourceData),
+        otherFee: this.getItemSingleTotalMoney('otherFee',sourceData),
       }, {
         column1: '合计',
         moneySource: '合计',
@@ -157,7 +173,7 @@ class BudgetSeasonOutcome extends React.Component {
         moneySource: item1.moneySource,
         pid: item1.pid,
         project: '金额(元)',
-        totalMoney: item1.totalMoney,
+        totalMoney: this.getItemTotalMoney(item1),
         ...item1,
       }, {
         column1: item1.moneySource,
@@ -169,6 +185,14 @@ class BudgetSeasonOutcome extends React.Component {
         moneySource: '小计',
         project: '金额(元)',
         totalMoney: sumMoney2,
+        materialMake: this.getItemSingleTotalMoney('materialMake',sourceData,true),
+        companyCase: this.getItemSingleTotalMoney('companyCase',sourceData,true),
+        courseDevelopment: this.getItemSingleTotalMoney('courseDevelopment',sourceData,true),
+        specialTool: this.getItemSingleTotalMoney('specialTool',sourceData,true),
+        applicationPromete: this.getItemSingleTotalMoney('applicationPromete',sourceData,true),
+        researchProve: this.getItemSingleTotalMoney('researchProve',sourceData,true),
+        expertConsult: this.getItemSingleTotalMoney('expertConsult',sourceData,true),
+        otherFee: this.getItemSingleTotalMoney('otherFee',sourceData,true),
       }, {
         column1: '项目筹措资金',
         moneySource: '小计',
