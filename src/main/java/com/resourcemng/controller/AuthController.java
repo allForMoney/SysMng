@@ -45,7 +45,7 @@ public class AuthController {
    * @param tuser
    * @return
    */
-  @RequestMapping (value = "/login",method =  RequestMethod.GET)
+  @RequestMapping (value = "/login",method =  RequestMethod.POST)
   public @ResponseBody
   Object loginPost(Tuser tuser ) throws MyException {
     try {
