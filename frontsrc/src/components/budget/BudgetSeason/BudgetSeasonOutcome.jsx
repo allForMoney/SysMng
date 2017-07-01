@@ -97,12 +97,14 @@ class BudgetSeasonOutcome extends React.Component {
 
   generateDataSource= (sourceData) => {
     const [ item1, item2, item3, item4 ] = sourceData;
+    const sumMoney = item1.money + item2.money + item3.money + item4.money;
+    const sumMoney2 = item2.money + item3.money + item4.money;
     let dataSource = [
       {
         column1: '合计',
         moneySource: '合计',
         project: '金额(元)',
-        money: 0,
+        money: sumMoney,
       }, {
         column1: '合计',
         moneySource: '合计',
@@ -124,7 +126,7 @@ class BudgetSeasonOutcome extends React.Component {
         column1: '项目筹措资金',
         moneySource: '小计',
         project: '金额(元)',
-        money: 0,
+        money: sumMoney2,
       }, {
         column1: '项目筹措资金',
         moneySource: '小计',
