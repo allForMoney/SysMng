@@ -253,10 +253,10 @@ class FrameContent extends React.Component {
               </SubMenu>
               <SubMenu key="其他功能" title={<span><Icon type="user" />其他功能</span>}>
                 <Menu.Item key="上报时间设置">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />上报时间设置</Link>
+                  <Link to="/sys/reportTime" ><Icon type="bars" />上报时间设置</Link>
                 </Menu.Item>
                 <Menu.Item key="发送短信通知">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />发送短信通知</Link>
+                  <Link to="/sys/sendSMS" ><Icon type="bars" />发送短信通知</Link>
                 </Menu.Item>
                 <Menu.Item key="系统使用建议">
                   <Link to="/budget_baseinfo" ><Icon type="bars" />系统使用建议</Link>

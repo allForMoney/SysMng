@@ -5,34 +5,45 @@ import FrameContent from '../common/FrameContent';
 
 const FormItem = Form.Item;
 
-function reportTime() {
+function reportTime(props) {
   const formItemLayout = {
     labelCol: {
-      xs: { span: 24 },
-      sm: { span: 6 },
+      sm: { span: 4 },
     },
     wrapperCol: {
-      xs: { span: 24 },
-      sm: { span: 14 },
+      sm: { span: 6 },
     },
   };
   const tailFormItemLayout = {
     wrapperCol: {
       xs: {
-        span: 24,
+        span: 4,
         offset: 0,
       },
       sm: {
-        span: 14,
+        span: 4,
         offset: 6,
       },
     },
   };
-  const { getFieldDecorator } = this.props.form;
+  const { getFieldDecorator, validateFields } = props.form;
+  const handleSubmit = () => {
+    console.log('tij');
+    validateFields((error, values) => {
+      if (error) {
+        return ;
+      }
+      console.log(values);
+      props.dispatch({
+        type: 'OtherModel/saveReportTime',
+        payload: values
+      });
+    });
+  };
 
   return (
     <FrameContent>
-      <Form onSubmit={this.handleSubmit}>
+      <Form>
         <FormItem
           {...formItemLayout}
           label="第一季度上报截止日期"
@@ -44,9 +55,39 @@ function reportTime() {
           )}
         </FormItem>
         <FormItem
+          {...formItemLayout}
+          label="第二季度上报截止日期"
+          hasFeedback
+        >
+          {getFieldDecorator('season2', {
+          })(
+            <Input />
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="第三季度上报截止日期"
+          hasFeedback
+        >
+          {getFieldDecorator('season3', {
+          })(
+            <Input />
+          )}
+        </FormItem>
+        <FormItem
+          {...formItemLayout}
+          label="第四季度上报截止日期"
+          hasFeedback
+        >
+          {getFieldDecorator('season4', {
+          })(
+            <Input />
+          )}
+        </FormItem>
+        <FormItem
           {...tailFormItemLayout}
         >
-        <Button></Button>
+          <Button type="submit" onClick={handleSubmit}>保存</Button>
         </FormItem>
       </Form>
     </FrameContent>
@@ -54,7 +95,7 @@ function reportTime() {
 }
 
 function mapStateToProps(state) {
-  const { userType, userName } = state.OtherModel;
+  const { userType, userName } = state.baseModel;
   return { userType, userName };
 }
 

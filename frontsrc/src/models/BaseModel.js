@@ -6,7 +6,7 @@ export default {
 
   state: {
     loading: false,
-    userType: 'inputer',  // inputer/finan/manager/admin/ministry
+    userType: 'admin',  // inputer/finan/manager/admin/ministry
     userName: '12345',
     showMsgModal: false,
     projectName: 'kfkkfkfkfkfkfkfk',
@@ -27,9 +27,9 @@ export default {
       });
     },
     init({ dispatch }) {
-      dispatch({
-        type: 'isLogin'
-      });
+      // dispatch({
+      //   type: 'isLogin'
+      // });
     }
 
   },

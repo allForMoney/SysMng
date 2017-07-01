@@ -35,7 +35,6 @@ export default {
       }
     },
 
-
     * changeCheckStatus({ payload }, { call }) {
       const data = yield call(changeCheckStatus, payload);
       if (data && data.code === 1) {

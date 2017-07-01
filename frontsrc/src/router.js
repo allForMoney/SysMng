@@ -17,6 +17,7 @@ import ImportBudget16 from './components/import/ImportBudget16';
 import ImportProjet from './components/import/ImportProjet';
 import ProjectInfoList from './components/project/ProjectInfoList';
 import ProjectBaseInfo from './components/project/ProjectBaseInfo';
+import reportTime from './components/others/reportTime';
 
 function RouterConfig({ history }) {
   return (
@@ -39,6 +40,7 @@ function RouterConfig({ history }) {
 
       <Route path="/sys/concat" component={ModifyConcat} />
       <Route path="/sys/advice" component={Advice} />
+      <Route path="/sys/reportTime" component={reportTime} />
     </Router>
   );
 }
