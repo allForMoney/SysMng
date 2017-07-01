@@ -30,9 +30,9 @@ public class AuthControllerTests {
   private AuthController authController;
   @Test
   public void test() throws Exception {
-    Tuser tuser = new Tuser();
-    tuser.setUsername("2016-02-2");
-    tuser.setPassword("123456");
-    Object obj = authController.loginPost(tuser);
+//    Tuser tuser = new Tuser();Tuser
+//    tuser.setUsername("2016-02-2");
+//    tuser.setPassword("123456");
+//    Object obj = authController.loginPost(tuser);
   }
 }

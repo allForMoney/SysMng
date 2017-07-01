@@ -14,3 +14,10 @@ export function login(params) {
     data: JSON.stringify(params),
   });
 }
+export function login(params) {
+  console.log(params);
+  return request('/isLogin', {
+    method: 'post',
+    data: JSON.stringify(params),
+  });
+}

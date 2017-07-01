@@ -66,6 +66,7 @@ class BudgetSeason extends React.Component {
     const {
       projectName,
       projectNo,
+      projectInfo,
       editBudgetSteps,
       buggetInComeList,
       buggetOutComeList,
@@ -84,7 +85,7 @@ class BudgetSeason extends React.Component {
 
     return (
       <FrameContent>
-        <Card title={`收入预算执行情况[编号: ${projectNo},名称:${projectName}]`}>
+        <Card title={`收入预算执行情况[编号: ${projectInfo.projectNo},名称:${projectInfo.majorName}]`}>
           { editBudgetSteps === 0 &&
             <Row className="">
               年度
@@ -166,6 +167,7 @@ function mapStateToProps(state) {
       budgetMsgNum,
       budgetMsgage,
       projectId,
+      projectInfo,
   } = state.baseModel;
   const {
     editBudgetSteps,
@@ -177,6 +179,7 @@ function mapStateToProps(state) {
   return {
     budgetMsgList,
     userType,
+    projectInfo,
     loading,
     budgetMsgNum,
     budgetMsgage,

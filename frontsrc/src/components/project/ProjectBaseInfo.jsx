@@ -143,7 +143,7 @@ class ProjectBaseInfo extends React.Component {
               <Col span={4}>{finaceHeader}</Col>
               <Col span={4}>联系电话</Col>
               <Col span={4}>{finaceHeaderTel}</Col>
-              <Col span={4}>QQ号码</Col>
+              <Col span={3}>QQ号码</Col>
               <Col span={4}>{finaceHeaderQq}</Col>
             </Row>
             <Row>
@@ -151,7 +151,7 @@ class ProjectBaseInfo extends React.Component {
               <Col span={4}>{reporter}</Col>
               <Col span={4}>联系电话</Col>
               <Col span={4}>{reporterTel}</Col>
-              <Col span={4}>QQ号码</Col>
+              <Col span={3}>QQ号码</Col>
               <Col span={4}>{reporterQq}</Col>
             </Row>
           </Card>
@@ -162,10 +162,7 @@ class ProjectBaseInfo extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { userType, userName } = state.baseModel;
-  const {
-    projectInfo,
-  } = state.ProjectModel;
+  const { userType, userName, projectInfo } = state.baseModel;
   return { userType, userName, projectInfo };
 }
 
