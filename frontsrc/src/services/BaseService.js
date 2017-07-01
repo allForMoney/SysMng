@@ -14,6 +14,11 @@ export function login(params) {
     data: JSON.stringify(params),
   });
 }
+export function getProviceInfo() {
+  return request('/common/provences', {
+    method: 'post',
+  });
+}
 export function isLogin(params) {
   console.log(params);
   return request('/isLogin');

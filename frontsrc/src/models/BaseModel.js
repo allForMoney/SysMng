@@ -1,4 +1,4 @@
-import { logout, login, isLogin } from '../services/BaseService';
+import { logout, login, isLogin, getProviceInfo } from '../services/BaseService';
 import { routerRedux } from 'dva/router';
 
 export default {
@@ -6,7 +6,7 @@ export default {
 
   state: {
     loading: false,
-    userType: 'inputer',  // inputer/finan/manager/admin/ministry
+    userType: 'admin',  // inputer/finan/manager/admin/ministry
     userName: '12345',
     showMsgModal: false,
     projectName: 'kfkkfkfkfkfkfkfk',
@@ -17,6 +17,7 @@ export default {
     projectTotal: 34,
     projectPage: 1,
     userId: '',
+    priviceList: [],
   },
   
   subscriptions: {
@@ -28,6 +29,10 @@ export default {
       });
     },
     init({ dispatch }) {
+      
+      dispatch({
+        type: 'getProviceInfo'
+      });
       // dispatch({
       //   type: 'isLogin'
       // });
@@ -127,7 +132,17 @@ export default {
       }
     },
 
-
+    * getProviceInfo({ payload }, { call }) {
+      const data = yield call(getProviceInfo, payload);
+      if (data&& data.code === '1') {
+        yield put({
+          type: 'setState',
+          payload: {
+            priviceList: data.result,
+          }
+        });
+      }
+    },
     * logout({ payload }, { call }) {
       const data = yield call(logout, payload);
     },
