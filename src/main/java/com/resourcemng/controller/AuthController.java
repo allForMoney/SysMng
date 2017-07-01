@@ -16,7 +16,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,7 +58,7 @@ public class AuthController {
       }
       LoginUserView view = new LoginUserView();
       BeanUtils.copyProperties(view, user);
-      view.setPassword("不给你看");
+//      view.setPassword("不给你看");
       //学校人员
       if (UserRole.REPORT.equals(user.getUserRole()) || UserRole.FINANCE.equals(user.getUserRole()) || UserRole.PROJECTHEADER.equals(user.getUserRole())) {
         Project project = projectService.get(ApplicationUitl.getPorjectNoByReportUserNo(user.getUsername()));
@@ -80,9 +82,8 @@ public class AuthController {
   public @ResponseBody
   Object isLogin(HttpSession session ) throws MyException {
       Object view = session.getAttribute(SESSION_KEY);
-      boolean isLoigin = view == null?false:true;
       // 设置session
-      return new RequestResult(ResultCode.SUCCESS, "判断是否登录.",  isLoigin);
+      return new RequestResult(ResultCode.SUCCESS, "判断是否登录.",  view);
   }
 
   /**
@@ -90,10 +91,10 @@ public class AuthController {
    * @param session
    * @return
    */
-  @GetMapping("/logout")
-  public String logout(HttpSession session) {
+  @RequestMapping("/logout")
+  public void logout(HttpSession session,HttpServletResponse response) throws IOException {
     // 移除session
     session.removeAttribute(SESSION_KEY);
-    return "redirect:/login.html";
+    response.sendRedirect("index.html");
   }
 }
