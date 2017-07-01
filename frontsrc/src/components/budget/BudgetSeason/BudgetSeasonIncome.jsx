@@ -54,67 +54,67 @@ class BudgetSeasonIncome extends React.Component {
   
   render() {
     const { getFieldDecorator } = this.props.form;
-    const dataSource = [{
-      source2: '101',
-      source: 102,
-      pname: 103,
-      money: 104,
-    }, {
-      source2: 201,
-      source: '202',
-      pname: 203,
-      money: 204,
-    }, {
-      source2: 301,
-      source: '302',
-      pname: 303,
-      money: 304,
-    }, {
-      source2: 401,
-      source: '402',
-      pname: 403,
-      money: 404,
-    }, {
-      source2: 501,
-      source: '502',
-      pname: 503,
-      money: 504,
-    }, {
-      source2: 601,
-      source: '602',
-      pname: 603,
-      money: 604,
-    }, {
-      source2: 701,
-      source: '702',
-      pname: 703,
-      money: 704,
-    }, {
-      source2: 801,
-      source: '802',
-      pname: 803,
-      money: 804,
-    }, {
-      source2: 901,
-      source: '902',
-      pname: 903,
-      money: 904,
-    }, {
-      source2: 1001,
-      source: '1002',
-      pname: 1003,
-      money: 1004,
-    }, {
-      source2: 1001,
-      source: '1002',
-      pname: 1003,
-      money: 1004,
-    }, {
-      source2: 1001,
-      source: '1002',
-      pname: 1003,
-      money: 1004,
-    }];
+    // const dataSource = [{
+    //   source2: '101',
+    //   source: 102,
+    //   pname: 103,
+    //   money: 104,
+    // }, {
+    //   source2: 201,
+    //   source: '202',
+    //   pname: 203,
+    //   money: 204,
+    // }, {
+    //   source2: 301,
+    //   source: '302',
+    //   pname: 303,
+    //   money: 304,
+    // }, {
+    //   source2: 401,
+    //   source: '402',
+    //   pname: 403,
+    //   money: 404,
+    // }, {
+    //   source2: 501,
+    //   source: '502',
+    //   pname: 503,
+    //   money: 504,
+    // }, {
+    //   source2: 601,
+    //   source: '602',
+    //   pname: 603,
+    //   money: 604,
+    // }, {
+    //   source2: 701,
+    //   source: '702',
+    //   pname: 703,
+    //   money: 704,
+    // }, {
+    //   source2: 801,
+    //   source: '802',
+    //   pname: 803,
+    //   money: 804,
+    // }, {
+    //   source2: 901,
+    //   source: '902',
+    //   pname: 903,
+    //   money: 904,
+    // }, {
+    //   source2: 1001,
+    //   source: '1002',
+    //   pname: 1003,
+    //   money: 1004,
+    // }, {
+    //   source2: 1001,
+    //   source: '1002',
+    //   pname: 1003,
+    //   money: 1004,
+    // }, {
+    //   source2: 1001,
+    //   source: '1002',
+    //   pname: 1003,
+    //   money: 1004,
+    // }];
 
     const columns = [{
       title: '资金来源',
@@ -186,6 +186,8 @@ class BudgetSeasonIncome extends React.Component {
       required: true,
       message: '不可为空'
     };
+
+    const { dataSource } = this.props;
 
     return (
       <Card>

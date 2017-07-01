@@ -14,8 +14,8 @@ export default {
 
   state: {
     loading: false,
-    year: 2017,
-    season: 1,
+    projectYear: 2017,
+    quarterNum: 1,
     editBudgetSteps: 0,
     buggetInComeList: [],
     buggetOutComeList: [],
@@ -28,7 +28,8 @@ export default {
   effects: {
 
     * getBudgetProjectList({ payload }, { call, put, select }) {
-      const data = yield call(getBudgetProjectList, payload);
+      const { projectId } = yield select(state => state.baseModel);
+      const data = yield call(getBudgetProjectList, { projectId, ...payload });
       if (data.code === '1') {
         yield put({
           type: 'setState',

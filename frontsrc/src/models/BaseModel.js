@@ -23,10 +23,12 @@ export default {
       console.log(data);
     },
 
+
     * logout({ payload }, { call }) {
-      const data = yield call(login, payload);
+      const data = yield call(logout, payload);
       console.log(data);
     },
+
     * doRouter({ payload }, { put }) {
       // TODO 根据用户角色不同,跳转到不同 的界面
       let pathname = '/base/projectList'; // 管理员的默认界面

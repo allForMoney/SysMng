@@ -24,7 +24,7 @@ class BudgetSeason extends React.Component {
     this.props.dispatch({
       type: 'budgetModel/setState',
       payload: {
-        year: value
+        projectYear: value
       }
     });
   }
@@ -33,7 +33,7 @@ class BudgetSeason extends React.Component {
     this.props.dispatch({
       type: 'budgetModel/getIncomeBudget',
       payload: {
-        season: value,
+        quarterNum: value,
       }
     });
   }
@@ -171,8 +171,8 @@ function mapStateToProps(state) {
     editBudgetSteps,
     buggetInComeList,
     buggetOutComeList,
-    year,
-    season,
+    projectYear,
+    quarterNum,
     } = state.budgetModel;
   return {
     budgetMsgList,
@@ -182,8 +182,8 @@ function mapStateToProps(state) {
     budgetMsgage,
     editBudgetSteps,
     buggetInComeList,
-    year,
-    season,
+    projectYear,
+    quarterNum,
     buggetOutComeList,
     projectId
   };
