@@ -16,19 +16,47 @@ class BudgetSeasonOutcome extends React.Component {
       {
         pid: 1,
         moneySource: '部本专项资金',
-        money: 0,
+        materialMake: 0,
+        companyCase: 0,
+        courseDevelopment: 0,
+        specialTool: 0,
+        applicationPromete: 0,
+        researchProve: 0,
+        expertConsult: 0,
+        otherFee: 0,
       }, {
         pid: 2,
         moneySource: '院校举办方或地方财政投入资金',
-        money: 0,
+        materialMake: 0,
+        companyCase: 0,
+        courseDevelopment: 0,
+        specialTool: 0,
+        applicationPromete: 0,
+        researchProve: 0,
+        expertConsult: 0,
+        otherFee: 0,
       }, {
         pid: 3,
         moneySource: '行业企业支持资金',
-        money: 0,
+        materialMake: 0,
+        companyCase: 0,
+        courseDevelopment: 0,
+        specialTool: 0,
+        applicationPromete: 0,
+        researchProve: 0,
+        expertConsult: 0,
+        otherFee: 0,
       }, {
         pid: 4,
         moneySource: '相关院校自筹资金',
-        money: 0,
+        materialMake: 0,
+        companyCase: 0,
+        courseDevelopment: 0,
+        specialTool: 0,
+        applicationPromete: 0,
+        researchProve: 0,
+        expertConsult: 0,
+        otherFee: 0,
       }
     ],
   }
@@ -79,59 +107,73 @@ class BudgetSeasonOutcome extends React.Component {
     });
   }
 
+  getItemTotalMoney = (item) => {
+    const totalMoney = (item.materialMake + item.companyCase + item.courseDevelopment
+    + item.specialTool + item.applicationPromete +
+    item.researchProve + item.expertConsult + item.otherFee);
+    return totalMoney;
+  }
+  
   getDetailSource = (item) => {
+    const totalMoney = this.getItemTotalMoney(item);
     return [{
       column1: '项目筹措资金',
       moneySource: item.moneySource,
       project: '金额(元)',
       pid: item.pid,
-      money: item.money,
+      totalMoney,
       ...item,
     }, {
       column1: '项目筹措资金',
       moneySource: item.moneySource,
       project: '到位率',
-      money: 0,
+      totalMoney: 0,
     }];
   }
 
   generateDataSource= (sourceData) => {
     const [ item1, item2, item3, item4 ] = sourceData;
-    const sumMoney = item1.money + item2.money + item3.money + item4.money;
-    const sumMoney2 = item2.money + item3.money + item4.money;
+    const item1Total = this.getItemTotalMoney(item1);
+    const item2Total = this.getItemTotalMoney(item2);
+    const item3Total = this.getItemTotalMoney(item3);
+    const item4Total = this.getItemTotalMoney(item4);
+    const sumMoney = item1Total + item2Total + item3Total + item4Total;
+
+    const sumMoney2 = item2Total + item3Total + item4Total;
+
     let dataSource = [
       {
         column1: '合计',
         moneySource: '合计',
         project: '金额(元)',
-        money: sumMoney,
+        totalMoney: sumMoney,
       }, {
         column1: '合计',
         moneySource: '合计',
         project: '到位率',
-        money: 0,
+        totalMoney: 0,
       }, {
         column1: item1.moneySource,
         moneySource: item1.moneySource,
         pid: item1.pid,
         project: '金额(元)',
-        money: item1.money,
+        totalMoney: item1.totalMoney,
         ...item1,
       }, {
         column1: item1.moneySource,
         moneySource: item1.moneySource,
         project: '到位率',
-        money: 0,
+        totalMoney: 0,
       }, {
         column1: '项目筹措资金',
         moneySource: '小计',
         project: '金额(元)',
-        money: sumMoney2,
+        totalMoney: sumMoney2,
       }, {
         column1: '项目筹措资金',
         moneySource: '小计',
         project: '到位率',
-        money: 0,
+        totalMoney: 0,
       }
     ];
     dataSource = dataSource.concat(this.getDetailSource(item2));
@@ -204,10 +246,12 @@ class BudgetSeasonOutcome extends React.Component {
         title: '项目',
         dataIndex: 'project',
         key: 'project',
+        width: 80
       }, {
         title: '总额',
-        dataIndex: 'pname',
-        key: 'pname',
+        dataIndex: 'totalMoney',
+        width: 80,
+        key: 'totalMoney',
       }, {
         title: '素材制作',
         dataIndex: 'materialMake',
