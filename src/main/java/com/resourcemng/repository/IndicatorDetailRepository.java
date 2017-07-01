@@ -17,6 +17,6 @@ import java.util.List;
  */
 public interface IndicatorDetailRepository extends JpaRepository<IndicatorDetail, String> {
 
-  @Query("from IndicatorDetail p where p.id=:projectId")
-  List<IndicatorDetail> findByProjectId(@Param("projectId") String projectId);
+//  @Query("from IndicatorDetail p where p.id=:projectId")
+  List<IndicatorDetail> findByFileImportId(String fileImportId);
 }

@@ -27,7 +27,7 @@ public interface ProjectRepository extends JpaRepository<Project, String> {
   Project findByProjectNo( @Param("projectNo")String projectNo);
 
 //  @Query("delete from Project p where p.projectNo=:projectNo")
-  Project deleteByProjectNo(@Param("projectNo")String projectNo);
+  void deleteByProjectNo(String projectNo);
 
 
 }

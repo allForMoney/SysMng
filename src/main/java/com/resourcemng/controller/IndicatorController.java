@@ -74,4 +74,17 @@ public class IndicatorController {
     return new RequestResult(ResultCode.SUCCESS, "绩效添加成功",   null);
   }
 
+  /**
+   * 绩效手动填写
+   * @param view
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "/detail" ,method = RequestMethod.GET)
+  @ResponseBody
+  public Object getIndicatorDetail(@RequestParam String projectId) throws Exception {
+    service.getIndicatorDetail(projectId);
+    return new RequestResult(ResultCode.SUCCESS, "绩效添加成功",   null);
+  }
+
 }

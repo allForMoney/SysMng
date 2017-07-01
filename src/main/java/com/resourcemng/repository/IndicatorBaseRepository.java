@@ -15,7 +15,7 @@ import java.util.List;
  * @blog http://blog.didispace.com
  */
 public interface IndicatorBaseRepository extends JpaRepository<IndicatorBase, String> {
-  @Query("from IndicatorBase p where p.id=:projectId")
-  List<IndicatorBase> findByProjectId(@Param("projectId")String projectId);
+//  @Query("from IndicatorBase p where p.id=:projectId")
+  IndicatorBase findByFileImportId(String fileImportId);
 
 }

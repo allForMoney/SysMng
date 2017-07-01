@@ -34,9 +34,13 @@ public class IndicatorService {
   IndicatorBaseRepository indicatorBaseRepository;
   public void importFormFile(String projectId, String importUser, File uploadFile) throws MyException {
     try {
-
+      //仅仅允许导入一次啊
+      FileImportLog log = fileImportLogRepository.findByProjectIdAndImportType(projectId,ImportFileType.TARGET);
+      if(log !=null){
+        throw new MyException("同一个项目绩效指标只能导入一次，如果需要修改，请删除记录后重试。");
+      }
       //保存导入记录
-      FileImportLog log = new FileImportLog();
+      log = new FileImportLog();
       log.setFileName(uploadFile.getName());
       log.setImportType(ImportFileType.TARGET);
       log.setImportUserId(importUser);
@@ -133,5 +137,24 @@ public class IndicatorService {
    */
   public void updateIndicatorDetail(IndicatorDetail detail) {
     indicatorDetailRepository.save(detail);
+  }
+
+  /**
+   *
+   * @param projectId
+   */
+  public IndicatorView getIndicatorDetail(String projectId) throws MyException, InvocationTargetException, IllegalAccessException {
+    IndicatorView view  = new IndicatorView ();
+    //仅仅允许导入一次啊
+    FileImportLog log = fileImportLogRepository.findByProjectIdAndImportType(projectId,ImportFileType.TARGET);
+    if(log == null){
+      throw new MyException("没有记录，请联系管理员导入指标数据。");
+    }
+    BeanUtils.copyProperties(view, log);
+    IndicatorBase indicatorBase = indicatorBaseRepository.findByFileImportId(log.getId());
+    view.setIndicatorBase(indicatorBase);
+    view.setIndicatorDetails(indicatorDetailRepository.findByFileImportId(log.getId()));
+    return view;
+
   }
 }

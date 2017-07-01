@@ -16,9 +16,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Transient;
 import java.io.File;
 import java.util.List;
-
+@Transactional
 @Service
 public class ProjectService {
   @Autowired
@@ -101,7 +102,13 @@ public class ProjectService {
    */
   public void  deletePorject(String projectNo){
     //删除关联用户
-    userRepository.deleteByUsernameLike(projectNo);
+//    userRepository.deleteByUsernameLike(projectNo);
+    List<Tuser> users = userRepository.findByProject(projectNo);
+    if(users!=null){
+      for (Tuser user:users){
+        userRepository.deleteById(user.getId());
+      }
+    }
     //删除项目信息
     projectRepository.deleteByProjectNo(projectNo);
   }

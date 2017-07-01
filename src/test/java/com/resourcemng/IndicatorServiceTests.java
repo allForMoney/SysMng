@@ -32,8 +32,10 @@ public class IndicatorServiceTests {
   private IndicatorService service;
   @Test
   public void testUploadFile() throws Exception {
-    service.importFormFile("ddd","ddw", new File("F:\\个人文件夹\\workspace\\绩效目标 - 副本.xlsx"));
+    service.importFormFile("402881f05cf98f57015cf98f68030003","402881f05cf98f57015cf98f67b40000", new File("E:\\项目资料\\新建文件夹\\模板\\绩效目标.xlsx"));
   }
-
-
+  @Test
+  public void get() throws Exception {
+    Object obj =  service.getIndicatorDetail("402881f05cf98f57015cf98f68030003");
+  }
 }

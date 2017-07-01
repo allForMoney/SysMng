@@ -1,12 +1,12 @@
 package com.resourcemng.entitys;
 
+import com.resourcemng.Enum.FoundSourceType;
 import com.resourcemng.Enum.IsDelete;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -25,21 +25,30 @@ public class FundsIn implements Serializable {
   private String userId;
   private String pid;
 
-  private String pName;
+  private String moneySource;
   public FundsIn() {
   }
 
   public FundsIn(String pid, String pName) {
     this.pid = pid;
-    this.pName = pName;
+    this.moneySource = pName;
   }
-@Transient
-  public String getpName() {
-    return pName;
+  @Transient
+  public String getMoneySource() {
+    if(FoundSourceType.COUNTRY.equals(pid)){
+      return "部本专项资金";
+    }else if(FoundSourceType.LOCAL.equals(pid)){
+      return "院校举办方或地方财政投入资金";
+    }else if(FoundSourceType.ENTERPRICE.equals(pid)){
+      return "行业企业支持资金";
+    }else if(FoundSourceType.UNIVERSITY.equals(pid)){
+      return "相关院校自筹资金";
+    }
+    return moneySource;
   }
 
-  public void setpName(String pName) {
-    this.pName = pName;
+  public void setMoneySource(String moneySource) {
+    this.moneySource = moneySource;
   }
 
   @Id

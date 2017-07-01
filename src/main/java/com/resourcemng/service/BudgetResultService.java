@@ -54,11 +54,15 @@ public class BudgetResultService {
     String projectNo = user.getUsername().substring(0,user.getUsername().lastIndexOf("-"));
     Project project = projectRepository.findByProjectNo(projectNo);
     view.setProjectId(project.getId());
-    ReportAuditLog log = new ReportAuditLog();
-    log.setProjectId(view.getProjectId());
-    log.setYear(view.getProjectYear());
-    log.setQuarter(view.getQuarterNum());
-    log.setReportTime(new Date());
+    //审核记录
+    ReportAuditLog log = reportAuditLogRepository.findByParam(view.getProjectId(),view.getQuarterNum(),view.getProjectYear());
+    if(log ==null) {
+      log = new ReportAuditLog();
+      log.setProjectId(view.getProjectId());
+      log.setYear(view.getProjectYear());
+      log.setQuarter(view.getQuarterNum());
+      log.setReportTime(new Date());
+    }
     reportAuditLogRepository.save(log);
     //提交保存季报收入
     List<FundsIn> fundsIns = view.getFundsIns();
@@ -90,11 +94,13 @@ public class BudgetResultService {
     view.setProjectYear(projectYear);
     view.setQuarterNum(quarterNum);
     view.setProjectId(project.getId());
-
-    List<FundsIn>  fundsIns =  fundsInRepository.findByParams(user.getId(),quarterNum,projectYear);
-    List<FundsOut>  fundsOuts =  fundsOutRepository.findByParams(user.getId(),quarterNum,projectYear);
     //审核记录
     ReportAuditLog log = reportAuditLogRepository.findByParam(projectId,quarterNum,projectYear);
+    if(log == null){
+      return view;
+    }
+    List<FundsIn>  fundsIns =  fundsInRepository.findByParams(user.getId(),quarterNum,projectYear);
+    List<FundsOut>  fundsOuts =  fundsOutRepository.findByParams(user.getId(),quarterNum,projectYear);
 
     view.setAuditStatus(EntityUitl.getReportAuditLogStatus(log));//返回状态
 

@@ -1,5 +1,6 @@
 package com.resourcemng.entitys;
 
+import com.resourcemng.Enum.FoundSourceType;
 import com.resourcemng.Enum.IsDelete;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -32,6 +33,25 @@ public class FundsOut implements Serializable {
   private String userId;
   private String pid;
 
+  private String moneySource;
+
+  @Transient
+  public String getMoneySource() {
+    if(FoundSourceType.COUNTRY.equals(pid)){
+      return "部本专项资金";
+    }else if(FoundSourceType.LOCAL.equals(pid)){
+      return "院校举办方或地方财政投入资金";
+    }else if(FoundSourceType.ENTERPRICE.equals(pid)){
+      return "行业企业支持资金";
+    }else if(FoundSourceType.UNIVERSITY.equals(pid)){
+      return "相关院校自筹资金";
+    }
+    return moneySource;
+  }
+
+  public void setMoneySource(String moneySource) {
+    this.moneySource = moneySource;
+  }
   @Id
   @GeneratedValue(generator = "uuid")
   @GenericGenerator(name = "uuid", strategy = "uuid")

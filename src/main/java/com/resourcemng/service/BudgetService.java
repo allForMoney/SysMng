@@ -58,8 +58,8 @@ public class BudgetService {
   }
 
   public void importBudget2016FormFile(String projectId, String importUser, String budgetYear,File uploadFile) throws MyException {
-    List<FileImportLog>  fileImportLogs  = this.fileImportLogRepository.findByProject(projectId);
-    if(fileImportLogs != null && fileImportLogs.size()>0){//不让重复导入？
+    FileImportLog  fileImportLogs  = this.fileImportLogRepository.findByProjectIdAndImportType(projectId,ImportFileType.BUDGET2015);
+    if(fileImportLogs != null) {//不让重复导入？
       throw new MyException("预算已经导入过，不能重复导入，请删除后重试");
     }
     try {
@@ -247,11 +247,8 @@ public class BudgetService {
    */
   public Object getByProject(String projetId) throws MyException {
       //TODO 预算如果导入多次怎么办,取最新的？
-    List<FileImportLog>  list  = this.fileImportLogRepository.findByProject(projetId);
-    FileImportLog log = null;
-    if(list !=null && list.size()>0){
-      log =  list.get(list.size()-1);
-
+    FileImportLog log  = this.fileImportLogRepository.findByProjectIdAndImportType(projetId,ImportFileType.BUDGET2016);
+    if(log !=null){
       return this.getDetail(log);
     }
     return null;

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,7 +21,8 @@ public interface TUserRepository extends JpaRepository<Tuser, String> {
     List<Tuser> findByProject(@Param("projectNo") String projectNo);
 
 //  @Query("delete from Tuser u where u.username like CONCAT('%',:projectNo,'%')")
-    void deleteByUsernameLike(/*@Param("projectNo")*/String username);
+  @Transactional
+  void deleteByUsernameLike(/*@Param("projectNo")*/String username);
 
   @Query("from Tuser u where u.username=:userNo")
   Tuser findByUserNo(@Param("userNo")String userNo);

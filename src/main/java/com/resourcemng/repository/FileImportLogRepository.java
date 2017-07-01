@@ -15,8 +15,8 @@ import java.util.List;
  * @blog http://blog.didispace.com
  */
 public interface FileImportLogRepository extends JpaRepository<FileImportLog, String> {
-  @Query("from FileImportLog p where p.projectId=:projectId")
-  List<FileImportLog> findByProject(@Param("projectId")String projectId);
+//  @Query("from FileImportLog p where p.projectId=:projectId")
+    FileImportLog findByProjectIdAndImportType(String projectId,String importType);
 
   @Query("from FileImportLog p where p.projectId like CONCAT('%',:projectId,'%')")
   List<FileImportLog> findByParam(@Param("projectId")String projectId);
