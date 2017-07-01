@@ -47,7 +47,7 @@ public class AuthController {
    */
   @RequestMapping (value = "/login",method =  RequestMethod.POST)
   public @ResponseBody
-  Object loginPost(Tuser tuser ) throws MyException {
+  Object loginPost(@RequestBody Tuser tuser,HttpSession session ) throws MyException {
     try {
       Map<String, Object> map = new HashMap<>();
       Tuser user = service.getUser(tuser.getUsername());
@@ -62,11 +62,27 @@ public class AuthController {
         Project project = projectService.get(ApplicationUitl.getPorjectNoByReportUserNo(user.getUsername()));
         view.setProject(project);
       }
+      session.setAttribute(SESSION_KEY,view);
       // 设置session
       return new RequestResult(ResultCode.SUCCESS, "登录成功.", view);
     }catch (Exception e){
       throw new MyException(e);
     }
+  }
+
+  /**
+   * 判断用户是否登录
+   * @param session
+   * @return
+   * @throws MyException
+   */
+  @RequestMapping (value = "/isLogin",method =  RequestMethod.GET)
+  public @ResponseBody
+  Object isLogin(HttpSession session ) throws MyException {
+      Object view = session.getAttribute(SESSION_KEY);
+      boolean isLoigin = view == null?false:true;
+      // 设置session
+      return new RequestResult(ResultCode.SUCCESS, "判断是否登录.",  isLoigin);
   }
 
   /**
@@ -78,6 +94,6 @@ public class AuthController {
   public String logout(HttpSession session) {
     // 移除session
     session.removeAttribute(SESSION_KEY);
-    return "redirect:/login";
+    return "redirect:/login.html";
   }
 }
