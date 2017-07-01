@@ -16,6 +16,7 @@ export default {
     projectList: [],
     projectTotal: 34,
     projectPage: 1,
+    userId: '',
   },
   
   subscriptions: {
@@ -67,8 +68,8 @@ export default {
         yield put({
           type: 'setState',
           payload: {
-            projectId: result.id,
-            projectNo: result.username,
+            userId: result.id,
+            projectNo: result.projectNo,
             userType,
             projectInfo: result.project,
             projectName: result.majorName,
