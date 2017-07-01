@@ -131,6 +131,7 @@ function ProjectBudgetTable(props) {
     <Table
       title={() => title}
       size="small"
+      scroll={{ x: true, y: 300 }}
       columns={columns}
       dataSource={dataList}
       loading={loading}

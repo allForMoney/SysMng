@@ -18,19 +18,19 @@ class BudgetSeasonIncome extends React.Component {
       {
         pid: 1,
         moneySource: '部本专项资金',
-        money: 0,
+        amountMoney: 0,
       }, {
         pid: 2,
         moneySource: '院校举办方或地方财政投入资金',
-        money: 0,
+        amountMoney: 0,
       }, {
         pid: 3,
         moneySource: '行业企业支持资金',
-        money: 0,
+        amountMoney: 0,
       }, {
         pid: 4,
         moneySource: '相关院校自筹资金',
-        money: 0,
+        amountMoney: 0,
       }
     ],
   }
@@ -87,51 +87,51 @@ class BudgetSeasonIncome extends React.Component {
       moneySource: item.moneySource,
       project: '金额(元)',
       pid: item.pid,
-      money: item.money,
+      amountMoney: item.amountMoney,
     }, {
       column1: '项目筹措资金',
       moneySource: item.moneySource,
       project: '到位率',
-      money: 0,
+      amountMoney: 0,
     }];
   }
 
   generateDataSource= (sourceData) => {
     const [ item1, item2, item3, item4 ] = sourceData;
-    const sumMoney = item1.money + item2.money + item3.money + item4.money;
-    const sumMoney2 = item2.money + item3.money + item4.money;
+    const sumMoney = item1.amountMoney + item2.amountMoney + item3.amountMoney + item4.amountMoney;
+    const sumMoney2 = item2.amountMoney + item3.amountMoney + item4.amountMoney;
     let dataSource = [
       {
         column1: '合计',
         moneySource: '合计',
         project: '金额(元)',
-        money: sumMoney,
+        amountMoney: sumMoney,
       }, {
         column1: '合计',
         moneySource: '合计',
         project: '到位率',
-        money: 0,
+        amountMoney: 0,
       }, {
         column1: item1.moneySource,
         moneySource: item1.moneySource,
         pid: item1.pid,
         project: '金额(元)',
-        money: item1.money,
+        amountMoney: item1.amountMoney,
       }, {
         column1: item1.moneySource,
         moneySource: item1.moneySource,
         project: '到位率',
-        money: 0,
+        amountMoney: 0,
       }, {
         column1: '项目筹措资金',
         moneySource: '小计',
         project: '金额(元)',
-        money: sumMoney2,
+        amountMoney: sumMoney2,
       }, {
         column1: '项目筹措资金',
         moneySource: '小计',
         project: '到位率',
-        money: 0,
+        amountMoney: 0,
       }
     ];
     dataSource = dataSource.concat(this.getDetailSource(item2));
@@ -206,8 +206,8 @@ class BudgetSeasonIncome extends React.Component {
       key: 'project',
     }, {
       title: '总额/到位率',
-      dataIndex: 'money',
-      key: 'money',
+      dataIndex: 'amountMoney',
+      key: 'amountMoney',
     }];
 
     const { modalVisible } = this.state;
@@ -236,7 +236,7 @@ class BudgetSeasonIncome extends React.Component {
               })(<Input disabled />)}
             </FormItem>
             <FormItem label="金额" {...formItemLayout}>
-              {getFieldDecorator('money', {
+              {getFieldDecorator('amountMoney', {
                 rules: [filterRules],
               })(<InputNumber />)}
             </FormItem>
