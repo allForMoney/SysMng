@@ -122,5 +122,16 @@ public class BudgetController {
   public Object getByProject(@RequestParam String projectId) throws Exception {
     return new RequestResult(ResultCode.SUCCESS, "获取成功",  service.getByProject(projectId));
   }
+  /**
+   * 获取某个项目的预算分类金额
+   * @param projectId
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "/getBudgetForProject" ,method = RequestMethod.GET)
+  @ResponseBody
+  public Object getBudgetForProject(@RequestParam String projectId) throws Exception {
+    return new RequestResult(ResultCode.SUCCESS, "获取成功",  service.getBudgetForProject(projectId));
+  }
 
 }

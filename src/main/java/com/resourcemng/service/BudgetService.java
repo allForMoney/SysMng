@@ -10,7 +10,7 @@ import com.resourcemng.entitys.*;
 import com.resourcemng.handler.BudgetImportHanlder;
 import com.resourcemng.repository.*;
 import com.resourcemng.util.BigDecimalUtil;
-import com.resourcemng.view.BudgetImportView;
+import com.resourcemng.view.*;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -266,5 +266,31 @@ public class BudgetService {
     leaveMessage.setMesType(LeaveMessageType.BUDGET);
     leaveMessage.setSubmitDate(new Date());
    return leaveMessageRepository.save(leaveMessage);
+  }
+
+  public Object getBudgetForProject(String projectId) throws InvocationTargetException, IllegalAccessException {
+    ProjectBudgetItemView view = new ProjectBudgetItemView();
+    List<FundsBudget> list = fundsBudgetRepository.findByProjectId( projectId);
+    for(FundsBudget fundsBudget:list){
+      if(FoundSourceType.COUNTRY.equals(fundsBudget.getPid())){
+        ProjectBudgetDetailView resultInfoView = new ProjectBudgetDetailView();
+        BeanUtils.copyProperties(resultInfoView,fundsBudget);
+        view.setCountryTotal(resultInfoView);
+      }else if(FoundSourceType.LOCAL.equals(fundsBudget.getPid())){
+        ProjectBudgetDetailView resultInfoView = new ProjectBudgetDetailView();
+        BeanUtils.copyProperties(resultInfoView,fundsBudget);
+        view.setLocal(resultInfoView);
+      }else if(FoundSourceType.ENTERPRICE.equals(fundsBudget.getPid())){
+        ProjectBudgetDetailView resultInfoView = new ProjectBudgetDetailView();
+        BeanUtils.copyProperties(resultInfoView,fundsBudget);
+        view.setEnterprise(resultInfoView);
+      }else if(FoundSourceType.UNIVERSITY.equals(fundsBudget.getPid())){
+        ProjectBudgetDetailView resultInfoView = new ProjectBudgetDetailView();
+        BeanUtils.copyProperties(resultInfoView,fundsBudget);
+        view.setUniversity(resultInfoView);
+      }
+    }
+return view;
+
   }
 }

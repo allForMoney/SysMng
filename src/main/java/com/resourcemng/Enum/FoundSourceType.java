@@ -7,6 +7,9 @@ package com.resourcemng.Enum;
 public class FoundSourceType {
 
   public static final String TOTAL = "0";
+  /**
+   * 不笨
+   */
   public static final String COUNTRY = "1";
   public static final String LOCAL = "2";
   public static final String ENTERPRICE = "3";

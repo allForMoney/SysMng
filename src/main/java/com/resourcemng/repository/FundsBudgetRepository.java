@@ -2,7 +2,10 @@ package com.resourcemng.repository;
 
 import com.resourcemng.entitys.FundsBudget;
 import com.resourcemng.entitys.FundsIn;
+import com.resourcemng.entitys.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 
 /**
@@ -12,4 +15,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @blog http://blog.didispace.com
  */
 public interface FundsBudgetRepository extends JpaRepository<FundsBudget, String> {
+  List<FundsBudget> findByProjectId(String projectId);
 }

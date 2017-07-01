@@ -4,6 +4,7 @@ import com.resourcemng.entitys.FileImportLog;
 import com.resourcemng.entitys.FundsIn;
 import com.resourcemng.entitys.FundsOut;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class BudgetReportView extends FileImportLog {
   public void setFundsIns(List<FundsIn> fundsIns) {
     this.fundsIns = fundsIns;
   }
+
 
   public List<FundsOut> getFundsOuts() {
     return fundsOuts;

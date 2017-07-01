@@ -5,6 +5,7 @@ import com.resourcemng.basic.ResultCode;
 import com.resourcemng.service.BudgetResultService;
 import com.resourcemng.view.BudgetReportView;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping("/budget/report")
 public class BudgetResultController {
+  @Autowired
   BudgetResultService budgetResultService;
 
   /**

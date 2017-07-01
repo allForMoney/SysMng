@@ -25,6 +25,23 @@ public class FundsIn implements Serializable {
   private String userId;
   private String pid;
 
+  private String pName;
+  public FundsIn() {
+  }
+
+  public FundsIn(String pid, String pName) {
+    this.pid = pid;
+    this.pName = pName;
+  }
+@Transient
+  public String getpName() {
+    return pName;
+  }
+
+  public void setpName(String pName) {
+    this.pName = pName;
+  }
+
   @Id
   @GeneratedValue(generator = "uuid")
   @GenericGenerator(name = "uuid", strategy = "uuid")

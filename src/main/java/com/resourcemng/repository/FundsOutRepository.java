@@ -18,7 +18,9 @@ public interface FundsOutRepository extends JpaRepository<FundsOut, String> {
   @Query("from FundsOut p where p.userId=:userId and  p.quarterNum=:quarterNum and  p.projectYear=:projectYear")
   List<FundsOut> findByParams(@Param("userId")String userId, @Param("quarterNum")String quarterNum, @Param("projectYear")String projectYear);
 
-  @Query("delete from FundsOut p where p.userId=:userId and  p.quarterNum=:quarterNum and  p.projectYear=:projectYear")
-  void deleteByParams(@Param("userId")String userId, @Param("quarterNum")String quarterNum, @Param("projectYear")String projectYear);
+//  @Query("delete from FundsOut p where p.userId=:userId and  p.quarterNum=:quarterNum and  p.projectYear=:projectYear")
+//  void deleteByParams(@Param("userId")String userId, @Param("quarterNum")String quarterNum, @Param("projectYear")String projectYear);
+
+  void deleteByUserIdAndQuarterNumAndProjectYear(String userId, String quarterNum, String projectYear);
 
 }
