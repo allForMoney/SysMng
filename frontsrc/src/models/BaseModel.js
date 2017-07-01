@@ -17,6 +17,7 @@ export default {
     projectTotal: 34,
     projectPage: 1,
   },
+  
   subscriptions: {
     setup({ dispatch, history }) {
       return history.listen(({ pathname, query }) => {

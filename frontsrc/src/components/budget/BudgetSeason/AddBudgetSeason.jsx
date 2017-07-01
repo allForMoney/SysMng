@@ -38,7 +38,7 @@ class BudgetSeason extends React.Component {
     });
   }
 
-  doCheck= (flag) => {// flag=true,通过审核
+  doCheck= (flag) => { // flag=true,通过审核
     const { projectId, userType } = this.props;
     this.props.dispatch({
       type: 'budgetModel/changeCheckStatus',
@@ -64,8 +64,6 @@ class BudgetSeason extends React.Component {
 
   render() {
     const {
-      projectName,
-      projectNo,
       projectInfo,
       editBudgetSteps,
       buggetInComeList,
@@ -92,7 +90,6 @@ class BudgetSeason extends React.Component {
               <Select
                 placeholder="Please select"
                 size={'default'}
-                defaultValue={['2017']}
                 onChange={this.onYearChange}
                 style={{ width: '20%', margin: 20 }}
               >
@@ -101,7 +98,6 @@ class BudgetSeason extends React.Component {
               季度
               <Select
                 placeholder="Please select"
-                defaultValue={['1']}
                 onChange={this.onSeaSonChange}
                 style={{ width: '10%' }}
               >

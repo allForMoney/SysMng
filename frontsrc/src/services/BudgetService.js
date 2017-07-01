@@ -1,7 +1,7 @@
 import qs from 'qs';
 import request from '../utils/request';
 
-export function getIncomeBudget(params) {
+export function getBudgetSeasonList(params) {
   return request(`/budget/report/quarterly/detail?${qs.stringify(params)}`);
 }
 

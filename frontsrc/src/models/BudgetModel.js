@@ -1,6 +1,6 @@
 
 import {
-  getIncomeBudget,
+  getBudgetSeasonList,
   getOutcomeBudget,
   updateSeasonBudget,
   changeCheckStatus,
@@ -43,8 +43,11 @@ export default {
     },
 
     * getIncomeBudget({ payload }, { call, put, select }) {
-      const { year } = yield select(state => state.budgetModel);
-      const data = yield call(getIncomeBudget, { year, ...payload });
+      const { projectInfo } = yield select(state => state.baseModel);
+      const { projectYear } = yield select(state => state.budgetModel);
+      const projectId = projectInfo.id;
+      const data = yield call(getBudgetSeasonList, { projectId, projectYear, ...payload });
+
       if (data && data.code === 1) {
         yield put({
           type: 'setState',
