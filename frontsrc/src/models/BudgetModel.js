@@ -42,7 +42,7 @@ export default {
       }
     },
 
-    * getIncomeBudget({ payload }, { call, put, select }) {
+    * getBudgetSeasonList({ payload }, { call, put, select }) {
       const { projectInfo } = yield select(state => state.baseModel);
       const { projectYear } = yield select(state => state.budgetModel);
       const projectId = projectInfo.id;
@@ -78,32 +78,18 @@ export default {
       }
     },
 
-    * getOutcomeBudget({ payload }, { call, put, select }) {
-      const { year, season } = yield select(state => state.budgetModel);
-      // 开发方便
-      yield put({
-        type: 'setState',
-        payload: {
-          editBudgetSteps: 1
-        }
-      });
-      const data = yield call(getOutcomeBudget, { year, season });
-
-      if (data && data.code === 1) {
-        yield put({
-          type: 'setState',
-          payload: {
-            buggetOutComeList: data.result,
-            editBudgetSteps: 1
-
-          }
-        });
-      }
-    },
-
     * updateSeasonBudget({ payload }, { call, select }) {
-      const { buggetOutComeList, buggetInComeList } = yield select(state => state.budgetModel);
-      const data = yield call(updateSeasonBudget, { buggetOutComeList, buggetInComeList });
+
+      const { buggetOutComeList, buggetInComeList, quarterNum, projectYear } = yield select(state => state.budgetModel);
+      const { userName, projectInfo } = yield select(state => state.baseModel);
+      const data = yield call(updateSeasonBudget, {
+        fundsOuts: buggetOutComeList,
+        fundsIns: buggetInComeList,
+        quarterNum,
+        projectId: projectInfo.id,
+        projectYear,
+        userId: userName,
+      });
       if (data && data.code === 1) {
         message('更新成功');
       }

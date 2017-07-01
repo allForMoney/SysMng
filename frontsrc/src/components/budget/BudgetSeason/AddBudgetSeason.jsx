@@ -31,7 +31,7 @@ class BudgetSeason extends React.Component {
   
   onSeaSonChange= (value) => {
     this.props.dispatch({
-      type: 'budgetModel/getIncomeBudget',
+      type: 'budgetModel/getBudgetSeasonList',
       payload: {
         quarterNum: value,
       }
@@ -52,7 +52,10 @@ class BudgetSeason extends React.Component {
 
   goNext = () => {
     this.props.dispatch({
-      type: 'budgetModel/getOutcomeBudget',
+      type: 'budgetModel/setState',
+      payload: {
+        editBudgetSteps: 1
+      }
     });
   }
 

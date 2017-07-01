@@ -17,7 +17,7 @@ export function getBudgetProjectList(params) {
 }
 
 export function updateSeasonBudget(params) {
-  return request('/budget/updateSeasonBudget', {
+  return request('/budget/report/update', {
     method: 'post',
     data: params,
   });

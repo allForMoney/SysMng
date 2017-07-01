@@ -31,7 +31,7 @@ class AchiveTargetList extends React.Component {
   saveAchiveTarget = () => {
     const { currentEditIndex } = this.state;
     const { dataSource } = this.props;
-    this.props.form.validateFields((err,values) => {
+    this.props.form.validateFields((err, values) => {
       if (err) {
         return;
       }
@@ -113,32 +113,32 @@ class AchiveTargetList extends React.Component {
 
     const columns = [{
       title: '一级指标',
-      dataIndex: 'source2',
+      dataIndex: 'indicatorOneLevel',
       colSpan: 2,
-      key: 'source2',
+      key: 'indicatorOneLevel',
     }, {
       title: '二级指标',
-      dataIndex: 'source',
+      dataIndex: 'indicatorTowLevel',
       colSpan: 0,
-      key: 'source',
+      key: 'indicatorTowLevel',
     }, {
       title: '三级指标',
-      dataIndex: 'pname',
-      key: 'pname',
+      dataIndex: 'indicatorThreeLevel',
+      key: 'indicatorThreeLevel',
     }, {
       title: '计划指标值',
       children: [{
         title: '总体值',
-        dataIndex: 'pna6me',
-        key: 'pnam0e',
+        dataIndex: 'planTotal',
+        key: 'planTotal',
       }, {
         title: '第一年',
-        dataIndex: 'pna1me',
-        key: 'pna-me',
+        dataIndex: 'planFirstYear',
+        key: 'planFirstYear',
       }, {
         title: '第二年',
-        dataIndex: 'pna1m4e',
-        key: 'pn8ame',
+        dataIndex: 'planSecondYear',
+        key: 'planSecondYear',
       }]
     }];
 
@@ -169,11 +169,11 @@ class AchiveTargetList extends React.Component {
         >
           <Form layout="vertical">
             <FormItem label="二级指标" {...formItemLayout} >
-              {getFieldDecorator('pname', {
+              {getFieldDecorator('indicatorTowLevel', {
               })(<Input />)}
             </FormItem>
             <FormItem label="三级指标" {...formItemLayout}>
-              {getFieldDecorator('money', {
+              {getFieldDecorator('indicatorThreeLevel', {
                 rules: [filterRules],
               })(<Input />)}
             </FormItem>
@@ -182,21 +182,21 @@ class AchiveTargetList extends React.Component {
               <Col span={20}>
                 <Row>
                   <FormItem label="总体值" {...formItemLayout2}>
-                    {getFieldDecorator('money', {
+                    {getFieldDecorator('planTotal', {
                       rules: [filterRules],
                     })(<Input />)}
                   </FormItem>
                 </Row>
                 <Row>
                   <FormItem label="第一年" {...formItemLayout2}>
-                    {getFieldDecorator('money', {
+                    {getFieldDecorator('planFirstYear', {
                       rules: [filterRules],
                     })(<Input />)}
                   </FormItem>
                 </Row>
                 <Row>
                   <FormItem label="第二年" {...formItemLayout2}>
-                    {getFieldDecorator('money', {
+                    {getFieldDecorator('planSecondYear', {
                       rules: [filterRules],
                     })(<Input />)}
                   </FormItem>

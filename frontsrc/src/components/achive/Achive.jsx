@@ -51,9 +51,6 @@ class Achive extends React.Component {
   goNext = () => {
     const { validateFields } = this.targetForm;
     validateFields((err, values) => {
-      // if (err) {
-      //   return;
-      // }
       this.props.dispatch({
         type: 'achiveModel/setState',
         payload: values,
