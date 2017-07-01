@@ -28,7 +28,8 @@ export default {
   effects: {
     // 获取项目预算表
     * getBudgetProjectList({ payload }, { call, put, select }) {
-      const { projectId } = yield select(state => state.baseModel);
+      const { projectInfo } = yield select(state => state.baseModel);
+      const projectId = projectInfo.id;
       const data = yield call(getBudgetProjectList, { projectId, ...payload });
       if (data.code === '1') {
         yield put({

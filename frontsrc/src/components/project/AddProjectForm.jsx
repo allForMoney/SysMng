@@ -10,6 +10,7 @@ class AddProjectModal extends React.Component  {
     const { getFieldDecorator } = this.props.form;
     const {
       schoolName,
+      priviceList,
       schoolHead,
       finaceHeader,
       finaceHeaderTel,
@@ -36,6 +37,11 @@ class AddProjectModal extends React.Component  {
         sm: { span: 14 },
       },
     };
+    const proviceOption = [];
+    console.log(priviceList);
+    priviceList.map((provice) => {
+      proviceOption.push(<Option value={provice.code}>{provice.name}</Option>);
+    });
 
 
     return (
@@ -66,8 +72,7 @@ class AddProjectModal extends React.Component  {
             rules: [],
           })(
             <Select>
-              <Option value="rmb">fdas</Option>
-              <Option value="dollar">fadsfas</Option>
+              {proviceOption}
             </Select>
           )}
         </Form.Item>

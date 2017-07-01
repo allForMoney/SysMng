@@ -6,7 +6,7 @@ export default {
 
   state: {
     loading: false,
-    userType: 'admin',  // inputer/finan/manager/admin/ministry
+    userType: 'inputer',  // inputer/finan/manager/admin/ministry
     userName: '12345',
     showMsgModal: false,
     projectName: 'kfkkfkfkfkfkfkfk',
@@ -132,9 +132,9 @@ export default {
       }
     },
 
-    * getProviceInfo({ payload }, { call }) {
+    * getProviceInfo({ payload }, { call, put }) {
       const data = yield call(getProviceInfo, payload);
-      if (data&& data.code === '1') {
+      if (data && data.code === '1') {
         yield put({
           type: 'setState',
           payload: {

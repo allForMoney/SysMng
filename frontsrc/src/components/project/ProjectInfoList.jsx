@@ -126,6 +126,7 @@ class ProjectInfoList extends React.Component {
   render() {
     const {
       userType,
+      priviceList,
       loading,
       projectList,
       projectListNum,
@@ -211,7 +212,7 @@ class ProjectInfoList extends React.Component {
             onOk={this.handleOk}
             onCancel={this.handleCancel}
           >
-            <AddProjectForm ref={this.addFormRdf} />
+            <AddProjectForm ref={this.addFormRdf} priviceList={priviceList} />
           </Modal>
           <Form onSubmit={this.onSearchSubmit} layout="inline">
             <Form.Item label="项目编号 ：">
@@ -262,7 +263,7 @@ class ProjectInfoList extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { userType, userName } = state.baseModel;
+  const { userType, userName, priviceList } = state.baseModel;
   const {
     projectList,
     projectListNum,
@@ -270,6 +271,7 @@ function mapStateToProps(state) {
   } = state.ProjectModel;
   return {
     userType,
+    priviceList,
     userName,
     projectList,
     projectListNum,
