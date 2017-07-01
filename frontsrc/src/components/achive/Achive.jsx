@@ -67,6 +67,8 @@ class Achive extends React.Component {
       projectId,
       projectName,
       achiveTargetList,
+      projectInfo,
+      userName,
     } = this.props;
     const {
       steps,
@@ -97,7 +99,7 @@ class Achive extends React.Component {
               <Button className={styles.btnClass} type="primary" onClick={this.doCheck.bind(this, true)}>通过审核</Button>
             </Col>
             }
-            <Card title={`绩效指标[编号:${projectId}, 名称:${projectName}]`}>
+            <Card title={`绩效指标[编号:${projectInfo.projectNo}, 名称:${projectInfo.majorName}]`}>
               <AchiveTargetList
                 editable={editable}
                 dataSource={achiveTargetList}
@@ -121,7 +123,8 @@ function mapStateToProps(state) {
     userType,
     userName,
     projectId,
-    projectName
+    projectName,
+    projectInfo,
    } = state.baseModel;
   const {
      achiveTargetList,
@@ -131,6 +134,7 @@ function mapStateToProps(state) {
    } = state.achiveModel;
   return {
     userType,
+    projectInfo,
     userName,
     projectId,
     projectName,

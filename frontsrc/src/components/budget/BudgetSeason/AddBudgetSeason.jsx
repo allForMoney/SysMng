@@ -86,12 +86,12 @@ class BudgetSeason extends React.Component {
 
     return (
       <FrameContent>
-        <Card title={`收入预算执行情况[编号: ${projectInfo.projectNo},名称:${projectInfo.majorName}]`}>
+        <Card title={`预算执行季报[编号: ${projectInfo.projectNo},名称:${projectInfo.majorName}]`}>
           { editBudgetSteps === 0 &&
             <Row className="">
               年度
               <Select
-                placeholder="Please select"
+                placeholder="选择年度"
                 size={'default'}
                 onChange={this.onYearChange}
                 style={{ width: '20%', margin: 20 }}
@@ -100,7 +100,7 @@ class BudgetSeason extends React.Component {
               </Select>
               季度
               <Select
-                placeholder="Please select"
+                placeholder="选择季度"
                 onChange={this.onSeaSonChange}
                 style={{ width: '10%' }}
               >
@@ -109,7 +109,7 @@ class BudgetSeason extends React.Component {
               <BudgetSeasonIncome
                 editable={editable}
                 dispatch={dispatch}
-                dataSource={buggetInComeList}
+                buggetInComeList={buggetInComeList}
               />
               <Col className={styles.btnContainer}>
                 <Button className={styles.btnClass} type="primary" onClick={this.goNext}>下一步</Button>
@@ -126,7 +126,7 @@ class BudgetSeason extends React.Component {
                 }
               <BudgetSeasonOutcome
                 editable={editable}
-                dataSource={buggetOutComeList}
+                buggetOutComeList={buggetOutComeList}
                 dispatch={dispatch}
               />
               <Col className={styles.btnContainer}>

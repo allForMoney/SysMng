@@ -2,7 +2,10 @@ import React from 'react';
 import {
   Table,
   Card,
-   Modal, Form, Input,InputNumber
+   Modal,
+   Form,
+   Input,
+   InputNumber
 } from 'antd';
 
 const FormItem = Form.Item;
@@ -11,6 +14,25 @@ class BudgetSeasonIncome extends React.Component {
   state={
     modalVisible: false,
     currentEditIndex: 0,
+    sourceData: [
+      {
+        pid: 1,
+        moneySource: '部本专项资金',
+        money: 0,
+      }, {
+        pid: 2,
+        moneySource: '院校举办方或地方财政投入资金',
+        money: 0,
+      }, {
+        pid: 3,
+        moneySource: '行业企业支持资金',
+        money: 0,
+      }, {
+        pid: 4,
+        moneySource: '相关院校自筹资金',
+        money: 0,
+      }
+    ],
   }
 
   onCancel= () => {
@@ -32,95 +54,106 @@ class BudgetSeasonIncome extends React.Component {
   }
 
   saveBudgetInCome= () => {
-    const { currentEditIndex } = this.state;
-    const { dataSource } = this.props;
+    const { sourceData } = this.state;
+    const { buggetInComeList } = this.props;
     this.props.form.validateFields((err,values) => {
       if (err) {
         return;
       }
-      const oldData = dataSource[currentEditIndex];
+      let array = sourceData;
+      if (buggetInComeList.length > 0) {
+        array = buggetInComeList;
+      }
 
-      dataSource.splice(currentEditIndex, 1, Object.assign(oldData, values));
+      array.map((item) => {
+        if (item.pid === values.pid) {
+          Object.assign(item, values);
+        }
+      });
 
       this.props.dispatch({
         type: 'budgetModel/setState',
         payload: {
-          buggetInComeList: dataSource
+          buggetInComeList: [...array]
         }
       });
       this.onCancel();
     });
   }
-  
+
+  getDetailSource = (item) => {
+    return [{
+      column1: '项目筹措资金',
+      moneySource: item.moneySource,
+      project: '金额(元)',
+      pid: item.pid,
+      money: item.money,
+    }, {
+      column1: '项目筹措资金',
+      moneySource: item.moneySource,
+      project: '到位率',
+      money: 0,
+    }];
+  }
+
+  generateDataSource= (sourceData) => {
+    const [ item1, item2, item3, item4 ] = sourceData;
+    let dataSource = [
+      {
+        column1: '合计',
+        moneySource: '合计',
+        project: '金额(元)',
+        money: 0,
+      }, {
+        column1: '合计',
+        moneySource: '合计',
+        project: '到位率',
+        money: 0,
+      }, {
+        column1: item1.moneySource,
+        moneySource: item1.moneySource,
+        pid: item1.pid,
+        project: '金额(元)',
+        money: item1.money,
+      }, {
+        column1: item1.moneySource,
+        moneySource: item1.moneySource,
+        project: '到位率',
+        money: 0,
+      }, {
+        column1: '项目筹措资金',
+        moneySource: '小计',
+        project: '金额(元)',
+        money: 0,
+      }, {
+        column1: '项目筹措资金',
+        moneySource: '小计',
+        project: '到位率',
+        money: 0,
+      }
+    ];
+    dataSource = dataSource.concat(this.getDetailSource(item2));
+    dataSource = dataSource.concat(this.getDetailSource(item3));
+    dataSource = dataSource.concat(this.getDetailSource(item4));
+
+    return dataSource;
+  }
+
   render() {
     const { getFieldDecorator } = this.props.form;
-    // const dataSource = [{
-    //   source2: '101',
-    //   source: 102,
-    //   pname: 103,
-    //   money: 104,
-    // }, {
-    //   source2: 201,
-    //   source: '202',
-    //   pname: 203,
-    //   money: 204,
-    // }, {
-    //   source2: 301,
-    //   source: '302',
-    //   pname: 303,
-    //   money: 304,
-    // }, {
-    //   source2: 401,
-    //   source: '402',
-    //   pname: 403,
-    //   money: 404,
-    // }, {
-    //   source2: 501,
-    //   source: '502',
-    //   pname: 503,
-    //   money: 504,
-    // }, {
-    //   source2: 601,
-    //   source: '602',
-    //   pname: 603,
-    //   money: 604,
-    // }, {
-    //   source2: 701,
-    //   source: '702',
-    //   pname: 703,
-    //   money: 704,
-    // }, {
-    //   source2: 801,
-    //   source: '802',
-    //   pname: 803,
-    //   money: 804,
-    // }, {
-    //   source2: 901,
-    //   source: '902',
-    //   pname: 903,
-    //   money: 904,
-    // }, {
-    //   source2: 1001,
-    //   source: '1002',
-    //   pname: 1003,
-    //   money: 1004,
-    // }, {
-    //   source2: 1001,
-    //   source: '1002',
-    //   pname: 1003,
-    //   money: 1004,
-    // }, {
-    //   source2: 1001,
-    //   source: '1002',
-    //   pname: 1003,
-    //   money: 1004,
-    // }];
+    const { buggetInComeList } = this.props;
+    let sourceData = this.state.sourceData;
+    if (buggetInComeList.length > 0) {
+      sourceData = buggetInComeList;
+    }
+
+    const dataSource = this.generateDataSource(sourceData);
 
     const columns = [{
       title: '资金来源',
-      dataIndex: 'source2',
+      dataIndex: 'column1',
       colSpan: 2,
-      key: 'source2',
+      key: 'column1',
       render: (value, row, index) => {
         const obj = {
           children: value,
@@ -145,9 +178,9 @@ class BudgetSeasonIncome extends React.Component {
       },
     }, {
       title: '项目',
-      dataIndex: 'source',
+      dataIndex: 'moneySource',
       colSpan: 0,
-      key: 'source',
+      key: 'moneySource',
       render: (value, row, index) => {
         const obj = {
           children: value,
@@ -165,11 +198,10 @@ class BudgetSeasonIncome extends React.Component {
         }
         return obj;
       },
-      
     }, {
       title: '项目',
-      dataIndex: 'pname',
-      key: 'pname',
+      dataIndex: 'project',
+      key: 'project',
     }, {
       title: '总额/到位率',
       dataIndex: 'money',
@@ -187,8 +219,6 @@ class BudgetSeasonIncome extends React.Component {
       message: '不可为空'
     };
 
-    const { dataSource } = this.props;
-
     return (
       <Card>
         <Modal
@@ -200,7 +230,7 @@ class BudgetSeasonIncome extends React.Component {
         >
           <Form layout="vertical">
             <FormItem label="资金来源" {...formItemLayout} >
-              {getFieldDecorator('pname', {
+              {getFieldDecorator('moneySource', {
               })(<Input disabled />)}
             </FormItem>
             <FormItem label="金额" {...formItemLayout}>
@@ -208,10 +238,14 @@ class BudgetSeasonIncome extends React.Component {
                 rules: [filterRules],
               })(<InputNumber />)}
             </FormItem>
+            <FormItem label="金额" {...formItemLayout} style={{display:'none'}}>
+              {getFieldDecorator('pid', {
+                rules: [filterRules],
+              })(<InputNumber />)}
+            </FormItem>
           </Form>
         </Modal>
         <Table
-          title={() => '留言处理情况'}
           columns={columns}
           size="small"
           dataSource={dataSource}

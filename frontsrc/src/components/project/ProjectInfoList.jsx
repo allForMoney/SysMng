@@ -1,3 +1,6 @@
+/**
+ * 项目列表页面,用来为管理员和教育厅提供 查看所有项目功能
+ */
 import { connect } from 'dva';
 import React from 'react';
 import { Form, Input, Button, Icon, Card, Table, Upload, message, Modal, Popconfirm } from 'antd';
@@ -55,7 +58,7 @@ class ProjectInfoList extends React.Component {
     const { selectedRows } = this.state;
     const selectObj = selectedRows[0];
     if (!selectObj) {
-      message('请选中一条数据');
+      message.info('请选中一条数据');
       return;
     }
     this.setState({
@@ -69,7 +72,7 @@ class ProjectInfoList extends React.Component {
   deletePro = () => {
     const { selectedRows } = this.state;
     if (selectedRows.length < 1) {
-      message('请选中一条数据');
+      message.info('请选中一条数据');
       return;
     }
     const projectNos = selectedRows.map(item => item.projectNo);
@@ -83,9 +86,8 @@ class ProjectInfoList extends React.Component {
   }
 
   importPro =() => {
-    console.log(2341)
     this.props.dispatch(routerRedux.push({
-      pathname: '/import/budget16',
+      pathname: '/import/importProjet',
     })
     );
   }

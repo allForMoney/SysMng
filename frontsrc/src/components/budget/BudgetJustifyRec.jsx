@@ -11,7 +11,7 @@ import ProjectBudgetTable from './ProjectBudgetTable';
 
 class BudgetJustifyRec extends React.Component {
   state={
-    showJustifyDetail: true,
+    showJustifyDetail: false,
   }
 
   onJustifyListPageChange= () => {

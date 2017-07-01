@@ -80,7 +80,7 @@ public class BudgetController {
    * @return
    * @throws Exception
    */
-  @RequestMapping(value = "allimport" ,method = RequestMethod.GET)
+  @RequestMapping(value = "/allimport" ,method = RequestMethod.GET)
   @ResponseBody
   public Object getAll(@RequestParam String projectId) throws Exception {
     return new RequestResult(ResultCode.SUCCESS, "提交成功",  service.getImportByProject(projectId));

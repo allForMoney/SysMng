@@ -1,3 +1,6 @@
+/**
+ * 项目预算表
+ */
 import React from 'react';
 import { connect } from 'dva';
 import {

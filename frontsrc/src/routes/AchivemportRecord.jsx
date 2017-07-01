@@ -5,16 +5,30 @@ import { connect } from 'dva';
 import React from 'react';
 import ImportRecord from '../components/import/ImportRecord';
 
-function AchivemportRecord(props) {
-  return (
-    <ImportRecord
-      dataSouce={props.achiveRecList}
-      pageNum={props.achiveRecPageNum}
-      pageTotal={props.achiveRecPageTotal}
-      tableTitel={"业绩导入记录"}
-      loading={props.dataSource}
-    />
-  );
+class AchivemportRecord extends React.Component {
+  componentDidMount = () => {
+    this.props.dispatch({
+      type: 'ImportData/getAllAchiveRec'
+    });
+  }
+  render() {
+    const {
+        achiveRecList,
+        achiveRecPageNum,
+        achiveRecPageTotal,
+        loading,
+        achiveRecPageSize,
+    } = this.props;
+    return (
+      <ImportRecord
+        dataSouce={achiveRecList}
+        pageNum={achiveRecPageNum}
+        pageTotal={achiveRecPageTotal}
+        tableTitel={"业绩导入记录"}
+        loading={loading}
+      />
+    );
+  }
 }
 
 function mapStateToProps(state) {

@@ -12,6 +12,25 @@ class BudgetSeasonOutcome extends React.Component {
   state={
     modalVisible: false,
     currentEditIndex: 0,
+    sourceData: [
+      {
+        pid: 1,
+        moneySource: '部本专项资金',
+        money: 0,
+      }, {
+        pid: 2,
+        moneySource: '院校举办方或地方财政投入资金',
+        money: 0,
+      }, {
+        pid: 3,
+        moneySource: '行业企业支持资金',
+        money: 0,
+      }, {
+        pid: 4,
+        moneySource: '相关院校自筹资金',
+        money: 0,
+      }
+    ],
   }
 
   onRowClicked= (record, index) => {
@@ -34,176 +53,193 @@ class BudgetSeasonOutcome extends React.Component {
   }
 
   saveBudgetOutCome= () => {
-    const { currentEditIndex } = this.state;
-    const { dataSource } = this.props;
+    const { sourceData } = this.state;
+    const { buggetOutComeList } = this.props;
     this.props.form.validateFields((err, values) => {
       if (err) {
         return;
       }
-      const oldData = dataSource[currentEditIndex];
+      let array = sourceData;
+      if (buggetOutComeList.length > 0) {
+        array = buggetOutComeList;
+      }
 
-      dataSource.splice(currentEditIndex, 1, Object.assign(oldData, values));
-
+      array.map((item) => {
+        if (item.pid === values.pid) {
+          Object.assign(item, values);
+        }
+      });
       this.props.dispatch({
         type: 'budgetModel/setState',
         payload: {
-          buggetOutComeList: dataSource
+          buggetOutComeList: [...array]
         }
       });
       this.onCancel();
     });
   }
-  
+
+  getDetailSource = (item) => {
+    return [{
+      column1: '项目筹措资金',
+      moneySource: item.moneySource,
+      project: '金额(元)',
+      pid: item.pid,
+      money: item.money,
+      ...item,
+    }, {
+      column1: '项目筹措资金',
+      moneySource: item.moneySource,
+      project: '到位率',
+      money: 0,
+    }];
+  }
+
+  generateDataSource= (sourceData) => {
+    const [ item1, item2, item3, item4 ] = sourceData;
+    let dataSource = [
+      {
+        column1: '合计',
+        moneySource: '合计',
+        project: '金额(元)',
+        money: 0,
+      }, {
+        column1: '合计',
+        moneySource: '合计',
+        project: '到位率',
+        money: 0,
+      }, {
+        column1: item1.moneySource,
+        moneySource: item1.moneySource,
+        pid: item1.pid,
+        project: '金额(元)',
+        money: item1.money,
+        ...item1,
+      }, {
+        column1: item1.moneySource,
+        moneySource: item1.moneySource,
+        project: '到位率',
+        money: 0,
+      }, {
+        column1: '项目筹措资金',
+        moneySource: '小计',
+        project: '金额(元)',
+        money: 0,
+      }, {
+        column1: '项目筹措资金',
+        moneySource: '小计',
+        project: '到位率',
+        money: 0,
+      }
+    ];
+    dataSource = dataSource.concat(this.getDetailSource(item2));
+    dataSource = dataSource.concat(this.getDetailSource(item3));
+    dataSource = dataSource.concat(this.getDetailSource(item4));
+
+    return dataSource;
+  }
   render() {
     const { getFieldDecorator } = this.props.form;
-    const dataSource = [{
-      source2: '101',
-      source: 102,
-      pname: 103,
-      money: 104,
-    }, {
-      source2: 201,
-      source: '202',
-      pname: 203,
-      money: 204,
-    }, {
-      source2: 301,
-      source: '302',
-      pname: 303,
-      money: 304,
-    }, {
-      source2: 401,
-      source: '402',
-      pname: 403,
-      money: 404,
-    }, {
-      source2: 501,
-      source: '502',
-      pname: 503,
-      money: 504,
-    }, {
-      source2: 601,
-      source: '602',
-      pname: 603,
-      money: 604,
-    }, {
-      source2: 701,
-      source: '702',
-      pname: 703,
-      money: 704,
-    }, {
-      source2: 801,
-      source: '802',
-      pname: 803,
-      money: 804,
-    }, {
-      source2: 901,
-      source: '902',
-      pname: 903,
-      money: 904,
-    }, {
-      source2: 1001,
-      source: '1002',
-      pname: 1003,
-      money: 1004,
-    }, {
-      source2: 1001,
-      source: '1002',
-      pname: 1003,
-      money: 1004,
-    }, {
-      source2: 1001,
-      source: '1002',
-      pname: 1003,
-      money: 1004,
-    }];
+    const { buggetOutComeList } = this.props;
+    let sourceData = this.state.sourceData;
+    if (buggetOutComeList.length > 0) {
+      sourceData = buggetOutComeList;
+    }
 
-    const columns = [{
-      title: '资金来源',
-      dataIndex: 'source',
-      colSpan: 2,
-      key: 'source',
-      render: (value, row, index) => {
-        const obj = {
-          children: value,
-          props: {},
-        };
-        if (index < 4) {
-          if (index % 2 === 0) {
-            obj.props.rowSpan = 2;
-            obj.props.colSpan = 2;
-          } else {
+    const dataSource = this.generateDataSource(sourceData);
+
+    const columns = [
+      {
+        title: '资金来源',
+        dataIndex: 'column1',
+        colSpan: 2,
+        key: 'column1',
+        render: (value, row, index) => {
+          const obj = {
+            children: value,
+            props: {},
+          };
+          if (index < 4) {
+            if (index % 2 === 0) {
+              obj.props.rowSpan = 2;
+              obj.props.colSpan = 2;
+            } else {
+              obj.props.rowSpan = 0;
+            }
+          }
+
+          if (index === 4) {
+            obj.props.rowSpan = 8;
+          }
+          if (index > 4) {
             obj.props.rowSpan = 0;
           }
-        }
-
-        if (index === 4) {
-          obj.props.rowSpan = 8;
-        }
-        if (index > 4) {
-          obj.props.rowSpan = 0;
-        }
-        return obj;
-      },
-    }, {
-      title: '项目',
-      dataIndex: 'source2',
-      colSpan: 0,
-      key: 'source2',
-      render: (value, row, index) => {
-        const obj = {
-          children: value,
-          props: {},
-        };
-        if (index < 4) {
-          obj.props.rowSpan = 0;
-        }
-        if (index >= 4) {
-          if (index % 2 === 0) {
-            obj.props.rowSpan = 2;
-          } else {
+          return obj;
+        },
+      }, {
+        title: '项目',
+        dataIndex: 'moneySource',
+        colSpan: 0,
+        key: 'moneySource',
+        render: (value, row, index) => {
+          const obj = {
+            children: value,
+            props: {},
+          };
+          if (index < 4) {
             obj.props.rowSpan = 0;
           }
-        }
-        return obj;
-      },
-    }, {
-      title: '总额',
-      dataIndex: 'pname',
-      key: 'pname',
-    }, {
-      title: '素材制作',
-      dataIndex: 'money',
-      key: 'money',
-    }, {
-      title: '企业案例收集制作',
-      dataIndex: 'money3',
-      key: 'money3',
-    }, {
-      title: '课程开发',
-      dataIndex: 'mo3ney',
-      key: 'monmo3neyey',
-    }, {
-      title: '特殊工具软件制作',
-      dataIndex: 'mon3ey',
-      key: 'mon3ey',
-    }, {
-      title: '应用推广',
-      dataIndex: 'm4oney',
-      key: 'm4oney',
-    }, {
-      title: '调研论证',
-      dataIndex: 'mo5ney',
-      key: 'mo5ney',
-    }, {
-      title: '专家咨询',
-      dataIndex: 'm6oney',
-      key: 'm6oney',
-    }, {
-      title: '其他',
-      dataIndex: 'mo7ney',
-      key: 'mo7ney',
-    }];
+          if (index >= 4) {
+            if (index % 2 === 0) {
+              obj.props.rowSpan = 2;
+            } else {
+              obj.props.rowSpan = 0;
+            }
+          }
+          return obj;
+        },
+      }, {
+        title: '项目',
+        dataIndex: 'project',
+        key: 'project',
+      }, {
+        title: '总额',
+        dataIndex: 'pname',
+        key: 'pname',
+      }, {
+        title: '素材制作',
+        dataIndex: 'materialMake',
+        key: 'materialMake',
+      }, {
+        title: '企业案例收集制作',
+        dataIndex: 'companyCase',
+        key: 'companyCase',
+      }, {
+        title: '课程开发',
+        dataIndex: 'courseDevelopment',
+        key: 'courseDevelopment',
+      }, {
+        title: '特殊工具软件制作',
+        dataIndex: 'specialTool',
+        key: 'specialTool',
+      }, {
+        title: '应用推广',
+        dataIndex: 'applicationPromete',
+        key: 'applicationPromete',
+      }, {
+        title: '调研论证',
+        dataIndex: 'researchProve',
+        key: 'researchProve',
+      }, {
+        title: '专家咨询',
+        dataIndex: 'expertConsult',
+        key: 'expertConsult',
+      }, {
+        title: '其他',
+        dataIndex: 'otherFee',
+        key: 'otherFee',
+      }
+    ];
 
     const { modalVisible } = this.state;
     const formItemLayout = {
@@ -227,53 +263,57 @@ class BudgetSeasonOutcome extends React.Component {
         >
           <Form layout="vertical" size="small">
             <FormItem label="资金来源" {...formItemLayout} >
-              {getFieldDecorator('pname', {
+              {getFieldDecorator('moneySource', {
               })(<Input disabled />)}
             </FormItem>
             <FormItem label="素材制作" {...formItemLayout}>
-              {getFieldDecorator('money', {
+              {getFieldDecorator('materialMake', {
                 rules: [filterRules],
               })(<InputNumber />)}
             </FormItem>
             <FormItem label="企业案例收集制作" {...formItemLayout}>
-              {getFieldDecorator('money', {
+              {getFieldDecorator('companyCase', {
                 rules: [filterRules],
               })(<InputNumber />)}
             </FormItem>
             <FormItem label="课程开发" {...formItemLayout}>
-              {getFieldDecorator('money', {
+              {getFieldDecorator('courseDevelopment', {
                 rules: [filterRules],
               })(<InputNumber />)}
             </FormItem>
             <FormItem label="特殊工具软件制作" {...formItemLayout}>
-              {getFieldDecorator('money', {
+              {getFieldDecorator('specialTool', {
                 rules: [filterRules],
               })(<InputNumber />)}
             </FormItem>
             <FormItem label="应用推广" {...formItemLayout}>
-              {getFieldDecorator('money', {
+              {getFieldDecorator('applicationPromete', {
                 rules: [filterRules],
               })(<InputNumber />)}
             </FormItem>
             <FormItem label="调研论证" {...formItemLayout}>
-              {getFieldDecorator('money', {
+              {getFieldDecorator('researchProve', {
                 rules: [filterRules],
               })(<InputNumber />)}
             </FormItem>
             <FormItem label="专家咨询" {...formItemLayout}>
-              {getFieldDecorator('money', {
+              {getFieldDecorator('expertConsult', {
                 rules: [filterRules],
               })(<InputNumber />)}
             </FormItem>
             <FormItem label="其他" {...formItemLayout}>
-              {getFieldDecorator('money', {
+              {getFieldDecorator('otherFee', {
+                rules: [filterRules],
+              })(<InputNumber />)}
+            </FormItem>
+            <FormItem label="其他" {...formItemLayout} style={{display:'none'}}>
+              {getFieldDecorator('pid', {
                 rules: [filterRules],
               })(<InputNumber />)}
             </FormItem>
           </Form>
         </Modal>
         <Table
-          title={() => '留言处理情况'}
           columns={columns}
           size="small"
           dataSource={dataSource}

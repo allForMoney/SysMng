@@ -26,7 +26,7 @@ export default {
     budgetProjectList: []
   },
   effects: {
-
+    // 获取项目预算表
     * getBudgetProjectList({ payload }, { call, put, select }) {
       const { projectId } = yield select(state => state.baseModel);
       const data = yield call(getBudgetProjectList, { projectId, ...payload });
@@ -34,9 +34,7 @@ export default {
         yield put({
           type: 'setState',
           payload: {
-            budgetProjectList: data.result.content,
-            projectListPage: data.result.number,
-            projectListNum: data.result.totalElements,
+            budgetProjectList: data.result.budgetImportDetaillList,
           }
         });
       }
@@ -77,7 +75,7 @@ export default {
         });
       }
     },
-
+    /** 更新项目执行季报  */
     * updateSeasonBudget({ payload }, { call, select }) {
 
       const { buggetOutComeList, buggetInComeList, quarterNum, projectYear } = yield select(state => state.budgetModel);
