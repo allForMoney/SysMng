@@ -30,8 +30,9 @@ export default {
     * getBudgetProjectList({ payload }, { call, put, select }) {
       const { projectInfo } = yield select(state => state.baseModel);
       const projectId = projectInfo.id;
+      console.log(projectId+'555');
       const data = yield call(getBudgetProjectList, { projectId, ...payload });
-      if (data.code === '1') {
+      if (data.code === '1' && data.result) {
         yield put({
           type: 'setState',
           payload: {

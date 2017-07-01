@@ -13,6 +13,7 @@ export function getBudgetRecList(params) {
   return request(`/project/getBudgetRecList?${qs.stringify(params)}`);
 }
 export function getBudgetProjectList(params) {
+  console.log(params);
   return request(`/budget/getByProjectId?${qs.stringify(params)}`);
 }
 

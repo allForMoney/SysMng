@@ -16,7 +16,6 @@ class ProjectBudget extends React.Component {
     const { projectId } = this.props;
     this.props.dispatch({
       type: 'budgetModel/getBudgetProjectList',
-      payload: { projectId }
     });
   }
   pageChangeHandler = () => {

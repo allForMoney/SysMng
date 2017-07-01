@@ -10,7 +10,7 @@ export default {
     userName: '12345',
     showMsgModal: false,
     projectName: 'kfkkfkfkfkfkfkfk',
-    projectId: '4028a1765cf97115015cf98f6f01006a',
+    projectId: '',
     projectNo: '2016-02',
     projectInfo: {}, // 单个项目基本信息
     projectList: [],
@@ -121,6 +121,7 @@ export default {
             userId: result.id,
             projectNo: result.username,
             userType,
+            projexctId: result.project.id,
             projectInfo: result.project,
             projectName: result.majorName,
           }
