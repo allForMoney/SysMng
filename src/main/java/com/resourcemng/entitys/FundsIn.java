@@ -55,7 +55,7 @@ public class FundsIn implements Serializable {
   }
 
   @Basic
-  @Column(name = "AMOUNT_MONEY", nullable = false, precision = 2)
+  @Column(name = "AMOUNT_MONEY", precision = 2)
   public BigDecimal getAmountMoney() {
     return amountMoney;
   }
@@ -75,7 +75,7 @@ public class FundsIn implements Serializable {
   }
 
   @Basic
-  @Column(name = "QUARTER_NUM", nullable = false, length = 5)
+  @Column(name = "QUARTER_NUM", length = 5)
   public String getQuarterNum() {
     return quarterNum;
   }

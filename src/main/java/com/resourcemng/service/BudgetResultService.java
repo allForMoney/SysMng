@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +31,8 @@ public class BudgetResultService {
   TUserRepository tUserRepository;
   @Autowired
   ReportAuditLogRepository reportAuditLogRepository;
+  @Autowired
+  BudgetService budgetService;
 
   /**
    *
@@ -159,34 +164,60 @@ public class BudgetResultService {
    * @param quarterNum
    * @return
    */
-  public Workbook exportFile(String projectId, String projectYear, String quarterNum) {
-    ProjectResultDownloadView view= new ProjectResultDownloadView();
+  public Workbook exportFile(String projectId, String projectYear, String quarterNum) throws InvocationTargetException,
+    IllegalAccessException {
+    ProjectResultDownloadView view = new ProjectResultDownloadView();
     //项目信息
     Project project = projectRepository.findById(projectId).get();
 
     //预算信息
-    ProjectBudgetInfoView projectBudgetInfoView = new ProjectBudgetInfoView();
-    List<FundsBudget> fundsBudgets = fundsBudgetRepository.findByProjectId(projectId);
-    for(FundsBudget foundsBudget:fundsBudgets){
-      if(FoundSourceType.COUNTRY.equals(foundsBudget.getPid())){
-        ResultInfoView resultInfoView = new ResultInfoView();
-        BeanUtils.copyProperties(foundsBudget,resultInfoView);
-        projectBudgetInfoView.setCountryTotal(resultInfoView);
-      }else if(FoundSourceType.LOCAL.equals(foundsBudget.getPid())){
-        ResultInfoView resultInfoView = new ResultInfoView();
-        BeanUtils.copyProperties(foundsBudget,resultInfoView);
-        projectBudgetInfoView.setLocal(resultInfoView);
-      }else if(FoundSourceType.ENTERPRICE.equals(foundsBudget.getPid())){
-        ResultInfoView resultInfoView = new ResultInfoView();
-        BeanUtils.copyProperties(foundsBudget,resultInfoView);
-        projectBudgetInfoView.setEnterprise(resultInfoView);
-      }else if(FoundSourceType.UNIVERSITY.equals(foundsBudget.getPid())){
-        ResultInfoView resultInfoView = new ResultInfoView();
-        BeanUtils.copyProperties(foundsBudget,resultInfoView);
-        projectBudgetInfoView.setUniversity(resultInfoView);
+    ProjectBudgetInfoView projectBudgetInfoView = budgetService.getBudgetForProject(projectId);
+    view.setBudget(projectBudgetInfoView);
+
+    BigDecimal temp = new BigDecimal(0);
+    BigDecimal countryBudget = projectBudgetInfoView.getCountryTotal().getTotal();
+    BigDecimal localBudget = projectBudgetInfoView.getLocal().getTotal();
+    BigDecimal enterpriseBudget = projectBudgetInfoView.getLocal().getTotal();
+    List<ResultInfoView> budgetList = new ArrayList();
+//    ResultInfoView ResultInfoView = new ResultInfoView();
+//    ResultInfoView.setTotal(temp.add(projectBudgetInfoView.getCountryTotal().getTotal()).
+//      add(projectBudgetInfoView.getLocal().getTotal()).add(projectBudgetInfoView.getEnterprise().getTotal()).
+//      add(projectBudgetInfoView.getUniversity().getTotal()));
+//    temp = new BigDecimal(0);
+//    ResultInfoView.setApplicationPromete(temp.add(projectBudgetInfoView.getCountryTotal().getApplicationPromete()).
+//      add(projectBudgetInfoView.getLocal().getApplicationPromete()).add(projectBudgetInfoView.getEnterprise().getApplicationPromete()).
+//      add(projectBudgetInfoView.getUniversity().getApplicationPromete()));
+//    temp = new BigDecimal(0);
+//    ResultInfoView.setMaterialMake(temp.add(projectBudgetInfoView.getCountryTotal().getApplicationPromete()).
+//      add(projectBudgetInfoView.getLocal().getApplicationPromete()).add(projectBudgetInfoView.getEnterprise().getApplicationPromete()).
+//      add(projectBudgetInfoView.getUniversity().getApplicationPromete()));
+    //收入信息
+    List<FundsIn> fundsIns = fundsInRepository.findByParams(project.getProjectNo() + "-1", quarterNum, projectYear);
+    ProjectFundInInfoView projectFundInInfoView = new ProjectFundInInfoView();
+    if (fundsIns != null) {
+      BigDecimal totalFundsIn = new BigDecimal(0);
+      for (FundsIn fundsIn : fundsIns) {
+        if (FoundSourceType.COUNTRY.equals(fundsIn.getPid())) {
+          projectFundInInfoView.setCountryTotal(fundsIn.getAmountMoney());
+          totalFundsIn.add(fundsIn.getAmountMoney());
+        } else if (FoundSourceType.LOCAL.equals(fundsIn.getPid())) {
+          projectFundInInfoView.setLocal(fundsIn.getAmountMoney());
+          totalFundsIn.add(fundsIn.getAmountMoney());
+        } else if (FoundSourceType.ENTERPRICE.equals(fundsIn.getPid())) {
+          projectFundInInfoView.setEnterprise(fundsIn.getAmountMoney());
+          totalFundsIn.add(fundsIn.getAmountMoney());
+        } else if (FoundSourceType.UNIVERSITY.equals(fundsIn.getPid())) {
+          projectFundInInfoView.setUniversity(fundsIn.getAmountMoney());
+          totalFundsIn.add(fundsIn.getAmountMoney());
+
+        }
+        //设置总输入
+        projectFundInInfoView.setTotal(totalFundsIn);
+        totalFundsIn.add(fundsIn.getAmountMoney());
       }
+
+
     }
     return null;
-
   }
 }

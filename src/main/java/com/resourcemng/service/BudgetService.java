@@ -268,24 +268,24 @@ public class BudgetService {
    return leaveMessageRepository.save(leaveMessage);
   }
 
-  public Object getBudgetForProject(String projectId) throws InvocationTargetException, IllegalAccessException {
-    ProjectBudgetItemView view = new ProjectBudgetItemView();
+  public ProjectBudgetInfoView getBudgetForProject(String projectId) throws InvocationTargetException, IllegalAccessException {
+    ProjectBudgetInfoView view = new ProjectBudgetInfoView();
     List<FundsBudget> list = fundsBudgetRepository.findByProjectId( projectId);
     for(FundsBudget fundsBudget:list){
       if(FoundSourceType.COUNTRY.equals(fundsBudget.getPid())){
-        ProjectBudgetDetailView resultInfoView = new ProjectBudgetDetailView();
+        ResultInfoView resultInfoView = new ResultInfoView();
         BeanUtils.copyProperties(resultInfoView,fundsBudget);
         view.setCountryTotal(resultInfoView);
       }else if(FoundSourceType.LOCAL.equals(fundsBudget.getPid())){
-        ProjectBudgetDetailView resultInfoView = new ProjectBudgetDetailView();
+        ResultInfoView resultInfoView = new ResultInfoView();
         BeanUtils.copyProperties(resultInfoView,fundsBudget);
         view.setLocal(resultInfoView);
       }else if(FoundSourceType.ENTERPRICE.equals(fundsBudget.getPid())){
-        ProjectBudgetDetailView resultInfoView = new ProjectBudgetDetailView();
+        ResultInfoView resultInfoView = new ResultInfoView();
         BeanUtils.copyProperties(resultInfoView,fundsBudget);
         view.setEnterprise(resultInfoView);
       }else if(FoundSourceType.UNIVERSITY.equals(fundsBudget.getPid())){
-        ProjectBudgetDetailView resultInfoView = new ProjectBudgetDetailView();
+        ResultInfoView resultInfoView = new ResultInfoView();
         BeanUtils.copyProperties(resultInfoView,fundsBudget);
         view.setUniversity(resultInfoView);
       }
