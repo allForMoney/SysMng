@@ -6,6 +6,7 @@ import { connect } from 'dva';
 import { Link } from 'dva/router';
 import styles from './FrameContent.less';
 import ModifyPass from '../sysConfig/ModifyPass';
+import { routerRedux } from 'dva/router';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -61,6 +62,10 @@ class FrameContent extends React.Component {
 
   doLogoOut = () => {
     // TODO
+    this.props.dispatch(routerRedux.push({
+      pathname: '/login',
+    })
+    );
   }
 
   saveFormRef = (form) => {
