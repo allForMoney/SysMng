@@ -56,6 +56,7 @@ public class AuthController {
       }
       LoginUserView view = new LoginUserView();
       BeanUtils.copyProperties(view, user);
+      view.setPassword("不给你看");
       //学校人员
       if (UserRole.REPORT.equals(user.getUserRole()) || UserRole.FINANCE.equals(user.getUserRole()) || UserRole.PROJECTHEADER.equals(user.getUserRole())) {
         Project project = projectService.get(ApplicationUitl.getPorjectNoByReportUserNo(user.getUsername()));
