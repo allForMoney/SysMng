@@ -12,6 +12,9 @@ export function getOutcomeBudget(params) {
 export function getBudgetRecList(params) {
   return request(`/project/getBudgetRecList?${qs.stringify(params)}`);
 }
+export function getBudgetProjectList(params) {
+  return request(`/budget/getByProjectId?${qs.stringify(params)}`);
+}
 
 export function updateSeasonBudget(params) {
   return request('/budget/updateSeasonBudget', {

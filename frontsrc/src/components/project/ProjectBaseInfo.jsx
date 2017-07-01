@@ -38,6 +38,9 @@ class ProjectBaseInfo extends React.Component {
     const { partnerSchool } = this.props.projectInfo;
     const { showAllUnit } = this.state;
     let tags = [];
+    if (!partnerSchool) {
+      return;
+    }
     if (showAllUnit) {
       tags = partnerSchool.split(',').map(item => <Tag>{item}</Tag>);
     } else {

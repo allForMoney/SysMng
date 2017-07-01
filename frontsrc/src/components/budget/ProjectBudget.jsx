@@ -8,56 +8,69 @@ import { routerRedux } from 'dva/router';
 import FrameContent from '../common/FrameContent';
 import ProjectBudgetTable from './ProjectBudgetTable';
 
-function ProjectBudget(props) {
-  function pageChangeHandler() {
-
+class ProjectBudget extends React.Component {
+  componentDidMount = () => {
+    const { projectId } = this.props;
+    this.props.dispatch({
+      type: 'budgetModel/getBudgetProjectList',
+      payload: { projectId }
+    });
   }
-  const { projectList, projectTotal, projectPage, projectName, loading } = props;
-  
-  const title = `项目预算表${projectName}`;
-  return (
-    <FrameContent>
-      <Card title={title}>
-        <p>
-           该信息为只读信息，如有疑义，请
-          <Button
-            onClick={
-            () => props.dispatch({
-              type: 'baseModel/setState',
-              payload: { showMsgModal: true }
-            })
-            }
-          >留言</Button>
-          。 预算一经确定，原则上不予调整。确须调整，请点击
-          <Button
-            onClick={() => {
-              props.dispatch(routerRedux.push({
-                pathname: '/budget/justify',
-              }));
-            }
-            }
-          >预算调整</Button>办理手续。
-        </p>
-        <ProjectBudgetTable
-          tableTitle={'项目预算表'}
-          totalNum={projectTotal}
-          onPageChange={pageChangeHandler}
-          currentPage={projectPage}
-          dataList={projectList}
-          loading={loading}
-        />
-      </Card>
-    </FrameContent>
-  );
+  pageChangeHandler = () => {
+  }
+  render() {
+    const { budgetProjectList, projectTotal, projectPage, projectName, loading } = this.props;
+    
+    const title = `项目预算表${projectName}`;
+    return (
+      <FrameContent>
+        <Card title={title}>
+          <p>
+            该信息为只读信息，如有疑义，请
+            <Button
+              onClick={
+              () => this.props.dispatch({
+                type: 'baseModel/setState',
+                payload: { showMsgModal: true }
+              })
+              }
+            >留言</Button>
+            。 预算一经确定，原则上不予调整。确须调整，请点击
+            <Button
+              onClick={() => {
+                this.props.dispatch(routerRedux.push({
+                  pathname: '/budget/justify',
+                }));
+              }
+              }
+            >预算调整</Button>办理手续。
+          </p>
+          <ProjectBudgetTable
+            tableTitle={'项目预算表'}
+            totalNum={projectTotal}
+            onPageChange={this.pageChangeHandler}
+            currentPage={projectPage}
+            dataList={budgetProjectList}
+            loading={loading}
+          />
+        </Card>
+      </FrameContent>
+    );
+  }
 }
+
 function mapStateToProps(state) {
-  const { projectList, projectTotal, projectPage, projectName } = state.baseModel;
+  const { projectList, projectTotal, projectPage, projectName, projectNo, projectId } = state.baseModel;
+  const { budgetProjectList } = state.budgetModel;
   return {
     loading: state.loading.models.baseModel,
     projectList,
     projectTotal,
     projectPage,
     projectName,
+    projectId,
+    budgetProjectList,
+    projectNo,
   };
 }
 

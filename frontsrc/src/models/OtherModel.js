@@ -1,7 +1,7 @@
 import { message } from 'antd';
 import { getProjectList, AddProject, deletePro, UpdateProject } from '../services/ProjectService';
 export default {
-  namespace: 'ProjectModel',
+  namespace: 'OtherModel',
 
   state: {
     loading: false,
