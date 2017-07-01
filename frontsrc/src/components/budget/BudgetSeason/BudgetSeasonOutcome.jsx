@@ -97,6 +97,7 @@ class BudgetSeasonOutcome extends React.Component {
           Object.assign(item, values);
         }
       });
+      
       this.props.dispatch({
         type: 'budgetModel/setState',
         payload: {

@@ -39,7 +39,7 @@ export default {
         });
       }
     },
-
+    // 获取预算季报信息
     * getBudgetSeasonList({ payload }, { call, put, select }) {
       const { projectInfo } = yield select(state => state.baseModel);
       const { projectYear } = yield select(state => state.budgetModel);
@@ -50,7 +50,8 @@ export default {
         yield put({
           type: 'setState',
           payload: {
-            buggetInComeList: data.result,
+            buggetInComeList: data.result.fundsIns,
+            buggetOutComeList: data.result.fundsOuts,
           }
         });
       }
