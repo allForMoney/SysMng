@@ -23,7 +23,7 @@ class Achive extends React.Component {
     showChangeModal: false,
     steps: 0,
     editable: this.props.userType === 'inputer', // 是否可编辑
-    showCheckBtn: this.props.userType === 'finan' || this.props.userType === 'manager', // 是否展示审批菜单
+    showCheckBtn: this.props.userType === 'finace' || this.props.userType === 'school', // 是否展示审批菜单
   }
   componentDidMount= () => {
     this.props.dispatch({
@@ -105,10 +105,10 @@ class Achive extends React.Component {
         {steps === 1 &&
           <div className="">
             {showCheckBtn &&
-            <Col className={styles.btnContainer}>
+            <span >
               <Button className={styles.btnClass} type="primary" onClick={this.doCheck.bind(this, false)}>返回上一级</Button>
               <Button className={styles.btnClass} type="primary" onClick={this.doCheck.bind(this, true)}>通过审核</Button>
-            </Col>
+            </span>
             }
             <Button className={styles.btnClass} type="primary" onClick={this.exportArchive}>导出Excel</Button>
             

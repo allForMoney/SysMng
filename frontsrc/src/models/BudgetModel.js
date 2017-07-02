@@ -30,7 +30,6 @@ export default {
     * getBudgetProjectList({ payload }, { call, put, select }) {
       const { projectInfo } = yield select(state => state.baseModel);
       const projectId = projectInfo.id;
-      console.log(projectId+'555');
       const data = yield call(getBudgetProjectList, { projectId, ...payload });
       if (data.code === '1' && data.result) {
         yield put({
@@ -105,8 +104,8 @@ export default {
 
     * changeCheckStatus({ payload }, { call }) {
       const data = yield call(changeCheckStatus, payload);
-      if (data && data.code === 1) {
-        message('审核成功');
+      if (data && data.code === '1') {
+        message.info('审核成功');
       }
     },
 

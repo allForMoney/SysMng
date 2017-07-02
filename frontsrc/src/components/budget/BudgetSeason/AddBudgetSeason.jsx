@@ -17,14 +17,14 @@ const Option = Select.Option;
 class BudgetSeason extends React.Component {
   state= {
     editable: this.props.userType === 'inputer', // 是否可编辑
-    showCheckBtn: this.props.userType === 'finan' || this.props.userType === 'manager', // 是否展示审批菜单
+    showCheckBtn: this.props.userType === 'finace' || this.props.userType === 'school', // 是否展示审批菜单
   }
 
   onYearChange= (value) => {
     this.props.dispatch({
       type: 'budgetModel/setState',
       payload: {
-        projectYear: value
+        projectYear: value,
       }
     });
   }
@@ -39,13 +39,20 @@ class BudgetSeason extends React.Component {
   }
 
   doCheck= (flag) => { // flag=true,通过审核
-    const { projectId, userType } = this.props;
+    const {
+      projectInfo,
+      projectYear,
+      quarterNum,
+      userType,
+  } = this.props;
     this.props.dispatch({
       type: 'budgetModel/changeCheckStatus',
       payload: {
-        projectId,
-        userType,
-        status: flag
+        projectId: projectInfo.id,
+        projectYear,
+        quarterNum,
+        auditType: userType,
+        auditContent: flag,
       }
     });
   }
@@ -119,10 +126,10 @@ class BudgetSeason extends React.Component {
           { editBudgetSteps === 1 &&
             <div className="">
                 {showCheckBtn &&
-                <Col className={styles.btnContainer}>
-                  <Button className={styles.btnClass} type="primary" onClick={this.doCheck.bind(this, false)}>返回上一级</Button>
-                  <Button className={styles.btnClass} type="primary" onClick={this.doCheck.bind(this, true)}>通过审核</Button>
-                </Col>
+                <span >
+                  <Button className={styles.btnClass} type="primary" onClick={this.doCheck.bind(this, '0')}>返回上一级</Button>
+                  <Button className={styles.btnClass} type="primary" onClick={this.doCheck.bind(this, '1')}>通过审核</Button>
+                </span>
                 }
               <BudgetSeasonOutcome
                 editable={editable}

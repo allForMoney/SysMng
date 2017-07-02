@@ -6,7 +6,7 @@ export default {
 
   state: {
     loading: false,
-    userType: 'admin',  // inputer/finan/manager/admin/ministry
+    userType: 'finace',  // inputer/finace/school/admin/country
     userName: '12345',
     showMsgModal: false,
     projectInfo: {}, // 单个项目基本信息
@@ -56,14 +56,14 @@ export default {
             userType = 'inputer';
             break;
           case '3':
-            userType = 'finan';
+            userType = 'finace';
             break;
           case '4':
-            userType = 'manager';
+            userType = 'school';
             break;
           case '5':
           case '6':
-            userType = 'ministry';
+            userType = 'country';
             break;
         }
 
@@ -99,14 +99,14 @@ export default {
             userType = 'inputer';
             break;
           case '3':
-            userType = 'finan';
+            userType = 'finace';
             break;
           case '4':
-            userType = 'manager';
+            userType = 'school';
             break;
           case '5':
           case '6':
-            userType = 'ministry';
+            userType = 'country';
             break;
         }
         if (result) {
@@ -154,12 +154,12 @@ export default {
       // TODO 根据用户角色不同,跳转到不同 的界面
       let pathname = '/base/projectList'; // 管理员的默认界面
       switch (userType) {
-        case 'ministry':
+        case 'country':
           pathname = '/base/projectList';
           break;
         case 'inputer':
-        case 'finan':
-        case 'manager':
+        case 'finace':
+        case 'school':
           pathname = '/budget/base';
           break;
         default:

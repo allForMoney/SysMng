@@ -97,7 +97,7 @@ class FrameContent extends React.Component {
     const { userType, userName, showMsgModal } = this.props;
 
     const isAdmin = userType === 'admin';
-    const isMinistry = userType === 'ministry';
+    const isMinistry = userType === 'country';
     let isSchool = true;
     if (isAdmin || isMinistry) {
       isSchool = false;
@@ -108,16 +108,16 @@ class FrameContent extends React.Component {
       case 'admin':
         identity = '管理员';
         break;
-      case 'ministry':
+      case 'country':
         identity = '教育部';
         break;
       case 'inputer':
         identity = '填报人';
         break;
-      case 'finan':
+      case 'finace':
         identity = '财务部门负责人';
         break;
-      case 'manager':
+      case 'school':
         identity = '项目负责人';
         break;
       default:
