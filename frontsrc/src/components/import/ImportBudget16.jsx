@@ -21,6 +21,13 @@ import ProjectInfo from './ProjectInfo';
 import styles from '../../index.less';
 
 class ImportBudget16 extends React.Component {
+  componentDidMount = () => {
+    this.props.dispatch({
+      type: 'ImportData/setState',
+      payload: { projectInfo: {} },
+    });
+  }
+
   state={
     projectNo: '',
   }

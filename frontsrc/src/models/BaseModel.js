@@ -9,15 +9,12 @@ export default {
     userType: 'admin',  // inputer/finan/manager/admin/ministry
     userName: '12345',
     showMsgModal: false,
-    projectName: 'kfkkfkfkfkfkfkfk',
-    projectId: '',
-    projectNo: '2016-02',
     projectInfo: {}, // 单个项目基本信息
     projectList: [],
     projectTotal: 34,
     projectPage: 1,
     userId: '',
-    priviceList: [],
+    priviceList: [], // 省份对应的列表
   },
   
   subscriptions: {
@@ -112,15 +109,19 @@ export default {
             userType = 'ministry';
             break;
         }
-        if (result && result.project) {
+        if (result) {
+          let projectInfo = {};
+          if (result.project) {
+            projectInfo = result.project;
+          }
+
           yield put({
             type: 'setState',
             payload: {
               userId: result.id,
-              projectNo: result.username,
+              userName: result.username,
               userType,
-              projexctId: result.project.id,
-              projectInfo: result.project,
+              projectInfo,
               projectName: result.majorName,
             }
           });
