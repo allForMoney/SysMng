@@ -24,7 +24,12 @@ class ImportAchive extends React.Component {
   state={
     projectNo: '',
   }
-
+  componentDidMount = () => {
+    this.props.dispatch({
+      type: 'ImportData/setState',
+      payload: { projectInfo: {} },
+    });
+  }
   onProjectValueChanged= (e) => {
     const projectNo = e.target.value;
     this.setState({ projectNo });
@@ -47,17 +52,14 @@ class ImportAchive extends React.Component {
     const {
       showUpload16,
       projectInfo,
-      userType,
+      userId,
     } = this.props;
     const {
       projectNo,
      } = this.state;
 
     const action = `
-    /indicator/import?
-    projectId=${projectInfo.id}&
-    importUser=${userType}&
-    importType=1`;
+    /indicator/import?projectId=${projectInfo.id}&importUser=${userId}&importType=1`;
 
     const uploadProps = {
       name: 'file',
@@ -115,11 +117,12 @@ function mapStateToProps(state) {
     userType,
     userName,
     projectId,
-    projectName
+    projectName,
+    userId,
    } = state.baseModel;
   const {
-    projectInfo,
     showUpload16,
+    projectInfo,
     loading,
    } = state.ImportData;
 
@@ -130,6 +133,7 @@ function mapStateToProps(state) {
     projectName,
     projectInfo,
     showUpload16,
+    userId,
     loading,
   };
 }
