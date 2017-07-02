@@ -6,7 +6,7 @@ export default {
 
   state: {
     loading: false,
-    userType: 'inputer',  // inputer/finan/manager/admin/ministry
+    userType: 'admin',  // inputer/finan/manager/admin/ministry
     userName: '12345',
     showMsgModal: false,
     projectName: 'kfkkfkfkfkfkfkfk',
@@ -88,13 +88,11 @@ export default {
         });
       }
     },
+
     * login({ payload }, { call, put }) {
       const data = yield call(login, payload);
       if (data && data.code === '1') {
         const result = data.result;
-        if (!result) {
-          return;
-        }
         let userType = 'admin';
         switch (result.userRole) {
           case '1':
@@ -114,18 +112,19 @@ export default {
             userType = 'ministry';
             break;
         }
-
-        yield put({
-          type: 'setState',
-          payload: {
-            userId: result.id,
-            projectNo: result.username,
-            userType,
-            projexctId: result.project.id,
-            projectInfo: result.project,
-            projectName: result.majorName,
-          }
-        });
+        if (result && result.project) {
+          yield put({
+            type: 'setState',
+            payload: {
+              userId: result.id,
+              projectNo: result.username,
+              userType,
+              projexctId: result.project.id,
+              projectInfo: result.project,
+              projectName: result.majorName,
+            }
+          });
+        }
         yield put({
           type: 'doRouter',
           payload: { userType }
@@ -144,6 +143,7 @@ export default {
         });
       }
     },
+    
     * logout({ payload }, { call }) {
       const data = yield call(logout, payload);
     },
@@ -167,6 +167,11 @@ export default {
       yield put(routerRedux.push({
         pathname
       }));
+      yield put({
+        type: 'setState',
+        payload
+      }
+      );
     },
   },
 
