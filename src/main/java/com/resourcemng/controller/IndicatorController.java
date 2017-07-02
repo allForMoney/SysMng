@@ -69,7 +69,7 @@ public class IndicatorController {
    */
   @RequestMapping(value = "/update" ,method = RequestMethod.POST)
   @ResponseBody
-  public Object updateIndicatorDetail(IndicatorView view) throws Exception {
+  public Object updateIndicatorDetail(@RequestBody IndicatorView view) throws Exception {
     service.saveIndicator(view);
     return new RequestResult(ResultCode.SUCCESS, "绩效添加成功",   null);
   }
