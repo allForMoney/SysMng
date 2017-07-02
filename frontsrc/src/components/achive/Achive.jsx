@@ -25,9 +25,16 @@ class Achive extends React.Component {
     editable: this.props.userType === 'inputer', // 是否可编辑
     showCheckBtn: this.props.userType === 'finan' || this.props.userType === 'manager', // 是否展示审批菜单
   }
+  componentDidMount= () => {
+    this.props.dispatch({
+      type: 'achiveModel/getProjectArchive',
+    });
+  }
 
-  saveChange= () => {
-    this.cancelMsg();
+  exportArchive=() => {
+    const url='';
+    window.open(url);
+    return;
   }
 
   doCheck= (flag) => { // flag=true,通过审核
@@ -44,16 +51,19 @@ class Achive extends React.Component {
 
   submit= () => {
     this.props.dispatch({
-      type: 'achiveModel/saveAchiveTarget',
+      type: 'achiveModel/updateAchiveTarget',
     });
   }
 
   goNext = () => {
     const { validateFields } = this.targetForm;
+    const { indicatorBase, dispatch } = this.props;
+
     validateFields((err, values) => {
-      this.props.dispatch({
+      Object.assign(indicatorBase, values);
+      dispatch({
         type: 'achiveModel/setState',
-        payload: values,
+        payload: indicatorBase,
       });
       this.setState({ steps: 1 });
     });
@@ -61,15 +71,16 @@ class Achive extends React.Component {
 
   render() {
     const {
+      indicatorDetails,
+      indicatorBase,
+      projectInfo,
+      dispatch,
+    } = this.props;
+    const {
       targetImplement,
       targetFirstYear,
       targetSecondYear,
-      projectId,
-      projectName,
-      achiveTargetList,
-      projectInfo,
-      userName,
-    } = this.props;
+    } = indicatorBase;
     const {
       steps,
       showCheckBtn,
@@ -99,10 +110,13 @@ class Achive extends React.Component {
               <Button className={styles.btnClass} type="primary" onClick={this.doCheck.bind(this, true)}>通过审核</Button>
             </Col>
             }
+            <Button className={styles.btnClass} type="primary" onClick={this.exportArchive}>导出Excel</Button>
+            
             <Card title={`绩效指标[编号:${projectInfo.projectNo}, 名称:${projectInfo.majorName}]`}>
               <AchiveTargetList
                 editable={editable}
-                dataSource={achiveTargetList}
+                dataSource={indicatorDetails}
+                dispatch={dispatch}
               />
             </Card>
             <Col className={styles.btnContainer}>
@@ -127,10 +141,8 @@ function mapStateToProps(state) {
     projectInfo,
    } = state.baseModel;
   const {
-     achiveTargetList,
-     targetImplement,
-     targetFirstYear,
-     targetSecondYear,
+      indicatorBase,
+      indicatorDetails,
    } = state.achiveModel;
   return {
     userType,
@@ -138,10 +150,8 @@ function mapStateToProps(state) {
     userName,
     projectId,
     projectName,
-    achiveTargetList,
-    targetImplement,
-    targetFirstYear,
-    targetSecondYear,
+    indicatorDetails,
+    indicatorBase,
   };
 }
 
