@@ -1,20 +1,23 @@
 package com.resourcemng.service;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
 import com.resourcemng.Enum.*;
 import com.resourcemng.entitys.*;
 import com.resourcemng.repository.*;
+import com.resourcemng.util.ApplicationUitl;
+import com.resourcemng.util.BigDecimalUtil;
 import com.resourcemng.view.*;
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional
@@ -175,55 +178,137 @@ public class BudgetResultService {
     ProjectResultDownloadView view = new ProjectResultDownloadView();
     //项目信息
     Project project = projectRepository.findById(projectId).get();
+    //TODO 校验
 
     //预算信息
     ProjectBudgetInfoView projectBudgetInfoView = budgetService.getBudgetForProject(projectId);
+    //TODO 校验
     view.setBudget(projectBudgetInfoView);
-
-    BigDecimal temp = new BigDecimal(0);
-    BigDecimal countryBudget = projectBudgetInfoView.getCountryTotal().getTotal();
-    BigDecimal localBudget = projectBudgetInfoView.getLocal().getTotal();
-    BigDecimal enterpriseBudget = projectBudgetInfoView.getLocal().getTotal();
-    List<ResultInfoView> budgetList = new ArrayList();
-//    ResultInfoView ResultInfoView = new ResultInfoView();
-//    ResultInfoView.setTotal(temp.add(projectBudgetInfoView.getCountryTotal().getTotal()).
-//      add(projectBudgetInfoView.getLocal().getTotal()).add(projectBudgetInfoView.getEnterprise().getTotal()).
-//      add(projectBudgetInfoView.getUniversity().getTotal()));
-//    temp = new BigDecimal(0);
-//    ResultInfoView.setApplicationPromete(temp.add(projectBudgetInfoView.getCountryTotal().getApplicationPromete()).
-//      add(projectBudgetInfoView.getLocal().getApplicationPromete()).add(projectBudgetInfoView.getEnterprise().getApplicationPromete()).
-//      add(projectBudgetInfoView.getUniversity().getApplicationPromete()));
-//    temp = new BigDecimal(0);
-//    ResultInfoView.setMaterialMake(temp.add(projectBudgetInfoView.getCountryTotal().getApplicationPromete()).
-//      add(projectBudgetInfoView.getLocal().getApplicationPromete()).add(projectBudgetInfoView.getEnterprise().getApplicationPromete()).
-//      add(projectBudgetInfoView.getUniversity().getApplicationPromete()));
+    view.setProject(project);
+    view.setProjectYear(projectYear);
+    view.setQuarterNum(quarterNum);
+    Tuser user = tUserRepository.findByUserNo(project.getProjectNo() + "-1");
     //收入信息
-    List<FundsIn> fundsIns = fundsInRepository.findByParams(project.getProjectNo() + "-1", quarterNum, projectYear);
+    List<FundsIn> fundsIns = fundsInRepository.findByParams(user.getId(), quarterNum, projectYear);
     ProjectFundInInfoView projectFundInInfoView = new ProjectFundInInfoView();
     if (fundsIns != null) {
       BigDecimal totalFundsIn = new BigDecimal(0);
       for (FundsIn fundsIn : fundsIns) {
         if (FoundSourceType.COUNTRY.equals(fundsIn.getPid())) {
           projectFundInInfoView.setCountryTotal(fundsIn.getAmountMoney());
-          totalFundsIn.add(fundsIn.getAmountMoney());
+          projectFundInInfoView.setCountryPrecent(BigDecimalUtil.percent(fundsIn.getAmountMoney(),projectBudgetInfoView.getCountryTotal().getTotal()));
+          totalFundsIn = totalFundsIn.add(fundsIn.getAmountMoney());
         } else if (FoundSourceType.LOCAL.equals(fundsIn.getPid())) {
           projectFundInInfoView.setLocal(fundsIn.getAmountMoney());
-          totalFundsIn.add(fundsIn.getAmountMoney());
+          projectFundInInfoView.setLocalPrecent(BigDecimalUtil.percent(fundsIn.getAmountMoney(),projectBudgetInfoView.getLocal().getTotal()));
+          totalFundsIn =totalFundsIn.add(fundsIn.getAmountMoney());
         } else if (FoundSourceType.ENTERPRICE.equals(fundsIn.getPid())) {
           projectFundInInfoView.setEnterprise(fundsIn.getAmountMoney());
-          totalFundsIn.add(fundsIn.getAmountMoney());
+          projectFundInInfoView.setEnterprisePrecent(BigDecimalUtil.percent(fundsIn.getAmountMoney(),projectBudgetInfoView.getEnterprise().getTotal()));
+          totalFundsIn =totalFundsIn.add(fundsIn.getAmountMoney());
         } else if (FoundSourceType.UNIVERSITY.equals(fundsIn.getPid())) {
           projectFundInInfoView.setUniversity(fundsIn.getAmountMoney());
-          totalFundsIn.add(fundsIn.getAmountMoney());
+          projectFundInInfoView.setUniversityPrecent(BigDecimalUtil.percent(fundsIn.getAmountMoney(),projectBudgetInfoView.getUniversity().getTotal()));
+          totalFundsIn = totalFundsIn.add(fundsIn.getAmountMoney());
 
         }
-        //设置总输入
-        projectFundInInfoView.setTotal(totalFundsIn);
-        totalFundsIn.add(fundsIn.getAmountMoney());
-      }
 
+      }
+      //设置总输入
+      projectFundInInfoView.setTotal(totalFundsIn);
+      projectFundInInfoView.setPrecent(BigDecimalUtil.percent(totalFundsIn,projectBudgetInfoView.getTotal().getTotal()));
 
     }
-    return null;
+    view.setFundin(projectFundInInfoView);
+
+    //支出信息
+    List<FundsOut> fundsOuts = fundsOutRepository.findByParams(user.getId(), quarterNum, projectYear);
+    ProjectFundOutInfoView projectFundOutInfoView = new ProjectFundOutInfoView();
+    if (fundsOuts != null) {
+      FundsOut totalFundsOut = new FundsOut();
+      for (FundsOut fundsOut : fundsOuts) {
+        if (FoundSourceType.COUNTRY.equals(fundsOut.getPid())) {
+          projectFundOutInfoView.setCountryTotal(this.getResultPrecentInfoView(projectBudgetInfoView.getCountryTotal(),fundsOut));
+          getTotalFundsOut(totalFundsOut,fundsOut);
+        } else if (FoundSourceType.LOCAL.equals(fundsOut.getPid())) {
+          projectFundOutInfoView.setLocal(this.getResultPrecentInfoView(projectBudgetInfoView.getLocal(),fundsOut));
+          getTotalFundsOut(totalFundsOut,fundsOut);
+        } else if (FoundSourceType.ENTERPRICE.equals(fundsOut.getPid())) {
+          projectFundOutInfoView.setEnterprise(this.getResultPrecentInfoView(projectBudgetInfoView.getEnterprise(),fundsOut));
+          getTotalFundsOut(totalFundsOut,fundsOut);
+        } else if (FoundSourceType.UNIVERSITY.equals(fundsOut.getPid())) {
+          projectFundOutInfoView.setUniversity(this.getResultPrecentInfoView(projectBudgetInfoView.getUniversity(),fundsOut));
+          getTotalFundsOut(totalFundsOut,fundsOut);
+
+        }
+
+      }
+      //设置总支出
+      projectFundOutInfoView.setTotal(this.getResultPrecentInfoView(projectBudgetInfoView.getTotal(),totalFundsOut));
+
+    }
+    view.setFundout(projectFundOutInfoView);
+
+    //导出文件
+//    TemplateExportParams params = new TemplateExportParams(
+//      ApplicationUitl.getWebRootPath("templete/预算执行情况模板.xlsx"), true);
+    TemplateExportParams params = new TemplateExportParams("E:\\workspace\\SysResourceMngNew\\target\\test-classes\\templete\\预算执行情况模板.xlsx", true);
+    Map<String, Object> map = new HashMap<>();
+    map.put("project",view.getProject());
+    map.put("budget",view.getBudget());
+    map.put("foudin",view.getFundin());
+    map.put("fundout",view.getFundout());
+    map.put("projectYear",view.getProjectYear());
+    map.put("quarterNum",view.getQuarterNum());
+    Workbook workbook = ExcelExportUtil.exportExcel(params, map);
+    return workbook;
   }
+
+  /**
+   * 累计各类支出的总计
+   * @param totalFundsOut
+   * @param fundsOut
+   * @return
+   */
+  private  void getTotalFundsOut(FundsOut totalFundsOut,FundsOut fundsOut) throws InvocationTargetException, IllegalAccessException {
+    totalFundsOut.setApplicationPromete(BigDecimalUtil.sum(totalFundsOut.getApplicationPromete(),fundsOut.getApplicationPromete()));
+    totalFundsOut.setCompanyCase(BigDecimalUtil.sum(totalFundsOut.getCompanyCase(),fundsOut.getCompanyCase()));
+    totalFundsOut.setCourseDevelopment(BigDecimalUtil.sum(totalFundsOut.getCourseDevelopment(),fundsOut.getCourseDevelopment()));
+    totalFundsOut.setExpertConsult(BigDecimalUtil.sum(totalFundsOut.getExpertConsult(),fundsOut.getExpertConsult()));
+    totalFundsOut.setMaterialMake(BigDecimalUtil.sum(totalFundsOut.getMaterialMake(),fundsOut.getMaterialMake()));
+    totalFundsOut.setResearchProve(BigDecimalUtil.sum(totalFundsOut.getResearchProve(),fundsOut.getResearchProve()));
+    totalFundsOut.setSpecialTool(BigDecimalUtil.sum(totalFundsOut.getSpecialTool(),fundsOut.getSpecialTool()));
+    totalFundsOut.setOtherFee(BigDecimalUtil.sum(totalFundsOut.getOtherFee(),fundsOut.getOtherFee()));
+  }
+
+
+  /**
+   * 根据预算数据和支出数据，计算数据视图
+   * @param resultInfoView
+   * @param fundsOut
+   * @return
+   */
+  private  ResultPrecentInfoView getResultPrecentInfoView( ResultInfoView resultInfoView,FundsOut fundsOut) throws InvocationTargetException, IllegalAccessException {
+    ResultPrecentInfoView resultPrecentInfoView = new ResultPrecentInfoView();
+    BeanUtils.copyProperties(resultPrecentInfoView,fundsOut);
+    BigDecimal subFundsOut = BigDecimalUtil.sum(fundsOut.getApplicationPromete(),fundsOut.getCompanyCase());
+    subFundsOut = BigDecimalUtil.sum(subFundsOut,fundsOut.getCourseDevelopment());
+    subFundsOut = BigDecimalUtil.sum(subFundsOut,fundsOut.getExpertConsult());
+    subFundsOut = BigDecimalUtil.sum(subFundsOut,fundsOut.getMaterialMake());
+    subFundsOut = BigDecimalUtil.sum(subFundsOut,fundsOut.getOtherFee());
+    subFundsOut = BigDecimalUtil.sum(subFundsOut,fundsOut.getResearchProve());
+    subFundsOut = BigDecimalUtil.sum(subFundsOut,fundsOut.getSpecialTool());
+    resultPrecentInfoView.setTotal(subFundsOut);
+    resultPrecentInfoView.setTotalPrecent(BigDecimalUtil.percent(subFundsOut,resultInfoView.getTotal()));
+    resultPrecentInfoView.setMaterialMakePrecent(BigDecimalUtil.percent(fundsOut.getMaterialMake(),resultInfoView.getMaterialMake()));
+    resultPrecentInfoView.setApplicationPrometePrecent(BigDecimalUtil.percent(fundsOut.getApplicationPromete(),resultInfoView.getApplicationPromete()));
+    resultPrecentInfoView.setCompanyCasePrecent(BigDecimalUtil.percent(fundsOut.getCompanyCase(),resultInfoView.getCompanyCase()));
+    resultPrecentInfoView.setCourseDevelopmentPrecent(BigDecimalUtil.percent(fundsOut.getCourseDevelopment(),resultInfoView.getCourseDevelopment()));
+    resultPrecentInfoView.setExpertConsultPrecent(BigDecimalUtil.percent(fundsOut.getExpertConsult(),resultInfoView.getExpertConsult()));
+    resultPrecentInfoView.setOtherFeePrecent(BigDecimalUtil.percent(fundsOut.getOtherFee(),resultInfoView.getOtherFee()));
+    resultPrecentInfoView.setResearchProvePrecent(BigDecimalUtil.percent(fundsOut.getResearchProve(),resultInfoView.getResearchProve()));
+    resultPrecentInfoView.setSpecialToolPrecent(BigDecimalUtil.percent(fundsOut.getSpecialTool(),resultInfoView.getSpecialTool()));
+  return resultPrecentInfoView;
+  }
+
 }

@@ -11,9 +11,27 @@ import java.util.List;
  */
 public class ProjectResultDownloadView extends FileImportLog {
   private Project project;
+  private String quarterNum;
+  private String projectYear;
   private ProjectBudgetInfoView budget;
   private ProjectFundInInfoView fundin;
   private ProjectFundOutInfoView fundout;
+
+  public String getQuarterNum() {
+    return quarterNum;
+  }
+
+  public void setQuarterNum(String quarterNum) {
+    this.quarterNum = quarterNum;
+  }
+
+  public String getProjectYear() {
+    return projectYear;
+  }
+
+  public void setProjectYear(String projectYear) {
+    this.projectYear = projectYear;
+  }
 
   public Project getProject() {
     return project;

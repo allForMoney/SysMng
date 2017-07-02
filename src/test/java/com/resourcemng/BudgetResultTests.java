@@ -6,6 +6,7 @@ import com.resourcemng.entitys.FundsOut;
 import com.resourcemng.service.BudgetResultService;
 import com.resourcemng.service.BudgetService;
 import com.resourcemng.view.BudgetReportView;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,5 +69,19 @@ public class BudgetResultTests {
   public void testQuarterlyReportGet() throws Exception {
     service.getQuarterlyDetail("40289e375ce817c2015ce817d1190003","2016-02","3");
     System.out.println();
+  }
+  @Test
+  public void testExport() throws Exception {
+    Workbook book  = service.exportFile("402881f05cf98f57015cf98f68030003","2017","1");
+    if(book == null){
+      return;
+    }
+    File savefile = new File("E:/excel/");
+    if (!savefile.exists()) {
+      savefile.mkdirs();
+    }
+    FileOutputStream fos = new FileOutputStream("E:/excel/foreach.xlsx");
+    book.write(fos);
+    fos.close();
   }
 }
