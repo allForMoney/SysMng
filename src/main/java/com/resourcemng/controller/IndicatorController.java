@@ -83,8 +83,8 @@ public class IndicatorController {
   @RequestMapping(value = "/detail" ,method = RequestMethod.GET)
   @ResponseBody
   public Object getIndicatorDetail(@RequestParam String projectId) throws Exception {
-    service.getIndicatorDetail(projectId);
-    return new RequestResult(ResultCode.SUCCESS, "绩效添加成功",   null);
+
+    return new RequestResult(ResultCode.SUCCESS, "绩效添加成功",   service.getIndicatorDetail(projectId));
   }
 
 }
