@@ -24,7 +24,7 @@ export function updateSeasonBudget(params) {
   });
 }
 export function changeCheckStatus(params) {
-  return request('/budget/checkstatus', {
+  return request('/budget/report/quarterly/audit', {
     method: 'post',
     data: JSON.stringify(params),
   });
