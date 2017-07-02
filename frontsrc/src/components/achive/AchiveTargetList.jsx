@@ -40,7 +40,7 @@ class AchiveTargetList extends React.Component {
       this.props.dispatch({
         type: 'achiveModel/setState',
         payload: {
-          buggetInComeList: dataSource
+          indicatorDetails: dataSource
         }
       });
       this.onCancel();
@@ -150,6 +150,7 @@ class AchiveTargetList extends React.Component {
           rowKey={record => record.id}
           onRowClick={this.onRowClicked}
           pagination={false}
+          scroll={{ x: true, y: 300 }}
         />
       </Card>
     );

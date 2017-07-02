@@ -2,25 +2,26 @@ import qs from 'qs';
 
 import request from '../utils/request';
 
-export function saveAchiveTarget(params) {
-  return request(`/achive/?${qs.stringify(params)}`);
+/** 获取绩效目标 */
+export function getProjectArchive(params) {
+  return request(`/indicator/detail?${qs.stringify(params)}`);
 }
-
-export function getProjectList(params) {
-  return request(`/achive/getProjectList?${qs.stringify(params)}`);
-}
-
+/** 获取所有绩效记录 */
 export function getAllAchiveRec(params) {
   return request(`/indicator/allimport?${qs.stringify(params)}`);
 }
 
-// export function deletePro(params) {
-//   return request(`/project/deletePro?${qs.stringify(params)}`);
-// }
+/** 更新绩效 */
+export function updateAchiveTarget(params) {
+  return request('/indicator/create', {
+    method: 'post',
+    data: JSON.stringify(params),
+  });
+}
 
 export function changeCheckStatus(params) {
-  return request('/achive/checkstatus', {
+  return request('/indicator/checkstatus', {
     method: 'post',
-    body: params,
+    data: JSON.stringify(params),
   });
 }

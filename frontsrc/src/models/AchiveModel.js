@@ -2,6 +2,8 @@
 import {
   saveAchiveTarget,
   changeCheckStatus,
+  getProjectArchive,
+  updateAchiveTarget,
 } from '../services/AchiveService';
 import { message } from 'antd';
 
@@ -10,27 +12,44 @@ export default {
 
   state: {
     loading: false,
-    targetImplement: '',
-    targetFirstYear: '',
-    targetSecondYear: '',
-    achiveTargetList: [],
-
+    id: '',
+    indicatorBase: {},
+    indicatorDetails: [],
   },
   effects: {
-    * saveAchiveTarget({ payload }, { call, select }) {
+
+    * getProjectArchive({ payload }, { call, select, put }) {
+      const { projectInfo } = yield select(state => state.baseModel);
+      const projectId = projectInfo.id;
+
+      const data = yield call(getProjectArchive, { projectId });
+      if (data && data.code === '1') {
+        console.log(data.result);
+        const { id, indicatorBase, indicatorDetails } = data.result;
+        yield put({
+          type: 'setState',
+          payload: {
+            id,
+            indicatorBase,
+            indicatorDetails,
+          }
+        });
+
+      }
+    },
+
+    * updateAchiveTarget({ payload }, { call, select }) {
       const {
-        targetImplement,
-        targetFirstYear,
-        targetSecondYear,
-        achiveTargetList,
+        indicatorBase,
+        indicatorDetails,
       } = yield select(state => state.achiveModel);
-      const data = yield call(saveAchiveTarget, {
-        targetImplement,
-        targetFirstYear,
-        targetSecondYear,
-        achiveTargetList,
+      const data = yield call(updateAchiveTarget, {
+        view: {
+          indicatorBase,
+          indicatorDetails,
+        }
       });
-      if (data && data.code === 1) {
+      if (data && data.code === '1') {
         message('更新成功');
       }
     },
