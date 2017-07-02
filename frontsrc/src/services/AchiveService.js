@@ -13,7 +13,7 @@ export function getAllAchiveRec(params) {
 
 /** 更新绩效 */
 export function updateAchiveTarget(params) {
-  return request('/indicator/create', {
+  return request('/indicator/update', {
     method: 'post',
     data: JSON.stringify(params),
   });
