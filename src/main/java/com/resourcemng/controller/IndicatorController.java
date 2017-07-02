@@ -67,7 +67,7 @@ public class IndicatorController {
    * @return
    * @throws Exception
    */
-  @RequestMapping(value = "/create" ,method = RequestMethod.POST)
+  @RequestMapping(value = "/update" ,method = RequestMethod.POST)
   @ResponseBody
   public Object updateIndicatorDetail(IndicatorView view) throws Exception {
     service.saveIndicator(view);
@@ -76,7 +76,7 @@ public class IndicatorController {
 
   /**
    * 绩效手动填写
-   * @param view
+   * @param projectId
    * @return
    * @throws Exception
    */

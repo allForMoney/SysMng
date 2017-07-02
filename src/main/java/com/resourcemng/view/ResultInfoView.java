@@ -1,16 +1,18 @@
 package com.resourcemng.view;
 
 import com.resourcemng.Enum.IsDelete;
+import com.resourcemng.util.BigDecimalUtil;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
 /**
  * Created by Administrator on 2017-6-23.
  */
-public class ResultInfoView {
+public class ResultInfoView   implements Serializable {
   private BigDecimal total;
   private BigDecimal materialMake;
   private BigDecimal companyCase;
@@ -22,7 +24,14 @@ public class ResultInfoView {
   private BigDecimal otherFee;
 
   public BigDecimal getTotal() {
-    return total;
+    BigDecimal subFundsOut = BigDecimalUtil.sum(this.getApplicationPromete(),this.getCompanyCase());
+    subFundsOut = BigDecimalUtil.sum(subFundsOut,this.getCourseDevelopment());
+    subFundsOut = BigDecimalUtil.sum(subFundsOut,this.getExpertConsult());
+    subFundsOut = BigDecimalUtil.sum(subFundsOut,this.getMaterialMake());
+    subFundsOut = BigDecimalUtil.sum(subFundsOut,this.getOtherFee());
+    subFundsOut = BigDecimalUtil.sum(subFundsOut,this.getResearchProve());
+    subFundsOut = BigDecimalUtil.sum(subFundsOut,this.getSpecialTool());
+    return subFundsOut;
   }
 
   public void setTotal(BigDecimal total) {

@@ -18,10 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Transactional
@@ -287,7 +284,27 @@ public class BudgetService {
         view.setUniversity(resultInfoView);
       }
     }
-return view;
+    //下面计算总计，本来可以在存入的时候将总计数据存入，但之前版本的数据没有存放统计数据，只好取出来只好求和。
+    List<ResultInfoView> budgetList = new ArrayList();
+    budgetList.add(view.getCountryTotal());
+    budgetList.add(view.getEnterprise());
+    budgetList.add(view.getLocal());
+    budgetList.add(view.getUniversity());
+    ResultInfoView total = new ResultInfoView();
+    total = budgetList.stream().reduce(total,(resultInfoView, element) -> {
+      resultInfoView.setMaterialMake(BigDecimalUtil.sum(resultInfoView.getMaterialMake(),element.getMaterialMake()));
+      resultInfoView.setApplicationPromete(BigDecimalUtil.sum(resultInfoView.getApplicationPromete(),element.getApplicationPromete()));
+      resultInfoView.setCompanyCase(BigDecimalUtil.sum(resultInfoView.getCompanyCase(),element.getCompanyCase()));
+      resultInfoView.setCourseDevelopment(BigDecimalUtil.sum(resultInfoView.getCourseDevelopment(),element.getCourseDevelopment()));
+      resultInfoView.setExpertConsult(BigDecimalUtil.sum(resultInfoView.getExpertConsult(),element.getExpertConsult()));
+      resultInfoView.setOtherFee(BigDecimalUtil.sum(resultInfoView.getOtherFee(),element.getOtherFee()));
+      resultInfoView.setResearchProve(BigDecimalUtil.sum(resultInfoView.getResearchProve(),element.getResearchProve()));
+      resultInfoView.setSpecialTool(BigDecimalUtil.sum(resultInfoView.getSpecialTool(),element.getSpecialTool()));
+      resultInfoView.setTotal(BigDecimalUtil.sum(resultInfoView.getTotal(),element.getTotal()));
+      return resultInfoView;
+    });
+    view.setTotal(total);
+  return view;
 
   }
 }

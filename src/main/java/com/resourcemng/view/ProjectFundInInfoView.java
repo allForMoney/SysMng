@@ -10,15 +10,15 @@ import java.math.BigDecimal;
  */
 public class ProjectFundInInfoView extends FileImportLog {
   private BigDecimal total;
-  private BigDecimal precent;
+  private String precent;
   private BigDecimal countryTotal;
-  private BigDecimal countryPrecent;
+  private String countryPrecent;
   private BigDecimal local;
-  private BigDecimal localPrecent;
+  private String localPrecent;
   private BigDecimal enterprise;
-  private BigDecimal enterprisePrecent;
+  private String enterprisePrecent;
   private BigDecimal university;
-  private BigDecimal universityPrecent;
+  private String universityPrecent;
 
   public BigDecimal getTotal() {
     return total;
@@ -28,11 +28,11 @@ public class ProjectFundInInfoView extends FileImportLog {
     this.total = total;
   }
 
-  public BigDecimal getPrecent() {
+  public String getPrecent() {
     return precent;
   }
 
-  public void setPrecent(BigDecimal precent) {
+  public void setPrecent(String precent) {
     this.precent = precent;
   }
 
@@ -44,13 +44,6 @@ public class ProjectFundInInfoView extends FileImportLog {
     this.countryTotal = countryTotal;
   }
 
-  public BigDecimal getCountryPrecent() {
-    return countryPrecent;
-  }
-
-  public void setCountryPrecent(BigDecimal countryPrecent) {
-    this.countryPrecent = countryPrecent;
-  }
 
   public BigDecimal getLocal() {
     return local;
@@ -60,13 +53,6 @@ public class ProjectFundInInfoView extends FileImportLog {
     this.local = local;
   }
 
-  public BigDecimal getLocalPrecent() {
-    return localPrecent;
-  }
-
-  public void setLocalPrecent(BigDecimal localPrecent) {
-    this.localPrecent = localPrecent;
-  }
 
   public BigDecimal getEnterprise() {
     return enterprise;
@@ -76,13 +62,6 @@ public class ProjectFundInInfoView extends FileImportLog {
     this.enterprise = enterprise;
   }
 
-  public BigDecimal getEnterprisePrecent() {
-    return enterprisePrecent;
-  }
-
-  public void setEnterprisePrecent(BigDecimal enterprisePrecent) {
-    this.enterprisePrecent = enterprisePrecent;
-  }
 
   public BigDecimal getUniversity() {
     return university;
@@ -92,11 +71,35 @@ public class ProjectFundInInfoView extends FileImportLog {
     this.university = university;
   }
 
-  public BigDecimal getUniversityPrecent() {
+  public String getCountryPrecent() {
+    return countryPrecent;
+  }
+
+  public void setCountryPrecent(String countryPrecent) {
+    this.countryPrecent = countryPrecent;
+  }
+
+  public String getLocalPrecent() {
+    return localPrecent;
+  }
+
+  public void setLocalPrecent(String localPrecent) {
+    this.localPrecent = localPrecent;
+  }
+
+  public String getEnterprisePrecent() {
+    return enterprisePrecent;
+  }
+
+  public void setEnterprisePrecent(String enterprisePrecent) {
+    this.enterprisePrecent = enterprisePrecent;
+  }
+
+  public String getUniversityPrecent() {
     return universityPrecent;
   }
 
-  public void setUniversityPrecent(BigDecimal universityPrecent) {
+  public void setUniversityPrecent(String universityPrecent) {
     this.universityPrecent = universityPrecent;
   }
 }

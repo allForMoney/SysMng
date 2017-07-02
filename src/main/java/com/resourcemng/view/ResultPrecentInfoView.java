@@ -1,6 +1,5 @@
 package com.resourcemng.view;
 
-import java.math.BigDecimal;
 
 /**
  * Created by Administrator on 2017-6-23.
@@ -9,85 +8,85 @@ public class ResultPrecentInfoView extends ResultInfoView {
   /**
    *支出率
    */
-  private BigDecimal totalPay;
-  private BigDecimal materialMakePay;
-  private BigDecimal companyCasePay;
-  private BigDecimal courseDevelopmentPay;
-  private BigDecimal specialToolPay;
-  private BigDecimal applicationPrometePay;
-  private BigDecimal researchProvePay;
-  private BigDecimal expertConsultPay;
-  private BigDecimal otherFeePay;
+  private String totalPrecent;
+  private String materialMakePrecent;
+  private String companyCasePrecent;
+  private String courseDevelopmentPrecent;
+  private String specialToolPrecent;
+  private String applicationPrometePrecent;
+  private String researchProvePrecent;
+  private String expertConsultPrecent;
+  private String otherFeePrecent;
 
-  public BigDecimal getTotalPay() {
-    return totalPay;
+  public String getTotalPrecent() {
+    return totalPrecent;
   }
 
-  public void setTotalPay(BigDecimal totalPay) {
-    this.totalPay = totalPay;
+  public void setTotalPrecent(String totalPrecent) {
+    this.totalPrecent = totalPrecent;
   }
 
-  public BigDecimal getMaterialMakePay() {
-    return materialMakePay;
+  public String getMaterialMakePrecent() {
+    return materialMakePrecent;
   }
 
-  public void setMaterialMakePay(BigDecimal materialMakePay) {
-    this.materialMakePay = materialMakePay;
+  public void setMaterialMakePrecent(String materialMakePrecent) {
+    this.materialMakePrecent = materialMakePrecent;
   }
 
-  public BigDecimal getCompanyCasePay() {
-    return companyCasePay;
+  public String getCompanyCasePrecent() {
+    return companyCasePrecent;
   }
 
-  public void setCompanyCasePay(BigDecimal companyCasePay) {
-    this.companyCasePay = companyCasePay;
+  public void setCompanyCasePrecent(String companyCasePrecent) {
+    this.companyCasePrecent = companyCasePrecent;
   }
 
-  public BigDecimal getCourseDevelopmentPay() {
-    return courseDevelopmentPay;
+  public String getCourseDevelopmentPrecent() {
+    return courseDevelopmentPrecent;
   }
 
-  public void setCourseDevelopmentPay(BigDecimal courseDevelopmentPay) {
-    this.courseDevelopmentPay = courseDevelopmentPay;
+  public void setCourseDevelopmentPrecent(String courseDevelopmentPrecent) {
+    this.courseDevelopmentPrecent = courseDevelopmentPrecent;
   }
 
-  public BigDecimal getSpecialToolPay() {
-    return specialToolPay;
+  public String getSpecialToolPrecent() {
+    return specialToolPrecent;
   }
 
-  public void setSpecialToolPay(BigDecimal specialToolPay) {
-    this.specialToolPay = specialToolPay;
+  public void setSpecialToolPrecent(String specialToolPrecent) {
+    this.specialToolPrecent = specialToolPrecent;
   }
 
-  public BigDecimal getApplicationPrometePay() {
-    return applicationPrometePay;
+  public String getApplicationPrometePrecent() {
+    return applicationPrometePrecent;
   }
 
-  public void setApplicationPrometePay(BigDecimal applicationPrometePay) {
-    this.applicationPrometePay = applicationPrometePay;
+  public void setApplicationPrometePrecent(String applicationPrometePrecent) {
+    this.applicationPrometePrecent = applicationPrometePrecent;
   }
 
-  public BigDecimal getResearchProvePay() {
-    return researchProvePay;
+  public String getResearchProvePrecent() {
+    return researchProvePrecent;
   }
 
-  public void setResearchProvePay(BigDecimal researchProvePay) {
-    this.researchProvePay = researchProvePay;
+  public void setResearchProvePrecent(String researchProvePrecent) {
+    this.researchProvePrecent = researchProvePrecent;
   }
 
-  public BigDecimal getExpertConsultPay() {
-    return expertConsultPay;
+  public String getExpertConsultPrecent() {
+    return expertConsultPrecent;
   }
 
-  public void setExpertConsultPay(BigDecimal expertConsultPay) {
-    this.expertConsultPay = expertConsultPay;
+  public void setExpertConsultPrecent(String expertConsultPrecent) {
+    this.expertConsultPrecent = expertConsultPrecent;
   }
 
-  public BigDecimal getOtherFeePay() {
-    return otherFeePay;
+  public String getOtherFeePrecent() {
+    return otherFeePrecent;
   }
 
-  public void setOtherFeePay(BigDecimal otherFeePay) {
-    this.otherFeePay = otherFeePay;
+  public void setOtherFeePrecent(String otherFeePrecent) {
+    this.otherFeePrecent = otherFeePrecent;
   }
 }
