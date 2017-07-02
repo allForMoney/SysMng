@@ -44,10 +44,8 @@ export default {
         indicatorDetails,
       } = yield select(state => state.achiveModel);
       const data = yield call(updateAchiveTarget, {
-        view: {
-          indicatorBase,
-          indicatorDetails,
-        }
+        indicatorBase,
+        indicatorDetails,
       });
       if (data && data.code === '1') {
         message('更新成功');
