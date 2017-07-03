@@ -18,21 +18,13 @@ export default {
   },
   
   subscriptions: {
-    setup({ dispatch, history }) {
-      return history.listen(({ pathname, query }) => {
-        if (pathname === '/users') {
-          dispatch({ type: 'fetch', payload: query });
-        }
-      });
-    },
     init({ dispatch }) {
-      
       dispatch({
         type: 'getProviceInfo'
       });
-      // dispatch({
-      //   type: 'isLogin'
-      // });
+      dispatch({
+        type: 'isLogin'
+      });
     }
 
   },

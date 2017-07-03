@@ -22,6 +22,7 @@ import AchivemportRecord from './routes/AchivemportRecord';
 import ProjectInfoList from './components/project/ProjectInfoList';
 import ProjectBaseInfo from './components/project/ProjectBaseInfo';
 import reportTime from './components/others/reportTime';
+import SendSMS from './components/others/SendSMS';
 
 function RouterConfig({ history }) {
   return (
@@ -48,6 +49,7 @@ function RouterConfig({ history }) {
       <Route path="/sys/concat" component={ModifyConcat} />
       <Route path="/sys/advice" component={Advice} />
       <Route path="/sys/reportTime" component={reportTime} />
+      <Route path="/sys/sendSMS" component={SendSMS} />
     </Router>
   );
 }

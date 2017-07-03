@@ -6,3 +6,10 @@ export function updateReportTime(params) {
     data: JSON.stringify(params),
   });
 }
+
+export function sendSMS(params) {
+  return request('/other/sendSMS', {
+    method: 'post',
+    data: JSON.stringify(params),
+  });
+}

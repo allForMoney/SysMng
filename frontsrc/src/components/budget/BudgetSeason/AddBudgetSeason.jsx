@@ -19,6 +19,18 @@ class BudgetSeason extends React.Component {
     editable: this.props.userType === 'inputer', // 是否可编辑
     showCheckBtn: this.props.userType === 'finace' || this.props.userType === 'school', // 是否展示审批菜单
   }
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'budgetModel/SetState',
+      payload: {
+        projectYear: 0,
+        quarterNum: 0,
+        editBudgetSteps: 0,
+        buggetInComeList: [],
+        buggetOutComeList: [],
+      }
+    });
+  }
 
   onYearChange= (value) => {
     this.props.dispatch({
@@ -72,6 +84,40 @@ class BudgetSeason extends React.Component {
     });
   }
 
+  getCheckVisible = (userType, auditStatus) => {
+    let cancelVisible = false;
+    let passVisible = false;
+    if (userType === 'finace') {
+      if (auditStatus === 1) {
+        passVisible = true;
+      }
+      if (auditStatus === 2) {
+        cancelVisible = true;
+      }
+    }
+    if (userType === 'school') {
+      if (auditStatus === 2) {
+        passVisible = true;
+      }
+      if (auditStatus === 3) {
+        cancelVisible = true;
+      }
+    }
+    if (userType === 'country') {
+      if (auditStatus === 3) {
+        passVisible = true;
+      }
+      if (auditStatus === 4) {
+        cancelVisible = true;
+      }
+    }
+
+    return {
+      cancelVisible,
+      passVisible
+    }
+  }
+
   render() {
     const {
       projectInfo,
@@ -79,6 +125,10 @@ class BudgetSeason extends React.Component {
       buggetInComeList,
       buggetOutComeList,
       dispatch,
+      projectYear,
+      quarterNum,
+      userType,
+      auditStatus,
     } = this.props;
     const YearSelection = [];
     for (let i = 2015; i < 2019; i++) {
@@ -89,7 +139,9 @@ class BudgetSeason extends React.Component {
       SeasonSelection.push(<Option key={i}>{`第${i}季度`}</Option>);
     }
 
-    const { editable, showCheckBtn } = this.state;
+    const { editable } = this.state;
+    const { cancelVisible, passVisible } = this.getCheckVisible(userType, auditStatus);
+
 
     return (
       <FrameContent>
@@ -113,23 +165,27 @@ class BudgetSeason extends React.Component {
               >
                 {SeasonSelection}
               </Select>
-              <BudgetSeasonIncome
-                editable={editable}
-                dispatch={dispatch}
-                buggetInComeList={buggetInComeList}
-              />
-              <Col className={styles.btnContainer}>
-                <Button className={styles.btnClass} type="primary" onClick={this.goNext}>下一步</Button>
-              </Col>
+              {projectYear && quarterNum &&
+                <div>
+                  <BudgetSeasonIncome
+                    editable={editable}
+                    dispatch={dispatch}
+                    buggetInComeList={buggetInComeList}
+                  />
+                  <Col className={styles.btnContainer}>
+                    <Button className={styles.btnClass} type="primary" onClick={this.goNext}>下一步</Button>
+                  </Col>
+                </div>
+              }
             </Row>
           }
           { editBudgetSteps === 1 &&
             <div className="">
-                {showCheckBtn &&
-                <span >
+                {cancelVisible &&
                   <Button className={styles.btnClass} type="primary" onClick={this.doCheck.bind(this, '0')}>返回上一级</Button>
+                }
+                {passVisible &&
                   <Button className={styles.btnClass} type="primary" onClick={this.doCheck.bind(this, '1')}>通过审核</Button>
-                </span>
                 }
               <BudgetSeasonOutcome
                 editable={editable}
@@ -153,7 +209,7 @@ class BudgetSeason extends React.Component {
                 >
                   返回
                 </Button>
-                {!showCheckBtn &&
+                {editable &&
                   <Button className={styles.btnClass} type="primary" onClick={this.submit}>保存</Button>
                 }
               </Col>
@@ -181,6 +237,7 @@ function mapStateToProps(state) {
     buggetOutComeList,
     projectYear,
     quarterNum,
+    auditStatus,
     } = state.budgetModel;
   return {
     budgetMsgList,
@@ -193,6 +250,7 @@ function mapStateToProps(state) {
     buggetInComeList,
     projectYear,
     quarterNum,
+    auditStatus,
     buggetOutComeList,
     projectId
   };
