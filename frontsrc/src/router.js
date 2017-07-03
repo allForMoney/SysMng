@@ -23,6 +23,7 @@ import ProjectInfoList from './components/project/ProjectInfoList';
 import ProjectBaseInfo from './components/project/ProjectBaseInfo';
 import reportTime from './components/others/reportTime';
 import SendSMS from './components/others/SendSMS';
+import ResetUserPwd from './components/others/ResetUserPwd';
 
 function RouterConfig({ history }) {
   return (
@@ -50,6 +51,7 @@ function RouterConfig({ history }) {
       <Route path="/sys/advice" component={Advice} />
       <Route path="/sys/reportTime" component={reportTime} />
       <Route path="/sys/sendSMS" component={SendSMS} />
+      <Route path="/sys/resetPwd" component={ResetUserPwd} />
     </Router>
   );
 }

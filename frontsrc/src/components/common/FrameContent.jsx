@@ -220,7 +220,7 @@ class FrameContent extends React.Component {
                   <Link onClick={this.modifyPass}><Icon type="bars" />修改密码</Link>
                 </Menu.Item>
                 <Menu.Item key="退出登录">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />退出登录</Link>
+                  <Link onClick={this.logoOut} ><Icon type="bars" />退出登录</Link>
                 </Menu.Item>
               </SubMenu>
             </Menu>
@@ -264,16 +264,16 @@ class FrameContent extends React.Component {
                   <Link to="/sys/sendSMS" ><Icon type="bars" />发送短信通知</Link>
                 </Menu.Item>
                 <Menu.Item key="系统使用建议">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />系统使用建议</Link>
+                  <Link to="/sys/advice" ><Icon type="bars" />系统使用建议</Link>
                 </Menu.Item>
                 <Menu.Item key="用户密码重置">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />用户密码重置</Link>
+                  <Link to="/sys/resetPwd" ><Icon type="bars" />用户密码重置</Link>
                 </Menu.Item>
                 <Menu.Item key="修改密码">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />修改密码</Link>
+                  <Link onClick={this.modifyPass}><Icon type="bars" />修改密码</Link>
                 </Menu.Item>
                 <Menu.Item key="退出登录">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />退出登录</Link>
+                  <Link onClick={this.logoOut} ><Icon type="bars" />退出登录</Link>
                 </Menu.Item>
               </SubMenu>
             </Menu>
@@ -380,10 +380,10 @@ class FrameContent extends React.Component {
               </SubMenu>
               <SubMenu key="系统设置" title={<span><Icon type="user" />系统设置</span>}>
                 <Menu.Item key="修改密码">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />修改密码</Link>
+                  <Link onClick={this.modifyPass}><Icon type="bars" />修改密码</Link>
                 </Menu.Item>
                 <Menu.Item key="退出登录">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />退出登录</Link>
+                   <Link onClick={this.logoOut} ><Icon type="bars" />退出登录</Link>
                 </Menu.Item>
               </SubMenu>
             </Menu>
