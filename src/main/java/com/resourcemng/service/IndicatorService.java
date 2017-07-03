@@ -2,17 +2,12 @@ package com.resourcemng.service;
 
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
-import com.resourcemng.Enum.FoundSourceType;
 import com.resourcemng.Enum.ImportFileType;
-import com.resourcemng.Enum.LeaveMessageType;
 import com.resourcemng.basic.MyException;
 import com.resourcemng.entitys.*;
-import com.resourcemng.handler.BudgetImportHanlder;
 import com.resourcemng.handler.IndicatorBaseInfoImportHanlder;
 import com.resourcemng.handler.IndicatorImportHanlder;
 import com.resourcemng.repository.*;
-import com.resourcemng.util.BigDecimalUtil;
-import com.resourcemng.view.BudgetImportView;
 import com.resourcemng.view.IndicatorView;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +30,12 @@ public class IndicatorService {
   public void importFormFile(String projectId, String importUser, File uploadFile) throws MyException {
     try {
       //仅仅允许导入一次啊
-      FileImportLog log = fileImportLogRepository.findByProjectIdAndImportType(projectId,ImportFileType.TARGET);
-      if(log !=null){
+      List<FileImportLog> logs = fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDate(projectId,ImportFileType.TARGET);
+      if(logs !=null &&logs.size() >0){
         throw new MyException("同一个项目绩效指标只能导入一次，如果需要修改，请删除记录后重试。");
       }
       //保存导入记录
-      log = new FileImportLog();
+      FileImportLog log = new FileImportLog();
       log.setFileName(uploadFile.getName());
       log.setImportType(ImportFileType.TARGET);
       log.setImportUserId(importUser);
@@ -146,14 +141,15 @@ public class IndicatorService {
   public IndicatorView getIndicatorDetail(String projectId) throws MyException, InvocationTargetException, IllegalAccessException {
     IndicatorView view  = new IndicatorView ();
     //仅仅允许导入一次啊
-    FileImportLog log = fileImportLogRepository.findByProjectIdAndImportType(projectId,ImportFileType.TARGET);
-    if(log == null){
+    List<FileImportLog>   logs = fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDate(projectId,ImportFileType.TARGET);
+    if(logs == null){
       throw new MyException("没有记录，请联系管理员导入指标数据。");
     }
-    BeanUtils.copyProperties(view, log);
-    IndicatorBase indicatorBase = indicatorBaseRepository.findByFileImportId(log.getId());
+    FileImportLog fileImportLog = logs.get(0);
+    BeanUtils.copyProperties(view, fileImportLog);
+    IndicatorBase indicatorBase = indicatorBaseRepository.findByFileImportId(fileImportLog.getId());
     view.setIndicatorBase(indicatorBase);
-    view.setIndicatorDetails(indicatorDetailRepository.findByFileImportId(log.getId()));
+    view.setIndicatorDetails(indicatorDetailRepository.findByFileImportId(fileImportLog.getId()));
     return view;
 
   }

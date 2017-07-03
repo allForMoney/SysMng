@@ -19,6 +19,8 @@ public class FileImportLog implements Serializable {
   private String importUserId;
   private String projectId;
   private String importType;
+  private String requestFile;
+  private String desFile;
 
   @Id
 @GeneratedValue(generator = "uuid")
@@ -83,6 +85,24 @@ public class FileImportLog implements Serializable {
 
   public void setImportType(String importType) {
     this.importType = importType;
+  }
+  @Basic
+  @Column(name = "REQUEST_FILE", nullable = true, length = 500)
+  public String getRequestFile() {
+    return requestFile;
+  }
+
+  public void setRequestFile(String requestFile) {
+    this.requestFile = requestFile;
+  }
+  @Basic
+  @Column(name = "DES_FILE", nullable = true, length = 500)
+  public String getDesFile() {
+    return desFile;
+  }
+
+  public void setDesFile(String desFile) {
+    this.desFile = desFile;
   }
 
   @Override

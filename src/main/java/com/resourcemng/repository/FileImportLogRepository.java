@@ -16,7 +16,10 @@ import java.util.List;
  */
 public interface FileImportLogRepository extends JpaRepository<FileImportLog, String> {
 //  @Query("from FileImportLog p where p.projectId=:projectId")
-    FileImportLog findByProjectIdAndImportType(String projectId,String importType);
+    List<FileImportLog> findByProjectIdAndImportTypeOrderByImportDate(String projectId, String importType);
+    List<FileImportLog>  findByImportType(String importType);
+
+    List<FileImportLog> findByProjectId(String projectId);
 
   @Query("from FileImportLog p where p.projectId like CONCAT('%',:projectId,'%')")
   List<FileImportLog> findByParam(@Param("projectId")String projectId);

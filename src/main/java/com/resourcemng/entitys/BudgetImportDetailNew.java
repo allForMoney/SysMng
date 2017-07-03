@@ -34,6 +34,7 @@ public class BudgetImportDetailNew implements Serializable {
   private String university;
   private String budgetYear;
   private String fileImportId;
+  private String originalId;
 
   @Id
    @GeneratedValue(generator = "uuid")
@@ -266,6 +267,15 @@ public class BudgetImportDetailNew implements Serializable {
   public void setFileImportId(String fileImportId) {
     this.fileImportId = fileImportId;
   }
+  @Basic
+  @Column(name = "ORIGINALID_ID", length = 50)
+  public String getOriginalId() {
+    return originalId;
+  }
+
+  public void setOriginalId(String originalId) {
+    this.originalId = originalId;
+  }
 
   @Override
   public boolean equals(Object o) {
@@ -301,6 +311,7 @@ public class BudgetImportDetailNew implements Serializable {
     if (university != null ? !university.equals(that.university) : that.university != null) return false;
     if (budgetYear != null ? !budgetYear.equals(that.budgetYear) : that.budgetYear != null) return false;
     if (fileImportId != null ? !fileImportId.equals(that.fileImportId) : that.fileImportId != null) return false;
+    if (originalId != null ? !originalId.equals(that.originalId) : that.originalId != null) return false;
 
     return true;
   }
@@ -330,6 +341,7 @@ public class BudgetImportDetailNew implements Serializable {
     result = 31 * result + (university != null ? university.hashCode() : 0);
     result = 31 * result + (budgetYear != null ? budgetYear.hashCode() : 0);
     result = 31 * result + (fileImportId != null ? fileImportId.hashCode() : 0);
+    result = 31 * result + (originalId != null ? originalId.hashCode() : 0);
     return result;
   }
 }

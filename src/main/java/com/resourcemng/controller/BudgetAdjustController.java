@@ -24,15 +24,25 @@ public class BudgetAdjustController {
   BudgetAdjustService service;
   @Autowired
   FileUitl fileUitl;
-  @RequestMapping(value = "/import/{projectId}" ,method = RequestMethod.POST)
+
+  /**
+   * 导入文件
+   * @param projectId
+   * @param adjustUserId
+   * @param adjustType
+   * @param request
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "/import" ,method = RequestMethod.POST)
   @ResponseBody
-  public Object uploadBudget(@PathVariable String projectId,/*@RequestParam String year,*/HttpServletRequest request) throws Exception {
+  public Object uploadBudget(@RequestParam String projectId,@RequestParam String adjustUserId,@RequestParam String adjustType,HttpServletRequest request) throws Exception {
     List<MultipartFile> files =((MultipartHttpServletRequest)request).getFiles("file");
     if (!files.isEmpty() && files.size() >=3) {
         File requestFile = fileUitl.saveUploadFile(files.get(0) );
         File adjustFile = fileUitl.saveUploadFile(files.get(1) );
         File descriptionFile = fileUitl.saveUploadFile(files.get(2) );
-        service.adjust(projectId,/*year,*/requestFile,adjustFile,descriptionFile);
+        service.adjust(projectId,adjustUserId,adjustType,requestFile,adjustFile,descriptionFile);
       return new RequestResult(ResultCode.SUCCESS, "上传成功",   null);
     } else {
       return new RequestResult(ResultCode.FAILED, "上传成功",   null);
@@ -40,7 +50,7 @@ public class BudgetAdjustController {
   }
 
   /**
-   *
+   *审核调整记录
    * @param id
    * @param auditType
    * @param auditContent
@@ -56,16 +66,31 @@ public class BudgetAdjustController {
   }
 
   /**
-   *
+   *获取项目所有的调整记录
    * @param projectId
    * @return
    * @throws Exception
    */
   @RequestMapping(value = "/all" ,method = RequestMethod.GET)
   @ResponseBody
-  public Object getAll( String projectId) throws Exception {
+  public Object getAll( @RequestParam String projectId) throws Exception {
 
 
     return new RequestResult(ResultCode.SUCCESS, "提交审批成功.",    service.find(projectId));
+  }
+
+
+  /**
+   *指定预算审核记录的ID，查看调整资源的比较信息
+   * @param id
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "/getCompareInfo" ,method = RequestMethod.GET)
+  @ResponseBody
+  public Object getCompareInfo(@RequestParam String id) throws Exception {
+
+
+    return new RequestResult(ResultCode.SUCCESS, "提交审批成功.",    service.getCompareInfo(id));
   }
 }

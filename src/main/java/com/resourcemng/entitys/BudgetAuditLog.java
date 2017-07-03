@@ -1,5 +1,7 @@
 package com.resourcemng.entitys;
 
+import com.resourcemng.Enum.AuditStatus;
+import com.resourcemng.Enum.ReportStatus;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -14,14 +16,14 @@ import java.util.Date;
 public class BudgetAuditLog implements Serializable {
   private String id;
   private String adjustId;
-  private String status;
+  private String status= ReportStatus.FILL;
   private Date reportTime;
   private Date financeAuditTime;
   private Date schoolAuditTime;
   private Date conutryAuditTime;
-  private String financeAuditState;
-  private String schoolAuditState;
-  private String conutryAuditState;
+  private String financeAuditState= AuditStatus.UN_PASS;
+  private String schoolAuditState= AuditStatus.UN_PASS;
+  private String conutryAuditState = AuditStatus.UN_PASS;
   private String auditOpinion;
 
   @Id

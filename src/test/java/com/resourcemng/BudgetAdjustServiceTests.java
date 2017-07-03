@@ -1,10 +1,9 @@
 package com.resourcemng;
 
-import cn.afterturn.easypoi.excel.ExcelImportUtil;
-import cn.afterturn.easypoi.excel.entity.ImportParams;
 import com.resourcemng.Enum.ImportFileType;
-import com.resourcemng.entitys.Project;
+import com.resourcemng.service.BudgetAdjustService;
 import com.resourcemng.service.BudgetService;
+import com.resourcemng.util.FileUitl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,13 +15,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.io.File;
-import java.util.*;
 
 
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
 @SpringBootTest
-public class BudgetServiceTests {
+public class BudgetAdjustServiceTests {
   private MockMvc mvc;
   @Before
   public void setUp() throws Exception {
@@ -32,14 +30,17 @@ public class BudgetServiceTests {
   public void getHello() throws Exception {
   }
   @Autowired
-  private BudgetService service;
+  private BudgetAdjustService service;
+  @Autowired
+  private FileUitl fileUitl;
   @Test
   public void testUploadFile() throws Exception {
-    service.importBudgetFormFile("ddd","ddw", ImportFileType.BUDGET2016,new File("E:\\项目资料\\新建文件夹\\模板\\预算2016.xlsx"));
+    service.adjust("ddd","ddw", ImportFileType.BUDGET_ADJUST_2016,new File("E:\\项目资料\\新建文件夹\\模板\\2015-10预算调整请示及说明20170113.pdf"),new File("E:\\项目资料\\新建文件夹\\模板\\2015-10预算明细20170113上传版.xlsx"),new File("E:\\项目资料\\新建文件夹\\模板\\2015-10预算调整说明20170113.pdf"));
   }
   @Test
   public void getBudgetForProject() throws Exception {
-    Object obj = service.getBudgetForProject("402881f05cf98f57015cf98f68030003");
+    service.find("ddd");
+
   }
 
 

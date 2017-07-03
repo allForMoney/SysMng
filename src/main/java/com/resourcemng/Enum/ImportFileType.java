@@ -5,8 +5,10 @@ package com.resourcemng.Enum;
  */
 public class ImportFileType {
 
-  public static String BUDGET2016 = "1";
-  public static String BUDGET2015 = "2";
-  public static String TARGET = "3";
+  public static String BUDGET2016 = "yusuan2016";
+  public static String BUDGET2015 = "yusuan";
+  public static String BUDGET_ADJUST = "yusuan2";
+  public static String BUDGET_ADJUST_2016 = "djust2016";
+  public static String TARGET = "jixiao";
 
 }

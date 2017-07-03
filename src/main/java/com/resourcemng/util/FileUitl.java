@@ -47,6 +47,24 @@ public class FileUitl {
 
   }
 
+  /**
+   * 获取文件的路径
+   * @param fileName
+   * @return
+   */
+  public  String getFPath(String fileName) {
+    return path+ File.separator+fileName;
+  }
+
+  /**
+   * 根据指定的文件名返回文件
+   * @param fileName
+   * @return
+   */
+  public  File getFile(String fileName) {
+    String filePath =  path+ File.separator+fileName;
+    return new File(filePath);
+  }
   public  String getPath() {
     return path;
   }

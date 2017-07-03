@@ -16,4 +16,6 @@ import java.util.List;
  */
 public interface FundsBudgetRepository extends JpaRepository<FundsBudget, String> {
   List<FundsBudget> findByProjectId(String projectId);
+
+   void deleteByProjectId(String projectId);
 }

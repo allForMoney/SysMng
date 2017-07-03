@@ -21,4 +21,7 @@ public interface BudgetImport2016Repository extends JpaRepository<BudgetImportDe
 
   @Query("delete from BudgetImportDetailNew p where p.fileImportId=:fileImportId")
  void deleteByBudgetImportId(@Param("fileImportId")String fileImportId);
+
+
+
 }

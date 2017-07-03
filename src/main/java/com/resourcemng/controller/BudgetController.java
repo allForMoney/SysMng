@@ -42,14 +42,14 @@ public class BudgetController {
    */
   @RequestMapping(value = "/import/{projectId}" ,method = RequestMethod.POST)
   @ResponseBody
-  public Object uploadBudget(@PathVariable String projectId,@RequestParam String importUser,@RequestParam String importType,@RequestParam String budgetYear,@RequestParam("file")
+  public Object uploadBudget(@PathVariable String projectId,@RequestParam String importUser,@RequestParam String importType,@RequestParam("file")
   MultipartFile file ) throws Exception {
     if (!file.isEmpty()) {
         // 这里只是简单例子，文件直接输出到项目路径下。
         // 实际项目中，文件需要输出到指定位置，需要在增加代码处理。
         // 还有关于文件格式限制、文件大小限制，详见：中配置。
         File uploadFile = fileUitl.saveUploadFile(file );
-        service.importBudgetFormFile(projectId,importUser,importType,budgetYear,uploadFile);
+        service.importBudgetFormFile(projectId,importUser,importType,uploadFile);
       return new RequestResult(ResultCode.SUCCESS, "上传成功",   null);
     } else {
       return "上传失败，因为文件是空的.";
