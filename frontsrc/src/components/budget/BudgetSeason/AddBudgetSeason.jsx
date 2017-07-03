@@ -88,15 +88,15 @@ class BudgetSeason extends React.Component {
     let cancelVisible = false;
     let passVisible = false;
     if (userType === 'finace') {
-      if (auditStatus === 1) {
+      if (auditStatus === 0) {
         passVisible = true;
       }
-      if (auditStatus === 2) {
+      if (auditStatus === 1) {
         cancelVisible = true;
       }
     }
     if (userType === 'school') {
-      if (auditStatus === 2) {
+      if (auditStatus === 1) {
         passVisible = true;
       }
       if (auditStatus === 3) {
@@ -107,7 +107,7 @@ class BudgetSeason extends React.Component {
       if (auditStatus === 3) {
         passVisible = true;
       }
-      if (auditStatus === 4) {
+      if (auditStatus === 5) {
         cancelVisible = true;
       }
     }
