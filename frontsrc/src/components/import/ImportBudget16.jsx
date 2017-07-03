@@ -45,7 +45,7 @@ class ImportBudget16 extends React.Component {
       payload: { projectNo },
     });
   }
-  
+
   saveForm = (form) => {
     this.form = form;
   }
@@ -60,7 +60,7 @@ class ImportBudget16 extends React.Component {
       projectNo,
      } = this.state;
 
-    const action = `/budget/import/${projectInfo.id}?importUser=${userType}&importType=1&budgetYear=2016`;
+    const action = `/budget/import/${projectInfo.id}?importUser=${userType}&importType=yusuan2016`;
 
     const uploadProps = {
       name: 'file',
