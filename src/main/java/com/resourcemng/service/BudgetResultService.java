@@ -100,6 +100,7 @@ public class BudgetResultService {
     //审核记录
     ReportAuditLog log = reportAuditLogRepository.findByParam(projectId,quarterNum,projectYear);
     if(log == null){
+      view.setAuditStatus(ReportStatus.UN_FILL);
       return view;
     }
     List<FundsIn>  fundsIns =  fundsInRepository.findByParams(user.getId(),quarterNum,projectYear);

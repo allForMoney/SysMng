@@ -11,7 +11,7 @@ import java.util.Date;
  * Created by Administrator on 2017-6-23.
  */
 @Entity
-@Table(name = "file_import_log", schema = "budget_resource", catalog = "")
+@Table(name = "file_import_log")
 public class FileImportLog implements Serializable {
   private String id;
   private Date importDate = new Date();;

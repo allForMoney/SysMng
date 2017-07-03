@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Created by Administrator on 2017-6-23.
  */
 @Entity
-@Table(name = "indicator_detail", schema = "budget_resource", catalog = "")
+@Table(name = "indicator_detail")
 public class IndicatorDetail implements Serializable {
   private String id;
   private String fileImportId;

@@ -14,7 +14,7 @@ import java.util.Date;
  * Created by Administrator on 2017-6-23.
  */
 @Entity
-@Table(name = "funds_out", schema = "budget_resource", catalog = "")
+@Table(name = "funds_out")
 public class FundsOut implements Serializable {
   private String id;
   private BigDecimal materialMake;

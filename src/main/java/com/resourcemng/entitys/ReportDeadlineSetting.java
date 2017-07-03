@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Created by Administrator on 2017-6-23.
  */
 @Entity
-@Table(name = "report_deadline_setting", schema = "budget_resource", catalog = "")
+@Table(name = "report_deadline_setting")
 public class ReportDeadlineSetting implements Serializable {
   private String id;
   private String value;
