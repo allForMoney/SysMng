@@ -14,8 +14,8 @@ export default {
 
   state: {
     loading: false,
-    projectYear: 2017,
-    quarterNum: 1,
+    projectYear: 0,
+    quarterNum: 0,
     editBudgetSteps: 0,
     buggetInComeList: [],
     buggetOutComeList: [],

@@ -40,6 +40,7 @@ class BudgetSeaonList extends React.Component {
       budgetRecordList,
       budgetRecordPage,
       budgetRecordNum,
+      projectInfo,
     } = this.props;
 
     const pageConfig = {
@@ -83,7 +84,7 @@ class BudgetSeaonList extends React.Component {
     return (
       <FrameContent>
         <Table
-          title={() => `预算执行季报查询【编号：${projectId}，名称：${projectName}】`}
+          title={() => `预算执行季报查询【编号：${projectInfo.id}，名称：${projectName}】`}
           columns={columns}
           dataSource={budgetRecordList}
           loading={loading}
@@ -100,6 +101,7 @@ function mapStateToProps(state) {
       userType,
       projectId,
       projectName,
+      projectInfo,
   } = state.baseModel;
 
   const {
@@ -110,6 +112,7 @@ function mapStateToProps(state) {
 
   return {
     userType,
+    projectInfo,
     projectId,
     projectName,
     budgetRecordList,

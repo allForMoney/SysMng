@@ -38,36 +38,36 @@ class BudgetJustifyRec extends React.Component {
 
     const columns = [{
       title: '项目编码',
-      dataIndex: 'index',
-      key: 'index',
+      dataIndex: 'projectNo',
+      key: 'projectNo',
     }, {
       title: '专业名称',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'majorName',
+      key: 'majorName',
     }, {
       title: '状态',
       dataIndex: 'status',
       key: 'status',
     }, {
       title: '填报人提交时间',
-      dataIndex: 'time',
-      key: 'time',
+      dataIndex: 'reportTime',
+      key: 'reportTime',
     }, {
       title: '财务部门负责人审核时间',
-      dataIndex: 'time2',
-      key: 'time2',
+      dataIndex: 'financeAuditTime',
+      key: 'financeAuditTime',
     }, {
       title: '项目负责人审核时间',
-      dataIndex: 'time3',
-      key: 'time3',
+      dataIndex: 'schoolAuditTime',
+      key: 'schoolAuditTime',
     }, {
       title: '教育部审核时间',
-      dataIndex: 'time4',
-      key: 'time4',
+      dataIndex: 'conutryAuditTime',
+      key: 'conutryAuditTime',
     }, {
       title: '审核意见',
-      dataIndex: 'opi',
-      key: 'opi',
+      dataIndex: 'auditOpinion',
+      key: 'auditOpinion',
     }, {
       title: '操作',
       key: 'operat',

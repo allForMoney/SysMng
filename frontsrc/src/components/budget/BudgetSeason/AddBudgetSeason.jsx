@@ -79,6 +79,8 @@ class BudgetSeason extends React.Component {
       buggetInComeList,
       buggetOutComeList,
       dispatch,
+      projectYear,
+      quarterNum,
     } = this.props;
     const YearSelection = [];
     for (let i = 2015; i < 2019; i++) {
@@ -113,14 +115,18 @@ class BudgetSeason extends React.Component {
               >
                 {SeasonSelection}
               </Select>
-              <BudgetSeasonIncome
-                editable={editable}
-                dispatch={dispatch}
-                buggetInComeList={buggetInComeList}
-              />
-              <Col className={styles.btnContainer}>
-                <Button className={styles.btnClass} type="primary" onClick={this.goNext}>下一步</Button>
-              </Col>
+              {projectYear && quarterNum &&
+                <div>
+                  <BudgetSeasonIncome
+                    editable={editable}
+                    dispatch={dispatch}
+                    buggetInComeList={buggetInComeList}
+                  />
+                  <Col className={styles.btnContainer}>
+                    <Button className={styles.btnClass} type="primary" onClick={this.goNext}>下一步</Button>
+                  </Col>
+                </div>
+              }
             </Row>
           }
           { editBudgetSteps === 1 &&
