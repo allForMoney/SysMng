@@ -10,10 +10,9 @@ import java.util.Date;
  * Created by Administrator on 2017-6-23.
  */
 @Entity
-@Table(name = "budget_audit_log", schema = "budget_resource", catalog = "")
+@Table(name = "budget_audit_log")
 public class BudgetAuditLog implements Serializable {
   private String id;
-  private String year;
   private String adjustId;
   private String status;
   private Date reportTime;
@@ -37,15 +36,6 @@ public class BudgetAuditLog implements Serializable {
     this.id = id;
   }
 
-  @Basic
-  @Column(name = "YEAR", nullable = false, length = 10)
-  public String getYear() {
-    return year;
-  }
-
-  public void setYear(String year) {
-    this.year = year;
-  }
 
   @Basic
   @Column(name = "ADJUST_ID", nullable = false, length = 50)
@@ -155,7 +145,6 @@ public class BudgetAuditLog implements Serializable {
     BudgetAuditLog that = (BudgetAuditLog) o;
 
     if (id != null ? !id.equals(that.id) : that.id != null) return false;
-    if (year != null ? !year.equals(that.year) : that.year != null) return false;
     if (adjustId != null ? !adjustId.equals(that.adjustId) : that.adjustId != null) return false;
     if (status != null ? !status.equals(that.status) : that.status != null) return false;
     if (reportTime != null ? !reportTime.equals(that.reportTime) : that.reportTime != null) return false;
@@ -179,7 +168,6 @@ public class BudgetAuditLog implements Serializable {
   @Override
   public int hashCode() {
     int result = id != null ? id.hashCode() : 0;
-    result = 31 * result + (year != null ? year.hashCode() : 0);
     result = 31 * result + (adjustId != null ? adjustId.hashCode() : 0);
     result = 31 * result + (status != null ? status.hashCode() : 0);
     result = 31 * result + (reportTime != null ? reportTime.hashCode() : 0);

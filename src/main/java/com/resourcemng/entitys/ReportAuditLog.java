@@ -12,7 +12,7 @@ import java.util.Date;
  * Created by Administrator on 2017-6-23.
  */
 @Entity
-@Table(name = "report_audit_log", schema = "budget_resource", catalog = "")
+@Table(name = "report_audit_log")
 public class ReportAuditLog implements Serializable {
   private String id;
   private String year;

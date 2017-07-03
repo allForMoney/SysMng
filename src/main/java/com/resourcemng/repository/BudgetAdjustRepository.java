@@ -2,7 +2,10 @@ package com.resourcemng.repository;
 
 import com.resourcemng.entitys.BudgetAdjust;
 import com.resourcemng.entitys.BudgetAuditLog;
+import com.resourcemng.entitys.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 
 /**
@@ -12,4 +15,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @blog http://blog.didispace.com
  */
 public interface BudgetAdjustRepository extends JpaRepository<BudgetAdjust, String> {
+  List<BudgetAdjust> findByProjectId(String projectId);
 }

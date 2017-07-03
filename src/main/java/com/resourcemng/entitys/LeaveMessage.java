@@ -10,7 +10,7 @@ import java.util.Date;
  * Created by Administrator on 2017-6-23.
  */
 @Entity
-@Table(name = "leave_message", schema = "budget_resource", catalog = "")
+@Table(name = "leave_message")
 public class LeaveMessage implements Serializable {
   private String id;
   private String mesType;
