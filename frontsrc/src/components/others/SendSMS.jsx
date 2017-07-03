@@ -2,19 +2,49 @@
  * 添加项目表单  我也不知道为什么放这里一个...
  */
 import React from 'react';
-import { Row, Col, Icon, Input, Button } from 'antd';
+import { Row, Col, Icon, Input, Button, Card } from 'antd';
 import { connect } from 'dva';
 import FrameContent from '../common/FrameContent';
 import styles from '../../index.less';
+import ProjectInfo from '../import/ProjectInfo';
+import SMSForm from './SMSForm';
 
 class SendSMS extends React.Component {
   state={
     projectNo: '',
   }
+
+  onProjectValueChanged= (e) => {
+    const projectNo = e.target.value;
+    this.setState({ projectNo });
+  }
+
+  doSeachPro = () => {
+    const { projectNo } = this.state;
+
+    this.props.dispatch({
+      type: 'OtherModel/getProjectInfo',
+      payload: { projectNo },
+    });
+  }
+  
+  sendSMS = () => {
+    this.smsForm.validateFields((err, values) => {
+      if (err) {
+        return;
+      }
+      this.props.dispatch({
+        type: 'OtherModel/sendSMS',
+        payload: values
+      });
+    });
+  }
+
+
   render() {
     const {
-      showUpload16,
       projectInfo,
+      showSMSText,
     } = this.props;
     const {
       projectNo,
@@ -35,17 +65,14 @@ class SendSMS extends React.Component {
         </Row>
         <Row className={styles.baseRow}>
           <Card title="项目基本情况">
-            <ProjectInfo ref={this.saveForm} {...projectInfo} />
+            <ProjectInfo {...projectInfo} />
           </Card>
         </Row>
-        {showUpload16 &&
-        <Row className="">
-          <Upload {...uploadProps}>
-            <Button>
-              <Icon type="upload" /> 上传
-            </Button>
-          </Upload>
-        </Row>
+        {showSMSText &&
+          <SMSForm
+            ref={(form) => { this.smsForm = form; }}
+            onSendSMS={this.sendSMS}
+          />
         }
       </FrameContent>
     );
@@ -54,25 +81,13 @@ class SendSMS extends React.Component {
 
 function mapStateToProps(state) {
   const {
-    userType,
-    userName,
-    projectId,
-    projectName
-   } = state.baseModel;
-  const {
+    showSMSText,
     projectInfo,
-    showUpload16,
-    loading,
-   } = state.ImportData;
+   } = state.OtherModel;
 
   return {
-    userType,
-    userName,
-    projectId,
-    projectName,
     projectInfo,
-    showUpload16,
-    loading,
+    showSMSText,
   };
 }
 export default connect(mapStateToProps)(SendSMS);

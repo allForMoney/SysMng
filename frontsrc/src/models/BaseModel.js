@@ -19,7 +19,6 @@ export default {
   
   subscriptions: {
     init({ dispatch }) {
-      
       dispatch({
         type: 'getProviceInfo'
       });

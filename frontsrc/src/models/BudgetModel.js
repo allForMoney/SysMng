@@ -19,6 +19,7 @@ export default {
     editBudgetSteps: 0,
     buggetInComeList: [],
     buggetOutComeList: [],
+    auditStatus: 0, // 审核状态
 
     budgetRecordList: [],
     budgetRecordPage: 1,
@@ -53,6 +54,7 @@ export default {
           payload: {
             buggetInComeList: data.result.fundsIns,
             buggetOutComeList: data.result.fundsOuts,
+            auditStatus: data.result.auditStatus,
           }
         });
       }
@@ -101,7 +103,7 @@ export default {
         message('更新成功');
       }
     },
-
+    /** 切换审核状态 */
     * changeCheckStatus({ payload }, { call }) {
       const data = yield call(changeCheckStatus, payload);
       if (data && data.code === '1') {
