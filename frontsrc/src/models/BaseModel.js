@@ -1,4 +1,5 @@
-import { logout, login, isLogin, getProviceInfo } from '../services/BaseService';
+import { logout, login, isLogin, getProviceInfo,
+getProjectInfoById } from '../services/BaseService';
 import { routerRedux } from 'dva/router';
 
 export default {
@@ -166,6 +167,19 @@ export default {
       }
       );
     },
+
+    * getProjectInfoById({ payload }, { call, put }) {
+      const data = yield call(getProjectInfoById, payload);
+
+      if (data && data.code === '1') {
+        yield put({
+          type: 'setState',
+          payload: {
+            projectInfo: data.result.project,
+          }
+        });
+      }
+    }
   },
 
   reducers: {
