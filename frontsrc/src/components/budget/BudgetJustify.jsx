@@ -57,7 +57,6 @@ class BudgetJustify extends React.Component {
               <Col offset={16} span={7}>
                 <a href={`/Budget/ExportByProject?projectId=${projectId}`}>当前预算表格下载</a>
               </Col>
-               
             </Row>
           </Card>
 

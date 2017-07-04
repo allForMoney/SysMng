@@ -10,31 +10,61 @@ import LinkBtn from '../common/LinkBtn';
 import ProjectBudgetTable from './ProjectBudgetTable';
 
 class BudgetJustifyRec extends React.Component {
-  state={
-    showJustifyDetail: false,
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'BudgetJustifyModel/getBudgetJustifyList',
+      payload: {
+        budgetJustifyPage: 0,
+      }
+    });
   }
 
-  onJustifyListPageChange= () => {
-    this.cancelMsg();
+  onJustifyListPageChange= (page) => {
+    this.props.dispatch({
+      type: 'BudgetJustifyModel/getBudgetJustifyList',
+      payload: {
+        budgetJustifyPage: page,
+      }
+    });
   }
 
-  onJustifyListDetailChange= () => {
-    this.cancelMsg();
+  onJustifyListDetailChange= (page) => {
+    this.props.dispatch({
+      type: 'BudgetJustifyModel/getBudgetJustifyCompareList',
+      payload: {
+        budgetJustifyComparePage: page,
+      }
+    });
+  }
+
+  showJustifyCompare= (rec) => {
+    this.props.dispatch({
+      type: 'BudgetJustifyModel/setState',
+      payload: {
+        compareId: rec.id,
+        budgetJustifyComparePage: 1,
+      }
+    });
+    
+    this.props.dispatch({
+      type: 'BudgetJustifyModel/getBudgetJustifyCompareList',
+      payload: {
+        budgetJustifyComparePage: page,
+      }
+    });
   }
 
   render() {
     const {
-      justifyList,
+      budgetJustifyList,
       loading,
-      justifyListNum,
-      justifyListPage,
-      justifyDetailList,
-      justifyDetailNum,
-      justifyDetailPage,
-    } = this.props;
-    const {
       showJustifyDetail,
-     } = this.state;
+      budgetJustifyPage,
+      budgetJustifyNum,
+      budgetJustifyCompareList,
+      budgetJustifyComparePage,
+      budgetJustifyCompareyNum,
+    } = this.props;
 
     const columns = [{
       title: '项目编码',
@@ -71,12 +101,13 @@ class BudgetJustifyRec extends React.Component {
     }, {
       title: '操作',
       key: 'operat',
-      render: rec => <LinkBtn onClick={this.showJustifyDetail.bind(this, rec)}>查看</LinkBtn>
+      render: rec => <LinkBtn onClick={this.showJustifyCompare.bind(this, rec)}>查看</LinkBtn>
     }];
-    const pageConfig = {
+
+    const recPageConfig = {
       className: 'ant-table-pagination',
-      total: justifyListNum,
-      current: justifyListPage,
+      total: budgetJustifyNum,
+      current: budgetJustifyPage,
       pageSize: 20,
       onChange: this.onJustifyListPageChange,
     };
@@ -87,10 +118,10 @@ class BudgetJustifyRec extends React.Component {
           {showJustifyDetail &&
             <ProjectBudgetTable
               tableTitle={'预算变化内容'}
-              totalNum={justifyDetailNum}
+              totalNum={budgetJustifyCompareyNum}
               onPageChange={this.onJustifyListDetailChange}
-              currentPage={justifyDetailPage}
-              dataList={justifyDetailList}
+              currentPage={budgetJustifyComparePage}
+              dataList={budgetJustifyCompareList}
               loading={loading}
             />
           }
@@ -99,10 +130,10 @@ class BudgetJustifyRec extends React.Component {
             <Table
               title={() => '预算修改申请情况一览表'}
               columns={columns}
-              dataSource={justifyList}
+              dataSource={budgetJustifyList}
               loading={loading}
               rowKey={record => record.id}
-              pagination={pageConfig}
+              pagination={recPageConfig}
             />
           }
         </Card>
@@ -113,23 +144,25 @@ class BudgetJustifyRec extends React.Component {
 
 function mapStateToProps(state) {
   const {
-      justifyList,
       loading,
-      justifyListNum,
-      justifyListPage,
-      justifyDetailList,
-      justifyDetailNum,
-      justifyDetailPage,
-    projectId } = state.baseModel;
+      showJustifyDetail,
+      budgetJustifyList,
+      budgetJustifyPage,
+      budgetJustifyNum,
+      budgetJustifyCompareList,
+      budgetJustifyComparePage,
+      budgetJustifyCompareyNum,
+     } = state.BudgetJustifyModel;
   return {
-    justifyList,
     loading,
-    justifyListNum,
-    justifyListPage,
-    justifyDetailList,
-    justifyDetailNum,
-    justifyDetailPage,
-    projectId };
+    budgetJustifyList,
+    showJustifyDetail,
+    budgetJustifyPage,
+    budgetJustifyNum,
+    budgetJustifyCompareList,
+    budgetJustifyComparePage,
+    budgetJustifyCompareyNum,
+  };
 }
 
 export default connect(mapStateToProps)(BudgetJustifyRec);
