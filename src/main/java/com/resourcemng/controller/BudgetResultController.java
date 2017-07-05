@@ -1,15 +1,25 @@
 package com.resourcemng.controller;
 
+import cn.afterturn.easypoi.entity.vo.NormalExcelConstants;
+import cn.afterturn.easypoi.entity.vo.TemplateExcelConstants;
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
 import com.resourcemng.basic.RequestResult;
 import com.resourcemng.basic.ResultCode;
 import com.resourcemng.service.BudgetResultService;
+import com.resourcemng.util.ApplicationUitl;
 import com.resourcemng.view.BudgetReportView;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 季报
@@ -17,6 +27,9 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping("/budget/report")
 public class BudgetResultController {
+  protected static final String HSSF         = ".xls";
+  protected static final String XSSF         = ".xlsx";
+
   @Autowired
   BudgetResultService budgetResultService;
 
@@ -102,13 +115,31 @@ public class BudgetResultController {
    */
   @RequestMapping(value = "/quarterly/download" ,method = RequestMethod.GET)
   @ResponseBody
-  public void quarterlyReportDownload(@RequestParam String projectId,@RequestParam String projectYear,@RequestParam String quarterNum, HttpServletResponse response) throws Exception {
+  public void quarterlyReportDownload(@RequestParam String projectId, @RequestParam String projectYear,
+                                      @RequestParam String quarterNum, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
     Workbook workbook =  budgetResultService.exportFile(projectId,projectYear,quarterNum);
-    String fileName = "预算执行情况.xls";
-    response.setHeader("content-Type", "application/vnd.ms-excel");
-    // 下载文件的默认名称
-    response.setHeader("Content-Disposition", "attachment;filename=user.xls");
-    workbook.write(response.getOutputStream());
+//    String fileName = "预算执行情况.xls";
+//    response.setHeader("content-Type", "application/vnd.ms-excel");
+//    // 下载文件的默认名称
+//    response.setHeader("Content-Disposition", "attachment;filename=预算执行情况"+projectYear+"_"+quarterNum+".xlsx");
+//    workbook.write(response.getOutputStream());
+
+    String codedFileName = "预算执行情况"+projectYear+"_"+quarterNum;
+    if (workbook instanceof HSSFWorkbook) {
+      codedFileName += HSSF;
+    } else {
+      codedFileName += XSSF;
+    }
+    if (ApplicationUitl.isIE(request)) {
+      codedFileName = java.net.URLEncoder.encode(codedFileName, "UTF8");
+    } else {
+      codedFileName = new String(codedFileName.getBytes("UTF-8"), "ISO-8859-1");
+    }
+    response.setHeader("content-disposition", "attachment;filename=" + codedFileName);
+    ServletOutputStream out = response.getOutputStream();
+    workbook.write(out);
+    out.flush();
+
   }
 }
