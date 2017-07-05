@@ -48,13 +48,23 @@ export default {
       const projectId = projectInfo.id;
       const data = yield call(getBudgetSeasonList, { projectId, projectYear, ...payload });
 
-      if (data && data.code === '1') {
+      if (data && data.code === '1' && data.result) {
+        let { fundsIns, fundsOuts, auditStatus } = data.result;
+        if (!fundsIns) {
+          fundsIns = [];
+        }
+        if (!fundsOuts) {
+          fundsOuts = [];
+        }
+        if (!auditStatus) {
+          auditStatus = 0;
+        }
         yield put({
           type: 'setState',
           payload: {
-            buggetInComeList: data.result.fundsIns,
-            buggetOutComeList: data.result.fundsOuts,
-            auditStatus: data.result.auditStatus,
+            buggetInComeList: fundsIns,
+            buggetOutComeList: fundsOuts,
+            auditStatus,
           }
         });
       }

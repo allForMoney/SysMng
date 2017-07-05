@@ -142,7 +142,8 @@ class BudgetSeason extends React.Component {
     const { editable } = this.state;
     const { cancelVisible, passVisible } = this.getCheckVisible(userType, auditStatus);
 
-
+    console.log(projectYear);
+    console.log(quarterNum);
     return (
       <FrameContent>
         <Card title={`预算执行季报[编号: ${projectInfo.projectNo},名称:${projectInfo.majorName}]`}>
