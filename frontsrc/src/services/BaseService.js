@@ -7,6 +7,10 @@ export function logout() {
   return request('/logout');
 }
 
+export function getProjectInfoById(params) {
+  return request(`/project/get?${qs.stringify(params)}`);
+}
+
 export function login(params) {
   console.log(params);
   return request('/login', {

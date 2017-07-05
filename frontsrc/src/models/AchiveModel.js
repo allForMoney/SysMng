@@ -1,6 +1,7 @@
 
 import {
   saveAchiveTarget,
+  getAchiveAllList,
   changeCheckStatus,
   getProjectArchive,
   updateAchiveTarget,
@@ -15,6 +16,12 @@ export default {
     id: '',
     indicatorBase: {},
     indicatorDetails: [],
+
+    achiveAllList: [],
+    achiveAllListNum: 0,
+    achiveAllListPage: 0,
+    filterParam: {}
+    
   },
   effects: {
 
@@ -22,7 +29,7 @@ export default {
       const { projectInfo } = yield select(state => state.baseModel);
       const projectId = projectInfo.id;
 
-      const data = yield call(getProjectArchive, { projectId });
+      const data = yield call(getProjectArchive, { projectId, ...payload });
       if (data && data.code === '1') {
         console.log(data.result);
         const { id, indicatorBase, indicatorDetails } = data.result;
@@ -35,6 +42,24 @@ export default {
           }
         });
 
+      }
+    },
+    /** 获取所有项目的预算信息 */
+    * getAchiveAllList({ payload }, { call, select, put }) {
+      const { achiveAllListPage, filterParam } = yield select(state => state.achiveModel);
+
+      const data = yield call(getAchiveAllList, { achiveAllListPage, ...filterParam });
+      if (data && data.code === '1') {
+        console.log(data.result);
+        const { currentPage, list, pageNum } = data.result;
+        yield put({
+          type: 'setState',
+          payload: {
+            achiveAllList: list,
+            achiveAllListNum: pageNum,
+            achiveAllListPage: currentPage,
+          }
+        });
       }
     },
 
@@ -58,6 +83,8 @@ export default {
         message('审核成功');
       }
     },
+
+
   },
 
   reducers: {

@@ -13,7 +13,6 @@ import ProjectBudgetTable from './ProjectBudgetTable';
 
 class ProjectBudget extends React.Component {
   componentDidMount = () => {
-    const { projectId } = this.props;
     this.props.dispatch({
       type: 'budgetModel/getBudgetProjectList',
     });

@@ -12,6 +12,7 @@ import BudgetSeaonList from './components/budget/BudgetSeason/BudgetSeaonList';
 import AddBudgetSeason from './components/budget/BudgetSeason/AddBudgetSeason';
 
 import Achive from './components/achive/Achive';
+import AchiveAllList from './components/achive/AchiveAllList';
 
 import ImportBudget16 from './components/import/ImportBudget16';
 import ImportAchive from './components/import/ImportAchive';
@@ -39,6 +40,7 @@ function RouterConfig({ history }) {
       <Route path="/budget/msg" component={BudgetMsgTable} />
 
       <Route path="/achive/add" component={Achive} />
+      <Route path="/achive/allList" component={AchiveAllList} />
       
       <Route path="/import/budget16" component={ImportBudget16} />
       <Route path="/import/importAchive" component={ImportAchive} />

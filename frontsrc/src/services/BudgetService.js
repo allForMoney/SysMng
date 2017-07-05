@@ -8,6 +8,14 @@ export function getBudgetSeasonList(params) {
 export function getAllBudgetRec(params) {
   return request(`/budget/allimport?${qs.stringify(params)}`);
 }
+/** 获取预算调整列表 */
+export function getBudgetJustifyList(params) {
+  return request(`/budgetadjust/all?${qs.stringify(params)}`);
+}
+/** 获取预算调整列表 */
+export function getBudgetJustifyCompareList(params) {
+  return request(`/budgetadjust/getCompareInfo?${qs.stringify(params)}`);
+}
 
 export function getBudgetRecList(params) {
   return request(`/project/getBudgetRecList?${qs.stringify(params)}`);

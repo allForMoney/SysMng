@@ -335,7 +335,7 @@ class FrameContent extends React.Component {
               <SubMenu key="绩效" title={<span><Icon type="user" />绩效</span>}>
                 <SubMenu key="绩效目标" title={<span><Icon type="user" />绩效目标</span>} >
                   <Menu.Item key="查询">
-                    <Link to="/budget_baseinfo" ><Icon type="bars" />查询</Link>
+                    <Link to="/achive/allList" ><Icon type="bars" />查询</Link>
                   </Menu.Item>
                   <Menu.Item key="绩效留言处理">
                     <Link to="/budget_baseinfo" ><Icon type="bars" />绩效留言处理</Link>

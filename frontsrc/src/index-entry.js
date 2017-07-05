@@ -12,6 +12,7 @@ app.use(createLoading());
 
 app.model(require('./models/ImportDataModel'));
 app.model(require('./models/BaseModel'));
+app.model(require('./models/BudgetJustifyModel'));
 app.model(require('./models/BudgetModel'));
 app.model(require('./models/OtherModel'));
 app.model(require('./models/ProjectModel'));
