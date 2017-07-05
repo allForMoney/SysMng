@@ -5,6 +5,7 @@ import com.resourcemng.basic.MyException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -30,4 +31,10 @@ public class ApplicationUitl {
     }
   }
 
+  public static boolean isIE(HttpServletRequest request) {
+    return (request.getHeader("USER-AGENT").toLowerCase().indexOf("msie") > 0
+      || request.getHeader("USER-AGENT").toLowerCase().indexOf("rv:11.0") > 0
+      || request.getHeader("USER-AGENT").toLowerCase().indexOf("edge") > 0) ? true
+      : false;
+  }
 }

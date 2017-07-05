@@ -41,8 +41,8 @@ public class BudgetResultTests {
   @Test
   public void testQuarterlyReport() throws Exception {
     BudgetReportView view = new BudgetReportView();
-    view.setUserId("40289e375ced4dff015ced4e0efe0000");
-    view.setProjectYear("2016-02");
+    view.setUserId("402881f05cf98f57015cf98f67b40000");
+    view.setProjectYear("2016");
     view.setQuarterNum("3");
     List<FundsIn> fundsIns = new ArrayList<>();
     FundsIn foundsIn = new FundsIn();
