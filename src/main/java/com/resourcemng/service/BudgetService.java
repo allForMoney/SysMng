@@ -1,7 +1,9 @@
 package com.resourcemng.service;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
+import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
 import com.resourcemng.Enum.FoundSourceType;
 import com.resourcemng.Enum.ImportFileType;
 import com.resourcemng.Enum.LeaveMessageType;
@@ -9,10 +11,12 @@ import com.resourcemng.basic.MyException;
 import com.resourcemng.entitys.*;
 import com.resourcemng.handler.BudgetImportHanlder;
 import com.resourcemng.repository.*;
+import com.resourcemng.util.ApplicationUitl;
 import com.resourcemng.util.BigDecimalUtil;
 import com.resourcemng.util.FileUitl;
 import com.resourcemng.view.*;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -240,7 +244,7 @@ public class BudgetService {
      return this.getDetail(obj);
   }
 
-  private Object getDetail( FileImportLog obj) throws MyException {
+  private BudgetImportView getDetail( FileImportLog obj) throws MyException {
     try {
       BudgetImportView view = new BudgetImportView();
       BeanUtils.copyProperties(view,obj);
@@ -266,7 +270,7 @@ public class BudgetService {
    * @return
    * @throws MyException
    */
-  public Object getByProject(String projetId) throws MyException {
+  public BudgetImportView getByProject(String projetId) throws MyException {
     //先看看有没有已经审核通过的调整记录
       //TODO 预算如果导入多次怎么办,取最新的？
 
@@ -337,5 +341,28 @@ public class BudgetService {
     view.setTotal(total);
   return view;
 
+  }
+
+  /**
+   *导出项目预算
+   * @param projectId
+   * @return
+   */
+  public Map<String,Object> exportBudget(String projectId) throws MyException {
+    Map<String,Object> map = new HashMap<>();
+    BudgetImportView budgetImportView = getByProject(projectId);
+   Project project =  this.projectRepository.findById(projectId).get();
+   //
+//导出文件
+    TemplateExportParams params = new TemplateExportParams(
+      ApplicationUitl.getWebRootPath("templete/预算2016模板.xlsx"), true);
+    Map<String,Object> tempDataMap = new HashMap<>();
+    tempDataMap.put("project",project);
+    tempDataMap.put("resultlist",budgetImportView.getBudgetImportDetaillList());
+    Workbook workbook = ExcelExportUtil.exportExcel(params, tempDataMap);
+    map.put("project",project);
+    map.put("workbook",workbook);
+
+    return map;
   }
 }

@@ -251,9 +251,9 @@ public class BudgetResultService {
     view.setFundout(projectFundOutInfoView);
 
     //导出文件
-//    TemplateExportParams params = new TemplateExportParams(
-//      ApplicationUitl.getWebRootPath("templete/预算执行情况模板.xlsx"), true);
-    TemplateExportParams params = new TemplateExportParams("E:\\workspace\\SysResourceMngNew\\target\\test-classes\\templete\\预算执行情况模板.xlsx", true);
+    TemplateExportParams params = new TemplateExportParams(
+      ApplicationUitl.getWebRootPath("templete/预算执行情况模板.xlsx"), true);
+//    TemplateExportParams params = new TemplateExportParams("E:\\workspace\\SysResourceMngNew\\target\\test-classes\\templete\\预算执行情况模板.xlsx", true);
     Map<String, Object> map = new HashMap<>();
     map.put("project",view.getProject());
     map.put("budget",view.getBudget());
