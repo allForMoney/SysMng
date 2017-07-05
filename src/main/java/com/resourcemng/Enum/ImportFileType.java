@@ -8,7 +8,7 @@ public class ImportFileType {
   public static String BUDGET2016 = "yusuan2016";
   public static String BUDGET2015 = "yusuan";
   public static String BUDGET_ADJUST = "yusuan2";
-  public static String BUDGET_ADJUST_2016 = "djust2016";
+  public static String BUDGET_ADJUST_2016 = "adjust2016";
   public static String TARGET = "jixiao";
 
 }
