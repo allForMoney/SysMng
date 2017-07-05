@@ -1,0 +1,59 @@
+@charset "utf-8";
+/* CSS Document */
+html, body {
+	height: 100%;
+	font-family: "microsoft yahei";
+}
+select{ outline:none;}
+.edu-hr {
+	border: none;
+	border-bottom: 1px solid #bfbfbf;
+	margin: 20px 0;
+}
+.edu-body {
+	margin: 0 auto;
+	width: 100%;
+	padding: 20px;
+	max-width: 1200px;
+}
+.edu-sltion {
+	border: 1px solid #c7c7c7;
+	border-radius: 5px;
+	padding-right:40px;
+	height:30px;
+	line-height:26px;
+	appearance: none;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	background:url(../images/slt.png) right 10px top 5px no-repeat;
+	
+}
+.edu-sltion>option{ padding-top:4px; padding-bottom:4px;}
+ .edu-sltion::-ms-expand {
+display: none;
+}
+.edu-row {
+	padding: 30px 0;
+	margin:0;
+}
+.edu-row img {
+	width: 100%
+}
+.edu-row+.edu-row {
+	border-top: 1px solid #bfbfbf; 
+}
+.edu-row>div {
+	padding: 0;
+}
+.edu-br {
+	border-right: 1px solid #bfbfbf;
+}
+.edu-bl {
+	border-left: 1px solid #bfbfbf;
+	margin-left: -0.5px;
+	padding-left: 40px;
+}
+.edu-tit{ color:#ff762c; font-size:18px; margin-top:0}
+.edu-linkp{ margin:0; }
+.edu-linkp>a{ color:#1895ff; font-size:14px; }
+.edu-linkp>a:hover{ color:#61b5fc; text-decoration:none;}
