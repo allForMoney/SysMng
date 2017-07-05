@@ -4,6 +4,7 @@
   "dependencies": {
     "antd": "2.10.0",
     "classnames": "^2.2.5",
+    "cx": "^17.7.2",
     "debug": "~2.6.3",
     "dva": "~1.2.1",
     "dva-loading": "^0.2.1",

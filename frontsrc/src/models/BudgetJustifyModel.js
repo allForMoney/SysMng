@@ -21,6 +21,9 @@ export default {
     budgetJustifyCompareyNum: 0,
     /** 调整的id */
     compareId: '',
+
+    /** 预算调整已经上传过的地址 */
+
   },
   effects: {
     // 获取项目预算调整表
