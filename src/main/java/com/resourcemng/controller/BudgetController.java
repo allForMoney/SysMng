@@ -2,18 +2,30 @@ package com.resourcemng.controller;
 
 import com.resourcemng.basic.RequestResult;
 import com.resourcemng.basic.ResultCode;
+import com.resourcemng.entitys.Project;
+import com.resourcemng.service.ProjectService;
+import com.resourcemng.util.ApplicationUitl;
 import com.resourcemng.util.FileUitl;
 import com.resourcemng.entitys.BudgetImportDetailNew;
 import com.resourcemng.entitys.LeaveMessage;
 import com.resourcemng.service.BudgetService;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Map;
 
 /**
  * @author Benjamin Winterberg
@@ -21,6 +33,8 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/budget")
 public class BudgetController {
+  protected static final String HSSF         = ".xls";
+  protected static final String XSSF         = ".xlsx";
   @Autowired
   BudgetService service;
   @Autowired
@@ -34,7 +48,6 @@ public class BudgetController {
    * @param importUser
    * 导入用户，一般是管理员
    * @param importType
-   * @param budgetYear
    * 导入类型，是2015还是2016
    * @param file
    * @return
@@ -54,6 +67,40 @@ public class BudgetController {
     } else {
       return "上传失败，因为文件是空的.";
     }
+  }
+
+  /**
+   * 下载项目最新预算信息
+   * @param projectId
+   * @param request
+   * @param response
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "/download/{projectId}" ,method = RequestMethod.GET)
+  @ResponseBody
+  public void downloadBudget(@PathVariable String projectId, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    Map<String,Object> resultMap=  service.exportBudget(projectId);
+    Project project = (Project) resultMap.get("project");
+    Workbook workbook = (Workbook) resultMap.get("workbook");
+    Format format = new SimpleDateFormat("yyyyMMdd");
+    String dateStr = format.format(new Date());
+
+    String codedFileName = project.getProjectNo()+"预算明细"+dateStr+"上传版";
+    if (workbook instanceof HSSFWorkbook) {
+      codedFileName += HSSF;
+    } else {
+      codedFileName += XSSF;
+    }
+    if (ApplicationUitl.isIE(request)) {
+      codedFileName = java.net.URLEncoder.encode(codedFileName, "UTF8");
+    } else {
+      codedFileName = new String(codedFileName.getBytes("UTF-8"), "ISO-8859-1");
+    }
+    response.setHeader("content-disposition", "attachment;filename=" + codedFileName);
+    ServletOutputStream out = response.getOutputStream();
+    workbook.write(out);
+    out.flush();
   }
 
   /**
