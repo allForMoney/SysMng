@@ -8,7 +8,7 @@ import {
   Col,
   Card,
   Select,
-  Input,
+  Form,
   Upload,
   Icon,
 
@@ -16,12 +16,14 @@ import {
 
 import FrameContent from '../common/FrameContent';
 import LinkBtn from '../common/LinkBtn';
+import styles from '../../index.less';
 
+const FormItem = Form.Item;
 const Option = Select.Option;
 
 class BudgetJustify extends React.Component {
   state={
-    showUpload: false,
+    showUpload: true,
     adjustType: 'adjust2016',
   }
 
@@ -51,11 +53,8 @@ class BudgetJustify extends React.Component {
     const { showUpload, adjustType } = this.state;
 
     // projectId  adjustUserId  adjustType
-    const uploadProps = {
-      action: `/budgetadjust/import?projectId=${projectInfo.id}&adjustUserId=${userId}&adjustType=${adjustType}`,
-      multiple: true,
-    };
-
+    const uploadURl = `/budgetadjust/import?projectId=${projectInfo.id}&adjustUserId=${userId}&adjustType=${adjustType}`;
+    
     return (
       <FrameContent>
         <Card title="预算调整申请">
@@ -85,11 +84,14 @@ class BudgetJustify extends React.Component {
                 <Option value="adjust2016">2016版预算</Option>
                 <Option value="yusuan2">2015版预算</Option>
               </Select>
-              <Upload {...uploadProps}>
-                <Button>
-                  <Icon type="upload" /> 上传文件
-                </Button>
-              </Upload>
+             
+              <form encType="multipart/form-data" action={uploadURl} method="post">
+                <input name="file" type="file" className={styles.uploadInput} />
+                <input name="file" type="file" className={styles.uploadInput} />
+                <input name="file" type="file" className={styles.uploadInput} />
+                <button type="submit" className={styles.uploadBtn} >提交</button>
+                <button type="reset" className={styles.uploadBtn} >重置</button>
+              </form>
             </Card>
           }
         </Card>
