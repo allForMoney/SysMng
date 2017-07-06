@@ -68,6 +68,11 @@ module.exports = function (webpackConfig, env) {
       loader.test = /\.css$/;
     }
   });
+  webpackConfig.module.loaders.push({
+    test: /\.(png|jpg)$/,
+    loader: 'url-loader?limit=8192&name=images/[hash:8].[name].[ext]'
+  });
+
 
   if (!isDev) {
     webpackConfig.externals = {

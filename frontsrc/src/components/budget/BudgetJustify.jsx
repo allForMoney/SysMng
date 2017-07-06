@@ -7,7 +7,7 @@ import {
   Row,
   Col,
   Card,
-  Modal,
+  Select,
   Input,
   Upload,
   Icon,
@@ -17,13 +17,27 @@ import {
 import FrameContent from '../common/FrameContent';
 import LinkBtn from '../common/LinkBtn';
 
+const Option = Select.Option;
+
 class BudgetJustify extends React.Component {
   state={
-    showAllUnit: false,
+    showUpload: false,
+    adjustType: 'adjust2016',
   }
 
-  saveChange= () => {
-    this.cancelMsg();
+  downloadBudget= () => {
+    const { projectInfo } = this.props;
+    const url = `/budget/download/${projectInfo.id}`;
+    window.open(url);
+    this.setState({
+      showUpload: true,
+    });
+  }
+
+  onAdjustTypeChanged= (value) => {
+    this.setState({
+      adjustType: value,
+    });
   }
 
   render() {
@@ -31,12 +45,17 @@ class BudgetJustify extends React.Component {
         URL1,
         url2,
         url3,
-        projectId
+        userId,
+        projectInfo
     } = this.props;
-    const {
-      showAllUnit,
-      showChangeModal,
-     } = this.state;
+    const { showUpload, adjustType } = this.state;
+
+    // projectId  adjustUserId  adjustType
+    const uploadProps = {
+      action: `/budgetadjust/import?projectId=${projectInfo.id}&adjustUserId=${userId}&adjustType=${adjustType}`,
+      multiple: true,
+    };
+
     return (
       <FrameContent>
         <Card title="预算调整申请">
@@ -55,11 +74,24 @@ class BudgetJustify extends React.Component {
             </Row>
             <Row>
               <Col offset={16} span={7}>
-                <a href={`/Budget/ExportByProject?projectId=${projectId}`}>当前预算表格下载</a>
+                <Button onClick={this.downloadBudget}>当前预算表格下载</Button>
               </Col>
             </Row>
           </Card>
-
+          {showUpload &&
+            <Card title="上传预算调整申请文件">
+             预算模板:
+              <Select defaultValue="adjust2016" onChange={this.onAdjustTypeChanged} style={{display:'block', width: 120}}>
+                <Option value="adjust2016">2016版预算</Option>
+                <Option value="yusuan2">2015版预算</Option>
+              </Select>
+              <Upload {...uploadProps}>
+                <Button>
+                  <Icon type="upload" /> 上传文件
+                </Button>
+              </Upload>
+            </Card>
+          }
         </Card>
       </FrameContent>
     );
@@ -68,15 +100,14 @@ class BudgetJustify extends React.Component {
 
 function mapStateToProps(state) {
   const {
-    URL1,
-    url2,
-    url3,
-    projectId } = state.baseModel;
+    projectInfo,
+    userId,
+   } = state.baseModel;
+
   return {
-    URL1,
-    url2,
-    url3,
-    projectId };
+    projectInfo,
+    userId
+  };
 }
 
 export default connect(mapStateToProps)(BudgetJustify);

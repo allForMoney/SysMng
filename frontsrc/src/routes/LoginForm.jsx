@@ -3,8 +3,9 @@ import React from 'react';
 import { connect } from 'dva';
 import styles from './LoginForm.less';
 import bgpBackgroundic from './bg-img.png';
+// import cx from 'cx';
 
-console.log(styles)
+console.log(bgpBackgroundic);
 
 const Option = Select.Option;
 const FormItem = Form.Item;
@@ -56,48 +57,42 @@ class LoginForm extends React.Component {
     };
 
     return (
-      <div className={styles.loginWrapper}>
-        <Card className={styles.loginTitle}>
-            职业教育国家级专业教学资源库预算绩效管理系统
-        </Card>
-        <Form onSubmit={this.handleSubmit} className={styles.loginForm}>
-          <FormItem label="年度" {...formWraper}>
-            {getFieldDecorator('year', {
-              rules: [{ required: true, message: '请选择年度' }],
-            })(
-              <Select
-                showSearch
-                placeholder="Select a person"
-                optionFilterProp="children"
-                onChange={this.onYearChanged}
-                value={selectedYear}
-              >
-                {options}
-              </Select>
-            )}
-          </FormItem>
-          <FormItem label="账号" {...formWraper}>
-            {getFieldDecorator('username', {
-              rules: [{ required: true, message: '请输入您的账号' }],
-            })(
-              <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="Username" />
-            )}
-          </FormItem>
-          <FormItem label="密码" {...formWraper}>
-            {getFieldDecorator('password', {
-              rules: [{ required: true, message: '请输入您的密码' }],
-            })(
-              <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="Password" />
-            )}
-          </FormItem>
-          <FormItem wrapperCol={{span:12,offset:6}}>
-            <Button type="primary" htmlType="submit" className="login-form-button">
-              登录
-            </Button>
-          </FormItem>
-        </Form>
-
-      </div>
+      <Form onSubmit={this.handleSubmit}>
+        <FormItem label="年度" {...formWraper}>
+          {getFieldDecorator('year', {
+            rules: [{ required: true, message: '请选择年度' }],
+          })(
+            <Select
+              showSearch
+              placeholder="Select a person"
+              optionFilterProp="children"
+              onChange={this.onYearChanged}
+              value={selectedYear}
+            >
+              {options}
+            </Select>
+          )}
+        </FormItem>
+        <FormItem label="账号" {...formWraper}>
+          {getFieldDecorator('username', {
+            rules: [{ required: true, message: '请输入您的账号' }],
+          })(
+            <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="Username" />
+          )}
+        </FormItem>
+        <FormItem label="密码" {...formWraper}>
+          {getFieldDecorator('password', {
+            rules: [{ required: true, message: '请输入您的密码' }],
+          })(
+            <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="Password" />
+          )}
+        </FormItem>
+        <FormItem wrapperCol={{span:12,offset:6}}>
+          <Button type="primary" htmlType="submit" className="login-form-button">
+            登录
+          </Button>
+        </FormItem>
+      </Form>
     );
   }
 }
