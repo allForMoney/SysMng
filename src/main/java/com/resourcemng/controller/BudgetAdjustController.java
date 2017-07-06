@@ -1,5 +1,6 @@
 package com.resourcemng.controller;
 
+import com.resourcemng.basic.MyException;
 import com.resourcemng.basic.RequestResult;
 import com.resourcemng.basic.ResultCode;
 import com.resourcemng.service.BudgetAdjustService;
@@ -99,12 +100,8 @@ public class BudgetAdjustController {
      File file = fileUitl.getFile(fileName);
 
     if(!file.exists()){
-      String errorMessage = "Sorry. The file you are looking for does not exist";
-      System.out.println(errorMessage);
-      OutputStream outputStream = response.getOutputStream();
-      outputStream.write(errorMessage.getBytes(Charset.forName("UTF-8")));
-      outputStream.close();
-      return;
+      String errorMessage = "对不起，你下载的文件不存在";
+     throw new MyException(errorMessage);
     }
     String mimeType= URLConnection.guessContentTypeFromName(file.getName());
     if(mimeType==null){
