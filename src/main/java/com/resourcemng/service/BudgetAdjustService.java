@@ -34,7 +34,7 @@ public class BudgetAdjustService {
    * @param descriptionFile
    * @throws MyException
    */
-  public void adjust(String projectId,String importUser,String adjustType,File requestFile,File adjustFile,File descriptionFile ) throws MyException {
+  public Object adjust(String projectId,String importUser,String adjustType,File requestFile,File adjustFile,File descriptionFile ) throws MyException {
     List<FileImportLog> fileImportLogs = null;
     if(ImportFileType.BUDGET_ADJUST_2016.equals(adjustType)) {
       fileImportLogs = fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDate(projectId, ImportFileType.BUDGET2016);
@@ -71,8 +71,10 @@ public class BudgetAdjustService {
       List<BudgetImportDetailNew> list =budgetService.importBudget2016FormFile(projectId,importUser,log);
       //预计算
       budgetService.computeBudgetImport2016(projectId,list);
+      return log;
     }else{
       //TODO
+      return null;
     }
 
 

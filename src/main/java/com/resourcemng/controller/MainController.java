@@ -21,6 +21,6 @@ public class MainController {
 
     @RequestMapping("/")
     public String index(Map<String, Object> model) throws Exception {
-        return "index.html";
+        return "/loginpage.html";
     }
 }
