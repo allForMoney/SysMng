@@ -189,4 +189,8 @@ public class BudgetAdjustService {
     }
   }
 
+  public Object getById(String adjustId) {
+    FileImportLog fileImportLog = fileImportLogRepository.findById(adjustId).get();
+    return fileImportLog;
+  }
 }

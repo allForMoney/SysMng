@@ -52,11 +52,22 @@ public class BudgetAdjustController {
         File requestFile = fileUitl.saveUploadFile(files.get(0) );
         File adjustFile = fileUitl.saveUploadFile(files.get(1) );
         File descriptionFile = fileUitl.saveUploadFile(files.get(2) );
-        service.adjust(projectId,adjustUserId,adjustType,requestFile,adjustFile,descriptionFile);
-      return new RequestResult(ResultCode.SUCCESS, "上传成功",   null);
+      return new RequestResult(ResultCode.SUCCESS, "上传成功",   service.adjust(projectId,adjustUserId,adjustType,requestFile,adjustFile,descriptionFile));
     } else {
       return new RequestResult(ResultCode.FAILED, "上传成功",   null);
     }
+  }
+
+  /**
+   * 导入文件
+   * @param adjustId
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "/getById" ,method = RequestMethod.GET)
+  @ResponseBody
+  public Object getById(@RequestParam String adjustId) throws Exception {
+      return new RequestResult(ResultCode.SUCCESS, "上传成功",   service.getById(adjustId));
   }
 
   /**
