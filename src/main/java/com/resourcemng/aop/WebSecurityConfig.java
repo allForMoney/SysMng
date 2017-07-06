@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
-@Configuration
+//@Configuration
 public class WebSecurityConfig   extends WebMvcConfigurerAdapter {
 
 
