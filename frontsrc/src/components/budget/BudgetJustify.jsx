@@ -87,10 +87,10 @@ class BudgetJustify extends React.Component {
              
               <form encType="multipart/form-data" action={uploadURl} method="post">
                 <input name="file" type="file" className={styles.uploadInput} />
-                <input name="file" type="file" />
-                <input name="file" type="file" />
-                <input type="submit" value="提交" className={styles.uploadBtn} />
-                <input type="reset" value="重置" className={styles.uploadBtn} />
+                <input name="file" type="file" className={styles.uploadInput} />
+                <input name="file" type="file" className={styles.uploadInput} />
+                <button type="submit" className={styles.uploadBtn} >提交</button>
+                <button type="reset" className={styles.uploadBtn} >重置</button>
               </form>
             </Card>
           }
