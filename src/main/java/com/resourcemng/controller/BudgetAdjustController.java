@@ -3,15 +3,24 @@ package com.resourcemng.controller;
 import com.resourcemng.basic.RequestResult;
 import com.resourcemng.basic.ResultCode;
 import com.resourcemng.service.BudgetAdjustService;
+import com.resourcemng.util.ApplicationUitl;
 import com.resourcemng.util.FileUitl;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URLConnection;
+import java.nio.charset.Charset;
 import java.util.List;
 
 /**
@@ -77,6 +86,46 @@ public class BudgetAdjustController {
 
 
     return new RequestResult(ResultCode.SUCCESS, "提交审批成功.",    service.find(projectId));
+  }
+  /**
+   *获取项目所有的调整记录
+   * @param projectId
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "/download/file" ,method = RequestMethod.GET)
+  @ResponseBody
+  public void downloadFile( @RequestParam String projectId,@RequestParam String fileName, HttpServletRequest request, HttpServletResponse response) throws Exception {
+     File file = fileUitl.getFile(fileName);
+
+    if(!file.exists()){
+      String errorMessage = "Sorry. The file you are looking for does not exist";
+      System.out.println(errorMessage);
+      OutputStream outputStream = response.getOutputStream();
+      outputStream.write(errorMessage.getBytes(Charset.forName("UTF-8")));
+      outputStream.close();
+      return;
+    }
+    String mimeType= URLConnection.guessContentTypeFromName(file.getName());
+    if(mimeType==null){
+      System.out.println("mimetype is not detectable, will take default");
+      mimeType = "application/octet-stream";
+    }
+    response.setContentType(mimeType);
+    response.setContentLength((int)file.length());
+    InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+    if (StringUtils.isNoneBlank(fileName)) {
+      fileName = fileName;
+    }
+    if (ApplicationUitl.isIE(request)) {
+      fileName = java.net.URLEncoder.encode(fileName, "UTF8");
+    } else {
+      fileName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
+    }
+
+    response.setHeader("content-disposition", "attachment;filename=" + fileName + ".pdf");
+    FileCopyUtils.copy(inputStream, response.getOutputStream());
+
   }
 
 
