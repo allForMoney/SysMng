@@ -95,6 +95,6 @@ public class AuthController {
   public void logout(HttpSession session,HttpServletResponse response) throws IOException {
     // 移除session
     session.removeAttribute(SESSION_KEY);
-    response.sendRedirect("index.html");
+    response.sendRedirect("/loginpage.html");
   }
 }
