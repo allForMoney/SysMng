@@ -65,7 +65,7 @@ public class AuthController {
         view.setProject(project);
       }
       session.setAttribute(SESSION_KEY,view);
-      response.sendRedirect("/index.html");
+//      response.sendRedirect("/index.html");
       // 设置session
       return new RequestResult(ResultCode.SUCCESS, "登录成功.", view);
     }catch (Exception e){
