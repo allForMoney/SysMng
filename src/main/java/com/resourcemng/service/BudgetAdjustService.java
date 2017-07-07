@@ -70,8 +70,8 @@ public class BudgetAdjustService {
       budgetService.importBudget2016FormFile (projectId, importUser, log);
       //导入数据
       List<BudgetImportDetailNew> list =budgetService.importBudget2016FormFile(projectId,importUser,log);
-      //预计算
-      budgetService.computeBudgetImport2016(projectId,list);
+//      //预计算
+//      budgetService.computeBudgetImport2016(projectId,list);
       return log;
     }else{
       //TODO
