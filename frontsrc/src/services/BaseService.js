@@ -13,7 +13,7 @@ export function getProjectInfoById(params) {
 
 export function login(params) {
   console.log(params);
-  return request('/login', {
+  return request('/loginSys', {
     method: 'post',
     data: JSON.stringify(params),
   });
