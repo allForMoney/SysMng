@@ -64,6 +64,7 @@ class BudgetJustify extends React.Component {
       console.log(resp);
     }, false);
     xhr.open('POST', uploadURl);
+    xhr.setRequestHeader("Content-Type", "multipart/form-data;");
     // 记得加入上传数据formData
     xhr.send(formData);
   }
@@ -109,7 +110,7 @@ class BudgetJustify extends React.Component {
           </Card>
           {showUpload &&
             <Card title="上传预算调整申请文件">
-              <Form>
+              <Form >
                 <FormItem label="预算模板" {...formItemLayout}>
                   <Select defaultValue="adjust2016" onChange={this.onAdjustTypeChanged} style={{ display: 'block', width: 120 }}>
                     <Option value="adjust2016">2016版预算</Option>
