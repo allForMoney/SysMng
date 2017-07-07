@@ -2,6 +2,7 @@ import React from 'react';
 import dva from 'dva';
 import createLoading from 'dva-loading';
 import LoginForm from './routes/LoginForm';
+import './login.html';
 
 const app = dva({
   onError(error) {
