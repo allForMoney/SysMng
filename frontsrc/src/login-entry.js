@@ -12,7 +12,7 @@ const app = dva({
 
 app.use(createLoading());
 
-app.model(require('./models/BaseModel'));
+app.model(require('./models/LoginModel'));
 
 // 4. Router
 app.router(() => <LoginForm />);

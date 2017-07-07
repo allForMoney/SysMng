@@ -30,7 +30,7 @@ class LoginForm extends React.Component {
       }
       console.log(values);
       this.props.dispatch({
-        type: 'baseModel/login',
+        type: 'loginModel/login',
         payload: values
       });
     });
@@ -94,7 +94,7 @@ class LoginForm extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { userType, userName } = state.baseModel;
+  const { userType, userName } = state.loginModel;
   return { userType, userName };
 }
 

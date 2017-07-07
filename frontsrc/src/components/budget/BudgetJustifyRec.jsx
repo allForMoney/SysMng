@@ -4,6 +4,7 @@ import {
   Card,
   Table,
 } from 'antd';
+import moment from 'moment';
 
 import FrameContent from '../common/FrameContent';
 import LinkBtn from '../common/LinkBtn';
@@ -49,7 +50,7 @@ class BudgetJustifyRec extends React.Component {
     this.props.dispatch({
       type: 'BudgetJustifyModel/getBudgetJustifyCompareList',
       payload: {
-        budgetJustifyComparePage: page,
+        budgetJustifyComparePage: 1,
       }
     });
   }
@@ -78,22 +79,70 @@ class BudgetJustifyRec extends React.Component {
       title: '状态',
       dataIndex: 'status',
       key: 'status',
+      render: (status) => {
+        let str = '';
+        switch (status) {
+          case '0':
+            str = '填报人已提交';
+            break;
+          case '1':
+            str = '财务已审核通过';
+            break;
+          case '3':
+            str = '负责人已审核通过';
+            break;
+          case '5':
+            str = '教育部已审核通过';
+            break;
+          default:
+            break;
+        }
+        return str;
+      }
     }, {
       title: '填报人提交时间',
       dataIndex: 'reportTime',
       key: 'reportTime',
+      render: (time) => {
+        let str = '-';
+        if (time) {
+          str = moment(time).format('YYYY-MM-DD HH:mm;ss');
+        }
+        return str;
+      }
     }, {
       title: '财务部门负责人审核时间',
       dataIndex: 'financeAuditTime',
-      key: 'financeAuditTime',
+      key: 'financeAuditTime',      
+      render: (time) => {
+        let str = '-';
+        if (time) {
+          str = moment(time).format('YYYY-MM-DD HH:mm;ss');
+        }
+        return str;
+      }
     }, {
       title: '项目负责人审核时间',
       dataIndex: 'schoolAuditTime',
       key: 'schoolAuditTime',
+      render: (time) => {
+        let str = '-';
+        if (time) {
+          str = moment(time).format('YYYY-MM-DD HH:mm;ss');
+        }
+        return str;
+      }
     }, {
       title: '教育部审核时间',
       dataIndex: 'conutryAuditTime',
       key: 'conutryAuditTime',
+      render: (time) => {
+        let str = '-';
+        if (time) {
+          str = moment(time).format('YYYY-MM-DD HH:mm;ss');
+        }
+        return str;
+      }
     }, {
       title: '审核意见',
       dataIndex: 'auditOpinion',

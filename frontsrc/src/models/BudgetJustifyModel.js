@@ -33,7 +33,7 @@ export default {
     * resetJustifyFiles({ payload }, { call, put, select }) {
       
     },
-    
+
     // 获取项目预算调整表
     * getBudgetJustifyList({ payload }, { call, put, select }) {
       const { projectInfo } = yield select(state => state.baseModel);
@@ -44,7 +44,7 @@ export default {
         yield put({
           type: 'setState',
           payload: {
-            budgetJustifyList: data.result.list,
+            budgetJustifyList: data.result,
           }
         });
       }
@@ -52,7 +52,7 @@ export default {
     // 获取项目预算调整比较
     * getBudgetJustifyCompareList({ payload }, { call, put, select }) {
       const { compareId, budgetJustifyComparePage } = yield select(state => state.BudgetJustifyModel);
-      const data = yield call(getBudgetJustifyCompareList, { compareId, budgetJustifyComparePage });
+      const data = yield call(getBudgetJustifyCompareList, { id: compareId, budgetJustifyComparePage });
       
       if (data.code === '1' && data.result) {
         yield put({
