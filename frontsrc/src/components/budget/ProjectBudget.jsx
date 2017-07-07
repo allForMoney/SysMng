@@ -21,8 +21,9 @@ class ProjectBudget extends React.Component {
   }
   render() {
     const { budgetProjectList, projectTotal, projectPage, projectName, loading } = this.props;
-    
+
     const title = `项目预算表${projectName}`;
+
     return (
       <FrameContent>
         <Card title={title}>

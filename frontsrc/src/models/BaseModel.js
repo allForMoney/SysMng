@@ -20,12 +20,12 @@ export default {
 
   subscriptions: {
     init({ dispatch }) {
-      // dispatch({
-      //   type: 'getProviceInfo'
-      // });
-      // dispatch({
-      //   type: 'isLogin'
-      // });
+      dispatch({
+        type: 'getProviceInfo'
+      });
+      dispatch({
+        type: 'isLogin'
+      });
     }
 
   },
