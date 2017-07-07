@@ -56,25 +56,31 @@ class BudgetJustify extends React.Component {
 
     const formData = new FormData();
     for (let i = 0; i < picFileList.length; i++) {
-      formData.append('files', picFileList[i]);
+      formData.append('file', picFileList[i].files[0]);
     }
     // 监听事件
     xhr.addEventListener('error', () => message.warn('文件上传失败'), false);// 发送文件和表单自定义参数
-    xhr.addEventListener('load', (evt, resp) => {
-      console.log(resp);
+    xhr.addEventListener('load', (evt) => {
+      const rep = JSON.parse(evt.target.response);
+      if (rep.code === '1') {
+        this.props.dispatch({
+          type: 'BudgetJustifyModel/setState',
+          payload: rep.result
+        });
+      }
     }, false);
     xhr.open('POST', uploadURl);
-    xhr.setRequestHeader("Content-Type", "multipart/form-data;");
+    // xhr.setRequestHeader("Content-Type", "multipart/form-data;");
     // 记得加入上传数据formData
     xhr.send(formData);
   }
 
   render() {
     const {
-        URL1,
-        url2,
-        url3,
         userId,
+        desFile, // 说明文件
+        requestFile,  // 请求文件
+        fileName, // 调整文件 xls
         projectInfo
     } = this.props;
     const { showUpload, adjustType } = this.state;
@@ -93,13 +99,13 @@ class BudgetJustify extends React.Component {
           <Card title="已上传附件">
             <Row>
               <Col offset={2} span={7}>
-               预算调整请示: <a href={URL1} target="_blank" rel="noopener noreferrer">{URL1}</a>
+               预算调整请示: <a href={`budgetadjust/download/file?projectId=${projectInfo.id}&fileName=${requestFile}`} target="_blank" rel="noopener noreferrer">{requestFile}</a>
               </Col>
               <Col span={7}>
-               拟调整后的预算表: <a href={URL1} target="_blank" rel="noopener noreferrer">{URL1}</a>
+               拟调整后的预算表: <a href={`budgetadjust/download/file?projectId=${projectInfo.id}&fileName=${fileName}`} target="_blank" rel="noopener noreferrer">{fileName}</a>
               </Col>
               <Col span={7}>
-               预算调整请示: <a href={URL1} target="_blank" rel="noopener noreferrer">{URL1}</a>
+               预算调整说明: <a href={`budgetadjust/download/file?projectId=${projectInfo.id}&fileName=${desFile}`} target="_blank" rel="noopener noreferrer">{desFile}</a>
               </Col>
             </Row>
             <Row>
@@ -118,13 +124,13 @@ class BudgetJustify extends React.Component {
                   </Select>
                 </FormItem>
                 <FormItem label="预算调整请示:" {...formItemLayout}>
-                  <input name="files" type="file" className={styles.uploadInput} />
+                  <input name="file" type="file" className={styles.uploadInput} />
                 </FormItem>
                 <FormItem label="拟调整后的预算表:" {...formItemLayout}>
-                  <input name="files" type="file" className={styles.uploadInput} />
+                  <input name="file" type="file" className={styles.uploadInput} />
                 </FormItem>
                 <FormItem label="预算调整请示:" {...formItemLayout}>
-                  <input name="files" type="file" className={styles.uploadInput} />
+                  <input name="file" type="file" className={styles.uploadInput} />
                 </FormItem>
                 <FormItem wrapperCol={{ span: 10, offset: 4 }}>
                   <Button type="primary" onClick={this.submitFiles}>提交</Button>
@@ -144,9 +150,17 @@ function mapStateToProps(state) {
     projectInfo,
     userId,
    } = state.baseModel;
+  const {
+    desFile, // 说明文件
+    requestFile,  // 请求文件
+    fileName, // 调整文件 xls
+   } = state.BudgetJustifyModel;
 
   return {
     projectInfo,
+    desFile, // 说明文件
+    requestFile,  // 请求文件
+    fileName, // 调整文件 xls
     userId
   };
 }
