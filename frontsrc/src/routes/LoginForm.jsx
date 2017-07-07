@@ -1,11 +1,7 @@
-import { Form, Icon, Input, Button, Card, Select} from 'antd';
+import { Form, Icon, Input, Button, Select } from 'antd';
 import React from 'react';
 import { connect } from 'dva';
 import styles from './LoginForm.less';
-import bgpBackgroundic from './bg-img.png';
-// import cx from 'cx';
-
-console.log(bgpBackgroundic);
 
 const Option = Select.Option;
 const FormItem = Form.Item;
@@ -20,7 +16,7 @@ class LoginForm extends React.Component {
 
   getYears = () => {
     const years = [];
-    for(let i=2010; i<2026; i++){
+    for (let i = 2010; i < 2026; i++) {
       years.push(i);
     }
     return years;
@@ -49,15 +45,15 @@ class LoginForm extends React.Component {
 
     const formWraper = {
       labelCol: {
-        sm: { span: 4 },
+        sm: { span: 6 },
       },
       wrapperCol: {
-        sm: { span: 8 },
+        sm: { span: 14 },
       },
     };
 
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form onSubmit={this.handleSubmit} className={styles.loginForm}>
         <FormItem label="年度" {...formWraper}>
           {getFieldDecorator('year', {
             rules: [{ required: true, message: '请选择年度' }],
@@ -87,8 +83,8 @@ class LoginForm extends React.Component {
             <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="Password" />
           )}
         </FormItem>
-        <FormItem wrapperCol={{span:12,offset:6}}>
-          <Button type="primary" htmlType="submit" className="login-form-button">
+        <FormItem wrapperCol={{ span: 12, offset: 6 }}>
+          <Button type="primary" htmlType="submit" className="login-form-button" style={{ width: 200 }}>
             登录
           </Button>
         </FormItem>
@@ -99,10 +95,7 @@ class LoginForm extends React.Component {
 
 function mapStateToProps(state) {
   const { userType, userName } = state.baseModel;
-  const {
-    projectInfo,
-  } = state.ProjectModel;
-  return { userType, userName, projectInfo };
+  return { userType, userName };
 }
 
 export default connect(mapStateToProps)(Form.create()(LoginForm));

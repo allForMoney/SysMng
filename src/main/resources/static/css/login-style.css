@@ -82,3 +82,12 @@ display: none;
 	letter-spacing: 14px;
 }
 .lg-button:hover{ background:#4a87cc}
+
+#react-root{
+	position: absolute;
+	width: 450px;
+	right: 0;
+	bottom: 200px;
+	background-color: white;
+}
+
