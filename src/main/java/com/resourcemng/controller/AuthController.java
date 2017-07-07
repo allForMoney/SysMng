@@ -49,12 +49,12 @@ public class AuthController {
    */
   @RequestMapping (value = "/loginSys",method =  RequestMethod.POST)
   public @ResponseBody
-  Object loginPost(@RequestBody Tuser tuser,HttpSession session ) throws MyException {
+  Object loginPost(@RequestBody Tuser tuser,HttpSession session,HttpServletResponse response ) throws MyException {
     try {
       Map<String, Object> map = new HashMap<>();
       Tuser user = service.getUser(tuser.getUsername());
       if (user == null || !user.getPassword().equals(tuser.getPassword())) {
-        return new MyException("用户名密码不正确");
+        throw new MyException("用户名密码不正确");
       }
       LoginUserView view = new LoginUserView();
       BeanUtils.copyProperties(view, user);
@@ -65,6 +65,7 @@ public class AuthController {
         view.setProject(project);
       }
       session.setAttribute(SESSION_KEY,view);
+      response.sendRedirect("/index.html");
       // 设置session
       return new RequestResult(ResultCode.SUCCESS, "登录成功.", view);
     }catch (Exception e){
