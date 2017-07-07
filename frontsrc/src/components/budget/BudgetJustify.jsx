@@ -60,8 +60,14 @@ class BudgetJustify extends React.Component {
     }
     // 监听事件
     xhr.addEventListener('error', () => message.warn('文件上传失败'), false);// 发送文件和表单自定义参数
-    xhr.addEventListener('load', (evt, resp) => {
-      console.log(resp);
+    xhr.addEventListener('load', (evt) => {
+      const rep = JSON.parse(evt.target.response);
+      if (rep.code === '1') {
+        this.props.dispatch({
+          type: 'BudgetJustifyModel/setState',
+          payload: rep.result
+        });
+      }
     }, false);
     xhr.open('POST', uploadURl);
     // xhr.setRequestHeader("Content-Type", "multipart/form-data;");
@@ -71,10 +77,10 @@ class BudgetJustify extends React.Component {
 
   render() {
     const {
-        URL1,
-        url2,
-        url3,
         userId,
+        desFile, // 说明文件
+        requestFile,  // 请求文件
+        fileName, // 调整文件 xls
         projectInfo
     } = this.props;
     const { showUpload, adjustType } = this.state;
@@ -93,13 +99,13 @@ class BudgetJustify extends React.Component {
           <Card title="已上传附件">
             <Row>
               <Col offset={2} span={7}>
-               预算调整请示: <a href={URL1} target="_blank" rel="noopener noreferrer">{URL1}</a>
+               预算调整请示: <a href={`budgetadjust/download/file?projectId=${projectInfo.id}&fileName=${requestFile}`} target="_blank" rel="noopener noreferrer">{requestFile}</a>
               </Col>
               <Col span={7}>
-               拟调整后的预算表: <a href={URL1} target="_blank" rel="noopener noreferrer">{URL1}</a>
+               拟调整后的预算表: <a href={`budgetadjust/download/file?projectId=${projectInfo.id}&fileName=${fileName}`} target="_blank" rel="noopener noreferrer">{fileName}</a>
               </Col>
               <Col span={7}>
-               预算调整请示: <a href={URL1} target="_blank" rel="noopener noreferrer">{URL1}</a>
+               预算调整说明: <a href={`budgetadjust/download/file?projectId=${projectInfo.id}&fileName=${desFile}`} target="_blank" rel="noopener noreferrer">{desFile}</a>
               </Col>
             </Row>
             <Row>
@@ -144,9 +150,17 @@ function mapStateToProps(state) {
     projectInfo,
     userId,
    } = state.baseModel;
+  const {
+    desFile, // 说明文件
+    requestFile,  // 请求文件
+    fileName, // 调整文件 xls
+   } = state.BudgetJustifyModel;
 
   return {
     projectInfo,
+    desFile, // 说明文件
+    requestFile,  // 请求文件
+    fileName, // 调整文件 xls
     userId
   };
 }

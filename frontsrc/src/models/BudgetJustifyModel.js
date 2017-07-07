@@ -23,9 +23,17 @@ export default {
     compareId: '',
 
     /** 预算调整已经上传过的地址 */
+    desFile: '', // 说明文件
+    requestFile: '',  // 请求文件
+    fileName: '', // 调整文件 xls
 
   },
   effects: {
+    // 获取项目预算调整表
+    * resetJustifyFiles({ payload }, { call, put, select }) {
+      
+    },
+    
     // 获取项目预算调整表
     * getBudgetJustifyList({ payload }, { call, put, select }) {
       const { projectInfo } = yield select(state => state.baseModel);
