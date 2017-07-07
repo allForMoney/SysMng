@@ -56,7 +56,7 @@ class BudgetJustify extends React.Component {
 
     const formData = new FormData();
     for (let i = 0; i < picFileList.length; i++) {
-      formData.append('file', picFileList[i]);
+      formData.append('files', picFileList[i]);
     }
     // 监听事件
     xhr.addEventListener('error', () => message.warn('文件上传失败'), false);// 发送文件和表单自定义参数
@@ -117,13 +117,13 @@ class BudgetJustify extends React.Component {
                   </Select>
                 </FormItem>
                 <FormItem label="预算调整请示:" {...formItemLayout}>
-                  <input name="file" type="file" className={styles.uploadInput} />
+                  <input name="files" type="file" className={styles.uploadInput} />
                 </FormItem>
                 <FormItem label="拟调整后的预算表:" {...formItemLayout}>
-                  <input name="file" type="file" className={styles.uploadInput} />
+                  <input name="files" type="file" className={styles.uploadInput} />
                 </FormItem>
                 <FormItem label="预算调整请示:" {...formItemLayout}>
-                  <input name="file" type="file" className={styles.uploadInput} />
+                  <input name="files" type="file" className={styles.uploadInput} />
                 </FormItem>
                 <FormItem wrapperCol={{ span: 10, offset: 4 }}>
                   <Button type="primary" onClick={this.submitFiles}>提交</Button>
