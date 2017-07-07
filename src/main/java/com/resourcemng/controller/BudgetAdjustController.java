@@ -54,7 +54,7 @@ public class BudgetAdjustController {
         File descriptionFile = fileUitl.saveUploadFile(files.get(2) );
       return new RequestResult(ResultCode.SUCCESS, "上传成功",   service.adjust(projectId,adjustUserId,adjustType,requestFile,adjustFile,descriptionFile));
     } else {
-      return new RequestResult(ResultCode.FAILED, "上传成功",   null);
+      return new RequestResult(ResultCode.FAILED, "上传失败，您没有提交任何文件",   null);
     }
   }
 
