@@ -1,6 +1,7 @@
 import { logout, login, isLogin, getProviceInfo,
   getProjectInfoById } from '../services/BaseService';
 import { routerRedux } from 'dva/router';
+import { message, Modal } from 'antd';
 
 export default {
   namespace: 'baseModel',
@@ -24,63 +25,16 @@ export default {
         type: 'getProviceInfo'
       });
       dispatch({
-        type: 'isLogin'
+        type: 'reLogin'
       });
     }
 
   },
   effects: {
-    * isLogin({ payload }, { call, put }) {
-      const data = yield call(isLogin, payload);
-      if (data && data.code === '1') {
-        const result = data.result;
-        if (!result) {
-          yield put(routerRedux.push({
-            pathname: '/login'
-          }));
-          return;
-        }
-        let userType = 'admin';
-        switch (result.userRole) {
-          case '1':
-            userType = 'admin';
-            break;
-          case '2':
-            userType = 'inputer';
-            break;
-          case '3':
-            userType = 'finace';
-            break;
-          case '4':
-            userType = 'school';
-            break;
-          case '5':
-          case '6':
-            userType = 'country';
-            break;
-        }
-
-        console.log(result.id);
-
-        yield put({
-          type: 'setState',
-          payload: {
-            userId: result.id,
-            projectNo: result.projectNo,
-            userType,
-            projectInfo: result.project,
-            projectName: result.majorName,
-          }
-        });
-        yield put({
-          type: 'doRouter',
-          payload: { userType }
-        });
-      }
-    },
-
-    * login({ payload }, { call, put }) {
-      const data = yield call(login, payload);
+    * reLogin({ payload }, { call, put }) {
+      console.log(sessionStorage);
+      const { username, password } = sessionStorage;
+      const data = yield call(login, { username, password });
       if (data && data.code === '1') {
         const result = data.result;
         let userType = 'admin';
@@ -123,6 +77,19 @@ export default {
           type: 'doRouter',
           payload: { userType }
         });
+      } else {
+        window.location = '../login.html';
+      }
+    },
+
+    * login({ payload }, { call }) {
+      const data = yield call(login, payload);
+      if (data && data.code === '1') {
+        window.location = '../index.html';
+        sessionStorage.username = payload.username;
+        sessionStorage.password = payload.password;
+      } else {
+        Modal.info({ content: '登录失败,请检查用户名密码', maskClosable: true });
       }
     },
 
