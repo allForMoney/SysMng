@@ -5,7 +5,7 @@ const pkg = require('./package.json');
 const path = require('path');
 const glob = require('glob');
 
-module.exports = function (webpackConfig, env) {
+module.exports = function(webpackConfig, env) {
   const isDev = (env === 'development');
 
   webpackConfig.babel.plugins.push('transform-runtime');
@@ -19,7 +19,7 @@ module.exports = function (webpackConfig, env) {
   }
 
   // Don't extract common.js and common.css
-  webpackConfig.plugins = webpackConfig.plugins.filter(function(plugin) {
+  webpackConfig.plugins = webpackConfig.plugins.filter((plugin) => {
     return !(plugin instanceof webpack.optimize.CommonsChunkPlugin);
   });
 
@@ -40,7 +40,7 @@ module.exports = function (webpackConfig, env) {
   // Support CSS Modules
   // https://github.com/css-modules/css-modules/pull/65
   // Parse all less files as css module.
-  webpackConfig.module.loaders.forEach(function(loader, index) {
+  webpackConfig.module.loaders.forEach((loader, index) => {
     if (typeof loader.test === 'function' && loader.test.toString()
         .indexOf('\\.less$') > -1) {
       loader.include = /node_modules/;
@@ -98,7 +98,7 @@ module.exports = function (webpackConfig, env) {
 
   webpackConfig.entry = Object.assign({}, webpackConfig.entry, newEntries);
 
-  webpackConfig.output.path = path.join(__dirname, '../src/main/resources/static');
+  // webpackConfig.output.path = path.join(__dirname, '../src/main/resources/static');
 
   return webpackConfig;
 };

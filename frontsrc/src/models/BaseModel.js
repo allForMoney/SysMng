@@ -1,5 +1,5 @@
 import { logout, login, isLogin, getProviceInfo,
-getProjectInfoById } from '../services/BaseService';
+  getProjectInfoById } from '../services/BaseService';
 import { routerRedux } from 'dva/router';
 
 export default {
@@ -17,7 +17,7 @@ export default {
     userId: '',
     priviceList: [], // 省份对应的列表
   },
-  
+
   subscriptions: {
     init({ dispatch }) {
       dispatch({
@@ -137,7 +137,7 @@ export default {
         });
       }
     },
-    
+
     * logout({ payload }, { call }) {
       const data = yield call(logout, payload);
     },

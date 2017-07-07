@@ -11,7 +11,7 @@ import {
   Form,
   Upload,
   Icon,
-
+message,
 } from 'antd';
 
 import FrameContent from '../common/FrameContent';
@@ -42,6 +42,32 @@ class BudgetJustify extends React.Component {
     });
   }
 
+  submitFiles= () => {
+    const xhr = new XMLHttpRequest();
+    // 将上传的多个文件放入formData中
+    const picFileList = document.getElementsByTagName('input');
+    const {
+        userId,
+        projectInfo
+    } = this.props;
+    const { adjustType } = this.state;
+
+    const uploadURl = `/budgetadjust/import?projectId=${projectInfo.id}&adjustUserId=${userId}&adjustType=${adjustType}`;
+
+    const formData = new FormData();
+    for (let i = 0; i < picFileList.length; i++) {
+      formData.append('file', picFileList[i]);
+    }
+    // 监听事件
+    xhr.addEventListener('error', () => message.warn('文件上传失败'), false);// 发送文件和表单自定义参数
+    xhr.addEventListener('load', (evt, resp) => {
+      console.log(resp);
+    }, false);
+    xhr.open('POST', uploadURl);
+    // 记得加入上传数据formData
+    xhr.send(formData);
+  }
+
   render() {
     const {
         URL1,
@@ -54,7 +80,11 @@ class BudgetJustify extends React.Component {
 
     // projectId  adjustUserId  adjustType
     const uploadURl = `/budgetadjust/import?projectId=${projectInfo.id}&adjustUserId=${userId}&adjustType=${adjustType}`;
-    
+    const formItemLayout = {
+      labelCol: { span: 7 },
+      wrapperCol: { span: 14 },
+    };
+
     return (
       <FrameContent>
         <Card title="预算调整申请">
@@ -79,19 +109,27 @@ class BudgetJustify extends React.Component {
           </Card>
           {showUpload &&
             <Card title="上传预算调整申请文件">
-             预算模板:
-              <Select defaultValue="adjust2016" onChange={this.onAdjustTypeChanged} style={{display:'block', width: 120}}>
-                <Option value="adjust2016">2016版预算</Option>
-                <Option value="yusuan2">2015版预算</Option>
-              </Select>
-             
-              <form encType="multipart/form-data" action={uploadURl} method="post">
-                <input name="file" type="file" className={styles.uploadInput} />
-                <input name="file" type="file" className={styles.uploadInput} />
-                <input name="file" type="file" className={styles.uploadInput} />
-                <button type="submit" className={styles.uploadBtn} >提交</button>
-                <button type="reset" className={styles.uploadBtn} >重置</button>
-              </form>
+              <Form>
+                <FormItem label="预算模板" {...formItemLayout}>
+                  <Select defaultValue="adjust2016" onChange={this.onAdjustTypeChanged} style={{ display: 'block', width: 120 }}>
+                    <Option value="adjust2016">2016版预算</Option>
+                    <Option value="yusuan2">2015版预算</Option>
+                  </Select>
+                </FormItem>
+                <FormItem label="预算调整请示:" {...formItemLayout}>
+                  <input name="file" type="file" className={styles.uploadInput} />
+                </FormItem>
+                <FormItem label="拟调整后的预算表:" {...formItemLayout}>
+                  <input name="file" type="file" className={styles.uploadInput} />
+                </FormItem>
+                <FormItem label="预算调整请示:" {...formItemLayout}>
+                  <input name="file" type="file" className={styles.uploadInput} />
+                </FormItem>
+                <FormItem wrapperCol={{ span: 10, offset: 4 }}>
+                  <Button type="primary" onClick={this.submitFiles}>提交</Button>
+                  <Button type="primary" htmlType="reset" className={styles.uploadBtn} >重置</Button>
+                </FormItem>
+              </Form>
             </Card>
           }
         </Card>
