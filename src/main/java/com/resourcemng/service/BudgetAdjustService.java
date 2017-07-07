@@ -7,6 +7,8 @@ import com.resourcemng.repository.*;
 import com.resourcemng.util.FileUitl;
 import com.resourcemng.view.BudgetAdjustCompareView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -137,9 +139,9 @@ public class BudgetAdjustService {
    * @param projectId
    * @return
    */
-  public List<BudgetAuditLog> find(String projectId) {
+  public Page find(String projectId, Pageable  pageable ) {
     if(StringUtils.isEmpty(projectId)){//查找所有预算
-      return  budgetAuditLogRepository.findAll();
+      return  budgetAuditLogRepository.findAll(pageable);
 
     }else{
       List<FileImportLog> budgetAdjusts = fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDate(projectId,ImportFileType.BUDGET_ADJUST_2016);
@@ -153,7 +155,7 @@ public class BudgetAdjustService {
       for(FileImportLog budgetAdjust:budgetAdjusts){
         ids.add(budgetAdjust.getId());
       }
-      return  budgetAuditLogRepository.findByAdjustIdIn(ids);
+      return  budgetAuditLogRepository.findByAdjustIdIn(ids,pageable);
     }
 
   }
