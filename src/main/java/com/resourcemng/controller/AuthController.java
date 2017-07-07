@@ -49,7 +49,7 @@ public class AuthController {
    */
   @RequestMapping (value = "/loginsys",method =  RequestMethod.POST)
   public @ResponseBody
-  void loginPost(@RequestBody Tuser tuser,HttpSession session,HttpServletResponse response ) throws MyException {
+  Object loginPost(@RequestBody Tuser tuser,HttpSession session,HttpServletResponse response ) throws MyException {
     try {
       Map<String, Object> map = new HashMap<>();
       Tuser user = service.getUser(tuser.getUsername());
@@ -67,7 +67,7 @@ public class AuthController {
       session.setAttribute(SESSION_KEY,view);
       response.sendRedirect("/index.html");
       // 设置session
-//      return new RequestResult(ResultCode.SUCCESS, "登录成功.", view);
+      return new RequestResult(ResultCode.SUCCESS, "登录成功.", view);
     }catch (Exception e){
       throw new MyException(e);
     }
