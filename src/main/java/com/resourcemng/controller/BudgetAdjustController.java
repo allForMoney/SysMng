@@ -61,7 +61,6 @@ public class BudgetAdjustController {
   }
 
   /**
-   * 导入文件
    * @param adjustId
    * @return
    * @throws Exception
@@ -69,9 +68,24 @@ public class BudgetAdjustController {
   @RequestMapping(value = "/getById" ,method = RequestMethod.GET)
   @ResponseBody
   public Object getById(@RequestParam String adjustId) throws Exception {
-      return new RequestResult(ResultCode.SUCCESS, "上传成功",   service.getById(adjustId));
+      return new RequestResult(ResultCode.SUCCESS, "根据调整ID获取调整详情",   service.getById(adjustId));
   }
 
+
+  /**
+   * @param projectId
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "/getLastAdjust" ,method = RequestMethod.GET)
+  @ResponseBody
+  public Object getLastAdjust(@RequestParam String projectId) throws Exception {
+    List list = (List) service.find(projectId,null).getContent();
+    if(list == null || list.size()==0){
+      return new RequestResult(ResultCode.SUCCESS, "还没有调整过",   null);
+    }
+    return new RequestResult(ResultCode.SUCCESS, "最后一次的调整如下：",  list.get(list.size()-1));
+  }
   /**
    *审核调整记录
    * @param id

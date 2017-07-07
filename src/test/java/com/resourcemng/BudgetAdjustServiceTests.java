@@ -45,6 +45,12 @@ public class BudgetAdjustServiceTests {
    Object obj =  service.find("402881f05d094788015d0949f20e000b",pageable);
 
   }
+  @Test
+  public void getLastAdjust() throws Exception {
+    Pageable pageable = new PageRequest(Integer.parseInt("1")-1,Integer.parseInt("4"));
+   Object obj =  service.find("402881f05d094788015d0949f20e000b",null);
+
+  }
 
 
 }
