@@ -41,6 +41,7 @@ export default {
         });
       }
     },
+
     // 获取预算季报信息
     * getBudgetSeasonList({ payload }, { call, put, select }) {
       const { projectInfo } = yield select(state => state.baseModel);
@@ -77,7 +78,9 @@ export default {
 
     * getBudgetRecList({ payload }, { call, put, select }) {
       const { budgetRecordPage } = yield select(state => state.budgetModel);
-      const data = yield call(getBudgetRecList, { budgetRecordPage });
+      const { projectInfo } = yield select(state => state.baseModel);
+      const projectId = projectInfo.id;
+      const data = yield call(getBudgetRecList, { projectId, budgetRecordPage });
       if (data && data.code === 1) {
         yield put({
           type: 'setState',
@@ -89,6 +92,7 @@ export default {
         });
       }
     },
+
     /** 更新项目执行季报  */
     * updateSeasonBudget({ payload }, { call, select }) {
       const { buggetOutComeList, buggetInComeList, quarterNum, projectYear } = yield select(state => state.budgetModel);
@@ -113,6 +117,7 @@ export default {
         message('更新成功');
       }
     },
+
     /** 切换审核状态 */
     * changeCheckStatus({ payload }, { call }) {
       const data = yield call(changeCheckStatus, payload);

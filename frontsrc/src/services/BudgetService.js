@@ -21,7 +21,7 @@ export function getBudgetJustifyCompareList(params) {
 }
 
 export function getBudgetRecList(params) {
-  return request(`/project/getBudgetRecList?${qs.stringify(params)}`);
+  return request(`/budget/report/all?${qs.stringify(params)}`);
 }
 export function getBudgetProjectList(params) {
   console.log(params);

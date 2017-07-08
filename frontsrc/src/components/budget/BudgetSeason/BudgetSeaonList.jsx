@@ -35,7 +35,6 @@ class BudgetSeaonList extends React.Component {
   render() {
     const {
       loading,
-      projectName,
       budgetRecordList,
       budgetRecordPage,
       budgetRecordNum,
