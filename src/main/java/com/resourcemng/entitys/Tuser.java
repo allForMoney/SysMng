@@ -13,6 +13,9 @@ import java.util.Collection;
 @Entity
 public class Tuser implements Serializable {
   private String id;
+  /**
+   * 用户编号映射
+   */
   private String username;
   private String majorName;
   private String password;

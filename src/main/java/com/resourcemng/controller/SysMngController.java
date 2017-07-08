@@ -7,6 +7,7 @@ import com.resourcemng.entitys.Project;
 import com.resourcemng.entitys.Tuser;
 import com.resourcemng.service.ProjectService;
 import com.resourcemng.service.SystemService;
+import com.resourcemng.task.DynamicScheduledTask;
 import com.resourcemng.util.FileUitl;
 import com.resourcemng.view.DeleteProjectView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ import java.util.Arrays;
 public class SysMngController {
   @Autowired
   SystemService service;
+  @Autowired
+  DynamicScheduledTask dynamicScheduledTask;
 
   /**
    * 添加项目
