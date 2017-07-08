@@ -13,7 +13,8 @@ const Option = Select.Option;
 class ExpertList extends React.Component {
   state={
     editModalVisible: false,
-    modalTitle: ''
+    modalTitle: '',
+    editRec: {}
   }
   componentDidMount() {
     this.props.dispatch({
@@ -46,7 +47,8 @@ class ExpertList extends React.Component {
     form.setFieldsValue(rec);
     this.setState({
       editModalVisible: true,
-      modalTitle: '更新专家'
+      modalTitle: '更新专家',
+      editRec: rec
     });
   }
 
@@ -68,7 +70,7 @@ class ExpertList extends React.Component {
   }
 
   handleOk = () => {
-    const { modalTitle } = this.state;
+    const { modalTitle, editRec } = this.state;
     let type = 'expertModel/addExpert';
     if (modalTitle !== '添加专家') {
       type = 'expertModel/updateExpert';
@@ -85,7 +87,7 @@ class ExpertList extends React.Component {
 
       this.props.dispatch({
         type,
-        payload: values
+        payload: { ...editRec, ...values }
       });
     });
   }
