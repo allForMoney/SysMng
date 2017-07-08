@@ -65,10 +65,7 @@ class BudgetSeason extends React.Component {
       projectYear,
       quarterNum,
   } = this.props;
-    const url = `./budget/report/quarterly/download?
-    projectId=${projectInfo.id}&
-    projectYear=${projectYear}&
-    quarterNum=${quarterNum}`;
+    const url = `./budget/report/quarterly/download?projectId=${projectInfo.id}&projectYear=${projectYear}&quarterNum=${quarterNum}`;
     window.open(url);
   }
 

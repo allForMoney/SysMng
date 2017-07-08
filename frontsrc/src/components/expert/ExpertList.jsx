@@ -43,7 +43,7 @@ class ExpertList extends React.Component {
 
   editExpert = (rec) => {
     const { form } = this.props;
-    form.resetFields(rec);
+    form.setFieldsValue(rec);
     this.setState({
       editModalVisible: true,
       modalTitle: '更新专家'
@@ -132,7 +132,7 @@ class ExpertList extends React.Component {
         title: '操作',
         render: (text, rec) => (
           <span>
-            <LinkBtn onClick={this.editExpert.bind(this, rec)}>编辑</LinkBtn>
+            <LinkBtn onClick={this.editExpert.bind(this, rec)}>编辑</LinkBtn>{' '}
             <Popconfirm title="确认删除?" onConfirm={this.deleteExpert.bind(this, rec)} okText="确认" cancelText="取消">
               <LinkBtn>删除</LinkBtn>
             </Popconfirm>
@@ -249,7 +249,6 @@ class ExpertList extends React.Component {
             columns={columns}
             dataSource={expertList}
             loading={loading}
-            pagination={pageConfig}
           />
         </Card>
       </FrameContent>

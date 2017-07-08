@@ -155,8 +155,7 @@ export default {
 
     * updateConcat({ payload }, { call, put, select }) {
       const { projectInfo } = yield select(state => state.baseModel);
-      const projectId = projectInfo.id;
-      const data = yield call(updateConcat, { ...payload, projectId });
+      const data = yield call(updateConcat, { ...projectInfo, ...payload });
 
       if (data && data.code === '1') {
         yield put({
@@ -165,6 +164,7 @@ export default {
             projectInfo: data.result.project,
           }
         });
+        message.info('联系方式更新成功');
       }
     }
   },
