@@ -51,6 +51,15 @@ public class ProjectControllerTests {
     System.out.println();
 
   }
+  @Test
+  public void testChangeUser() throws Exception {
+    Project project = new Project();
+    project.setProjectNo("2016-02");
+    project.setReporterTel("2334");
+    project.setFinaceHeaderTel("4444");
+    project.setProjectHeaderTel("5555");
+    projectController.changePorjectUser(project);
+  }
 
 
 }

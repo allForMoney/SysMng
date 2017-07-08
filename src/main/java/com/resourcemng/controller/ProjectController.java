@@ -122,14 +122,14 @@ public class ProjectController {
 
   /**
    * 更新联系人信息
-   * @param user
+   * @param project
    * @return
    * @throws Exception
    */
   @RequestMapping(value = "/contacter/change", method = RequestMethod.POST)
   @ResponseBody
-  public Object changePorjectUser(@ModelAttribute Tuser user) throws Exception {
-     service.changePorjectUser(user);
+  public Object changePorjectUser(@RequestBody Project project) throws Exception {
+     service.changePorjectUser(project);
     return new RequestResult(ResultCode.SUCCESS, "保存成功", "保存成功");
   }
 
