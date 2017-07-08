@@ -6,6 +6,7 @@ import com.resourcemng.basic.ResultCode;
 import com.resourcemng.service.BudgetAdjustService;
 import com.resourcemng.util.ApplicationUitl;
 import com.resourcemng.util.FileUitl;
+import com.resourcemng.view.BudgetAdjustView;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -84,7 +85,9 @@ public class BudgetAdjustController {
     if(list == null || list.size()==0){
       return new RequestResult(ResultCode.SUCCESS, "还没有调整过",   null);
     }
-    return new RequestResult(ResultCode.SUCCESS, "最后一次的调整如下：",  list.get(list.size()-1));
+   BudgetAdjustView view = (BudgetAdjustView) list.get(list.size()-1);
+
+    return new RequestResult(ResultCode.SUCCESS, "最后一次的调整如下：",  service.getById(view.getAdjustId()));
   }
   /**
    *审核调整记录
