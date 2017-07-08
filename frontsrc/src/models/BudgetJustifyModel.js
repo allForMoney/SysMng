@@ -26,12 +26,13 @@ export default {
     desFile: '', // 说明文件
     requestFile: '',  // 请求文件
     fileName: '', // 调整文件 xls
+    id: '', // 调整id
 
   },
   effects: {
     // 获取项目预算调整表
     * resetJustifyFiles({ payload }, { call, put, select }) {
-      
+
     },
 
     // 获取项目预算调整表
@@ -53,7 +54,7 @@ export default {
     * getBudgetJustifyCompareList({ payload }, { call, put, select }) {
       const { compareId, budgetJustifyComparePage } = yield select(state => state.BudgetJustifyModel);
       const data = yield call(getBudgetJustifyCompareList, { id: compareId, budgetJustifyComparePage });
-      
+
       if (data.code === '1' && data.result) {
         yield put({
           type: 'setState',
