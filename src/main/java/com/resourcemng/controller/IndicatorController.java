@@ -86,7 +86,7 @@ public class IndicatorController {
   @ResponseBody
   public Object getIndicatorDetail(@RequestParam String projectId) throws Exception {
 
-    return new RequestResult(ResultCode.SUCCESS, "绩效添加成功",   service.getIndicatorDetail(projectId));
+    return new RequestResult(ResultCode.SUCCESS, "查询绩效成功",   service.getIndicatorDetail(projectId));
   }
   /**
    * 绩效手动填写
