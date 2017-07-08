@@ -18,7 +18,19 @@ class ProjectInfoList extends React.Component {
     modalTitle: '添加',
     selectObj: {},
   }
- 
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'ProjectModel/setState',
+      payload: {
+        filterParam: {},
+        projectListPage: 1,
+      },
+    });
+    this.props.dispatch({
+      type: 'ProjectModel/getProjectList',
+    });
+  }
+
   onPageChanged = (page) => {
     this.props.dispatch({
       type: 'ProjectModel/setState',
@@ -95,7 +107,7 @@ class ProjectInfoList extends React.Component {
   addFormRdf =(form) => {
     this.addForm = form;
   }
-    
+
   handleOk = () => {
     const { validateFields } = this.addForm;
     const { selectObj } = this.state;
@@ -185,8 +197,6 @@ class ProjectInfoList extends React.Component {
         dataIndex: 'partnerSchool',
       }];
 
-  
-
     const pageConfig = {
       className: 'ant-table-pagination',
       total: projectListNum,
@@ -194,7 +204,7 @@ class ProjectInfoList extends React.Component {
       pageSize: 20,
       onChange: this.onPageChanged,
     };
-    
+
     const { modelVisible, modalTitle, selectObj, selectedRowKeys } = this.state;
     const rowSelection = {
       selectedRowKeys,
@@ -218,7 +228,7 @@ class ProjectInfoList extends React.Component {
             <Form.Item label="项目编号 ：">
               { getFieldDecorator('projectNo', {
               })(
-                <Input size="small" width="100"/>
+                <Input size="small" width="100" />
               )}
             </Form.Item>
             <Form.Item label="专业名称 ：">
@@ -235,15 +245,15 @@ class ProjectInfoList extends React.Component {
             </Form.Item>
             <Form.Item >
               <Button size="small" type="primary" htmlType="submit" icon="search" onClick={this.doSearch}>查询</Button>
-              <Button size="small" style={{marginLeft:5}} type="primary" onClick={() => this.props.form.resetFields()}><Icon type="rollback" />重置</Button>
+              <Button size="small" style={{ marginLeft: 5 }} type="primary" onClick={() => this.props.form.resetFields()}><Icon type="rollback" />重置</Button>
               {userType === 'admin' &&
               <span className="">
-                <Button size="small" style={{marginLeft:5}} type="primary" onClick={this.addNew}><Icon type="plus" />添加</Button>
-                <Button size="small" style={{marginLeft:5}} type="primary" onClick={this.editProject}><Icon type="edit" />编辑</Button>
+                <Button size="small" style={{ marginLeft: 5 }} type="primary" onClick={this.addNew}><Icon type="plus" />添加</Button>
+                <Button size="small" style={{ marginLeft: 5 }} type="primary" onClick={this.editProject}><Icon type="edit" />编辑</Button>
                 <Popconfirm title="确认删除选中的数据吗?" onConfirm={this.deletePro} okText="是" cancelText="否">
                   <Button size="small" style={{ marginLeft: 5 }} type="primary"><Icon type="close" />删除</Button>
                 </Popconfirm>
-                <Button size="small" style={{marginLeft:5}} type="primary" onClick={this.importPro}>导入</Button>
+                <Button size="small" style={{ marginLeft: 5 }} type="primary" onClick={this.importPro}>导入</Button>
               </span>
               }
             </Form.Item>

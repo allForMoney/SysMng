@@ -83,7 +83,7 @@ class BudgetSeaonList extends React.Component {
     return (
       <FrameContent>
         <Table
-          title={() => `预算执行季报查询【编号：${projectInfo.id}，名称：${projectName}】`}
+          title={() => `预算执行季报查询【编号：${projectInfo.projectNo}，名称：${projectInfo.majorName}】`}
           columns={columns}
           dataSource={budgetRecordList}
           loading={loading}

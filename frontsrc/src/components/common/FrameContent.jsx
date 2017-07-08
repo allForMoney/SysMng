@@ -242,7 +242,7 @@ class FrameContent extends React.Component {
                   <Link to="/import/importProjet" ><Icon type="bars" />项目基本信息导入</Link>
                 </Menu.Item>
                 <Menu.Item key="预算导入（2015年前）">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />预算导入（2015年前）</Link>
+                  <Link to="/blank" ><Icon type="bars" />预算导入（2015年前）</Link>
                 </Menu.Item>
                 <Menu.Item key="预算导入（2016年后）">
                   <Link to="/import/budget16" ><Icon type="bars" />预算导入（2016年后）</Link>
@@ -292,45 +292,45 @@ class FrameContent extends React.Component {
                   <Link to="/base/projectList" ><Icon type="bars" />项目基本情况</Link>
                 </Menu.Item>
                 <Menu.Item key="项目预算">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />项目预算</Link>
+                  <Link to="/import/budgetImportRec" ><Icon type="bars" />项目预算</Link>
                 </Menu.Item>
                 <Menu.Item key="预算执行情况季报">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />预算执行情况季报</Link>
+                  <Link to="/budget/projectSeaonBudget" ><Icon type="bars" />预算执行情况季报</Link>
                 </Menu.Item>
                 <Menu.Item key="项目预算调整">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />项目预算调整</Link>
+                  <Link to="/budget/justifyRec" ><Icon type="bars" />项目预算调整</Link>
                 </Menu.Item>
                 <Menu.Item key="预算执行结果">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />预算执行结果</Link>
+                  <Link to="/budget/projectBudgetResult" ><Icon type="bars" />预算执行结果</Link>
                 </Menu.Item>
                 <Menu.Item key="预算留言处理">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />预算留言处理</Link>
+                  <Link to="/blank" ><Icon type="bars" />预算留言处理</Link>
                 </Menu.Item>
                 <Menu.Item key="有关批复">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />有关批复</Link>
+                  <Link to="/blank" ><Icon type="bars" />有关批复</Link>
                 </Menu.Item>
                 <Menu.Item key="领导批示处理结果">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />领导批示处理结果</Link>
+                  <Link to="/blank" ><Icon type="bars" />领导批示处理结果</Link>
                 </Menu.Item>
               </SubMenu>
               <SubMenu key="数据分析" title={<span><Icon type="user" />数据分析</span>}>
                 <Menu.Item key="预算执行分析">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />预算执行分析</Link>
+                  <Link to="/blank" ><Icon type="bars" />预算执行分析</Link>
                 </Menu.Item>
                 <Menu.Item key="预算与投入">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />预算与投入</Link>
+                  <Link to="/blank" ><Icon type="bars" />预算与投入</Link>
                 </Menu.Item>
                 <Menu.Item key="专业预算与投入">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />专业预算与投入</Link>
+                  <Link to="/blank" ><Icon type="bars" />专业预算与投入</Link>
                 </Menu.Item>
                 <Menu.Item key="预算与支出">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />预算与支出</Link>
+                  <Link to="/blank" ><Icon type="bars" />预算与支出</Link>
                 </Menu.Item>
                 <Menu.Item key="专业预算与支出">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />专业预算与支出</Link>
+                  <Link to="/blank" ><Icon type="bars" />专业预算与支出</Link>
                 </Menu.Item>
                 <Menu.Item key="报表数据分析">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />报表数据分析</Link>
+                  <Link to="/blank" ><Icon type="bars" />报表数据分析</Link>
                 </Menu.Item>
               </SubMenu>
               <SubMenu key="绩效" title={<span><Icon type="user" />绩效</span>}>
@@ -339,44 +339,44 @@ class FrameContent extends React.Component {
                     <Link to="/achive/allList" ><Icon type="bars" />查询</Link>
                   </Menu.Item>
                   <Menu.Item key="绩效留言处理">
-                    <Link to="/budget_baseinfo" ><Icon type="bars" />绩效留言处理</Link>
+                    <Link to="/blank" ><Icon type="bars" />绩效留言处理</Link>
                   </Menu.Item>
                   <Menu.Item key="变更处理">
-                    <Link to="/budget_baseinfo" ><Icon type="bars" />变更处理</Link>
+                    <Link to="/blank" ><Icon type="bars" />变更处理</Link>
                   </Menu.Item>
                 </SubMenu>
                 <SubMenu key="绩效监控" title={<span><Icon type="user" />绩效监控</span>} >
                   <Menu.Item key="绩效目标比对">
-                    <Link to="/budget_baseinfo" ><Icon type="bars" />绩效目标比对</Link>
+                    <Link to="/blank" ><Icon type="bars" />绩效目标比对</Link>
                   </Menu.Item>
                   <Menu.Item key="绩效运行中发生的问题">
-                    <Link to="/budget_baseinfo" ><Icon type="bars" />绩效运行中发生的问题</Link>
+                    <Link to="/blank" ><Icon type="bars" />绩效运行中发生的问题</Link>
                   </Menu.Item>
                 </SubMenu>
                 <SubMenu key="绩效评价" title={<span><Icon type="user" />绩效评价</span>} >
                   <Menu.Item key="第一年度绩效评价">
-                    <Link to="/budget_baseinfo" ><Icon type="bars" />第一年度绩效评价</Link>
+                    <Link to="/blank" ><Icon type="bars" />第一年度绩效评价</Link>
                   </Menu.Item>
                   <Menu.Item key="第二年度前半年绩效评价">
-                    <Link to="/budget_baseinfo" ><Icon type="bars" />第二年度前半年绩效评价</Link>
+                    <Link to="/blank" ><Icon type="bars" />第二年度前半年绩效评价</Link>
                   </Menu.Item>
                   <Menu.Item key="项目终了绩效评价">
-                    <Link to="/budget_baseinfo" ><Icon type="bars" />项目终了绩效评价</Link>
+                    <Link to="/blank" ><Icon type="bars" />项目终了绩效评价</Link>
                   </Menu.Item>
                 </SubMenu>
                 <Menu.Item key="特别情况处理">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />特别情况处理</Link>
+                  <Link to="/blank" ><Icon type="bars" />特别情况处理</Link>
                 </Menu.Item>
               </SubMenu>
               <SubMenu key="专家库" title={<span><Icon type="user" />专家库</span>}>
                 <Menu.Item key="专家信息管理">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />专家信息管理</Link>
+                  <Link to="/blank" ><Icon type="bars" />专家信息管理</Link>
                 </Menu.Item>
                 <Menu.Item key="专家信用记录">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />专家信用记录</Link>
+                  <Link to="/blank" ><Icon type="bars" />专家信用记录</Link>
                 </Menu.Item>
                 <Menu.Item key="专家抽取">
-                  <Link to="/budget_baseinfo" ><Icon type="bars" />专家抽取</Link>
+                  <Link to="/blank" ><Icon type="bars" />专家抽取</Link>
                 </Menu.Item>
               </SubMenu>
               <SubMenu key="系统设置" title={<span><Icon type="user" />系统设置</span>}>

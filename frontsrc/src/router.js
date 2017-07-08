@@ -26,6 +26,9 @@ import reportTime from './components/others/reportTime';
 import SendSMS from './components/others/SendSMS';
 import ResetUserPwd from './components/others/ResetUserPwd';
 
+import BudgetSeason_Country from './components/budget/BudgetSeason_Country';
+import BudgetResult_Country from './components/budget/BudgetResult_Country';
+
 function RouterConfig({ history }) {
   return (
     <Router history={history}>
@@ -38,10 +41,12 @@ function RouterConfig({ history }) {
       <Route path="/budget/addbudgetseason" component={AddBudgetSeason} />
       <Route path="/budget/budgetSeasonList" component={BudgetSeaonList} />
       <Route path="/budget/msg" component={BudgetMsgTable} />
+      <Route path="/budget/projectSeaonBudget" component={BudgetSeason_Country} />
+      <Route path="/budget/projectBudgetResult" component={BudgetResult_Country} />
 
       <Route path="/achive/add" component={Achive} />
       <Route path="/achive/allList" component={AchiveAllList} />
-      
+
       <Route path="/import/budget16" component={ImportBudget16} />
       <Route path="/import/importAchive" component={ImportAchive} />
       <Route path="/import/importProjet" component={ImportProjet} />
@@ -54,6 +59,7 @@ function RouterConfig({ history }) {
       <Route path="/sys/reportTime" component={reportTime} />
       <Route path="/sys/sendSMS" component={SendSMS} />
       <Route path="/sys/resetPwd" component={ResetUserPwd} />
+
     </Router>
   );
 }
