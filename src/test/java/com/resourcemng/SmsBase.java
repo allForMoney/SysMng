@@ -1,61 +1,42 @@
 package com.resourcemng;
 
-import org.junit.*;
+import com.resourcemng.controller.ProjectController;
+import com.resourcemng.entitys.Project;
+import com.resourcemng.task.MessageSender;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Created by 燕子 on 2017/6/18.
- */
+
+@RunWith(SpringRunner.class)
+@WebAppConfiguration
+@SpringBootTest
 public class SmsBase {
-  private String x_id="test";
-  private String x_pwd="123456";
- @org.junit.Test
- public void testSendMessage() throws UnsupportedEncodingException {
-   SendSms("18538289636","你的验证码为：123456【中正云通信】");
- }
-  public String SendSms(String mobile,String content) throws UnsupportedEncodingException {
-    Integer x_ac=10;//发送信息
-    HttpURLConnection httpconn = null;
-    String result="Error";
-    StringBuilder sb = new StringBuilder();
-    sb.append("http://service.winic.org:8009/sys_port/gateway/index.asp?");
-
-//以下是参数
-//为了你的测试方便收到短信！请短信内容编辑为：你的验证码为：123456【中正云通信】
-    sb.append("id=").append(URLEncoder.encode(x_id, "gb2312"));
-    sb.append("&pwd=").append(x_pwd);
-    sb.append("&to=").append(mobile);
-    sb.append("&content=").append(URLEncoder.encode(content, "gb2312"));
-    sb.append("&time=").append("");
-    try {
-      URL url = new URL(sb.toString());
-      httpconn = (HttpURLConnection) url.openConnection();
-      BufferedReader rd = new BufferedReader(new InputStreamReader(httpconn.getInputStream()));
-      result = rd.readLine();
-      rd.close();
-    } catch (MalformedURLException e) {
-// TODO Auto-generated catch block
-      e.printStackTrace();
-    } catch (IOException e) {
-// TODO Auto-generated catch block
-      e.printStackTrace();
-    } finally{
-      if(httpconn!=null){
-        httpconn.disconnect();
-        httpconn=null;
-      }
-
-    }
-    return result;
+  private MockMvc mvc;
+  @Before
+  public void setUp() throws Exception {
+    mvc = MockMvcBuilders.standaloneSetup(new Application()).build();
   }
+  //@Test
+  public void getHello() throws Exception {
+  }
+  @Autowired
+  private MessageSender messageSender;
+  @Test
+  public void test() throws Exception {
+    messageSender.sendSms("18538289636","测试是否能发送消息成功");
+  }
+
 
 
 }

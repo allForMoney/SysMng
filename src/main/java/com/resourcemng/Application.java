@@ -11,6 +11,7 @@ import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.servlet.MultipartConfigElement;
@@ -18,6 +19,7 @@ import javax.servlet.MultipartConfigElement;
 @SpringBootApplication
 //@ComponentScan
 @EnableAutoConfiguration
+@EnableScheduling
 @EnableTransactionManagement
 public class Application extends SpringBootServletInitializer {
 

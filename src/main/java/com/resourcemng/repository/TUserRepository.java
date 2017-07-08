@@ -27,6 +27,9 @@ public interface TUserRepository extends JpaRepository<Tuser, String> {
   @Query("from Tuser u where u.username=:userNo")
   Tuser findByUserNo(@Param("userNo")String userNo);
 
+
+  List<Tuser> findByUserRole(String userRole);
+
 //    @Query("from User u where u.name=:name")
 //    List<TUserEntity> findUser(@Param("name") String name);
 
