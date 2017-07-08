@@ -56,6 +56,7 @@ public class SystemService {
     this.saveScheduleSetting(QuarterSettinEnum.TWO,reportDeadLineView.getQuarterTwoSetting());
     this.saveScheduleSetting(QuarterSettinEnum.THREE,reportDeadLineView.getQuarterThreeSetting());
     this.saveScheduleSetting(QuarterSettinEnum.FOUR,reportDeadLineView.getQuarterFourSetting());
+    //更新周期
     dynamicScheduledTask.updateTask();
   }
 

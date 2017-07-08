@@ -10,6 +10,7 @@ import com.resourcemng.service.SystemService;
 import com.resourcemng.task.DynamicScheduledTask;
 import com.resourcemng.util.FileUitl;
 import com.resourcemng.view.DeleteProjectView;
+import com.resourcemng.view.ReportDeadLineView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -28,19 +29,18 @@ import java.util.Arrays;
 public class SysMngController {
   @Autowired
   SystemService service;
-  @Autowired
-  DynamicScheduledTask dynamicScheduledTask;
 
   /**
-   * 添加项目
-   * @param project
+   * 修改季报填写的周期
+   * @param reportDeadLineView
    * @return
    * @throws Exception
    */
     @RequestMapping(value = "/changereporttime" ,method = RequestMethod.POST)
     @ResponseBody
-    public Object create(@RequestBody Project project) throws Exception {
-      return null;
+    public Object create(ReportDeadLineView reportDeadLineView) throws Exception {
+      service.saveScheduView(reportDeadLineView);
+      return new RequestResult(ResultCode.SUCCESS, "创建项目成功.",null   );
     }
 
 }
