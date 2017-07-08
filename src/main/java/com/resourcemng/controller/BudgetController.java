@@ -103,19 +103,8 @@ public class BudgetController {
     out.flush();
   }
 
-  /**
-   * 添加预算留言
-   * @param leaveMessage
-   * @return
-   * @throws Exception
-   */
-  @RequestMapping(value = "/comment/create" ,method = RequestMethod.POST)
-  @ResponseBody
-  public Object comment(@RequestBody LeaveMessage leaveMessage) throws Exception {
-    return service.comment(leaveMessage);
-  }
 
-    @RequestMapping(value = "/comment/update" ,method = RequestMethod.POST)
+    @RequestMapping(value = "update" ,method = RequestMethod.POST)
     @ResponseBody
     public Object update(@ModelAttribute BudgetImportDetailNew budgetImportDetailNew) throws Exception {
       return new RequestResult(ResultCode.SUCCESS, "提交成功",   service.update(budgetImportDetailNew));

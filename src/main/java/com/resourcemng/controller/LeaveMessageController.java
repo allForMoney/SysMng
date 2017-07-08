@@ -3,6 +3,8 @@ package com.resourcemng.controller;
 import com.resourcemng.Enum.LeaveMessageType;
 import com.resourcemng.basic.RequestResult;
 import com.resourcemng.basic.ResultCode;
+import com.resourcemng.entitys.BudgetImportDetailNew;
+import com.resourcemng.entitys.LeaveMessage;
 import com.resourcemng.service.LeaveMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,18 +21,79 @@ public class LeaveMessageController {
   //文件上传保存路径
 
   /**
-   * 添加项目
+   * 添加预算留言
+   * @param leaveMessage
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "/budget/create" ,method = RequestMethod.POST)
+  @ResponseBody
+  public Object budgetComment(@RequestBody LeaveMessage leaveMessage) throws Exception {
+    leaveMessage.setMesType(LeaveMessageType.BUDGET);
+    return leaveMessageService.comment(leaveMessage);
+  }
+  /**
+   * 添加项目留言
+   * @param leaveMessage
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "/project/create" ,method = RequestMethod.POST)
+  @ResponseBody
+  public Object projectComment(@RequestBody LeaveMessage leaveMessage) throws Exception {
+    leaveMessage.setMesType(LeaveMessageType.PROJECT);
+    return leaveMessageService.comment(leaveMessage);
+  }
+  /**
+   * 添加项目留言
+   * @param leaveMessage
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "/indicator/create" ,method = RequestMethod.POST)
+  @ResponseBody
+  public Object indicatorComment(@RequestBody LeaveMessage leaveMessage) throws Exception {
+    leaveMessage.setMesType(LeaveMessageType.INDICATOR);
+    return leaveMessageService.comment(leaveMessage);
+  }
+  /**
+   * 添加留言,前台输入类型
+   * @param leaveMessage
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "/create" ,method = RequestMethod.POST)
+  @ResponseBody
+  public Object create(@RequestBody LeaveMessage leaveMessage) throws Exception {
+    return leaveMessageService.comment(leaveMessage);
+  }
+
+
+
+  /**
+   * 所有预算/项目留言
    * @return
    * @throws Exception
    */
     @RequestMapping(value = "/budget/all" ,method = RequestMethod.POST)
     @ResponseBody
-    public Object create() throws Exception {
+    public Object budgetAll() throws Exception {
       return new RequestResult(ResultCode.SUCCESS, "获取成功",   this.leaveMessageService.findByType(LeaveMessageType.BUDGET));
     }
 
+
+    /**
+     * 所有绩效目标留言
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/indicator/all" ,method = RequestMethod.POST)
+    @ResponseBody
+    public Object indicatorAll() throws Exception {
+      return new RequestResult(ResultCode.SUCCESS, "获取成功",   this.leaveMessageService.findByType(LeaveMessageType.INDICATOR));
+    }
   /**
-   * 添加项目
+   * 留言回复
    * @return
    * @throws Exception
    */
