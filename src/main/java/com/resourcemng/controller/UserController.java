@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -32,7 +33,7 @@ public class UserController {
    */
   @RequestMapping(value = "/changePassword" ,method = RequestMethod.POST)
   @ResponseBody
-  public Object getAll(String userName, String oldPassword, String newPassword) throws Exception {
+  public Object changePassword(@RequestParam  String userName, @RequestParam String oldPassword, @RequestParam String newPassword) throws Exception {
     Tuser user = service.getUserByNO(userName);
     if (user == null || !user.getPassword().equals(MD5.encrypt(oldPassword))) {//前端没有加密，加密比较
       return new RequestResult(ResultCode.FAILED, "旧密码输入不正确",  "旧密码输入不正确");
