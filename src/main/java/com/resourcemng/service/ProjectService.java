@@ -31,91 +31,90 @@ public class ProjectService {
   private String defaultPass = "654321";
 
   @Transactional
-   public Project createPorject(Project project) throws MyException {
-     try {
-       // 创建三个关联用户
-       Tuser reportUser = new Tuser();
-       // 可以不要
-       reportUser.setMajorName(project.getMajorName());
-       reportUser.setUserRole(UserRole.REPORT);
-       reportUser.setUsername(project.getProjectNo() + "-1");
-       reportUser.setPassword(defaultPass);
-       //用户名空字段，可以不要
+  public Project createPorject(Project project) throws MyException {
+    try {
+      // 创建三个关联用户
+      Tuser reportUser = new Tuser();
+      // 可以不要
+      reportUser.setMajorName(project.getMajorName());
+      reportUser.setUserRole(UserRole.REPORT);
+      reportUser.setUsername(project.getProjectNo() + "-1");
+      reportUser.setPassword(defaultPass);
+      //用户名空字段，可以不要
 //     reportUser.setUserName(project.getReportHead());
-       reportUser.setTelephoneNum(project.getReporterTel());
-       //用户名空字段，可以不要
+      reportUser.setTelephoneNum(project.getReporterTel());
+      //用户名空字段，可以不要
 //     reportUser.setIsDelete();
-       Tuser reportUserA = userRepository.save(reportUser);
+      Tuser reportUserA = userRepository.save(reportUser);
 
-       //财务
-       Tuser financeUser = new Tuser();
-       financeUser.setUserRole(UserRole.FINANCE);
-       financeUser.setMajorName(project.getMajorName());
-       financeUser.setUsername(project.getProjectNo() + "-2");
-       financeUser.setPassword(defaultPass);
-       financeUser.setTelephoneNum(project.getFinaceHeaderTel());
-       userRepository.save(financeUser);
-       //项目负责人
-       Tuser projectUser = new Tuser();
-       projectUser.setUserRole(UserRole.PROJECTHEADER);
-       projectUser.setMajorName(project.getMajorName());
-       projectUser.setUsername(project.getProjectNo() + "-3");
-       projectUser.setPassword(defaultPass);
-       projectUser.setTelephoneNum(project.getProjectHeaderTel());
-       userRepository.save(projectUser);
+      //财务
+      Tuser financeUser = new Tuser();
+      financeUser.setUserRole(UserRole.FINANCE);
+      financeUser.setMajorName(project.getMajorName());
+      financeUser.setUsername(project.getProjectNo() + "-2");
+      financeUser.setPassword(defaultPass);
+      financeUser.setTelephoneNum(project.getFinaceHeaderTel());
+      userRepository.save(financeUser);
+      //项目负责人
+      Tuser projectUser = new Tuser();
+      projectUser.setUserRole(UserRole.PROJECTHEADER);
+      projectUser.setMajorName(project.getMajorName());
+      projectUser.setUsername(project.getProjectNo() + "-3");
+      projectUser.setPassword(defaultPass);
+      projectUser.setTelephoneNum(project.getProjectHeaderTel());
+      userRepository.save(projectUser);
 
-       //设置项目报告人ID
-       project.setImportUserId(reportUserA.getId());
-       return projectRepository.save(project);
-     }catch (Exception e) {
-       e.printStackTrace();
-       throw new MyException(e);
-     }
-   }
+      //设置项目报告人ID
+      project.setImportUserId(reportUserA.getId());
+      return projectRepository.save(project);
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw new MyException(e);
+    }
+  }
 
   /**
-   *
    * @param project
    * @return
    */
-  public Project  updatePorject(Project project) throws MyException {
+  public Project updatePorject(Project project) throws MyException {
     //删除关联用户
     this.deletePorject(project.getProjectNo());
     return this.createPorject(project);
   }
 
   /**
-   *
    * @param projectNos
    */
-  public void  deletePorjects(List<String> projectNos){
-   if(projectNos == null){
-    return;
-   }
-   for(String projectNo:projectNos){
+  public void deletePorjects(List<String> projectNos) {
+    if (projectNos == null) {
+      return;
+    }
+    for (String projectNo : projectNos) {
       this.deletePorject(projectNo);
-   }
+    }
   }
+
   /**
-   *
    * @param projectNo
    */
-  public void  deletePorject(String projectNo){
+  public void deletePorject(String projectNo) {
     //删除关联用户
 //    userRepository.deleteByUsernameLike(projectNo);
     List<Tuser> users = userRepository.findByProject(projectNo);
-    if(users!=null){
-      for (Tuser user:users){
+    if (users != null) {
+      for (Tuser user : users) {
         userRepository.deleteById(user.getId());
       }
     }
     //删除项目信息
     projectRepository.deleteByProjectNo(projectNo);
   }
+
   /**
    *
    */
-  public void  queryProject(){
+  public void queryProject() {
 
     projectRepository.findAll();
 
@@ -123,6 +122,7 @@ public class ProjectService {
 
   /**
    * 解析上传文件，导入project
+   *
    * @param uploadFile
    */
   public void importPorjectByFile(File uploadFile) throws MyException {
@@ -131,19 +131,18 @@ public class ProjectService {
     params.setHeadRows(1);
     params.setNeedSave(true);
     List<Project> list = ExcelImportUtil.importExcel(uploadFile, Project.class, params);
-    if(list == null){
+    if (list == null) {
       throw new MyException("您的文件中没用任何项目信息，请确认文件");
     }
-    for(Project p:list){
-      if (p.getProjectNo() != null){//项目编号不能为空
-       this.createPorject(p);
+    for (Project p : list) {
+      if (p.getProjectNo() != null) {//项目编号不能为空
+        this.createPorject(p);
       }
     }
 
   }
 
   /**
-   *
    * @param projectNo
    * @return
    */
@@ -153,47 +152,42 @@ public class ProjectService {
 
   /**
    * 查询
+   *
    * @param projectNo
    * @param majorName
    * @param schoolName
    */
   public Page find(String projectNo, String majorName, String schoolName, Pageable pageable) {
-    projectNo = projectNo ==null?"":projectNo;
-    majorName = majorName ==null?"":majorName;
-    schoolName = schoolName ==null?"":schoolName;
-      return this.projectRepository.findByProjectNoLikeAndMajorNameLikeAndSchoolNameLike(projectNo,majorName,schoolName,pageable);
-   }
+    projectNo = projectNo == null ? "" : projectNo;
+    majorName = majorName == null ? "" : majorName;
+    schoolName = schoolName == null ? "" : schoolName;
+    return this.projectRepository.findByProjectNoLikeAndMajorNameLikeAndSchoolNameLike(projectNo, majorName, schoolName, pageable);
+  }
 
   /**
    * 修改项目联系人电话
-   * @param user
+   *
    * @return
    */
-  public void changePorjectUser(Tuser user) throws MyException {
+  public void changePorjectUser(Project project) throws MyException {
     try {
-      String userNo = user.getUsername();
-      String projectNo = ApplicationUitl.getPorjectNoByReportUserNo(userNo);
-      String lastIndex = userNo.substring(userNo.length() - 1, userNo.length());
-      Tuser tuser = this.userRepository.findByUserNo(userNo);
-      Project project = this.projectRepository.findByProjectNo(projectNo);
-      tuser.setTelephoneNum(user.getTelephoneNum());
-      switch (lastIndex) {
-        case "1"://修改填报人信息
-          project.setReporterTel(user.getTelephoneNum());
-          break;
-        case "2"://修改财务信息
-          project.setFinaceHeaderTel(user.getTelephoneNum());
-          break;
-        case "3"://修改项目负责人信息
-          project.setProjectHeaderTel(user.getTelephoneNum());
-          break;
-        default:
-          break;
-      }
-      this.userRepository.save(tuser);//更新用户信息
-      this.projectRepository.save(project);//更新项目信息
-    }catch (Exception e){
-        throw new MyException(e);
+      Project projectJap = this.projectRepository.findByProjectNo(project.getProjectNo());
+      projectJap.setFinaceHeaderTel(project.getFinaceHeaderTel());
+      projectJap.setProjectHeaderTel(project.getProjectHeaderTel());
+      projectJap.setReporterTel(project.getReporterTel());
+      this.projectRepository.save(projectJap);
+      String projectNo = project.getProjectNo();
+      updateUserTel(projectNo + "-1", project.getReporterTel());//修改填报人信息
+      updateUserTel(projectNo + "-2", project.getFinaceHeaderTel());//修改财务信息
+      updateUserTel(projectNo + "-3", project.getProjectHeaderTel());//修改项目负责人信息
+    } catch (Exception e) {
+      throw new MyException(e);
     }
+  }
+
+  private void updateUserTel(String userNo, String tel) {
+    Tuser user = this.userRepository.findByUserNo(userNo);
+    user.setTelephoneNum(tel);
+    this.userRepository.save(user);
   }
 }
