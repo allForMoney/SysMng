@@ -21,6 +21,14 @@ class BudgetJustifyRec extends React.Component {
       type: 'BudgetJustifyModel/getBudgetJustifyList',
     });
   }
+  componentWillUnmount() {
+    this.props.dispatch({
+      type: 'BudgetJustifyModel/setState',
+      payload: {
+        showJustifyDetail: false,
+      }
+    });
+  }
 
   onJustifyListPageChange= (page) => {
     this.props.dispatch({
@@ -181,6 +189,7 @@ class BudgetJustifyRec extends React.Component {
               currentPage={budgetJustifyComparePage}
               dataList={budgetJustifyCompareList}
               loading={loading}
+              compare
             />
           }
           {
