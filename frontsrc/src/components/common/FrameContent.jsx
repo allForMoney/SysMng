@@ -141,7 +141,9 @@ class FrameContent extends React.Component {
           />
         </Modal>
         <Header className="header">
-          <div className={styles.logo} />
+          <div className={styles.logo}>
+            职业教育国家级专业教学资源库预算绩效管理系统
+          </div>
           <div style={{ float: 'right' }} >
             <span>用户名：{userName} 身份： {identity}</span>
             <Button type="primary" size="small" onClick={this.logoOut} style={{ marginLeft: 10 }}>退出登录</Button>

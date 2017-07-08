@@ -23,7 +23,7 @@ const Option = Select.Option;
 
 class BudgetJustify extends React.Component {
   state={
-    showUpload: true,
+    showUpload: false,
     adjustType: 'adjust2016',
     auditOpin: ''
   }

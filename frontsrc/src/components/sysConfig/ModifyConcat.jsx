@@ -12,6 +12,7 @@ import FrameContent from '../common/FrameContent';
 const FormItem = Form.Item;
 
 class ModifyConcat extends React.Component {
+
   handleSubmit = () => {
     const { validateFields } = this.props.form;
     validateFields((error, values) => {
@@ -19,7 +20,7 @@ class ModifyConcat extends React.Component {
         return;
       }
       this.props.dispatch({
-        type: `baseModel/updateConcat`,
+        type: 'baseModel/updateConcat',
         payload: values
       });
     });
@@ -50,8 +51,17 @@ class ModifyConcat extends React.Component {
       },
     };
 
-    const { poejectName, lawName, phone, userName } = this.props;
-    console.log(userName)
+    const { projectInfo } = this.props;
+    const {
+      majorName,
+      schoolHead,
+      finaceHeader,
+      finaceHeaderTel,
+      projectHeader,
+      projectHeaderTel,
+      reporter,
+      reporterTel,
+    } = projectInfo;
     const filterRules = {
       required: true,
       message: '不可为空'
@@ -66,8 +76,8 @@ class ModifyConcat extends React.Component {
                 label="项目名称"
                 hasFeedback
               >
-                {getFieldDecorator('poejectName', {
-                  initialValue: poejectName,
+                {getFieldDecorator('majorName', {
+                  initialValue: majorName,
                 })(<Input disabled type="text" />)}
               </FormItem>
             </Col>
@@ -77,8 +87,8 @@ class ModifyConcat extends React.Component {
                 label="法定代表人"
                 hasFeedback
               >
-                {getFieldDecorator('lawName', {
-                  initialValue: userName,
+                {getFieldDecorator('schoolHead', {
+                  initialValue: schoolHead,
                 })(<Input disabled type="text" />)}
               </FormItem>
             </Col>
@@ -90,8 +100,8 @@ class ModifyConcat extends React.Component {
                 label="项目负责人"
                 hasFeedback
               >
-                {getFieldDecorator('name1', {
-                  initialValue: lawName,
+                {getFieldDecorator('projectHeader', {
+                  initialValue: projectHeader,
                 })(<Input disabled type="text" />)}
               </FormItem>
             </Col>
@@ -101,9 +111,9 @@ class ModifyConcat extends React.Component {
                 label="联系电话"
                 hasFeedback
               >
-                {getFieldDecorator('phone1', {
+                {getFieldDecorator('projectHeaderTel', {
                   rules: [filterRules],
-                  initialValue: phone,
+                  initialValue: projectHeaderTel,
                 })(<Input type="text" />)}
               </FormItem>
             </Col>
@@ -115,8 +125,8 @@ class ModifyConcat extends React.Component {
                 label="财务部门负责人"
                 hasFeedback
               >
-                {getFieldDecorator('name2', {
-                  initialValue: lawName,
+                {getFieldDecorator('finaceHeader', {
+                  initialValue: finaceHeader,
                 })(<Input disabled type="text" />)}
               </FormItem>
             </Col>
@@ -126,9 +136,9 @@ class ModifyConcat extends React.Component {
                 label="联系电话"
                 hasFeedback
               >
-                {getFieldDecorator('phone2', {
+                {getFieldDecorator('finaceHeaderTel', {
                   rules: [filterRules],
-                  initialValue: phone,
+                  initialValue: finaceHeaderTel,
                 })(<Input type="text" />)}
               </FormItem>
             </Col>
@@ -140,8 +150,8 @@ class ModifyConcat extends React.Component {
                 label="填报人"
                 hasFeedback
               >
-                {getFieldDecorator('name3', {
-                  initialValue: lawName,
+                {getFieldDecorator('reporter', {
+                  initialValue: reporter,
                 })(<Input disabled type="text" />)}
               </FormItem>
             </Col>
@@ -151,9 +161,9 @@ class ModifyConcat extends React.Component {
                 label="联系电话"
                 hasFeedback
               >
-                {getFieldDecorator('phone3', {
+                {getFieldDecorator('reporterTel', {
                   rules: [filterRules],
-                  initialValue: phone,
+                  initialValue: reporterTel,
                 })(<Input type="text" />)}
               </FormItem>
             </Col>
@@ -167,8 +177,8 @@ class ModifyConcat extends React.Component {
   }
 }
 function mapStateToProps(state) {
-  const { userType, userName } = state.baseModel;
-  return { userType, userName };
+  const { userType, userName, projectInfo } = state.baseModel;
+  return { userType, userName, projectInfo };
 }
 export default connect(mapStateToProps)(Form.create({})(ModifyConcat));
 
