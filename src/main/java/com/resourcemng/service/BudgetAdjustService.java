@@ -97,9 +97,8 @@ public class BudgetAdjustService {
    * 预算调整审核
    * @param id
    * @param auditType
-   * @param auditContent
    */
-  public void audit(String id, String auditType,String auditContent) {
+  public void audit(String id, String auditType,String auditStatus) {
     BudgetAuditLog log = budgetAuditLogRepository.findByAdjustId(id);
     if(log == null){
       log = new BudgetAuditLog();
@@ -108,21 +107,27 @@ public class BudgetAdjustService {
     switch(auditType)
     {
       case AuditType.FINACE_AUDIT:
-        log.setFinanceAuditState(AuditStatus.PASS);
+        log.setFinanceAuditState(auditStatus);
         log.setFinanceAuditTime(new Date());
-        log.setStatus(ReportStatus.F_PASS);
+        if(AuditStatus.PASS.equals(auditStatus)) {
+          log.setStatus(ReportStatus.F_PASS);
+        }
         break;
       case AuditType.SCHOOL_AUDIT:
-        log.setSchoolAuditState(AuditStatus.PASS);
+        log.setSchoolAuditState(auditStatus);
         log.setSchoolAuditTime(new Date());
-        log.setStatus(ReportStatus.P_PASS);
+        if(AuditStatus.PASS.equals(auditStatus)) {
+          log.setStatus(ReportStatus.P_PASS);
+        }
         break;
       case AuditType.COUNTRY_AUDIT:
-        log.setConutryAuditState(AuditStatus.PASS);
+        log.setConutryAuditState(auditStatus);
         log.setConutryAuditTime(new Date());
-        log.setAuditOpinion(auditContent);
+//        log.setAuditOpinion(auditContent);
+        if(!AuditStatus.PASS.equals(auditStatus)) {
+          break;
+        }
         log.setStatus(ReportStatus.COUNTRY_PASS);
-
         String importId = log.getAdjustId();
         FileImportLog fileImportLog = fileImportLogRepository.findById(importId).get();
         String projectId = fileImportLog.getProjectId();
@@ -133,12 +138,13 @@ public class BudgetAdjustService {
         if(ImportFileType.BUDGET_ADJUST_2016.equals(fileImportLog)){
           List<BudgetImportDetailNew> budgetImportDetailNews = budgetImport2016Repository.findByBudgetImportId(fileImportLog.getId());
           budgetService.computeBudgetImport2016(projectId,budgetImportDetailNews);
+
         }else{//2015预算调整审核
           //TODO
         }
-
         break;
-
+      default:
+        break;
     }
   }
 
