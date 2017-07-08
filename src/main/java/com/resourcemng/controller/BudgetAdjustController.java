@@ -73,14 +73,14 @@ public class BudgetAdjustController {
 
 
   /**
-   * @param projectId
+   * @param projectNo
    * @return
    * @throws Exception
    */
   @RequestMapping(value = "/getLastAdjust" ,method = RequestMethod.GET)
   @ResponseBody
-  public Object getLastAdjust(@RequestParam String projectId) throws Exception {
-    List list = (List) service.find(projectId,null).getContent();
+  public Object getLastAdjust(@RequestParam String projectNo) throws Exception {
+    List list = (List) service.find(projectNo,null,null,null).getContent();
     if(list == null || list.size()==0){
       return new RequestResult(ResultCode.SUCCESS, "还没有调整过",   null);
     }
@@ -104,16 +104,15 @@ public class BudgetAdjustController {
 
   /**
    *获取项目所有的调整记录
-   * @param projectId
    * @return
    * @throws Exception
    */
   @RequestMapping(value = "/all" ,method = RequestMethod.GET)
   @ResponseBody
-  public Object getAll( @RequestParam String projectId,String page,String size) throws Exception {
+  public Object getAll( String projectNo,String majorName,String schoolName,String page,String size) throws Exception {
     Pageable pageable = new PageRequest(Integer.parseInt(page)-1,Integer.parseInt(size));
 
-    return new RequestResult(ResultCode.SUCCESS, "提交审批成功.",    service.find(projectId,pageable));
+    return new RequestResult(ResultCode.SUCCESS, "提交审批成功.",    service.find(projectNo,majorName,schoolName,pageable));
   }
   /**
    *获取项目所有的调整记录

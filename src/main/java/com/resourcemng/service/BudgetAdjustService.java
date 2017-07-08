@@ -6,14 +6,19 @@ import com.resourcemng.entitys.*;
 import com.resourcemng.repository.*;
 import com.resourcemng.util.FileUitl;
 import com.resourcemng.view.BudgetAdjustCompareView;
+import com.resourcemng.view.BudgetAdjustView;
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 @Service
@@ -25,8 +30,12 @@ public class BudgetAdjustService {
   BudgetService budgetService;
   @Autowired
   FileImportLogRepository fileImportLogRepository;
+  @Autowired
   FundsBudgetRepository fundsBudgetRepository;
+  @Autowired
   BudgetImport2016Repository budgetImport2016Repository;
+  @Autowired
+  ProjectRepository projectRepository;
   /**
    * 预算调整
    * @param projectId
@@ -136,27 +145,52 @@ public class BudgetAdjustService {
 
   /**
    * 指定项目ID查找
-   * @param projectId
    * @return
    */
-  public Page find(String projectId, Pageable  pageable ) {
-    if(StringUtils.isEmpty(projectId)){//查找所有预算
-      return  budgetAuditLogRepository.findAll(pageable);
-
-    }else{
-      List<FileImportLog> budgetAdjusts = fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDate(projectId,ImportFileType.BUDGET_ADJUST_2016);
-      if(budgetAdjusts == null){
-      budgetAdjusts = fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDate(projectId,ImportFileType.BUDGET_ADJUST);
-      }
-      if(budgetAdjusts == null){
-        return null;
-      }
-      List<String> ids = new ArrayList<>();
-      for(FileImportLog budgetAdjust:budgetAdjusts){
-        ids.add(budgetAdjust.getId());
-      }
-      return  budgetAuditLogRepository.findByAdjustIdIn(ids,pageable);
+  public Page find(String projectNo,String majorName,String schoolName, Pageable  pageable ) throws InvocationTargetException, IllegalAccessException {
+    projectNo = projectNo ==null?"":projectNo;
+    majorName = majorName ==null?"":majorName;
+    schoolName = schoolName ==null?"":schoolName;
+    List<Project> projects = this.projectRepository.findByProjectNoLikeAndMajorNameLikeAndSchoolNameLike(projectNo,majorName,schoolName);
+    if(projects == null || projects.size() == 0){
+      pageable = pageable==null?new PageRequest(1,10):pageable;//这里随便构造一个对象，不然校验不通过
+      return new PageImpl(new ArrayList<>(),pageable,0);
     }
+    List<String> projectIds = new ArrayList<>();
+    Map<String,Project> projectMap = new HashMap();
+    for(Project project:projects){//缓存
+      projectIds.add(project.getId());
+      projectMap.put(project.getId(),project);
+    }
+
+    List<FileImportLog> budgetAdjustsImportLog = fileImportLogRepository.findByProjectIdInAndImportTypeOrderByImportDate(projectIds,ImportFileType.BUDGET_ADJUST_2016);
+    if(budgetAdjustsImportLog == null){
+      budgetAdjustsImportLog = fileImportLogRepository.findByProjectIdInAndImportTypeOrderByImportDate(projectIds,ImportFileType.BUDGET_ADJUST);
+    }
+    if(budgetAdjustsImportLog == null){
+      return null;
+    }
+    List<String> ids = new ArrayList<>();
+    Map<String,FileImportLog> adjustMap = new HashMap();
+    for(FileImportLog budgetAdjust:budgetAdjustsImportLog){
+      ids.add(budgetAdjust.getId());
+      adjustMap.put(budgetAdjust.getId(),budgetAdjust);
+    }
+    Page result =   budgetAuditLogRepository.findByAdjustIdIn(ids,pageable);
+    List<BudgetAuditLog> adjustList = result.getContent();
+    if(adjustList == null){
+      return result;
+    }
+    List adjustViewList = new ArrayList();
+    for(BudgetAuditLog budgetAuditLog:adjustList){
+      BudgetAdjustView view = new BudgetAdjustView();
+      BeanUtils.copyProperties(view,budgetAuditLog);
+      FileImportLog fileImportLog= adjustMap.get(budgetAuditLog.getAdjustId());
+      Project project= projectMap.get(fileImportLog.getProjectId());
+      BeanUtils.copyProperties(view,project);
+      adjustViewList.add(view);
+    }
+    return new PageImpl(adjustViewList,result.getPageable(),result.getTotalElements());
 
   }
 

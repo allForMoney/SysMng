@@ -17,6 +17,9 @@ import java.util.List;
 public interface FileImportLogRepository extends JpaRepository<FileImportLog, String> {
 //  @Query("from FileImportLog p where p.projectId=:projectId")
     List<FileImportLog> findByProjectIdAndImportTypeOrderByImportDate(String projectId, String importType);
+
+    List<FileImportLog> findByProjectIdInAndImportTypeOrderByImportDate(List ids, String importType);
+
     List<FileImportLog>  findByImportType(String importType);
 
     List<FileImportLog> findByProjectId(String projectId);
