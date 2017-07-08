@@ -33,8 +33,10 @@ public class ProjectServiceTests {
   public void setUp() throws Exception {
     mvc = MockMvcBuilders.standaloneSetup(new Application()).build();
   }
-  //@Test
+  @Test
   public void getHello() throws Exception {
+
+
   }
   @Autowired
   private ProjectService service;

@@ -9,11 +9,11 @@ import com.resourcemng.entitys.Tuser;
 import com.resourcemng.service.ProjectService;
 import com.resourcemng.service.UserService;
 import com.resourcemng.util.ApplicationUitl;
+import com.resourcemng.util.MD5;
 import com.resourcemng.view.LoginUserView;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -52,8 +52,8 @@ public class AuthController {
   Object loginPost(@RequestBody Tuser tuser,HttpSession session,HttpServletResponse response ) throws MyException {
     try {
       Map<String, Object> map = new HashMap<>();
-      Tuser user = service.getUser(tuser.getUsername());
-      if (user == null || !user.getPassword().equals(tuser.getPassword())) {
+      Tuser user = service.getUserByNO(tuser.getUsername());
+      if (user == null || !user.getPassword().equals(MD5.encrypt(tuser.getPassword()))) {//前端没有加密，加密比较
         throw new MyException("用户名密码不正确");
       }
       LoginUserView view = new LoginUserView();

@@ -9,6 +9,7 @@ import com.resourcemng.entitys.Tuser;
 import com.resourcemng.repository.ProjectRepository;
 import com.resourcemng.repository.TUserRepository;
 import com.resourcemng.util.ApplicationUitl;
+import com.resourcemng.util.MD5;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -28,18 +29,20 @@ public class ProjectService {
   TUserRepository userRepository;
 
   @Value("${app.user.defaultpassword}")
-  private String defaultPass = "654321";
+  private String defaultPass = "wzNncBURtPYCDsYd7TUgWQ==";
 
   @Transactional
   public Project createPorject(Project project) throws MyException {
     try {
+      String pass = defaultPass;
+//      String pass = MD5.encrypt(defaultPass);
       // 创建三个关联用户
       Tuser reportUser = new Tuser();
       // 可以不要
       reportUser.setMajorName(project.getMajorName());
       reportUser.setUserRole(UserRole.REPORT);
       reportUser.setUsername(project.getProjectNo() + "-1");
-      reportUser.setPassword(defaultPass);
+      reportUser.setPassword(pass);
       //用户名空字段，可以不要
 //     reportUser.setUserName(project.getReportHead());
       reportUser.setTelephoneNum(project.getReporterTel());
@@ -52,7 +55,7 @@ public class ProjectService {
       financeUser.setUserRole(UserRole.FINANCE);
       financeUser.setMajorName(project.getMajorName());
       financeUser.setUsername(project.getProjectNo() + "-2");
-      financeUser.setPassword(defaultPass);
+      financeUser.setPassword(pass);
       financeUser.setTelephoneNum(project.getFinaceHeaderTel());
       userRepository.save(financeUser);
       //项目负责人
@@ -60,7 +63,7 @@ public class ProjectService {
       projectUser.setUserRole(UserRole.PROJECTHEADER);
       projectUser.setMajorName(project.getMajorName());
       projectUser.setUsername(project.getProjectNo() + "-3");
-      projectUser.setPassword(defaultPass);
+      projectUser.setPassword(pass);
       projectUser.setTelephoneNum(project.getProjectHeaderTel());
       userRepository.save(projectUser);
 
