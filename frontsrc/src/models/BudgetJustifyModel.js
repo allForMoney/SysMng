@@ -99,11 +99,14 @@ export default {
       }
     },
     // 通过调整审核
-    * changeCheckStatus({ payload }, { call }) {
+    * changeCheckStatus({ payload }, { call, put }) {
       const data = yield call(changeCheckStatus, payload);
 
       if (data.code === '1') {
         message.info('审核成功');
+        yield put({
+          type: 'getBudgetJustifyList'
+        });
       }
     },
 
