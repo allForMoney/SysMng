@@ -21,6 +21,12 @@ class BudgetSeason extends React.Component {
   }
   componentDidMount() {
     this.props.dispatch({
+      type: 'budgetModel/getBudgetSeasonList',
+    });
+  }
+
+  componentWillUnmount() {
+    this.props.dispatch({
       type: 'budgetModel/SetState',
       payload: {
         projectYear: 0,
@@ -40,14 +46,30 @@ class BudgetSeason extends React.Component {
       }
     });
   }
-  
+
   onSeaSonChange= (value) => {
     this.props.dispatch({
-      type: 'budgetModel/getBudgetSeasonList',
+      type: 'budgetModel/setState',
       payload: {
         quarterNum: value,
       }
     });
+    this.props.dispatch({
+      type: 'budgetModel/getBudgetSeasonList',
+    });
+  }
+
+  doExport= () => {
+    const {
+      projectInfo,
+      projectYear,
+      quarterNum,
+  } = this.props;
+    const url = `./budget/report/quarterly/download?
+    projectId=${projectInfo.id}&
+    projectYear=${projectYear}&
+    quarterNum=${quarterNum}`;
+    window.open(url);
   }
 
   doCheck= (flag) => { // flag=true,通过审核
@@ -115,7 +137,7 @@ class BudgetSeason extends React.Component {
     return {
       cancelVisible,
       passVisible
-    }
+    };
   }
 
   render() {
@@ -129,6 +151,7 @@ class BudgetSeason extends React.Component {
       quarterNum,
       userType,
       auditStatus,
+      showSeasonExport,
     } = this.props;
     const YearSelection = [];
     for (let i = 2015; i < 2019; i++) {
@@ -142,8 +165,6 @@ class BudgetSeason extends React.Component {
     const { editable } = this.state;
     const { cancelVisible, passVisible } = this.getCheckVisible(userType, auditStatus);
 
-    console.log(projectYear);
-    console.log(quarterNum);
     return (
       <FrameContent>
         <Card title={`预算执行季报[编号: ${projectInfo.projectNo},名称:${projectInfo.majorName}]`}>
@@ -188,6 +209,10 @@ class BudgetSeason extends React.Component {
                 {passVisible &&
                   <Button className={styles.btnClass} type="primary" onClick={this.doCheck.bind(this, '1')}>通过审核</Button>
                 }
+                {showSeasonExport &&
+                  <Button className={styles.btnClass} type="primary" onClick={this.doExport}>导出Excel文件</Button>
+                }
+
               <BudgetSeasonOutcome
                 editable={editable}
                 buggetOutComeList={buggetOutComeList}
@@ -198,7 +223,6 @@ class BudgetSeason extends React.Component {
                   className={styles.btnClass}
                   type="primary"
                   onClick={() => {
-                    console.log(4564);
                     this.props.dispatch({
                       type: 'budgetModel/setState',
                       payload: {
@@ -239,11 +263,13 @@ function mapStateToProps(state) {
     projectYear,
     quarterNum,
     auditStatus,
+    showSeasonExport,
     } = state.budgetModel;
   return {
     budgetMsgList,
     userType,
     projectInfo,
+    showSeasonExport,
     loading,
     budgetMsgNum,
     budgetMsgage,

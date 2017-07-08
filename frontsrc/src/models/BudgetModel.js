@@ -24,7 +24,9 @@ export default {
     budgetRecordList: [],
     budgetRecordPage: 1,
     budgetRecordNum: 45,
-    budgetProjectList: []
+    budgetProjectList: [],
+
+    showSeasonExport: false,
   },
   effects: {
     // 获取项目预算表
@@ -45,9 +47,9 @@ export default {
     // 获取预算季报信息
     * getBudgetSeasonList({ payload }, { call, put, select }) {
       const { projectInfo } = yield select(state => state.baseModel);
-      const { projectYear } = yield select(state => state.budgetModel);
+      const { projectYear, quarterNum } = yield select(state => state.budgetModel);
       const projectId = projectInfo.id;
-      const data = yield call(getBudgetSeasonList, { projectId, projectYear, ...payload });
+      const data = yield call(getBudgetSeasonList, { projectId, projectYear, quarterNum });
 
       if (data && data.code === '1' && data.result) {
         let { fundsIns, fundsOuts, auditStatus } = data.result;
@@ -78,16 +80,15 @@ export default {
 
     * getBudgetRecList({ payload }, { call, put, select }) {
       const { budgetRecordPage } = yield select(state => state.budgetModel);
-      const { projectInfo } = yield select(state => state.baseModel);
-      const projectId = projectInfo.id;
-      const data = yield call(getBudgetRecList, { projectId });
-      if (data && data.code === 1) {
+      const data = yield call(getBudgetRecList, { page: budgetRecordPage });
+      if (data && data.code === '1') {
+        const { content, totalPages } = data.result;
+
         yield put({
           type: 'setState',
           payload: {
-            budgetRecordList: data.result,
-            budgetRecordPage: data.result.page,
-            budgetRecordNum: data.result.total,
+            budgetRecordList: content,
+            budgetRecordNum: totalPages,
           }
         });
       }

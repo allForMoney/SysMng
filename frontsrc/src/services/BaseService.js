@@ -26,7 +26,7 @@ export function getProviceInfo() {
 
 export function updateConcat(params) {
   console.log(params);
-  return request('/common/updateConcat', {
+  return request('/project/contacter/change', {
     method: 'post',
     data: JSON.stringify(params),
   });
