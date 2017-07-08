@@ -162,9 +162,9 @@ public class BudgetAdjustService {
       projectMap.put(project.getId(),project);
     }
 
-    List<FileImportLog> budgetAdjustsImportLog = fileImportLogRepository.findByProjectIdInAndImportTypeOrderByImportDate(projectIds,ImportFileType.BUDGET_ADJUST_2016);
+    List<FileImportLog> budgetAdjustsImportLog = fileImportLogRepository.findByProjectIdInAndImportTypeOrderByImportDateDesc(projectIds,ImportFileType.BUDGET_ADJUST_2016);
     if(budgetAdjustsImportLog == null){
-      budgetAdjustsImportLog = fileImportLogRepository.findByProjectIdInAndImportTypeOrderByImportDate(projectIds,ImportFileType.BUDGET_ADJUST);
+      budgetAdjustsImportLog = fileImportLogRepository.findByProjectIdInAndImportTypeOrderByImportDateDesc(projectIds,ImportFileType.BUDGET_ADJUST);
     }
     if(budgetAdjustsImportLog == null){
       return null;

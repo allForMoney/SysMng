@@ -9,6 +9,7 @@ import com.resourcemng.entitys.*;
 import com.resourcemng.handler.IndicatorBaseInfoImportHanlder;
 import com.resourcemng.handler.IndicatorImportHanlder;
 import com.resourcemng.repository.*;
+import com.resourcemng.view.BudgetAdjustView;
 import com.resourcemng.view.IndicatorView;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -160,8 +161,26 @@ public class IndicatorService {
     return view;
 
   }
+  /**
+   *
+   * @param fileImportId
+   */
+  public IndicatorView getIndicatorDetailByImportId(String fileImportId) throws MyException, InvocationTargetException, IllegalAccessException {
+    IndicatorView view  = new IndicatorView ();
+    //仅仅允许导入一次啊
+    FileImportLog  fileImportLog = fileImportLogRepository.findById(fileImportId).get();
+    if(fileImportLog == null){
+      throw new MyException("没有记录，请联系管理员导入指标数据。");
+    }
+    BeanUtils.copyProperties(view, fileImportLog);
+    IndicatorBase indicatorBase = indicatorBaseRepository.findByFileImportId(fileImportLog.getId());
+    view.setIndicatorBase(indicatorBase);
+    view.setIndicatorDetails(indicatorDetailRepository.findByFileImportId(fileImportLog.getId()));
+    return view;
 
-  public Page find(String projectNo, String majorName, String schoolName,  Pageable pageable ) throws InvocationTargetException, IllegalAccessException {
+  }
+
+  public Page find(String projectNo, String majorName, String schoolName,  Pageable pageable ) throws InvocationTargetException, IllegalAccessException, MyException {
     projectNo = projectNo == null ? "" : projectNo;
     majorName = majorName ==null?"":majorName;
     schoolName = schoolName ==null?"":schoolName;
@@ -176,21 +195,20 @@ public class IndicatorService {
       projectIds.add(project.getId());
       projectMap.put(project.getId(),project);
     }
-
-    List<FileImportLog> budgetAdjustsImportLog = fileImportLogRepository.findByProjectIdInAndImportTypeOrderByImportDate(projectIds,ImportFileType.BUDGET_ADJUST_2016);
-    if(budgetAdjustsImportLog == null){
+  //分页查询
+    Page page = fileImportLogRepository.findByProjectIdInAndImportTypeOrderByImportDateDesc(projectIds,ImportFileType.TARGET,pageable);
+    List<FileImportLog> indictorImportLogs = page.getContent();
+    if(indictorImportLogs == null){
       pageable = pageable==null?new PageRequest(1,10):pageable;//这里随便构造一个对象，不然校验不通过
       return new PageImpl(new ArrayList<>(),pageable,0);
     }
-    List<String> ids = new ArrayList<>();
-    Map<String,FileImportLog> fileImportMap = new HashMap();
-    for(FileImportLog fileImportLog:budgetAdjustsImportLog){
-      ids.add(fileImportLog.getId());
-      fileImportMap.put(fileImportLog.getId(),fileImportLog);
+    List indicatorList = new ArrayList();
+    //返回
+    for(FileImportLog budgetAuditLog:indictorImportLogs){
+      IndicatorView view = this.getIndicatorDetailByImportId(budgetAuditLog.getId());
+      indicatorList.add(view);
     }
-//    indicatorBaseRepository.findByFileImportIdIn(ids);
-
-    return null;
+    return new PageImpl(indicatorList,page.getPageable(),page.getTotalElements());
   }
 
   }

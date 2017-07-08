@@ -38,4 +38,8 @@ public class IndicatorServiceTests {
   public void get() throws Exception {
     Object obj =  service.getIndicatorDetail("402881f05cf98f57015cf98f68030003");
   }
+  @Test
+  public void find() throws Exception {
+    Object obj =  service.find("2017","","",null);
+  }
 }
