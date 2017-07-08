@@ -8,26 +8,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class ExpertServiceService  /*implements  UserDetailsService*/{
   @Autowired
   ExpertsRepository expertsRepository;
 
-  public Object regiestExpert(Experts experts){
+
+  public Object update(Experts experts){
 
     return  expertsRepository.save(experts);
   }
+  public void batchDelete(List ids){
 
-  public Object updeteExpert(Experts experts){
+      expertsRepository.deleteInBatch(ids);
+  }
 
+  public Object create(Experts experts) {
     return  expertsRepository.save(experts);
   }
-  public void delete(String id){
-
-      expertsRepository.deleteById(id);
+  public Object find() {
+    return  expertsRepository.findAll();
   }
-
 }
 
 

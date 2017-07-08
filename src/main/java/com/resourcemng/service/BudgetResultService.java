@@ -135,7 +135,7 @@ public class BudgetResultService {
    * @param quarterNum
    * @param auditType
    */
-  public void quarterlyReportAudit(String projectId,String reportYear,String quarterNum ,String auditType ,String auditContent) {
+  public void quarterlyReportAudit(String projectId,String reportYear,String quarterNum ,String auditType ,String auditStatus) {
     ReportAuditLog log = reportAuditLogRepository.findByParam(projectId,quarterNum,reportYear);
     if(log == null){
       log = new ReportAuditLog();
@@ -146,20 +146,26 @@ public class BudgetResultService {
     switch(auditType)
     {
       case AuditType.FINACE_AUDIT:
-        log.setFinanceAuditState(AuditStatus.PASS);
+        log.setFinanceAuditState(auditStatus);//AuditStatus ，通过不通过
         log.setFinanceAuditTime(new Date());
-        log.setStatus(ReportStatus.F_PASS);
+        if(AuditStatus.PASS.equals(auditStatus)) {
+          log.setStatus(ReportStatus.F_PASS);
+        }
         break;
       case AuditType.SCHOOL_AUDIT:
-        log.setSchoolAuditState(AuditStatus.PASS);
+        log.setSchoolAuditState(auditStatus);
         log.setSchoolAuditTime(new Date());
-        log.setStatus(ReportStatus.P_PASS);
+        if(AuditStatus.PASS.equals(auditStatus)) {
+          log.setStatus(ReportStatus.P_PASS);
+        }
         break;
       case AuditType.COUNTRY_AUDIT:
-        log.setConutryAuditState(AuditStatus.PASS);
+        log.setConutryAuditState(auditStatus);
         log.setConutryAuditTime(new Date());
-        log.setAuditOpinion(auditContent);
-        log.setStatus(ReportStatus.COUNTRY_PASS);
+//        log.setAuditOpinion(auditContent);
+        if(AuditStatus.PASS.equals(auditStatus)) {
+          log.setStatus(ReportStatus.COUNTRY_PASS);
+        }
 
         break;
 
