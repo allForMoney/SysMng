@@ -10,6 +10,7 @@ import com.resourcemng.entitys.*;
 import com.resourcemng.handler.BudgetImportHanlder;
 import com.resourcemng.repository.*;
 import com.resourcemng.util.BigDecimalUtil;
+import com.resourcemng.util.MD5;
 import com.resourcemng.view.BudgetImportView;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -33,19 +34,16 @@ public class UserService  /*implements  UserDetailsService*/{
     return  userRepository.save(user);
   }
 
-  public Tuser getUser(String userNo){
+  public Tuser getUserByNO(String userNo){
     return  userRepository.findByUserNo(userNo);
   }
 
-//  @Override
-//  public UserDetails loadUserByUsername(String userNo) throws UsernameNotFoundException {
-//    if (StringUtils.isBlank(userNo)) {
-//      throw new UsernameNotFoundException("用户名为空");
-//    }
-//
-//    Tuser user = userRepository.findByUserNo(userNo);
-//    return user;
-//  }
+  public Object changePassword(String userNo, String newPassword) {
+   Tuser user =  userRepository.findByUserNo(userNo);
+    user.setPassword(MD5.encrypt(newPassword));
+    return userRepository.save(user);
+  }
+
 }
 
 
