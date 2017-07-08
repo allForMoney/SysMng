@@ -23,7 +23,7 @@ public class ExpertServiceService  /*implements  UserDetailsService*/{
   }
   public void batchDelete(List ids){
 
-      expertsRepository.deleteInBatch(ids);
+      expertsRepository.deleteByIdIn(ids);
   }
 
   public Object create(Experts experts) {

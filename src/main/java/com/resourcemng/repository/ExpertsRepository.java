@@ -16,4 +16,6 @@ import java.util.List;
  * @blog http://blog.didispace.com
  */
 public interface ExpertsRepository extends JpaRepository<Experts, String> {
+
+  void deleteByIdIn(List ids);
 }
