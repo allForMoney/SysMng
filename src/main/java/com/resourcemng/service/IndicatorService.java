@@ -188,7 +188,7 @@ public class IndicatorService {
       ids.add(fileImportLog.getId());
       fileImportMap.put(fileImportLog.getId(),fileImportLog);
     }
-//    indicatorBaseRepository.find(view.getIndicatorBase());
+//    indicatorBaseRepository.findByFileImportIdIn(ids);
 
     return null;
   }

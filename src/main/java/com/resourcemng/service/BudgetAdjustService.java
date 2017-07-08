@@ -4,7 +4,6 @@ import com.resourcemng.Enum.*;
 import com.resourcemng.basic.MyException;
 import com.resourcemng.entitys.*;
 import com.resourcemng.repository.*;
-import com.resourcemng.util.FileUitl;
 import com.resourcemng.view.BudgetAdjustCompareView;
 import com.resourcemng.view.BudgetAdjustView;
 import org.apache.commons.beanutils.BeanUtils;
@@ -180,7 +179,7 @@ public class BudgetAdjustService {
     if(StringUtils.isEmpty(status)) {
       result = budgetAuditLogRepository.findByAdjustIdIn(ids, pageable);
     }else{
-      result = budgetAuditLogRepository.findByAdjustIdInAAndStatus(ids,status, pageable);
+      result = budgetAuditLogRepository.findByAdjustIdInAndStatus(ids,status, pageable);
 
     }
     List<BudgetAuditLog> adjustList = result.getContent();
