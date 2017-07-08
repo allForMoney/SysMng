@@ -66,7 +66,7 @@ public class BudgetImportHanlder extends ExcelDataHandlerDefaultImpl<Map<String,
         case "19":
           return "university";
         case "20":
-          return "oraginalId";
+          return "originalId";
       }
       return null;
     }

@@ -50,7 +50,7 @@ public class BudgetAdjustController {
   @RequestMapping(value = "/import" ,method = RequestMethod.POST)
   @ResponseBody
   public Object uploadBudget(@RequestParam String projectId,@RequestParam String adjustUserId,@RequestParam String adjustType,HttpServletRequest request) throws Exception {
-    List<MultipartFile> files =((MultipartHttpServletRequest)request).getFiles("files");
+    List<MultipartFile> files =((MultipartHttpServletRequest)request).getFiles("file");
     if (!files.isEmpty() && files.size() >=3) {
         File requestFile = fileUitl.saveUploadFile(files.get(0) );
         File adjustFile = fileUitl.saveUploadFile(files.get(1) );
