@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2017-6-22.
  */
-public class BudgetAdjustCompareView extends FileImportLog {
+public class BudgetAdjustCompareView /*extends FileImportLog*/ {
   BudgetImportDetailNew beforeAdjust;
   BudgetImportDetailNew afterAdjust;
 
