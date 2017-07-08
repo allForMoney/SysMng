@@ -91,6 +91,7 @@ export default {
         yield put({
           type: 'setState',
           payload: {
+            showJustifyDetail: true,
             budgetJustifyCompareList: data.result.list,
           }
         });
