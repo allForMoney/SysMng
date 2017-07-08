@@ -10,6 +10,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
@@ -47,7 +49,7 @@ public class BudgetAdjustController {
   @RequestMapping(value = "/import" ,method = RequestMethod.POST)
   @ResponseBody
   public Object uploadBudget(@RequestParam String projectId,@RequestParam String adjustUserId,@RequestParam String adjustType,HttpServletRequest request) throws Exception {
-    List<MultipartFile> files =((MultipartHttpServletRequest)request).getFiles("file");
+    List<MultipartFile> files =((MultipartHttpServletRequest)request).getFiles("files");
     if (!files.isEmpty() && files.size() >=3) {
         File requestFile = fileUitl.saveUploadFile(files.get(0) );
         File adjustFile = fileUitl.saveUploadFile(files.get(1) );
@@ -59,7 +61,6 @@ public class BudgetAdjustController {
   }
 
   /**
-   * 导入文件
    * @param adjustId
    * @return
    * @throws Exception
@@ -67,9 +68,24 @@ public class BudgetAdjustController {
   @RequestMapping(value = "/getById" ,method = RequestMethod.GET)
   @ResponseBody
   public Object getById(@RequestParam String adjustId) throws Exception {
-      return new RequestResult(ResultCode.SUCCESS, "上传成功",   service.getById(adjustId));
+      return new RequestResult(ResultCode.SUCCESS, "根据调整ID获取调整详情",   service.getById(adjustId));
   }
 
+
+  /**
+   * @param projectId
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "/getLastAdjust" ,method = RequestMethod.GET)
+  @ResponseBody
+  public Object getLastAdjust(@RequestParam String projectId) throws Exception {
+    List list = (List) service.find(projectId,null).getContent();
+    if(list == null || list.size()==0){
+      return new RequestResult(ResultCode.SUCCESS, "还没有调整过",   null);
+    }
+    return new RequestResult(ResultCode.SUCCESS, "最后一次的调整如下：",  list.get(list.size()-1));
+  }
   /**
    *审核调整记录
    * @param id
@@ -94,10 +110,10 @@ public class BudgetAdjustController {
    */
   @RequestMapping(value = "/all" ,method = RequestMethod.GET)
   @ResponseBody
-  public Object getAll( @RequestParam String projectId) throws Exception {
+  public Object getAll( @RequestParam String projectId,String page,String size) throws Exception {
+    Pageable pageable = new PageRequest(Integer.parseInt(page)-1,Integer.parseInt(size));
 
-
-    return new RequestResult(ResultCode.SUCCESS, "提交审批成功.",    service.find(projectId));
+    return new RequestResult(ResultCode.SUCCESS, "提交审批成功.",    service.find(projectId,pageable));
   }
   /**
    *获取项目所有的调整记录

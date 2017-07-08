@@ -1,6 +1,8 @@
 package com.resourcemng.repository;
 
 import com.resourcemng.entitys.BudgetAuditLog;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Collection;
@@ -26,5 +28,5 @@ public interface BudgetAuditLogRepository extends JpaRepository<BudgetAuditLog, 
    * @param adjustIds
    * @return
    */
-  List<BudgetAuditLog> findByAdjustIdIn(Collection adjustIds);
+  Page findByAdjustIdIn(Collection adjustIds,  Pageable pageable);
 }

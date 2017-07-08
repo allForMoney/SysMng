@@ -9,6 +9,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -39,7 +41,14 @@ public class BudgetAdjustServiceTests {
   }
   @Test
   public void getBudgetForProject() throws Exception {
-    service.find("ddd");
+    Pageable pageable = new PageRequest(Integer.parseInt("1")-1,Integer.parseInt("4"));
+   Object obj =  service.find("402881f05d094788015d0949f20e000b",pageable);
+
+  }
+  @Test
+  public void getLastAdjust() throws Exception {
+    Pageable pageable = new PageRequest(Integer.parseInt("1")-1,Integer.parseInt("4"));
+   Object obj =  service.find("402881f05d094788015d0949f20e000b",null);
 
   }
 
