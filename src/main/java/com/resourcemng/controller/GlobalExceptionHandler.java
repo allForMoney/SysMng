@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(value={Exception.class})
   @ResponseBody //在返回自定义相应类的情况下必须有，这是@ControllerAdvice注解的规定
  public RequestResult exceptionHandler(RuntimeException e, HttpServletResponse response) {
-    e.printStackTrace();
+      e.printStackTrace();
     return new RequestResult(ResultCode.FAILED, e.getMessage(), e.getMessage());
   }
 }

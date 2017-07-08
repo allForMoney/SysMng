@@ -1,15 +1,20 @@
 package com.resourcemng.service;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
+import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
 import com.resourcemng.Enum.ImportFileType;
 import com.resourcemng.basic.MyException;
 import com.resourcemng.entitys.*;
 import com.resourcemng.handler.IndicatorBaseInfoImportHanlder;
 import com.resourcemng.handler.IndicatorImportHanlder;
 import com.resourcemng.repository.*;
+import com.resourcemng.util.ApplicationUitl;
+import com.resourcemng.view.BudgetImportView;
 import com.resourcemng.view.IndicatorView;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -209,4 +214,33 @@ public class IndicatorService {
     return new PageImpl(indicatorList,page.getPageable(),page.getTotalElements());
   }
 
-  }
+  /**
+   * 导出
+   * @param projectId
+   * @return
+   * @throws IllegalAccessException
+   * @throws MyException
+   * @throws InvocationTargetException
+   */
+  public Map<String,Object> exportIndicator(String projectId) throws IllegalAccessException, MyException, InvocationTargetException {
+      Map<String, Object> map = new HashMap<>();
+      IndicatorView indicatorView = getIndicatorDetail(projectId);
+      if (indicatorView == null) {
+        return null;
+      }
+      Project project = this.projectRepository.findById(projectId).get();
+      //
+//导出文件
+      TemplateExportParams params = new TemplateExportParams(
+        ApplicationUitl.getWebRootPath("templete/绩效目标模板.xlsx"), true);
+      Map<String, Object> tempDataMap = new HashMap<>();
+      tempDataMap.put("project", project);
+      tempDataMap.put("indicatorDetails", indicatorView.getIndicatorDetails());
+      tempDataMap.put("indicatorBase", indicatorView.getIndicatorBase());
+      Workbook workbook = ExcelExportUtil.exportExcel(params, tempDataMap);
+      map.put("project", project);
+      map.put("workbook", workbook);
+
+      return map;
+    }
+}
