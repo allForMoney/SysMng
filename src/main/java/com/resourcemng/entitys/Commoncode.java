@@ -9,6 +9,7 @@ import java.io.Serializable;
  * Created by Administrator on 2017-6-23.
  */
 @Entity
+@Table(name = "commoncode")
 public class Commoncode implements Serializable {
   private String id;
   private String name;
