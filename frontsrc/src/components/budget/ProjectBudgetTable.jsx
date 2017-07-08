@@ -1,5 +1,5 @@
 /**
- * 项目预算表table,在 ProjectBudget 中引入
+ * 项目预算表table,在 ProjectBudget/BudgetJustifyRec 中引入
  */
 import React from 'react';
 import { Table } from 'antd';
@@ -10,9 +10,10 @@ function ProjectBudgetTable(props) {
     totalNum,
     onPageChange,
     currentPage,
-    dataList,
     loading,
+    compare,
   } = props;
+  let { dataList } = props;
   const columns =
     [{
       title: '序号',
@@ -117,8 +118,24 @@ function ProjectBudgetTable(props) {
       }],
     }];
 
-  
+
   const title = `${tableTitle} (单位:万元)`;
+  if (compare) {
+    columns.unshift(
+      {
+        title: '对比',
+        dataIndex: 'compare',
+        key: 'compare',
+        width: 30,
+      });
+    const temp = [];
+    dataList.forEach((item) => {
+      temp.push({ compare: '调整前', ...item.beforeAdjust });
+      temp.push({ compare: '调整后', ...item.afterAdjust });
+// afterAdjust/beforeAdjust
+    });
+    dataList = temp;
+  }
 
   const pageConfig = {
     className: 'ant-table-pagination',
