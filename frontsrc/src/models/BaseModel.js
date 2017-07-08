@@ -1,4 +1,5 @@
 import { logout, login, updateConcat, getProviceInfo,
+  modifyPass,
   getProjectInfoById } from '../services/BaseService';
 import { routerRedux } from 'dva/router';
 import { message, Modal } from 'antd';
@@ -165,6 +166,21 @@ export default {
           }
         });
         message.info('联系方式更新成功');
+      }
+    },
+
+    * modifyPass({ payload }, { call, put, select }) {
+      const { projectInfo } = yield select(state => state.baseModel);
+      const data = yield call(modifyPass, { ...projectInfo, ...payload });
+
+      if (data && data.code === '1') {
+        yield put({
+          type: 'setState',
+          payload: {
+            projectInfo: data.result.project,
+          }
+        });
+        message.info('密码修改成功');
       }
     }
   },

@@ -28,17 +28,17 @@ class ModifyPass extends React.Component {
       >
         <Form layout="vertical">
           <FormItem label="用户名" {...formItemLayout} >
-            {getFieldDecorator('name', {
+            {getFieldDecorator('userName', {
               initialValue: this.props.userName,
             })(<Input disabled />)}
           </FormItem>
           <FormItem label="原密码" {...formItemLayout}>
-            {getFieldDecorator('oldpass', {
+            {getFieldDecorator('oldPassword', {
               rules: [filterRules],
             })(<Input />)}
           </FormItem>
           <FormItem label="新密码" {...formItemLayout}>
-            {getFieldDecorator('newpass', {
+            {getFieldDecorator('newPassword', {
               rules: [filterRules],
             })(<Input />)}
           </FormItem>

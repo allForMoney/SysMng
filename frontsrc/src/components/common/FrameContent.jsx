@@ -1,6 +1,6 @@
 import { Layout, Menu, Breadcrumb,
   Input,
-  Icon, Card, Button, Modal } from 'antd';
+  Icon, message, Button, Modal } from 'antd';
 import React, { PropTypes } from 'react';
 import { connect } from 'dva';
 import { Link } from 'dva/router';
@@ -32,6 +32,10 @@ class FrameContent extends React.Component {
 
     form.validateFields((err, values) => {
       if (err) {
+        return;
+      }
+      if (values.newPassword !== values.repeatPass) {
+        message.info('请输入一致的密码');
         return;
       }
       this.props.dispatch({
