@@ -3,13 +3,11 @@ package com.resourcemng.service;
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import com.resourcemng.Enum.ImportFileType;
-import com.resourcemng.Enum.LeaveMessageType;
 import com.resourcemng.basic.MyException;
 import com.resourcemng.entitys.*;
 import com.resourcemng.handler.IndicatorBaseInfoImportHanlder;
 import com.resourcemng.handler.IndicatorImportHanlder;
 import com.resourcemng.repository.*;
-import com.resourcemng.view.BudgetAdjustView;
 import com.resourcemng.view.IndicatorView;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +36,7 @@ public class IndicatorService {
   public void importFormFile(String projectId, String importUser, File uploadFile) throws MyException {
     try {
       //仅仅允许导入一次啊
-      List<FileImportLog> logs = fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDate(projectId,ImportFileType.TARGET);
+      List<FileImportLog> logs = fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDateDesc(projectId,ImportFileType.TARGET);
       if(logs !=null &&logs.size() >0){
         throw new MyException("同一个项目绩效指标只能导入一次，如果需要修改，请删除记录后重试。");
       }
@@ -149,7 +147,7 @@ public class IndicatorService {
   public IndicatorView getIndicatorDetail(String projectId) throws MyException, InvocationTargetException, IllegalAccessException {
     IndicatorView view  = new IndicatorView ();
     //仅仅允许导入一次啊
-    List<FileImportLog>   logs = fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDate(projectId,ImportFileType.TARGET);
+    List<FileImportLog>   logs = fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDateDesc(projectId,ImportFileType.TARGET);
     if(logs == null){
       throw new MyException("没有记录，请联系管理员导入指标数据。");
     }

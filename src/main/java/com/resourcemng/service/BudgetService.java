@@ -6,7 +6,7 @@ import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
 import com.resourcemng.Enum.FoundSourceType;
 import com.resourcemng.Enum.ImportFileType;
-import com.resourcemng.Enum.LeaveMessageType;
+import com.resourcemng.Enum.ReportStatus;
 import com.resourcemng.basic.MyException;
 import com.resourcemng.entitys.*;
 import com.resourcemng.handler.BudgetImportHanlder;
@@ -56,7 +56,7 @@ public class BudgetService {
   public void importBudgetFormFile(String projectId, String importUser,String importType, File uploadFile) throws MyException {
 
     if(ImportFileType.BUDGET2016.equals(importType)){
-      List<FileImportLog>    fileImportLogs  = this.fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDate(projectId,importType);
+      List<FileImportLog>    fileImportLogs  = this.fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDateDesc(projectId,importType);
       if(fileImportLogs != null && fileImportLogs.size()>0) {//不让重复导入？
         throw new MyException("预算已经导入过，不能重复导入，请删除后重试");
       }
@@ -248,10 +248,10 @@ public class BudgetService {
     try {
       BudgetImportView view = new BudgetImportView();
       BeanUtils.copyProperties(view,obj);
-      if(ImportFileType.BUDGET2016.equals(obj.getImportType())) {//2016
+      if(ImportFileType.BUDGET2016.equals(obj.getImportType()) ||ImportFileType.BUDGET_ADJUST_2016.equals(obj.getImportType())) {//2016
         List<BudgetImportDetailNew> detail = this.budgetImport2016Repository.findByBudgetImportId(obj.getId());
         view.setBudgetImportDetaillList(detail);
-      }else{//2015
+      } else{//2015
         List<BudgetImportDetailOld> detail = this.budgetImportRepository.findByBudgetImportId(obj.getId());
         view.setBudgetImportDetaillList(detail);
       }
@@ -265,7 +265,7 @@ public class BudgetService {
 
 
   /**
-   * 获取明细，返回基本导入信息和详细预算信息
+   * 获取明细，返回基本导入信息和详细预算信息,获取最后一次调整的数据
    * @param projetId
    * @return
    * @throws MyException
@@ -274,15 +274,47 @@ public class BudgetService {
     //先看看有没有已经审核通过的调整记录
       //TODO 预算如果导入多次怎么办,取最新的？
 
-    List<FileImportLog>   logs  = this.fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDate(projetId,ImportFileType.BUDGET_ADJUST_2016);
-    if(logs ==null ||  logs.size()==0){
-      logs  = this.fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDate(projetId,ImportFileType.BUDGET2016);
+    List<FileImportLog> allLogs = new ArrayList<>();
+
+    List<FileImportLog>   logs2016  = this.fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDateDesc(projetId,ImportFileType.BUDGET_ADJUST_2016);
+    List<FileImportLog>   logs2015  = this.fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDateDesc(projetId,ImportFileType.BUDGET_ADJUST);
+    if(logs2016 !=null) {
+      allLogs.addAll(logs2016);
     }
-    //先取调整数据再取导入数据
-    if(logs ==null ||  logs.size()==0){
+    if(logs2015 !=null) {
+      allLogs.addAll(logs2015);
+    }
+
+    FileImportLog fileImportLog =null;
+    if(allLogs !=null &&  allLogs.size()>0){
+      List<BudgetAuditLog> allBudgetAuditLog =  budgetAuditLogRepository.findByStatusOrderByConutryAuditTimeDesc(ReportStatus.COUNTRY_PASS);
+      if(allBudgetAuditLog !=null &&allBudgetAuditLog.size() >0) {
+        //拿到所有的审核记录，判断最新的审核通过的数据
+        Map<String, FileImportLog> importLog = new HashMap<>();
+        for (FileImportLog temp : allLogs) {
+          importLog.put(temp.getId(), temp);
+        }
+        for (BudgetAuditLog budgetAuditLog : allBudgetAuditLog) {//匹配
+          fileImportLog = importLog.get(budgetAuditLog.getAdjustId());
+         if(fileImportLog!=null){
+           break;
+         }
+
+        }
+      }
+
+    }
+    if(fileImportLog ==null){
+      allLogs  = this.fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDateDesc(projetId,ImportFileType.BUDGET2016);
+      if(allLogs !=null &&  allLogs.size()>0){
+        fileImportLog = allLogs.get(0);
+      }
+    }
+    if(fileImportLog ==null){
       return null;
     }
-      FileImportLog fileImportLog = logs.get(0);
+    //先取调整数据再取导入数据
+
       return this.getDetail(fileImportLog);
   }
 

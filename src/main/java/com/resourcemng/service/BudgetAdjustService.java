@@ -48,18 +48,14 @@ public class BudgetAdjustService {
   public Object adjust(String projectId,String importUser,String adjustType,File requestFile,File adjustFile,File descriptionFile ) throws MyException {
     List<FileImportLog> fileImportLogs = null;
     if(ImportFileType.BUDGET_ADJUST_2016.equals(adjustType)) {
-      fileImportLogs = fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDate(projectId, ImportFileType.BUDGET2016);
+      fileImportLogs = fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDateDesc(projectId, ImportFileType.BUDGET2016);
     }else{
-      fileImportLogs = fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDate(projectId, ImportFileType.BUDGET2015);
+      fileImportLogs = fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDateDesc(projectId, ImportFileType.BUDGET2015);
 
     }
     if(fileImportLogs == null || fileImportLogs.size()==0){
       throw new MyException("预算还没有导入，不能调整，请导入预算");
     }
-    FileImportLog fileImportLog = fileImportLogs.get(0);
-//    if(!fileImportLog.getImportType().equals(adjustType)){
-//      throw new MyException("不支持不同格式的预算调整");
-//    }
     if(ImportFileType.BUDGET_ADJUST_2016.equals(adjustType)){
 //导入记录
       FileImportLog log = new FileImportLog();
@@ -214,7 +210,7 @@ public class BudgetAdjustService {
     BudgetAuditLog log = budgetAuditLogRepository.findByAdjustId(id);
     String importId = log.getAdjustId();
     FileImportLog fileImportLog = fileImportLogRepository.findById(importId).get();
-    if(ImportFileType.BUDGET_ADJUST_2016.equals(fileImportLog)) {//2016
+    if(ImportFileType.BUDGET_ADJUST_2016.equals(fileImportLog.getImportType())) {//2016
 
       List<BudgetImportDetailNew> budgetImportDetailNews = budgetImport2016Repository.findByBudgetImportId(fileImportLog.getId());
       if (budgetImportDetailNews == null) {
@@ -224,9 +220,11 @@ public class BudgetAdjustService {
       List<BudgetAdjustCompareView> compareList = new ArrayList<BudgetAdjustCompareView>();
       for (BudgetImportDetailNew budgetImportDetailNew : budgetImportDetailNews) {
         BudgetAdjustCompareView budgetAdjustCompareView = new BudgetAdjustCompareView();
-        BudgetImportDetailNew oldRecord = budgetImport2016Repository.findById(budgetImportDetailNew.getOriginalId()).get();
-        budgetAdjustCompareView.setAfterAdjust(budgetImportDetailNew);
-        budgetAdjustCompareView.setBeforeAdjust(oldRecord);
+        if(budgetImportDetailNew.getOriginalId()!=null) {
+          BudgetImportDetailNew oldRecord = budgetImport2016Repository.findById(budgetImportDetailNew.getOriginalId()).get();
+          budgetAdjustCompareView.setBeforeAdjust(oldRecord);
+        }
+          budgetAdjustCompareView.setAfterAdjust(budgetImportDetailNew);
         compareList.add(budgetAdjustCompareView);
       }
       //返回比较数据
