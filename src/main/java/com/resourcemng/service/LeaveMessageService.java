@@ -29,7 +29,16 @@ import java.util.Map;
 public class LeaveMessageService {
   @Autowired
   LeaveMessageRepository leaveMessageRepository;
-
+  /**
+   *
+   * @param leaveMessage
+   * @return
+   */
+  public Object comment(LeaveMessage leaveMessage) {
+    leaveMessage.setMesType(LeaveMessageType.BUDGET);
+    leaveMessage.setSubmitDate(new Date());
+    return leaveMessageRepository.save(leaveMessage);
+  }
   /**
    * 根据类型查找
    * @param mesType

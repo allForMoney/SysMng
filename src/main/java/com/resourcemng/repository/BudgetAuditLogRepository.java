@@ -28,5 +28,6 @@ public interface BudgetAuditLogRepository extends JpaRepository<BudgetAuditLog, 
    * @param adjustIds
    * @return
    */
+  Page findByAdjustIdInAAndStatus(Collection adjustIds,  String status,Pageable pageable);
   Page findByAdjustIdIn(Collection adjustIds,  Pageable pageable);
 }

@@ -147,7 +147,7 @@ public class BudgetAdjustService {
    * 指定项目ID查找
    * @return
    */
-  public Page find(String projectNo,String majorName,String schoolName, Pageable  pageable ) throws InvocationTargetException, IllegalAccessException {
+  public Page find(String projectNo,String majorName,String schoolName,String status,Pageable  pageable ) throws InvocationTargetException, IllegalAccessException {
     projectNo = projectNo ==null?"":projectNo;
     majorName = majorName ==null?"":majorName;
     schoolName = schoolName ==null?"":schoolName;
@@ -176,7 +176,13 @@ public class BudgetAdjustService {
       ids.add(budgetAdjust.getId());
       adjustMap.put(budgetAdjust.getId(),budgetAdjust);
     }
-    Page result =   budgetAuditLogRepository.findByAdjustIdIn(ids,pageable);
+    Page result =null;
+    if(StringUtils.isEmpty(status)) {
+      result = budgetAuditLogRepository.findByAdjustIdIn(ids, pageable);
+    }else{
+      result = budgetAuditLogRepository.findByAdjustIdInAAndStatus(ids,status, pageable);
+
+    }
     List<BudgetAuditLog> adjustList = result.getContent();
     if(adjustList == null){
       return result;

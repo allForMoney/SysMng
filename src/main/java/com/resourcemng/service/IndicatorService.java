@@ -3,6 +3,7 @@ package com.resourcemng.service;
 import cn.afterturn.easypoi.excel.ExcelImportUtil;
 import cn.afterturn.easypoi.excel.entity.ImportParams;
 import com.resourcemng.Enum.ImportFileType;
+import com.resourcemng.Enum.LeaveMessageType;
 import com.resourcemng.basic.MyException;
 import com.resourcemng.entitys.*;
 import com.resourcemng.handler.IndicatorBaseInfoImportHanlder;
@@ -11,6 +12,10 @@ import com.resourcemng.repository.*;
 import com.resourcemng.view.IndicatorView;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +32,8 @@ public class IndicatorService {
   IndicatorDetailRepository indicatorDetailRepository;
   @Autowired
   IndicatorBaseRepository indicatorBaseRepository;
+  @Autowired
+  ProjectRepository projectRepository;
   public void importFormFile(String projectId, String importUser, File uploadFile) throws MyException {
     try {
       //仅仅允许导入一次啊
@@ -153,4 +160,37 @@ public class IndicatorService {
     return view;
 
   }
-}
+
+  public Page find(String projectNo, String majorName, String schoolName,  Pageable pageable ) throws InvocationTargetException, IllegalAccessException {
+    projectNo = projectNo == null ? "" : projectNo;
+    majorName = majorName ==null?"":majorName;
+    schoolName = schoolName ==null?"":schoolName;
+    List<Project> projects = this.projectRepository.findByProjectNoLikeAndMajorNameLikeAndSchoolNameLike(projectNo,majorName,schoolName);
+    if(projects == null || projects.size() == 0){
+      pageable = pageable==null?new PageRequest(1,10):pageable;//这里随便构造一个对象，不然校验不通过
+      return new PageImpl(new ArrayList<>(),pageable,0);
+    }
+    List<String> projectIds = new ArrayList<>();
+    Map<String,Project> projectMap = new HashMap();
+    for(Project project:projects){//缓存
+      projectIds.add(project.getId());
+      projectMap.put(project.getId(),project);
+    }
+
+    List<FileImportLog> budgetAdjustsImportLog = fileImportLogRepository.findByProjectIdInAndImportTypeOrderByImportDate(projectIds,ImportFileType.BUDGET_ADJUST_2016);
+    if(budgetAdjustsImportLog == null){
+      pageable = pageable==null?new PageRequest(1,10):pageable;//这里随便构造一个对象，不然校验不通过
+      return new PageImpl(new ArrayList<>(),pageable,0);
+    }
+    List<String> ids = new ArrayList<>();
+    Map<String,FileImportLog> fileImportMap = new HashMap();
+    for(FileImportLog fileImportLog:budgetAdjustsImportLog){
+      ids.add(fileImportLog.getId());
+      fileImportMap.put(fileImportLog.getId(),fileImportLog);
+    }
+//    indicatorBaseRepository.find(view.getIndicatorBase());
+
+    return null;
+  }
+
+  }

@@ -286,16 +286,7 @@ public class BudgetService {
       return this.getDetail(fileImportLog);
   }
 
-  /**
-   *
-   * @param leaveMessage
-   * @return
-   */
-  public Object comment(LeaveMessage leaveMessage) {
-    leaveMessage.setMesType(LeaveMessageType.BUDGET);
-    leaveMessage.setSubmitDate(new Date());
-   return leaveMessageRepository.save(leaveMessage);
-  }
+
 
   public ProjectBudgetInfoView getBudgetForProject(String projectId) throws InvocationTargetException, IllegalAccessException {
     ProjectBudgetInfoView view = new ProjectBudgetInfoView();

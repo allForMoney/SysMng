@@ -88,5 +88,16 @@ public class IndicatorController {
 
     return new RequestResult(ResultCode.SUCCESS, "绩效添加成功",   service.getIndicatorDetail(projectId));
   }
+  /**
+   * 绩效手动填写
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "/all" ,method = RequestMethod.GET)
+  @ResponseBody
+  public Object all(String projectNo,String majorName,String schoolName,String page,String size) throws Exception {
+
+    return new RequestResult(ResultCode.SUCCESS, "绩效添加成功",   service.find(projectNo,majorName,schoolName,null));
+  }
 
 }
