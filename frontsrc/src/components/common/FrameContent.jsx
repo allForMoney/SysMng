@@ -370,13 +370,13 @@ class FrameContent extends React.Component {
               </SubMenu>
               <SubMenu key="专家库" title={<span><Icon type="user" />专家库</span>}>
                 <Menu.Item key="专家信息管理">
-                  <Link to="/blank" ><Icon type="bars" />专家信息管理</Link>
+                  <Link to="/expert/list" ><Icon type="bars" />专家信息管理</Link>
                 </Menu.Item>
                 <Menu.Item key="专家信用记录">
                   <Link to="/blank" ><Icon type="bars" />专家信用记录</Link>
                 </Menu.Item>
                 <Menu.Item key="专家抽取">
-                  <Link to="/blank" ><Icon type="bars" />专家抽取</Link>
+                  <Link to="/expert/drawExpert" ><Icon type="bars" />专家抽取</Link>
                 </Menu.Item>
               </SubMenu>
               <SubMenu key="系统设置" title={<span><Icon type="user" />系统设置</span>}>

@@ -80,7 +80,7 @@ export default {
       const { budgetRecordPage } = yield select(state => state.budgetModel);
       const { projectInfo } = yield select(state => state.baseModel);
       const projectId = projectInfo.id;
-      const data = yield call(getBudgetRecList, { projectId, budgetRecordPage });
+      const data = yield call(getBudgetRecList, { projectId });
       if (data && data.code === 1) {
         yield put({
           type: 'setState',
