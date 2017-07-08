@@ -42,12 +42,12 @@ public class BudgetAdjustServiceTests {
   @Test
   public void getBudgetForProject() throws Exception {
     Pageable pageable = new PageRequest(Integer.parseInt("1")-1,Integer.parseInt("4"));
-   Object obj =  service.find("2017","","",pageable);
+   Object obj =  service.find("2017","","",null,pageable);
 
   }
   @Test
   public void getLastAdjust() throws Exception {
-   Object obj =  service.find("2017","","",null);
+   Object obj =  service.find("2017","","",null,null);
 
   }
 
