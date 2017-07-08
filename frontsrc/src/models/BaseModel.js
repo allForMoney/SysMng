@@ -82,17 +82,6 @@ export default {
       }
     },
 
-    * login({ payload }, { call }) {
-      const data = yield call(login, payload);
-      if (data && data.code === '1') {
-        window.location = '../index.html';
-        sessionStorage.username = payload.username;
-        sessionStorage.password = payload.password;
-      } else {
-        Modal.info({ content: '登录失败,请检查用户名密码', maskClosable: true });
-      }
-    },
-
     * getProviceInfo({ payload }, { call, put }) {
       const data = yield call(getProviceInfo, payload);
       if (data && data.code === '1') {
@@ -111,6 +100,12 @@ export default {
 
     * doRouter({ payload }, { put }) {
       const userType = payload.userType;
+      const hash = window.location.hash;
+      const start = hash.indexOf('?');
+      console.log(start);
+      if (start > 2) {
+        return;
+      }
       // TODO 根据用户角色不同,跳转到不同 的界面
       let pathname = '/base/projectList'; // 管理员的默认界面
       switch (userType) {

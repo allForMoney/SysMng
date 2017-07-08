@@ -3,7 +3,7 @@ import { connect } from 'dva';
 
 import {
   Button,
-  Tag,
+  Input,
   Row,
   Col,
   Card,
@@ -25,6 +25,7 @@ class BudgetJustify extends React.Component {
   state={
     showUpload: true,
     adjustType: 'adjust2016',
+    auditOpin: ''
   }
 
   downloadBudget= () => {
@@ -40,6 +41,40 @@ class BudgetJustify extends React.Component {
     this.setState({
       adjustType: value,
     });
+  }
+
+  getCheckVisible = (userType, auditStatus) => {
+    let cancelVisible = false;
+    let passVisible = false;
+    if (userType === 'finace') {
+      if (auditStatus === 0) {
+        passVisible = true;
+      }
+      if (auditStatus === 1) {
+        cancelVisible = true;
+      }
+    }
+    if (userType === 'school') {
+      if (auditStatus === 1) {
+        passVisible = true;
+      }
+      if (auditStatus === 3) {
+        cancelVisible = true;
+      }
+    }
+    if (userType === 'country') {
+      if (auditStatus === 3) {
+        passVisible = true;
+      }
+      if (auditStatus === 5) {
+        cancelVisible = true;
+      }
+    }
+
+    return {
+      cancelVisible,
+      passVisible
+    };
   }
 
   submitFiles= () => {
@@ -75,15 +110,39 @@ class BudgetJustify extends React.Component {
     xhr.send(formData);
   }
 
+  onAuditContentChanged = (value) => {
+    this.setState({
+      auditOpin: value,
+    });
+  }
+
+  doCheck= (flag) => { // flag=true,通过审核
+    const {
+      userType,
+      id,
+  } = this.props;
+    const { auditOpin } = this.state;
+    this.props.dispatch({
+      type: 'budgetModel/changeCheckStatus',
+      payload: {
+        id,
+        auditOpin,
+        auditType: userType,
+        auditContent: flag,
+      }
+    });
+  }
   render() {
     const {
         userId,
         desFile, // 说明文件
         requestFile,  // 请求文件
         fileName, // 调整文件 xls
-        projectInfo
+        projectInfo,
+        userType,
+        auditStatus,
     } = this.props;
-    const { showUpload, adjustType } = this.state;
+    const { showUpload, adjustType, auditOpin } = this.state;
 
     // projectId  adjustUserId  adjustType
     const uploadURl = `/budgetadjust/import?projectId=${projectInfo.id}&adjustUserId=${userId}&adjustType=${adjustType}`;
@@ -91,6 +150,9 @@ class BudgetJustify extends React.Component {
       labelCol: { span: 7 },
       wrapperCol: { span: 14 },
     };
+
+    const { cancelVisible, passVisible } = this.getCheckVisible(userType, auditStatus);
+
 
     return (
       <FrameContent>
@@ -109,12 +171,23 @@ class BudgetJustify extends React.Component {
               </Col>
             </Row>
             <Row>
-              <Col offset={16} span={7}>
+              <Col offset={16} span={7} style={{ margin: 10 }}>
                 <Button onClick={this.downloadBudget}>当前预算表格下载</Button>
+              </Col>
+              <Col offset={16} span={7} style={{ margin: 10 }}>
+                {passVisible &&
+                  <Input value={auditOpin} onChange={this.onAuditContentChanged} />
+                }
+                {cancelVisible &&
+                  <Button className={styles.btnClass} type="primary" onClick={this.doCheck.bind(this, '0')}>返回上一级</Button>
+                }
+                {passVisible &&
+                  <Button className={styles.btnClass} type="primary" onClick={this.doCheck.bind(this, '1')}>通过审核</Button>
+                }
               </Col>
             </Row>
           </Card>
-          {showUpload &&
+          {showUpload && userType === 'inputer' &&
             <Card title="上传预算调整申请文件">
               <Form >
                 <FormItem label="预算模板" {...formItemLayout}>
@@ -139,6 +212,9 @@ class BudgetJustify extends React.Component {
               </Form>
             </Card>
           }
+          {
+
+          }
         </Card>
       </FrameContent>
     );
@@ -149,15 +225,19 @@ function mapStateToProps(state) {
   const {
     projectInfo,
     userId,
+    userType,
    } = state.baseModel;
   const {
     desFile, // 说明文件
     requestFile,  // 请求文件
     fileName, // 调整文件 xls
+    id,
    } = state.BudgetJustifyModel;
 
   return {
     projectInfo,
+    id,
+    userType,
     desFile, // 说明文件
     requestFile,  // 请求文件
     fileName, // 调整文件 xls

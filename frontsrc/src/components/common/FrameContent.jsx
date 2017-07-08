@@ -26,7 +26,7 @@ class FrameContent extends React.Component {
     const [cookie3, cookie2, cookie1] = keyPath;
     this.setState({ cookie1, cookie2, cookie3, selectKeys: cookie3 });
   }
-  
+
   onCreateBtnClicked = () => {
     const form = this.form;
 
@@ -62,10 +62,9 @@ class FrameContent extends React.Component {
 
   doLogoOut = () => {
     // TODO
-    this.props.dispatch(routerRedux.push({
-      pathname: '/login',
-    })
-    );
+    delete sessionStorage.username;
+    delete sessionStorage.password;
+    window.location = '../login.html';
   }
 
   saveFormRef = (form) => {
@@ -88,7 +87,7 @@ class FrameContent extends React.Component {
     });
     this.cancelMsg();
   }
-  
+
   render() {
     const { cookie1, cookie2, cookie3, msgValue,
     selectKeys,
@@ -143,7 +142,7 @@ class FrameContent extends React.Component {
         </Modal>
         <Header className="header">
           <div className={styles.logo} />
-          <div style={{ float: 'right'}} >
+          <div style={{ float: 'right' }} >
             <span>用户名：{userName} 身份： {identity}</span>
             <Button type="primary" size="small" onClick={this.logoOut} style={{ marginLeft: 10 }}>退出登录</Button>
           </div>
@@ -383,7 +382,7 @@ class FrameContent extends React.Component {
                   <Link onClick={this.modifyPass}><Icon type="bars" />修改密码</Link>
                 </Menu.Item>
                 <Menu.Item key="退出登录">
-                   <Link onClick={this.logoOut} ><Icon type="bars" />退出登录</Link>
+                  <Link onClick={this.logoOut} ><Icon type="bars" />退出登录</Link>
                 </Menu.Item>
               </SubMenu>
             </Menu>
