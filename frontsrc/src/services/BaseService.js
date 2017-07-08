@@ -23,7 +23,11 @@ export function getProviceInfo() {
     method: 'post',
   });
 }
-export function isLogin(params) {
+
+export function updateConcat(params) {
   console.log(params);
-  return request('/isLogin');
+  return request('/common/updateConcat', {
+    method: 'post',
+    data: JSON.stringify(params),
+  });
 }

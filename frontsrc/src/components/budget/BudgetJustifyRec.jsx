@@ -12,10 +12,16 @@ import ProjectBudgetTable from './ProjectBudgetTable';
 
 class BudgetJustifyRec extends React.Component {
   componentDidMount() {
+    const { projectInfo } = this.props;
+    let projectId = '';
+    if (projectInfo) {
+      projectId = projectInfo.id;
+    }
     this.props.dispatch({
       type: 'BudgetJustifyModel/getBudgetJustifyList',
       payload: {
-        budgetJustifyPage: 0,
+        budgetJustifyPage: 1,
+        projectId,
       }
     });
   }
@@ -46,7 +52,7 @@ class BudgetJustifyRec extends React.Component {
         budgetJustifyComparePage: 1,
       }
     });
-    
+
     this.props.dispatch({
       type: 'BudgetJustifyModel/getBudgetJustifyCompareList',
       payload: {
@@ -113,7 +119,7 @@ class BudgetJustifyRec extends React.Component {
     }, {
       title: '财务部门负责人审核时间',
       dataIndex: 'financeAuditTime',
-      key: 'financeAuditTime',      
+      key: 'financeAuditTime',
       render: (time) => {
         let str = '-';
         if (time) {
@@ -178,6 +184,7 @@ class BudgetJustifyRec extends React.Component {
             !showJustifyDetail &&
             <Table
               title={() => '预算修改申请情况一览表'}
+              size="small"
               columns={columns}
               dataSource={budgetJustifyList}
               loading={loading}
@@ -193,6 +200,9 @@ class BudgetJustifyRec extends React.Component {
 
 function mapStateToProps(state) {
   const {
+    projectInfo,
+   } = state.baseModel;
+  const {
       loading,
       showJustifyDetail,
       budgetJustifyList,
@@ -204,6 +214,7 @@ function mapStateToProps(state) {
      } = state.BudgetJustifyModel;
   return {
     loading,
+    projectInfo,
     budgetJustifyList,
     showJustifyDetail,
     budgetJustifyPage,

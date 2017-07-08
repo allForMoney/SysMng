@@ -1,4 +1,4 @@
-import { logout, login, isLogin, getProviceInfo,
+import { logout, login, updateConcat, getProviceInfo,
   getProjectInfoById } from '../services/BaseService';
 import { routerRedux } from 'dva/router';
 import { message, Modal } from 'antd';
@@ -132,6 +132,21 @@ export default {
 
     * getProjectInfoById({ payload }, { call, put }) {
       const data = yield call(getProjectInfoById, payload);
+
+      if (data && data.code === '1') {
+        yield put({
+          type: 'setState',
+          payload: {
+            projectInfo: data.result.project,
+          }
+        });
+      }
+    },
+
+    * updateConcat({ payload }, { call, put, select }) {
+      const { projectInfo } = yield select(state => state.baseModel);
+      const projectId = projectInfo.id;
+      const data = yield call(updateConcat, { ...payload, projectId });
 
       if (data && data.code === '1') {
         yield put({
