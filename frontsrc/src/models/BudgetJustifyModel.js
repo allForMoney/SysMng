@@ -3,6 +3,7 @@ import {
   getBudgetJustifyList,
   getBudgetJustifyCompareList,
   getLastAdjust,
+  changeCheckStatus,
 } from '../services/BudgetService';
 import { message } from 'antd';
 
@@ -29,7 +30,7 @@ export default {
     requestFile: '',  // 请求文件
     fileName: '', // 调整文件 xls
     id: '', // 调整id
-
+    auditStatus: null, // 调整审核状态
   },
   effects: {
     // 获取项目预算调整表
@@ -61,11 +62,11 @@ export default {
     // 获取项目预算调整表
     * getBudgetJustifyList({ payload }, { call, put, select }) {
       const { projectNo } = yield select(state => state.baseModel);
-      console.log(projectNo);
-      const { budgetJustifyPage, budgetJustifyPageSize } = yield select(state => state.BudgetJustifyModel);
+      const { budgetJustifyPage, budgetJustifyPageSize, auditStatus } = yield select(state => state.BudgetJustifyModel);
 
       const data = yield call(getBudgetJustifyList, {
         projectNo,
+        status: auditStatus,
         page: budgetJustifyPage,
         size: budgetJustifyPageSize
       });
@@ -95,6 +96,14 @@ export default {
             budgetJustifyCompareList: data.result.list,
           }
         });
+      }
+    },
+    // 通过调整审核
+    * changeCheckStatus({ payload }, { call }) {
+      const data = yield call(changeCheckStatus, payload);
+
+      if (data.code === '1') {
+        message.info('审核成功');
       }
     },
 

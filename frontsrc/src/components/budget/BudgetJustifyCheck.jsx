@@ -1,3 +1,6 @@
+/**
+ * 项目预算审核页面( 在非填报人点击 项目预算调整时展现)
+ */
 import React from 'react';
 import { connect } from 'dva';
 import {
@@ -10,16 +13,35 @@ import FrameContent from '../common/FrameContent';
 import LinkBtn from '../common/LinkBtn';
 import ProjectBudgetTable from './ProjectBudgetTable';
 
-class BudgetJustifyRec extends React.Component {
+class BudgetJustifyCheck extends React.Component {
   componentDidMount() {
+    const auditStatus = this.getStatusByUserType();
     this.props.dispatch({
       type: 'BudgetJustifyModel/setState',
-      payload: { auditStatus: null }
+      payload: { auditStatus }
     });
-
     this.props.dispatch({
       type: 'BudgetJustifyModel/getBudgetJustifyList',
     });
+  }
+
+  getStatusByUserType = () => {
+    const { userType } = this.props;
+    let status = '-1';
+    switch (userType) {
+      case 'finace':
+        status = '0';
+        break;
+      case 'school':
+        status = '1';
+        break;
+      case 'country':
+        status = '3';
+        break;
+      default:
+        break;
+    }
+    return status;
   }
 
   onJustifyListPageChange= (page) => {
@@ -35,31 +57,16 @@ class BudgetJustifyRec extends React.Component {
     });
   }
 
-  onJustifyListDetailChange= (page) => {
+  passCheck= (rec, flag) => { // flag=true,通过审核
+    const {
+      userType,
+  } = this.props;
     this.props.dispatch({
-      type: 'BudgetJustifyModel/setState',
+      type: 'BudgetJustifyModel/changeCheckStatus',
       payload: {
-        budgetJustifyComparePage: page,
-      }
-    });
-    this.props.dispatch({
-      type: 'BudgetJustifyModel/getBudgetJustifyCompareList',
-    });
-  }
-
-  showJustifyCompare= (rec) => {
-    this.props.dispatch({
-      type: 'BudgetJustifyModel/setState',
-      payload: {
-        compareId: rec.adjustId,
-        budgetJustifyComparePage: 1,
-      }
-    });
-
-    this.props.dispatch({
-      type: 'BudgetJustifyModel/getBudgetJustifyCompareList',
-      payload: {
-        budgetJustifyComparePage: 1,
+        id: rec.adjustId,
+        auditType: userType,
+        auditContent: flag,
       }
     });
   }
@@ -159,7 +166,12 @@ class BudgetJustifyRec extends React.Component {
     }, {
       title: '操作',
       key: 'operat',
-      render: rec => <LinkBtn onClick={this.showJustifyCompare.bind(this, rec)}>查看</LinkBtn>
+      render: (text, rec) => (
+        <span>
+          <LinkBtn onClick={this.passCheck.bind(this, rec, '0')}>返回上一级</LinkBtn>
+          <LinkBtn onClick={this.passCheck.bind(this, rec, '1')}>通过审核</LinkBtn>
+        </span>
+        )
     }];
 
     const recPageConfig = {
@@ -171,32 +183,17 @@ class BudgetJustifyRec extends React.Component {
     };
 
     return (
-      <FrameContent>
-        <Card title="预算修改申请情况一览表">
-          {showJustifyDetail &&
-            <ProjectBudgetTable
-              tableTitle={'预算变化内容'}
-              totalNum={budgetJustifyCompareyNum}
-              onPageChange={this.onJustifyListDetailChange}
-              currentPage={budgetJustifyComparePage}
-              dataList={budgetJustifyCompareList}
-              loading={loading}
-            />
-          }
-          {
-            !showJustifyDetail &&
-            <Table
-              title={() => '预算修改申请情况一览表'}
-              size="small"
-              columns={columns}
-              dataSource={budgetJustifyList}
-              loading={loading}
-              rowKey={record => record.adjustId}
-              pagination={recPageConfig}
-            />
-          }
-        </Card>
-      </FrameContent>
+      <Card title="预算修改申请情况一览表">
+        <Table
+          title={() => '预算修改申请情况一览表'}
+          size="small"
+          columns={columns}
+          dataSource={budgetJustifyList}
+          loading={loading}
+          rowKey={record => record.adjustId}
+          pagination={recPageConfig}
+        />
+      </Card>
     );
   }
 }
@@ -205,6 +202,7 @@ function mapStateToProps(state) {
   const {
     projectInfo,
     projectNo,
+    userType,
    } = state.baseModel;
   const {
       loading,
@@ -219,6 +217,7 @@ function mapStateToProps(state) {
   return {
     loading,
     projectNo,
+    userType,
     projectInfo,
     budgetJustifyList,
     showJustifyDetail,
@@ -230,4 +229,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(BudgetJustifyRec);
+export default connect(mapStateToProps)(BudgetJustifyCheck);

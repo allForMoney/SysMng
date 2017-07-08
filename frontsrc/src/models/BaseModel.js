@@ -16,11 +16,19 @@ export default {
     projectTotal: 34,
     projectPage: 1,
     userId: '',
+    projectNo: '123',
     priviceList: [], // 省份对应的列表
   },
 
   subscriptions: {
     init({ dispatch }) {
+      const { projectNo } = sessionStorage;
+      if (projectNo) {
+        dispatch({
+          type: 'setState',
+          payload: { projectNo }
+        });
+      }
       dispatch({
         type: 'getProviceInfo'
       });
@@ -32,10 +40,7 @@ export default {
   },
   effects: {
     * reLogin({ payload }, { call, put }) {
-      const { username, password, isLogined } = sessionStorage;
-      // if (isLogined) {
-      //   return;
-      // }
+      const { username, password } = sessionStorage;
       const data = yield call(login, { username, password });
       if (data && data.code === '1') {
         const result = data.result;
@@ -63,19 +68,20 @@ export default {
           if (result.project) {
             projectInfo = result.project;
           }
+          const payloadInfo = {
+            userId: result.id,
+            userName: result.username,
+            userType,
+            projectNo: projectInfo.projectNo,
+            projectInfo,
+            projectName: result.majorName,
+          };
 
           yield put({
             type: 'setState',
-            payload: {
-              userId: result.id,
-              userName: result.username,
-              userType,
-              projectNo: projectInfo.projectNo,
-              projectInfo,
-              projectName: result.majorName,
-            }
+            payload: payloadInfo
           });
-          sessionStorage.isLogined = true;
+          sessionStorage.projectNo = projectInfo.projectNo;
         }
         yield put({
           type: 'doRouter',

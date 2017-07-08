@@ -17,6 +17,7 @@ message,
 import FrameContent from '../common/FrameContent';
 import LinkBtn from '../common/LinkBtn';
 import styles from '../../index.less';
+import BudgetJustifyCheck from './BudgetJustifyCheck';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -121,22 +122,6 @@ class BudgetJustify extends React.Component {
     });
   }
 
-  doCheck= (flag) => { // flag=true,通过审核
-    const {
-      userType,
-      id,
-  } = this.props;
-    const { auditOpin } = this.state;
-    this.props.dispatch({
-      type: 'budgetModel/changeCheckStatus',
-      payload: {
-        id,
-        auditOpin,
-        auditType: userType,
-        auditContent: flag,
-      }
-    });
-  }
   render() {
     const {
         userId,
@@ -161,63 +146,58 @@ class BudgetJustify extends React.Component {
 
     return (
       <FrameContent>
-        <Card title="预算调整申请">
-          <p>使用说明：先下载当前预算表格，在其中做出修改后，再上传。</p>
-          <Card title="已上传附件">
-            <Row>
-              <Col offset={2} span={7}>
-               预算调整请示: <a href={`budgetadjust/download/file?projectId=${projectInfo.id}&fileName=${requestFile}`} target="_blank" rel="noopener noreferrer">{requestFile}</a>
-              </Col>
-              <Col span={7}>
-               拟调整后的预算表: <a href={`budgetadjust/download/file?projectId=${projectInfo.id}&fileName=${fileName}`} target="_blank" rel="noopener noreferrer">{fileName}</a>
-              </Col>
-              <Col span={7}>
-               预算调整说明: <a href={`budgetadjust/download/file?projectId=${projectInfo.id}&fileName=${desFile}`} target="_blank" rel="noopener noreferrer">{desFile}</a>
-              </Col>
-            </Row>
-            <Row>
-              <Col offset={16} span={7} style={{ margin: 10 }}>
-                <Button onClick={this.downloadBudget}>当前预算表格下载</Button>
-              </Col>
-              <Col offset={16} span={7} style={{ margin: 10 }}>
-                {passVisible &&
-                  <Input value={auditOpin} onChange={this.onAuditContentChanged} />
-                }
-                {cancelVisible &&
-                  <Button className={styles.btnClass} type="primary" onClick={this.doCheck.bind(this, '0')}>返回上一级</Button>
-                }
-                {passVisible &&
-                  <Button className={styles.btnClass} type="primary" onClick={this.doCheck.bind(this, '1')}>通过审核</Button>
-                }
-              </Col>
-            </Row>
-          </Card>
-          {showUpload && userType === 'inputer' &&
-            <Card title="上传预算调整申请文件">
-              <Form >
-                <FormItem label="预算模板" {...formItemLayout}>
-                  <Select defaultValue="adjust2016" onChange={this.onAdjustTypeChanged} style={{ display: 'block', width: 120 }}>
-                    <Option value="adjust2016">2016版预算</Option>
-                    <Option value="yusuan2">2015版预算</Option>
-                  </Select>
-                </FormItem>
-                <FormItem label="预算调整请示:" {...formItemLayout}>
-                  <input name="file" type="file" className={styles.uploadInput} />
-                </FormItem>
-                <FormItem label="拟调整后的预算表:" {...formItemLayout}>
-                  <input name="file" type="file" className={styles.uploadInput} />
-                </FormItem>
-                <FormItem label="预算调整请示:" {...formItemLayout}>
-                  <input name="file" type="file" className={styles.uploadInput} />
-                </FormItem>
-                <FormItem wrapperCol={{ span: 10, offset: 4 }}>
-                  <Button type="primary" onClick={this.submitFiles}>提交</Button>
-                  <Button type="primary" htmlType="reset" className={styles.uploadBtn} >重置</Button>
-                </FormItem>
-              </Form>
+        {userType === 'inputer' &&
+          <Card title="预算调整申请">
+            <p>使用说明：先下载当前预算表格，在其中做出修改后，再上传。</p>
+            <Card title="已上传附件">
+              <Row>
+                <Col offset={2} span={7}>
+                预算调整请示: <a href={`budgetadjust/download/file?projectId=${projectInfo.id}&fileName=${requestFile}`} target="_blank" rel="noopener noreferrer">{requestFile}</a>
+                </Col>
+                <Col span={7}>
+                拟调整后的预算表: <a href={`budgetadjust/download/file?projectId=${projectInfo.id}&fileName=${fileName}`} target="_blank" rel="noopener noreferrer">{fileName}</a>
+                </Col>
+                <Col span={7}>
+                预算调整说明: <a href={`budgetadjust/download/file?projectId=${projectInfo.id}&fileName=${desFile}`} target="_blank" rel="noopener noreferrer">{desFile}</a>
+                </Col>
+              </Row>
+              <Row>
+                <Col offset={16} span={7} style={{ margin: 10 }}>
+                  <Button onClick={this.downloadBudget}>当前预算表格下载</Button>
+                </Col>
+              </Row>
             </Card>
-          }
-        </Card>
+            {showUpload && userType === 'inputer' &&
+              <Card title="上传预算调整申请文件">
+                <Form >
+                  <FormItem label="预算模板" {...formItemLayout}>
+                    <Select defaultValue="adjust2016" onChange={this.onAdjustTypeChanged} style={{ display: 'block', width: 120 }}>
+                      <Option value="adjust2016">2016版预算</Option>
+                      <Option value="yusuan2">2015版预算</Option>
+                    </Select>
+                  </FormItem>
+                  <FormItem label="预算调整请示:" {...formItemLayout}>
+                    <input name="file" type="file" className={styles.uploadInput} />
+                  </FormItem>
+                  <FormItem label="拟调整后的预算表:" {...formItemLayout}>
+                    <input name="file" type="file" className={styles.uploadInput} />
+                  </FormItem>
+                  <FormItem label="预算调整请示:" {...formItemLayout}>
+                    <input name="file" type="file" className={styles.uploadInput} />
+                  </FormItem>
+                  <FormItem wrapperCol={{ span: 10, offset: 4 }}>
+                    <Button type="primary" onClick={this.submitFiles}>提交</Button>
+                    <Button type="primary" htmlType="reset" className={styles.uploadBtn} >重置</Button>
+                  </FormItem>
+                </Form>
+              </Card>
+            }
+          </Card>
+        }
+        {
+          userType !== 'inputer' &&
+          <BudgetJustifyCheck />
+        }
       </FrameContent>
     );
   }
