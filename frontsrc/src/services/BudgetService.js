@@ -4,6 +4,9 @@ import request from '../utils/request';
 export function getBudgetSeasonList(params) {
   return request(`/budget/report/quarterly/detail?${qs.stringify(params)}`);
 }
+export function getLastAdjust(params) {
+  return request(`/budgetadjust/getLastAdjust?${qs.stringify(params)}`);
+}
 
 export function getAllBudgetRec(params) {
   return request(`/budget/allimport?${qs.stringify(params)}`);

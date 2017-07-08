@@ -12,35 +12,33 @@ import ProjectBudgetTable from './ProjectBudgetTable';
 
 class BudgetJustifyRec extends React.Component {
   componentDidMount() {
-    const { projectInfo } = this.props;
-    let projectId = '';
-    if (projectInfo) {
-      projectId = projectInfo.id;
-    }
     this.props.dispatch({
       type: 'BudgetJustifyModel/getBudgetJustifyList',
-      payload: {
-        budgetJustifyPage: 1,
-        projectId,
-      }
     });
   }
 
   onJustifyListPageChange= (page) => {
     this.props.dispatch({
-      type: 'BudgetJustifyModel/getBudgetJustifyList',
+      type: 'BudgetJustifyModel/setState',
       payload: {
         budgetJustifyPage: page,
       }
+    });
+
+    this.props.dispatch({
+      type: 'BudgetJustifyModel/getBudgetJustifyList',
     });
   }
 
   onJustifyListDetailChange= (page) => {
     this.props.dispatch({
-      type: 'BudgetJustifyModel/getBudgetJustifyCompareList',
+      type: 'BudgetJustifyModel/setState',
       payload: {
         budgetJustifyComparePage: page,
       }
+    });
+    this.props.dispatch({
+      type: 'BudgetJustifyModel/getBudgetJustifyCompareList',
     });
   }
 
@@ -48,7 +46,7 @@ class BudgetJustifyRec extends React.Component {
     this.props.dispatch({
       type: 'BudgetJustifyModel/setState',
       payload: {
-        compareId: rec.id,
+        compareId: rec.adjustId,
         budgetJustifyComparePage: 1,
       }
     });
@@ -188,7 +186,7 @@ class BudgetJustifyRec extends React.Component {
               columns={columns}
               dataSource={budgetJustifyList}
               loading={loading}
-              rowKey={record => record.id}
+              rowKey={record => record.adjustId}
               pagination={recPageConfig}
             />
           }
@@ -201,6 +199,7 @@ class BudgetJustifyRec extends React.Component {
 function mapStateToProps(state) {
   const {
     projectInfo,
+    projectNo,
    } = state.baseModel;
   const {
       loading,
@@ -214,6 +213,7 @@ function mapStateToProps(state) {
      } = state.BudgetJustifyModel;
   return {
     loading,
+    projectNo,
     projectInfo,
     budgetJustifyList,
     showJustifyDetail,
