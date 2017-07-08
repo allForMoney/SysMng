@@ -12,12 +12,14 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -41,8 +43,16 @@ public class BudgetResultService {
    *
    * @return
    */
-  public Object findByParam(String projectId,String year,String quarter) {
-    return this.reportAuditLogRepository.findByParam(projectId,year,quarter);
+  public Object findByParam(String projectNo, String majorName, String schoolName, Pageable pageable) {
+    projectNo = projectNo ==null?"":projectNo;
+    majorName = majorName ==null?"":majorName;
+    schoolName = schoolName ==null?"":schoolName;
+    List<Project> projects =  projectRepository.findByProjectNoLikeAndMajorNameLikeAndSchoolNameLike(projectNo,majorName,schoolName );
+    List ids = new ArrayList();
+    if(projects  !=null) {
+      ids = projects.stream().map(Project::getId).collect(Collectors.toList());
+    }
+    return this.reportAuditLogRepository.findByProjectIdIn(ids,pageable);
   }
 
   /**

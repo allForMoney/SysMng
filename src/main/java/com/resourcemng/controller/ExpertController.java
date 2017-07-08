@@ -22,7 +22,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/experts")
 public class ExpertController {
-
+@Autowired
   ExpertServiceService service;
   /**
    * 添加

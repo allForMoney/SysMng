@@ -12,6 +12,8 @@ import com.resourcemng.view.BudgetReportView;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,8 +42,12 @@ public class BudgetResultController {
    */
   @RequestMapping(value = "all" ,method = RequestMethod.GET)
   @ResponseBody
-  public Object getAll(@RequestParam String projectId,String year,String quarter) throws Exception {
-    return new RequestResult(ResultCode.SUCCESS, "获取成功.",   budgetResultService.findByParam(projectId,year,quarter));
+  public Object getAll(String projectNo,String majorName,String schoolName,String page,String size) throws Exception {
+    page = page ==null?"1":page;
+    size = size ==null?"10":size;
+    Pageable pageable = new PageRequest(Integer.parseInt(page)-1,Integer.parseInt(size));
+
+    return new RequestResult(ResultCode.SUCCESS, "获取成功.",   budgetResultService.findByParam(projectNo,majorName,schoolName,pageable));
 
   }
 
