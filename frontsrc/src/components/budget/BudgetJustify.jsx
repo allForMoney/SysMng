@@ -27,6 +27,11 @@ class BudgetJustify extends React.Component {
     adjustType: 'adjust2016',
     auditOpin: ''
   }
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'BudgetJustifyModel/getLastAdjust',
+    });
+  }
 
   downloadBudget= () => {
     const { projectInfo } = this.props;
@@ -211,9 +216,6 @@ class BudgetJustify extends React.Component {
                 </FormItem>
               </Form>
             </Card>
-          }
-          {
-
           }
         </Card>
       </FrameContent>

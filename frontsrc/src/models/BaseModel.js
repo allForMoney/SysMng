@@ -32,8 +32,10 @@ export default {
   },
   effects: {
     * reLogin({ payload }, { call, put }) {
-      console.log(sessionStorage);
-      const { username, password } = sessionStorage;
+      const { username, password, isLogined } = sessionStorage;
+      // if (isLogined) {
+      //   return;
+      // }
       const data = yield call(login, { username, password });
       if (data && data.code === '1') {
         const result = data.result;
@@ -68,10 +70,12 @@ export default {
               userId: result.id,
               userName: result.username,
               userType,
+              projectNo: projectInfo.projectNo,
               projectInfo,
               projectName: result.majorName,
             }
           });
+          sessionStorage.isLogined = true;
         }
         yield put({
           type: 'doRouter',

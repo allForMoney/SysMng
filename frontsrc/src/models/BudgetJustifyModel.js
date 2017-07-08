@@ -2,6 +2,7 @@
 import {
   getBudgetJustifyList,
   getBudgetJustifyCompareList,
+  getLastAdjust,
 } from '../services/BudgetService';
 import { message } from 'antd';
 
@@ -13,11 +14,12 @@ export default {
     showJustifyDetail: false, // 是否展示调整详情页
     /** 调整列表 */
     budgetJustifyList: [],
-    budgetJustifyPage: 0,
+    budgetJustifyPage: 1,
+    budgetJustifyPageSize: 10,
     budgetJustifyNum: 0,
     /** 调整详情页 */
     budgetJustifyCompareList: [],
-    budgetJustifyComparePage: 0,
+    budgetJustifyComparePage: 1,
     budgetJustifyCompareyNum: 0,
     /** 调整的id */
     compareId: '',
@@ -31,21 +33,51 @@ export default {
   },
   effects: {
     // 获取项目预算调整表
-    * resetJustifyFiles({ payload }, { call, put, select }) {
+    * getLastAdjust({ payload }, { call, put, select }) {
+      const { projectNo } = yield select(state => state.baseModel);
+      const data = yield call(getLastAdjust, {
+        projectNo,
+      });
+      if (data.code === '1' && data.result) {
+        const {
+          desFile,
+          requestFile,
+          fileName,
+          id
+        } = data.result;
 
+        yield put({
+          type: 'setState',
+          payload: {
+            desFile,
+            requestFile,
+            fileName,
+            id
+          }
+        });
+      }
     },
 
     // 获取项目预算调整表
     * getBudgetJustifyList({ payload }, { call, put, select }) {
-      const { projectInfo } = yield select(state => state.baseModel);
-      const { budgetJustifyPage } = yield select(state => state.BudgetJustifyModel);
-      const projectId = projectInfo.id;
-      const data = yield call(getBudgetJustifyList, { projectId, budgetJustifyPage, ...payload });
+      const { projectNo } = yield select(state => state.baseModel);
+      console.log(projectNo);
+      const { budgetJustifyPage, budgetJustifyPageSize } = yield select(state => state.BudgetJustifyModel);
+
+      const data = yield call(getBudgetJustifyList, {
+        projectNo,
+        page: budgetJustifyPage,
+        size: budgetJustifyPageSize
+      });
+
       if (data.code === '1' && data.result) {
+        const { content, pageable, totalPages } = data.result;
+
         yield put({
           type: 'setState',
           payload: {
-            budgetJustifyList: data.result,
+            budgetJustifyList: content,
+            budgetJustifyNum: totalPages,
           }
         });
       }
@@ -53,7 +85,7 @@ export default {
     // 获取项目预算调整比较
     * getBudgetJustifyCompareList({ payload }, { call, put, select }) {
       const { compareId, budgetJustifyComparePage } = yield select(state => state.BudgetJustifyModel);
-      const data = yield call(getBudgetJustifyCompareList, { id: compareId, budgetJustifyComparePage });
+      const data = yield call(getBudgetJustifyCompareList, { id: compareId });
 
       if (data.code === '1' && data.result) {
         yield put({
