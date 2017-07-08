@@ -28,6 +28,9 @@ import ResetUserPwd from './components/others/ResetUserPwd';
 
 import BudgetSeason_Country from './components/budget/BudgetSeason_Country';
 import BudgetResult_Country from './components/budget/BudgetResult_Country';
+// 专家相关
+import ExpertList from './components/expert/ExpertList';
+import DrawExpert from './components/expert/DrawExpert';
 
 function RouterConfig({ history }) {
   return (
@@ -59,6 +62,9 @@ function RouterConfig({ history }) {
       <Route path="/sys/reportTime" component={reportTime} />
       <Route path="/sys/sendSMS" component={SendSMS} />
       <Route path="/sys/resetPwd" component={ResetUserPwd} />
+
+      <Route path="/expert/list" component={ExpertList} />
+      <Route path="/expert/drawExpert" component={DrawExpert} />
 
     </Router>
   );
