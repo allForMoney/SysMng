@@ -23,8 +23,8 @@ export default {
   effects: {
     * sendSMS({ payload }, { call, select }) {
       const { projectInfo } = yield select(state => state.OtherModel);
-      const data = yield call(sendSMS, { ...payload, ...projectInfo });
-      if (data && data.code === '1' && data.result) {
+      const data = yield call(sendSMS, { ...payload, projectId: projectInfo.id });
+      if (data && data.code === '1') {
         message.info('短信发送成功');
       }
     },

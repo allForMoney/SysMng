@@ -9,9 +9,8 @@ export function updateReportTime(params) {
 }
 
 export function sendSMS(params) {
-  return request('/other/sendSMS', {
+  return request(`/system/sendmessage?${qs.stringify(params)}`, {
     method: 'post',
-    data: JSON.stringify(params),
   });
 }
 export function resetPwd(params) {

@@ -8,13 +8,13 @@ class SMSForm extends React.Component {
     const { getFieldDecorator } = this.props.form;
     const { onSendSMS } = this.props;
     return (
-      <Form onSubmit={onSendSMS}>
+      <Form>
         <FormItem
           label="短信内容"
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 8 }}
         >
-          {getFieldDecorator('note', {
+          {getFieldDecorator('message', {
             rules: [{ required: true, message: '请输入短信内容' }],
           })(
             <Input type="textarea" rows={4} />
@@ -23,7 +23,7 @@ class SMSForm extends React.Component {
         <FormItem
           wrapperCol={{ span: 8, offset: 4 }}
         >
-          <Button type="primary" htmlType="submit">
+          <Button htmlType="submit" onClick={onSendSMS}>
             发送短信
           </Button>
         </FormItem>
