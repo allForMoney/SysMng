@@ -58,5 +58,16 @@ public class UserController {
     Pageable pageable = new PageRequest(Integer.parseInt(page)-1,Integer.parseInt(size));
     return new RequestResult(ResultCode.SUCCESS, "更新成功",  service.find(userNo,pageable));
   }
+  /**
+   *
+   * @param id
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "/resetpassword" ,method = RequestMethod.GET)
+  @ResponseBody
+  public Object resetPassword(@RequestParam String id) throws Exception {
+    return new RequestResult(ResultCode.SUCCESS, "更新成功",  service.resetPassword(id));
+  }
 
 }

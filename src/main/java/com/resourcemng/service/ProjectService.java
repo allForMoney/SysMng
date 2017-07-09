@@ -29,7 +29,7 @@ public class ProjectService {
   TUserRepository userRepository;
 
   @Value("${app.user.defaultpassword}")
-  private String defaultPass = "wzNncBURtPYCDsYd7TUgWQ==";
+  private String defaultPass = "4QrcOUm6Wau+VuBX8g+IPg==";
 
   @Transactional
   public Project createPorject(Project project) throws MyException {
