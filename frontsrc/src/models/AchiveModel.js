@@ -21,7 +21,7 @@ export default {
     achiveAllListNum: 0,
     achiveAllListPage: 0,
     filterParam: {}
-    
+
   },
   effects: {
 
@@ -30,8 +30,7 @@ export default {
       const projectId = projectInfo.id;
 
       const data = yield call(getProjectArchive, { projectId, ...payload });
-      if (data && data.code === '1') {
-        console.log(data.result);
+      if (data && data.code === '1' && data.result) {
         const { id, indicatorBase, indicatorDetails } = data.result;
         yield put({
           type: 'setState',
@@ -41,7 +40,6 @@ export default {
             indicatorDetails,
           }
         });
-
       }
     },
     /** 获取所有项目的预算信息 */
@@ -49,8 +47,7 @@ export default {
       const { achiveAllListPage, filterParam } = yield select(state => state.achiveModel);
 
       const data = yield call(getAchiveAllList, { achiveAllListPage, ...filterParam });
-      if (data && data.code === '1') {
-        console.log(data.result);
+      if (data && data.code === '1' && data.result) {
         const { currentPage, list, pageNum } = data.result;
         yield put({
           type: 'setState',

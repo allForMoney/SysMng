@@ -99,7 +99,7 @@ export default {
 
     * getProviceInfo({ payload }, { call, put }) {
       const data = yield call(getProviceInfo, payload);
-      if (data && data.code === '1') {
+      if (data && data.code === '1' && data.result) {
         yield put({
           type: 'setState',
           payload: {
@@ -109,9 +109,6 @@ export default {
       }
     },
 
-    * logout({ payload }, { call }) {
-      const data = yield call(logout, payload);
-    },
 
     * doRouter({ payload }, { put }) {
       const userType = payload.userType;
@@ -148,7 +145,7 @@ export default {
     * getProjectInfoById({ payload }, { call, put }) {
       const data = yield call(getProjectInfoById, payload);
 
-      if (data && data.code === '1') {
+      if (data && data.code === '1' && data.result) {
         yield put({
           type: 'setState',
           payload: {
@@ -162,7 +159,7 @@ export default {
       const { projectInfo } = yield select(state => state.baseModel);
       const data = yield call(updateConcat, { ...projectInfo, ...payload });
 
-      if (data && data.code === '1') {
+      if (data && data.code === '1' && data.result) {
         yield put({
           type: 'setState',
           payload: {
@@ -170,13 +167,15 @@ export default {
           }
         });
         message.info('联系方式更新成功');
+      } else {
+        message.info('联系方式更新失败,请售后重试');
       }
     },
 
     * modifyPass({ payload }, { call, put, select }) {
       const data = yield call(modifyPass, { ...payload });
 
-      if (data && data.code === '1') {
+      if (data && data.code === '1' && data.result) {
         yield put({
           type: 'setState',
           payload: {
@@ -185,6 +184,8 @@ export default {
         });
         message.info('密码修改成功');
         window.location = './index.html';
+      } else {
+        message.info('密码修改失败,请售后重试');
       }
     },
 
