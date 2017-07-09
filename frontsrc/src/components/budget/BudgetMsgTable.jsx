@@ -3,12 +3,31 @@ import { connect } from 'dva';
 import {
   Table,
 } from 'antd';
+import moment from 'moment';
 
 import FrameContent from '../common/FrameContent';
+import LinkBtn from '../common/LinkBtn';
 
 class BudgetMsgTable extends React.Component {
-  onBudgetMsgChange= () => {
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'msgModel/setState',
+      payload: { budgetMsgListPage: 1 }
+    });
 
+    this.props.dispatch({
+      type: 'msgModel/getBudgetMsgList',
+    });
+  }
+  onPageChange= (page) => {
+    this.props.dispatch({
+      type: 'msgModel/setState',
+      payload: { budgetMsgListPage: page }
+    });
+
+    this.props.dispatch({
+      type: 'msgModel/getBudgetMsgList',
+    });
   }
 
   render() {
@@ -19,30 +38,52 @@ class BudgetMsgTable extends React.Component {
       budgetMsgage,
     } = this.props;
 
-    const columns = [{
-      dataIndex: 'index',
-      key: 'index',
-    }, {
-      title: '留言时间',
-      dataIndex: 'name',
-      key: 'name',
-    }, {
-      title: '留言内容',
-      dataIndex: 'status',
-      key: 'status',
-    }, {
-      title: '相关文件',
-      dataIndex: 'time',
-      key: 'time',
-    }, {
-      title: '恢复内容',
-      dataIndex: 'time2',
-      key: 'time2',
-    }, {
-      title: '回复时间',
-      dataIndex: 'time3',
-      key: 'time3',
-    }];
+    const columns = [
+      {
+        title: '项目编号',
+        dataIndex: 'projectNos',
+        key: 'projectNos',
+      }, {
+        title: '留言时间',
+        dataIndex: 'submitDate',
+        key: 'submitDate',
+        render: (time) => {
+          let str = '-';
+          if (time) {
+            str = moment(time).format('YYYY-MM-DD HH:mm;ss');
+          }
+          return str;
+        }
+      }, {
+        title: '留言人',
+        dataIndex: 'submitUserName',
+        key: 'submitUserName',
+      }, {
+        title: '留言内容',
+        dataIndex: 'contents',
+        key: 'contents',
+        width: 300
+      }, {
+        title: '相关文件',
+        dataIndex: 'refFile',
+        key: 'refFile',
+      }, {
+        title: '回复内容',
+        dataIndex: 'replyContents',
+        key: 'replyContents',
+      }, {
+        title: '回复时间',
+        dataIndex: 'replyDate',
+        key: 'replyDate',
+        render: (time) => {
+          let str = '-';
+          if (time) {
+            str = moment(time).format('YYYY-MM-DD HH:mm;ss');
+          }
+          return str;
+        }
+      }
+    ];
 
     const pageConfig = {
       className: 'ant-table-pagination',
@@ -69,17 +110,21 @@ class BudgetMsgTable extends React.Component {
 
 function mapStateToProps(state) {
   const {
-      budgetMsgList,
+    userId,
+   } = state.baseModel;
+  const {
       loading,
-      budgetMsgNum,
-      budgetMsgage,
-    projectId } = state.baseModel;
+      budgetMsgList,
+      budgetMsgListPage,
+      budgetMsgListNum,
+     } = state.msgModel;
   return {
-    budgetMsgList,
     loading,
-    budgetMsgNum,
-    budgetMsgage,
-    projectId };
+    budgetMsgList,
+    budgetMsgListPage,
+    budgetMsgListNum,
+    userId,
+  };
 }
 
 export default connect(mapStateToProps)(BudgetMsgTable);
