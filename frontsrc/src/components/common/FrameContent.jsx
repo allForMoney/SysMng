@@ -43,7 +43,7 @@ class FrameContent extends React.Component {
         payload: values
       });
       form.resetFields();
-      this.setState({ popWinVisible: false });
+      this.setState({ showModiPass: false });
     });
   }
 
