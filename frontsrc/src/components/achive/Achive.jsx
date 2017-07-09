@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 
 import {
   Button,
@@ -33,7 +34,7 @@ class Achive extends React.Component {
 
   exportArchive=() => {
     const { projectInfo } = this.props;
-    const url = `indicator/download?projectId=${projectInfo.id}`;
+    const url = `indicator/download/${projectInfo.id}`;
     window.open(url);
   }
 

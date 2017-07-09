@@ -1,6 +1,5 @@
 import { getProjectInfoById } from '../services/ProjectService';
-import { getAllBudgetRec } from '../services/BudgetService';
-import { getAllAchiveRec } from '../services/AchiveService';
+import { getAllAchiveRec, getAllImportData } from '../services/ImportService';
 
 export default {
   namespace: 'ImportData',
@@ -17,6 +16,16 @@ export default {
     achiveRecPageNum: 0,
     achiveRecPageTotal: 0,
     achiveRecPageSize: 20,
+  // public static String BUDGET2016 = "yusuan2016";
+  // public static String BUDGET2015 = "yusuan";
+  // public static String BUDGET_ADJUST = "yusuan2";
+  // public static String BUDGET_ADJUST_2016 = "adjust2016";
+  // public static String TARGET = "jixiao";
+
+    allImportData: [],
+    importFileType: '',
+    allImportPage: 1,
+    allImportNum: 0,
     showUpload16: false,
   },
   effects: {
@@ -34,18 +43,23 @@ export default {
       }
     },
 
-    * getAllBudgetRec({ payload }, { call, put }) {
-      const data = yield call(getAllBudgetRec, payload);
+    * getAllImportData({ payload }, { call, put, select }) {
+      const { allImportPage, importFileType } = yield select(state => state.ImportData);
+      const data = yield call(getAllImportData, {
+        type: importFileType,
+        page: allImportPage
+      });
       if (data && data.code === '1' && data.result) {
         yield put({
           type: 'setState',
           payload: {
-            projectInfo: data.result,
-            showUpload16: true,
+            allImportData: data.result.content,
+            allImportNum: data.result.totalPages,
           }
         });
       }
     },
+
     * getAllAchiveRec({ payload }, { call, put }) {
       const data = yield call(getAllAchiveRec, payload);
       if (data && data.code === '1' && data.result) {
