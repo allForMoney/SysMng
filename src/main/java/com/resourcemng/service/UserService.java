@@ -66,7 +66,9 @@ public class UserService  /*implements  UserDetailsService*/{
       UserView view = new UserView();
       BeanUtils.copyProperties(view, user);
       Project project = projectsMap.get(ApplicationUitl.getPorjectNoByReportUserNo(user.getUsername()));
-      BeanUtils.copyProperties(view, project);
+      if(project!=null) {
+        BeanUtils.copyProperties(view, project);
+      }
       view.setRoleName(ApplicationUitl.getRoleNameByRole(view.getUserRole()));
       result.add(view);
     }

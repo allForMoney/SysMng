@@ -18,6 +18,10 @@ import java.net.URISyntaxException;
 public class ApplicationUitl {
 
   public static String getPorjectNoByReportUserNo(String userNo){
+   int index = userNo.lastIndexOf('-');
+   if(index<0){
+     return null;
+   }
     String projectNo = userNo.substring(0, userNo.lastIndexOf('-') );
     return projectNo;
   }
