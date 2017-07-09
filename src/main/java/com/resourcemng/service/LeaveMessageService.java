@@ -42,29 +42,34 @@ public class LeaveMessageService {
    * @param mesType
    * @return
    */
-  public List findByType(String mesType) throws InvocationTargetException, IllegalAccessException {
-    List<LeaveMessage> list = leaveMessageRepository.findByType(mesType);
+  public List findByType(String mesType,String projectId) throws InvocationTargetException, IllegalAccessException {
+    List<LeaveMessage> list = null;
+    if (projectId == null) {
+      list = leaveMessageRepository.findByType(mesType);
+    } else {
+      list = leaveMessageRepository.findByMesTypeaAndProjectId(mesType,projectId);
+    }
     List<Project> projects = projectRepository.findAll();
-    projects = projects==null?new ArrayList<>():projects;
+    projects = projects == null ? new ArrayList<>() : projects;
     List<Tuser> users = userRepository.findAll();
-    users = users==null?new ArrayList<>():users;
+    users = users == null ? new ArrayList<>() : users;
 
-    Map<String,Project> projectsMap = new HashMap();
-    for(Project project:projects){
-      projectsMap.put(project.getId(),project);
+    Map<String, Project> projectsMap = new HashMap();
+    for (Project project : projects) {
+      projectsMap.put(project.getId(), project);
     }
-    Map<String,Tuser>  usersMap = new HashMap();
-    for(Tuser user:users){
-      usersMap.put(user.getId(),user);
+    Map<String, Tuser> usersMap = new HashMap();
+    for (Tuser user : users) {
+      usersMap.put(user.getId(), user);
     }
 
-  List<LeaveMessageView> result =  new ArrayList<>();
-    for(LeaveMessage leaveMessage:list){
+    List<LeaveMessageView> result = new ArrayList<>();
+    for (LeaveMessage leaveMessage : list) {
       LeaveMessageView view = new LeaveMessageView();
-      BeanUtils.copyProperties(view,leaveMessage);
+      BeanUtils.copyProperties(view, leaveMessage);
       view.setProjectNos(projectsMap.get(leaveMessage.getProjectId()).getProjectNo());
       view.setSubmitUserName(usersMap.get(leaveMessage.getSubmitUserId()).getUsername());
-      if(leaveMessage.getReplyUserId() !=null) {
+      if (leaveMessage.getReplyUserId() != null) {
         view.setReplyUserName(usersMap.get(leaveMessage.getReplyUserId()).getUsername());
       }
       result.add(view);

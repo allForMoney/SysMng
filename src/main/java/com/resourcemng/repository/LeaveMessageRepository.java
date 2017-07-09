@@ -18,4 +18,7 @@ import java.util.List;
 public interface LeaveMessageRepository extends JpaRepository<LeaveMessage, String> {
   @Query("from LeaveMessage p where p.mesType=:mesType")
   List findByType( @Param("mesType")String mesType);
+
+
+  List findByMesTypeaAndProjectId(String mesType,String projectId);
 }
