@@ -78,8 +78,8 @@ public class LeaveMessageController {
    */
     @RequestMapping(value = "/budget/all" ,method = RequestMethod.GET)
     @ResponseBody
-    public Object budgetAll() throws Exception {
-      return new RequestResult(ResultCode.SUCCESS, "获取成功",   this.leaveMessageService.findByType(LeaveMessageType.BUDGET));
+    public Object budgetAll(String projectId) throws Exception {
+      return new RequestResult(ResultCode.SUCCESS, "获取成功",   this.leaveMessageService.findByType(LeaveMessageType.BUDGET,projectId));
     }
 
 
@@ -90,8 +90,8 @@ public class LeaveMessageController {
      */
     @RequestMapping(value = "/indicator/all" ,method = RequestMethod.GET)
     @ResponseBody
-    public Object indicatorAll() throws Exception {
-      return new RequestResult(ResultCode.SUCCESS, "获取成功",   this.leaveMessageService.findByType(LeaveMessageType.INDICATOR));
+    public Object indicatorAll(String projectId) throws Exception {
+      return new RequestResult(ResultCode.SUCCESS, "获取成功",   this.leaveMessageService.findByType(LeaveMessageType.INDICATOR,projectId));
     }
   /**
    * 留言回复
