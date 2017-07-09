@@ -64,7 +64,7 @@ public class UserController {
    * @return
    * @throws Exception
    */
-  @RequestMapping(value = "/resetpassword" ,method = RequestMethod.GET)
+  @RequestMapping(value = "/resetpassword" ,method = RequestMethod.POST)
   @ResponseBody
   public Object resetPassword(@RequestParam String id) throws Exception {
     return new RequestResult(ResultCode.SUCCESS, "更新成功",  service.resetPassword(id));
