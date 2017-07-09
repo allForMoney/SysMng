@@ -56,24 +56,24 @@ public class UserService  /*implements  UserDetailsService*/{
 
   public Object find(String userNo,Pageable pageable ) throws InvocationTargetException, IllegalAccessException {
    String username = userNo==null?"":userNo;
-    List<Project> projects = projectRepository.findAll();
-    projects = projects == null ? new ArrayList<>() : projects;
+//    List<Project> projects = projectRepository.findAll();
+//    projects = projects == null ? new ArrayList<>() : projects;
     Page pageResult = userRepository.findByUsernameLike(username,pageable);
     List<Tuser> list = null;
     list = pageResult.getContent();
 
-    Map<String, Project> projectsMap = new HashMap();
-    for (Project project : projects) {
-      projectsMap.put(project.getProjectNo(), project);
-    }
+//    Map<String, Project> projectsMap = new HashMap();
+//    for (Project project : projects) {
+//      projectsMap.put(project.getProjectNo(), project);
+//    }
     List<UserView> result = new ArrayList<>();
     for (Tuser user : list) {
       UserView view = new UserView();
       BeanUtils.copyProperties(view, user);
-      Project project = projectsMap.get(ApplicationUitl.getPorjectNoByReportUserNo(user.getUsername()));
-      if(project!=null) {
-        BeanUtils.copyProperties(view, project);
-      }
+//      Project project = projectsMap.get(ApplicationUitl.getPorjectNoByReportUserNo(user.getUsername()));
+//      if(project!=null) {
+//        BeanUtils.copyProperties(view, project);
+//      }
       view.setRoleName(ApplicationUitl.getRoleNameByRole(view.getUserRole()));
       result.add(view);
     }
