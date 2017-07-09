@@ -2,7 +2,7 @@ import request from '../utils/request';
 import qs from 'qs';
 
 export function updateReportTime(params) {
-  return request('/other/updateReportTime', {
+  return request('/system/changeReportTime', {
     method: 'post',
     data: JSON.stringify(params),
   });
