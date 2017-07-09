@@ -2,6 +2,7 @@ package com.resourcemng.util;
 
 import cn.afterturn.easypoi.util.PoiPublicUtil;
 import com.resourcemng.Enum.TempleteType;
+import com.resourcemng.Enum.UserRole;
 import com.resourcemng.basic.MyException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,5 +49,22 @@ public class ApplicationUitl {
         return "预算2016模板.xlsx";
     }
     return null;
+  }
+  public static String getRoleNameByRole(String role) {
+    switch (role){
+      case UserRole.REPORT:
+        return "填报人";
+      case UserRole.COUNTRY:
+        return "教育部";
+      case UserRole.FINANCE:
+        return "财务部门负责人";
+      case UserRole.PROJECTHEADER:
+        return "项目负责人";
+      case UserRole.ADMIN:
+        return "管理员";
+      case UserRole.PROVENCE:
+        return "教育厅";
+    }
+    return "";
   }
 }

@@ -49,7 +49,6 @@ public class SysMngController {
     @RequestMapping(value = "/getReportTime" ,method = RequestMethod.GET)
     @ResponseBody
     public Object getReportTime() throws Exception {
-
       return new RequestResult(ResultCode.SUCCESS, "创建项目成功.",service.getScheduView()   );
     }
 

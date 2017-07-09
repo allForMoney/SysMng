@@ -7,6 +7,8 @@ import com.resourcemng.entitys.Tuser;
 import com.resourcemng.service.UserService;
 import com.resourcemng.util.MD5;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,5 +44,19 @@ public class UserController {
     return new RequestResult(ResultCode.SUCCESS, "更新成功",  service.changePassword(userName,newPassword));
   }
 
+  /**
+   * 根据用户模糊查询
+   * @param userNo
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "/all" ,method = RequestMethod.GET)
+  @ResponseBody
+  public Object all(String userNo,String page,String size) throws Exception {
+    page = page ==null?"1":page;
+    size = size ==null?"10":size;
+    Pageable pageable = new PageRequest(Integer.parseInt(page)-1,Integer.parseInt(size));
+    return new RequestResult(ResultCode.SUCCESS, "更新成功",  service.find(userNo,pageable));
+  }
 
 }

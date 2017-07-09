@@ -1,6 +1,8 @@
 package com.resourcemng.repository;
 
 import com.resourcemng.entitys.Tuser;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -29,6 +31,14 @@ public interface TUserRepository extends JpaRepository<Tuser, String> {
 
 
   List<Tuser> findByUserRole(String userRole);
+
+  /**
+   * 项目编号
+   * @param username
+   * @return
+   */
+  @Query("from Tuser u where u.username like CONCAT('%',:username,'%')")
+  Page findByUsernameLike(@Param("username")String username, Pageable pageable);
 
 //    @Query("from User u where u.name=:name")
 //    List<TUserEntity> findUser(@Param("name") String name);
