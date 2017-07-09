@@ -42,6 +42,16 @@ public class SysMngController {
       service.saveScheduView(reportDeadLineView);
       return new RequestResult(ResultCode.SUCCESS, "创建项目成功.",null   );
     }
+  /**
+   * @return
+   * @throws Exception
+   */
+    @RequestMapping(value = "/getReportTime" ,method = RequestMethod.GET)
+    @ResponseBody
+    public Object getReportTime() throws Exception {
+
+      return new RequestResult(ResultCode.SUCCESS, "创建项目成功.",service.getScheduView()   );
+    }
 
   /**
    * 人工发送短信接口
