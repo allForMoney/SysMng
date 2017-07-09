@@ -33,7 +33,7 @@ function ImportProjet() {
   return (
     <FrameContent>
       <Card title="项目基本信息导入">
-        <a href="...">导入模板下载</a>
+        <a href="/common/templete/download?type=PROJECT">导入模板下载</a>
         <Upload {...fileProps}>
           <Button>
             <Icon type="upload" /> 点击上传并导入文件

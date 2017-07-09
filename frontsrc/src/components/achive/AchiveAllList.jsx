@@ -88,7 +88,7 @@ class AchiveAllList extends React.Component {
             <Form.Item label="项目编号 ：">
               { getFieldDecorator('projectNo', {
               })(
-                <Input size="small" width="100"/>
+                <Input size="small" width="100" />
               )}
             </Form.Item>
             <Form.Item label="专业名称 ：">
@@ -105,7 +105,7 @@ class AchiveAllList extends React.Component {
             </Form.Item>
             <Form.Item >
               <Button size="small" type="primary" icon="search" onClick={this.doSearch}>查询</Button>
-              <Button size="small" style={{marginLeft:5}} type="primary" onClick={() => this.props.form.resetFields()}><Icon type="rollback" />重置</Button>
+              <Button size="small" style={{ marginLeft: 5 }} type="primary" onClick={() => this.props.form.resetFields()}><Icon type="rollback" />重置</Button>
             </Form.Item>
           </Form>
           <Table

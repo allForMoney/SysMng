@@ -4,29 +4,54 @@
 import { connect } from 'dva';
 import React from 'react';
 import ImportRecord from '../components/import/ImportRecord';
+import { routerRedux } from 'dva/router';
 
 class BudgetImportRecord extends React.Component {
   componentDidMount = () => {
     this.props.dispatch({
-      type: 'ImportData/getAllBudgetRec'
+      type: 'ImportData/setState',
+      payload: {
+        importFileType: 'yusuan2016'
+      }
     });
+  }
+
+  showDetail=(record) => {
+    console.log(record);
+    this.props.dispatch({
+      type: 'baseModel/setState',
+      payload: {
+        projectNo: record.projectNo,
+        projectInfo: {
+          id: record.projectId,
+          projectNo: record.projectNo,
+          majorName: record.majorName,
+        },
+        projectName: record.majorName,
+      }
+    });
+    this.props.dispatch(routerRedux.push({
+      pathname: '/budget/project',
+    }));
   }
 
   render() {
     const {
-      budgetRecList,
-      budgetRecPageNum,
-      budgetRecPageTotal,
-      loading,
-      budgetRecPageSize,
+      allImportData,
+    allImportPage,
+    allImportNum,
+    dispatch,
+    loading
     } = this.props;
     return (
       <ImportRecord
-        dataSouce={budgetRecList}
-        pageNum={budgetRecPageNum}
-        pageTotal={budgetRecPageTotal}
-        tableTitel={"预算导入记录"}
+        dataSouce={allImportData}
+        pageNum={allImportPage}
+        pageTotal={allImportNum}
+        tableTitel={'项目预算导入记录'}
+        actionFunc={this.showDetail}
         loading={loading}
+        dispatch={dispatch}
       />
     );
   }
@@ -34,18 +59,16 @@ class BudgetImportRecord extends React.Component {
 
 function mapStateToProps(state) {
   const {
-    budgetRecList,
-    budgetRecPageNum,
-    budgetRecPageTotal,
-    budgetRecPageSize,
+    allImportData,
+    allImportPage,
+    allImportNum,
     loading,
   } = state.ImportData;
   return {
-    budgetRecList,
-    budgetRecPageNum,
-    budgetRecPageTotal,
-    loading,
-    budgetRecPageSize,
+    allImportData,
+    allImportPage,
+    allImportNum,
+    loading
   };
 }
 

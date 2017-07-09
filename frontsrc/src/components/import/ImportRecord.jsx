@@ -2,7 +2,7 @@
  * 项目导入记录
  * 这个页面可以复用,可以分别用来展示项目预算和绩效目标的导入情况
  */
-import { connect } from 'dva';
+import moment from 'moment';
 import React from 'react';
 import { Form, Input, Button, Icon, Card, Table, Upload, message, Modal, Popconfirm } from 'antd';
 import FrameContent from '../common/FrameContent';
@@ -13,27 +13,34 @@ import { routerRedux } from 'dva/router';
 
 class ImportRecord extends React.Component {
   state = {
-    selectedRows: [],
-    selectedRowKeys: [],
-    modelVisible: false,
-    modalTitle: '添加',
-    selectObj: {},
+    editRec: {}
   }
- 
+
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'ImportData/setState',
+      payload: {
+        allImportPage: 1,
+      },
+    });
+
+    setTimeout(() => {
+      this.props.dispatch({
+        type: 'ImportData/getAllImportData',
+      });
+    }, 100);
+  }
+
   onPageChanged = (page) => {
     this.props.dispatch({
-      type: 'ProjectModel/setState',
+      type: 'ImportData/setState',
       payload: {
-        projectListPage: page,
+        allImportPage: page,
       },
     });
     this.props.dispatch({
-      type: 'ProjectModel/getProjectList',
+      type: 'ImportData/getAllImportData',
     });
-  }
-
-  showDetail =(record) => {
-    console.log(record);
   }
 
   render() {
@@ -43,6 +50,7 @@ class ImportRecord extends React.Component {
       pageTotal,
       tableTitel,
       loading,
+      actionFunc,
     } = this.props;
     const columns =
       [{
@@ -52,22 +60,18 @@ class ImportRecord extends React.Component {
         title: '专业名称',
         dataIndex: 'majorName',
       }, {
-        title: '立项年度',
-        dataIndex: 'createYear',
-      }, {
         title: '第一主持单位',
         dataIndex: 'schoolName',
       }, {
         title: '导入时间',
         dataIndex: 'partnerSchool',
+        render: time => moment(time).format('YYYY-MM-DD:HH:mm:ss')
       }, {
         title: '导入人',
-        dataIndex: 'partnerSchool',
+        dataIndex: 'importUserNo',
       }, {
         title: '查看明细',
-        render: (item, record) => {
-          return (<LinkBtn onClick={showDetail.bind(this, record)}>查看详情</LinkBtn>)
-        }
+        render: (item, record) => (<LinkBtn onClick={actionFunc.bind(this, record)}>查看详情</LinkBtn>)
       }];
 
     const pageConfig = {
@@ -77,7 +81,7 @@ class ImportRecord extends React.Component {
       pageSize: 20,
       onChange: this.onPageChanged,
     };
-    
+
     return (
       <FrameContent>
         <Card title={tableTitel}>
