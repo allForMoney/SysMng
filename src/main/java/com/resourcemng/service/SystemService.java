@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 @Service
@@ -32,16 +33,25 @@ public class SystemService {
   @Autowired
   DynamicScheduledTask dynamicScheduledTask;
 
-  public ReportDeadLineView getScheduView(){
-    ReportDeadlineSetting reportDeadlineSettingOne = repository.findById(QuarterSettinEnum.ONE).get();
-    ReportDeadlineSetting reportDeadlineSettingTwo = repository.findById(QuarterSettinEnum.TWO).get();
-    ReportDeadlineSetting reportDeadlineSettingThree = repository.findById(QuarterSettinEnum.THREE).get();
-    ReportDeadlineSetting reportDeadlineSettingFour = repository.findById(QuarterSettinEnum.FOUR).get();
+  public ReportDeadLineView getScheduView() {
+    ReportDeadlineSetting reportDeadlineSettingOne = null;
+    ReportDeadlineSetting reportDeadlineSettingTwo = null;
+    ReportDeadlineSetting reportDeadlineSettingThree = null;
+    ReportDeadlineSetting reportDeadlineSettingFour = null;
+    try {
+      reportDeadlineSettingOne = repository.findById(QuarterSettinEnum.ONE).get();
+      reportDeadlineSettingTwo = repository.findById(QuarterSettinEnum.TWO).get();
+      reportDeadlineSettingThree = repository.findById(QuarterSettinEnum.THREE).get();
+      reportDeadlineSettingFour = repository.findById(QuarterSettinEnum.FOUR).get();
+    } catch (Exception e) {
+//      e.printStackTrace();
+
+    }
     ReportDeadLineView reportDeadLineView = new ReportDeadLineView();
-    reportDeadLineView.setQuarterOneSetting(reportDeadlineSettingOne.getValue());
-    reportDeadLineView.setQuarterTwoSetting(reportDeadlineSettingTwo.getValue());
-    reportDeadLineView.setQuarterThreeSetting(reportDeadlineSettingThree.getValue());
-    reportDeadLineView.setQuarterFourSetting(reportDeadlineSettingFour.getValue());
+    reportDeadLineView.setQuarterOneSetting(Optional.ofNullable(reportDeadlineSettingOne).map(s->s.getValue()).orElse("15"));
+    reportDeadLineView.setQuarterTwoSetting(Optional.ofNullable(reportDeadlineSettingTwo).map(s->s.getValue()).orElse("15"));
+    reportDeadLineView.setQuarterThreeSetting(Optional.ofNullable(reportDeadlineSettingThree).map(s->s.getValue()).orElse("15"));
+    reportDeadLineView.setQuarterFourSetting(Optional.ofNullable(reportDeadlineSettingFour).map(s->s.getValue()).orElse("15"));
     return reportDeadLineView;
 
   }
