@@ -18,6 +18,7 @@ import com.resourcemng.view.UserView;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -35,6 +36,10 @@ public class UserService  /*implements  UserDetailsService*/{
   TUserRepository userRepository;
   @Autowired
   ProjectRepository projectRepository;
+
+
+  @Value("${app.user.defaultpassword}")
+  private String defaultPass = "4QrcOUm6Wau+VuBX8g+IPg==";
   public Object regiestUser(Tuser user){
     return  userRepository.save(user);
   }
@@ -73,6 +78,12 @@ public class UserService  /*implements  UserDetailsService*/{
       result.add(view);
     }
     return new PageImpl(result,pageResult.getPageable(),pageResult.getTotalElements());
+  }
+
+  public Object resetPassword(String id) {
+    Tuser user = userRepository.findById(id).get();
+    user.setPassword(defaultPass);
+     return userRepository.save(user);
   }
 }
 
