@@ -32,9 +32,9 @@ class Achive extends React.Component {
   }
 
   exportArchive=() => {
-    const url='';
+    const { projectInfo } = this.props;
+    const url = `indicator/download?projectId=${projectInfo.id}`;
     window.open(url);
-    return;
   }
 
   doCheck= (flag) => { // flag=true,通过审核
@@ -111,7 +111,7 @@ class Achive extends React.Component {
             </span>
             }
             <Button className={styles.btnClass} type="primary" onClick={this.exportArchive}>导出Excel</Button>
-            
+
             <Card title={`绩效指标[编号:${projectInfo.projectNo}, 名称:${projectInfo.majorName}]`}>
               <AchiveTargetList
                 editable={editable}
