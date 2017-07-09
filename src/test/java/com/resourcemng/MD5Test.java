@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 public class MD5Test  {
 
     public static void main(String[] args) {
-      System.out.println(MD5.encrypt("123456"));
+      System.out.println(MD5.encrypt("13053388577"));
 
     }
 
