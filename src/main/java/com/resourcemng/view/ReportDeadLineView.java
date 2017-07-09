@@ -5,7 +5,7 @@ import com.resourcemng.entitys.BudgetAuditLog;
 /**
  * Created by 燕子 on 2017/7/8.
  */
-public class ReportDeadLineView extends BudgetAuditLog {
+public class ReportDeadLineView  {
   String quarterOneSetting;
   String quarterTwoSetting;
   String quarterThreeSetting;
