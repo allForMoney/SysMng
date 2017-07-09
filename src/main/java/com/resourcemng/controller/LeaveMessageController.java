@@ -42,7 +42,8 @@ public class LeaveMessageController {
   @ResponseBody
   public Object projectComment(@RequestBody LeaveMessage leaveMessage) throws Exception {
     leaveMessage.setMesType(LeaveMessageType.PROJECT);
-    return leaveMessageService.comment(leaveMessage);
+
+    return new RequestResult(ResultCode.SUCCESS, "添加成功",  leaveMessageService.comment(leaveMessage) );
   }
   /**
    * 添加项目留言
@@ -54,7 +55,7 @@ public class LeaveMessageController {
   @ResponseBody
   public Object indicatorComment(@RequestBody LeaveMessage leaveMessage) throws Exception {
     leaveMessage.setMesType(LeaveMessageType.INDICATOR);
-    return leaveMessageService.comment(leaveMessage);
+    return new RequestResult(ResultCode.SUCCESS, "添加成功",  leaveMessageService.comment(leaveMessage) );
   }
   /**
    * 添加留言,前台输入类型
@@ -65,7 +66,7 @@ public class LeaveMessageController {
   @RequestMapping(value = "/create" ,method = RequestMethod.POST)
   @ResponseBody
   public Object create(@RequestBody LeaveMessage leaveMessage) throws Exception {
-    return leaveMessageService.comment(leaveMessage);
+    return new RequestResult(ResultCode.SUCCESS, "添加成功",  leaveMessageService.comment(leaveMessage) );
   }
 
 
