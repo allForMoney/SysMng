@@ -7,6 +7,9 @@ export function updateReportTime(params) {
     data: JSON.stringify(params),
   });
 }
+export function getReportTime() {
+  return request('/system/getReportTime');
+}
 
 export function sendSMS(params) {
   return request(`/system/sendmessage?${qs.stringify(params)}`, {
@@ -21,5 +24,5 @@ export function resetPwd(params) {
 }
 
 export function getUserList(params) {
-  return request(`/other/getUserList?${qs.stringify(params)}`);
+  return request(`/user/all?${qs.stringify(params)}`);
 }

@@ -3,6 +3,7 @@ import {
   updateReportTime,
   sendSMS,
   resetPwd,
+  getReportTime,
   getUserList,
  } from '../services/OtherService';
 import { getProjectInfoById } from '../services/ProjectService';
@@ -16,8 +17,12 @@ export default {
     showSMSText: false,
     projectInfo: {},
     userRecList: [],
-    userRecPageNum: 0,
+    userRecPageNum: 1,
     userRecTotal: 0,
+    reportTimeObj: {},
+  },
+
+  subscriptions: {
   },
 
   effects: {
@@ -49,9 +54,8 @@ export default {
         yield put({
           type: 'setState',
           payload: {
-            userRecList: data.result,
-            userRecPageNum: data.result.pageNum,
-            userRecTotal: data.result.total,
+            userRecList: data.result.content,
+            userRecTotal: data.result.totalPages,
           }
         });
       }
@@ -64,10 +68,20 @@ export default {
       }
     },
 
-    * saveReportTime({ payload }, { call, put }) {
+    * saveReportTime({ payload }, { call }) {
       const data = yield call(updateReportTime, payload);
       if (data && data.code === '1') {
         message.info('保存成功');
+      }
+    },
+
+    * getReportTime({ payload }, { call, put }) {
+      const data = yield call(getReportTime, payload);
+      if (data && data.code === '1') {
+        yield put({
+          type: 'setState',
+          payload: { reportTimeObj: data.result },
+        });
       }
     },
   },

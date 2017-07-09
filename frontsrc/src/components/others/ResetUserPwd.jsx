@@ -18,6 +18,12 @@ class ResetUserPwd extends React.Component {
 
   componentDidMount() {
     this.props.dispatch({
+      type: 'OtherModel/setState',
+      payload: {
+        userRecPageNum: 1,
+      },
+    });
+    this.props.dispatch({
       type: 'OtherModel/getUserList',
     });
   }
@@ -38,20 +44,20 @@ class ResetUserPwd extends React.Component {
     const columns =
       [{
         title: '登录账号',
-        dataIndex: 'projectNo',
+        dataIndex: 'username',
       }, {
         title: '用户角色',
-        dataIndex: 'majorName',
+        dataIndex: 'roleName',
       }, {
         title: '专业名称',
-        dataIndex: 'createYear',
+        dataIndex: 'majorName',
       }, {
         title: '联系方式',
-        dataIndex: 'schoolName',
+        dataIndex: 'telephoneNum',
       }, {
         title: '重置密码',
         dataIndex: 'schoolHead',
-        render: (value,rec) => <LinkBtn onClick={this.resetPwd.bind(this, rec)}>重置密码</LinkBtn>
+        render: (value, rec) => <LinkBtn onClick={this.resetPwd.bind(this, rec)}>重置密码</LinkBtn>
       }];
 
     const {
