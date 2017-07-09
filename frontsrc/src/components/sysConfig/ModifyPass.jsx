@@ -40,12 +40,12 @@ class ModifyPass extends React.Component {
           <FormItem label="新密码" {...formItemLayout}>
             {getFieldDecorator('newPassword', {
               rules: [filterRules],
-            })(<Input />)}
+            })(<Input type="password" />)}
           </FormItem>
           <FormItem label="重复一次" {...formItemLayout}>
             {getFieldDecorator('repeatPass', {
               rules: [filterRules],
-            })(<Input />)}
+            })(<Input type="password" />)}
           </FormItem>
         </Form>
       </Modal>

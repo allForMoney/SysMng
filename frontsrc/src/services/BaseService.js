@@ -26,9 +26,8 @@ export function getProviceInfo() {
 
 export function modifyPass(params) {
   console.log(params);
-  return request('/user/changePassword', {
+  return request(`/user/changePassword?${qs.stringify(params)}`, {
     method: 'post',
-    data: JSON.stringify(params),
   });
 }
 export function updateConcat(params) {

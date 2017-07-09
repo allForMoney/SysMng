@@ -170,8 +170,7 @@ export default {
     },
 
     * modifyPass({ payload }, { call, put, select }) {
-      const { projectInfo } = yield select(state => state.baseModel);
-      const data = yield call(modifyPass, { ...projectInfo, ...payload });
+      const data = yield call(modifyPass, { ...payload });
 
       if (data && data.code === '1') {
         yield put({
@@ -181,6 +180,7 @@ export default {
           }
         });
         message.info('密码修改成功');
+        window.location = './index.html';
       }
     }
   },
