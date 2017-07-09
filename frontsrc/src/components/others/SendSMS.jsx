@@ -27,7 +27,7 @@ class SendSMS extends React.Component {
       payload: { projectNo },
     });
   }
-  
+
   sendSMS = () => {
     this.smsForm.validateFields((err, values) => {
       if (err) {
