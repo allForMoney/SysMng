@@ -35,7 +35,6 @@ public class LeaveMessageService {
    * @return
    */
   public Object comment(LeaveMessage leaveMessage) {
-    leaveMessage.setMesType(LeaveMessageType.BUDGET);
     leaveMessage.setSubmitDate(new Date());
     return leaveMessageRepository.save(leaveMessage);
   }
