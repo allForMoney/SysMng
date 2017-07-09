@@ -107,7 +107,8 @@ class ProjectBaseInfo extends React.Component {
                 type: 'baseModel/setState',
                 payload: {
                   showMsgModal: true,
-                  msgType: 'project'
+                  msgType: 'project',
+                  mesType: 1,
                 }
               })
               }

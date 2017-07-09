@@ -98,7 +98,8 @@ class Achive extends React.Component {
                 type: 'baseModel/setState',
                 payload: {
                   showMsgModal: true,
-                  msgType: 'indicator'
+                  msgType: 'indicator',
+                  mesType: 2,
                 }
               })
               }

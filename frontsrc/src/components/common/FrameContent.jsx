@@ -89,6 +89,7 @@ class FrameContent extends React.Component {
       type: 'baseModel/saveMsg',
       payload: { msgValue }
     });
+    this.setState({ msgValue: '' });
     this.cancelMsg();
   }
 
@@ -308,7 +309,7 @@ class FrameContent extends React.Component {
                   <Link to="/budget/projectBudgetResult" ><Icon type="bars" />预算执行结果</Link>
                 </Menu.Item>
                 <Menu.Item key="预算留言处理">
-                  <Link to="/blank" ><Icon type="bars" />预算留言处理</Link>
+                  <Link to="/budget/msgList" ><Icon type="bars" />预算留言处理</Link>
                 </Menu.Item>
                 <Menu.Item key="有关批复">
                   <Link to="/blank" ><Icon type="bars" />有关批复</Link>
@@ -343,7 +344,7 @@ class FrameContent extends React.Component {
                     <Link to="/achive/allList" ><Icon type="bars" />查询</Link>
                   </Menu.Item>
                   <Menu.Item key="绩效留言处理">
-                    <Link to="/blank" ><Icon type="bars" />绩效留言处理</Link>
+                    <Link to="/achive/msgAll" ><Icon type="bars" />绩效留言处理</Link>
                   </Menu.Item>
                   <Menu.Item key="变更处理">
                     <Link to="/blank" ><Icon type="bars" />变更处理</Link>

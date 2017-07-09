@@ -13,12 +13,12 @@ export function getProjectInfoById(params) {
 
 export function saveMsg(params) {
   console.log(params);
-  const { mesType } = params;
-  if (!mesType) {
+  const { msgType } = params;
+  if (!msgType) {
     return;
   }
   let url = '';
-  switch (mesType) {
+  switch (msgType) {
     case 'budget':
       url = 'leavemessage/budget/create';
       break;
