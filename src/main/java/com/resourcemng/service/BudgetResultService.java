@@ -183,6 +183,103 @@ public class BudgetResultService {
 
   }
 
+//  /**
+//   * 文件下载
+//   * @param projectId
+//   * @param projectYear
+//   * @param quarterNum
+//   * @return
+//   */
+//  public Workbook exportFile(String projectId, String projectYear, String quarterNum) throws InvocationTargetException,
+//    IllegalAccessException {
+//    ProjectResultDownloadView view = new ProjectResultDownloadView();
+//    //项目信息
+//    Project project = projectRepository.findById(projectId).get();
+//    //TODO 校验
+//
+//    //预算信息
+//    ProjectBudgetInfoView projectBudgetInfoView = budgetService.getBudgetForProject(projectId);
+//    //TODO 校验
+//    view.setBudget(projectBudgetInfoView);
+//    view.setProject(project);
+//    view.setProjectYear(projectYear);
+//    view.setQuarterNum(quarterNum);
+//    Tuser user = tUserRepository.findByUserNo(project.getProjectNo() + "-1");
+//    //收入信息
+//    List<FundsIn> fundsIns = fundsInRepository.findByParams(user.getId(), quarterNum, projectYear);
+//    ProjectFundInInfoView projectFundInInfoView = new ProjectFundInInfoView();
+//    if (fundsIns != null) {
+//      BigDecimal totalFundsIn = new BigDecimal(0);
+//      for (FundsIn fundsIn : fundsIns) {
+//        if (FoundSourceType.COUNTRY.equals(fundsIn.getPid())) {
+//          projectFundInInfoView.setCountryTotal(fundsIn.getAmountMoney());
+//          projectFundInInfoView.setCountryPrecent(BigDecimalUtil.percent(fundsIn.getAmountMoney(),projectBudgetInfoView.getCountryTotal().getTotal()));
+//          totalFundsIn = totalFundsIn.add(fundsIn.getAmountMoney());
+//        } else if (FoundSourceType.LOCAL.equals(fundsIn.getPid())) {
+//          projectFundInInfoView.setLocal(fundsIn.getAmountMoney());
+//          projectFundInInfoView.setLocalPrecent(BigDecimalUtil.percent(fundsIn.getAmountMoney(),projectBudgetInfoView.getLocal().getTotal()));
+//          totalFundsIn =totalFundsIn.add(fundsIn.getAmountMoney());
+//        } else if (FoundSourceType.ENTERPRICE.equals(fundsIn.getPid())) {
+//          projectFundInInfoView.setEnterprise(fundsIn.getAmountMoney());
+//          projectFundInInfoView.setEnterprisePrecent(BigDecimalUtil.percent(fundsIn.getAmountMoney(),projectBudgetInfoView.getEnterprise().getTotal()));
+//          totalFundsIn =totalFundsIn.add(fundsIn.getAmountMoney());
+//        } else if (FoundSourceType.UNIVERSITY.equals(fundsIn.getPid())) {
+//          projectFundInInfoView.setUniversity(fundsIn.getAmountMoney());
+//          projectFundInInfoView.setUniversityPrecent(BigDecimalUtil.percent(fundsIn.getAmountMoney(),projectBudgetInfoView.getUniversity().getTotal()));
+//          totalFundsIn = totalFundsIn.add(fundsIn.getAmountMoney());
+//
+//        }
+//
+//      }
+//      //设置总输入
+//      projectFundInInfoView.setTotal(totalFundsIn);
+//      projectFundInInfoView.setPrecent(BigDecimalUtil.percent(totalFundsIn,projectBudgetInfoView.getTotal().getTotal()));
+//
+//    }
+//    view.setFundin(projectFundInInfoView);
+//
+//    //支出信息
+//    List<FundsOut> fundsOuts = fundsOutRepository.findByParams(user.getId(), quarterNum, projectYear);
+//    ProjectFundOutInfoView projectFundOutInfoView = new ProjectFundOutInfoView();
+//    if (fundsOuts != null) {
+//      FundsOut totalFundsOut = new FundsOut();
+//      for (FundsOut fundsOut : fundsOuts) {
+//        if (FoundSourceType.COUNTRY.equals(fundsOut.getPid())) {
+//          projectFundOutInfoView.setCountryTotal(this.getResultPrecentInfoView(projectBudgetInfoView.getCountryTotal(),fundsOut));
+//          getTotalFundsOut(totalFundsOut,fundsOut);
+//        } else if (FoundSourceType.LOCAL.equals(fundsOut.getPid())) {
+//          projectFundOutInfoView.setLocal(this.getResultPrecentInfoView(projectBudgetInfoView.getLocal(),fundsOut));
+//          getTotalFundsOut(totalFundsOut,fundsOut);
+//        } else if (FoundSourceType.ENTERPRICE.equals(fundsOut.getPid())) {
+//          projectFundOutInfoView.setEnterprise(this.getResultPrecentInfoView(projectBudgetInfoView.getEnterprise(),fundsOut));
+//          getTotalFundsOut(totalFundsOut,fundsOut);
+//        } else if (FoundSourceType.UNIVERSITY.equals(fundsOut.getPid())) {
+//          projectFundOutInfoView.setUniversity(this.getResultPrecentInfoView(projectBudgetInfoView.getUniversity(),fundsOut));
+//          getTotalFundsOut(totalFundsOut,fundsOut);
+//
+//        }
+//
+//      }
+//      //设置总支出
+//      projectFundOutInfoView.setTotal(this.getResultPrecentInfoView(projectBudgetInfoView.getTotal(),totalFundsOut));
+//
+//    }
+//    view.setFundout(projectFundOutInfoView);
+//
+//    //导出文件
+//    TemplateExportParams params = new TemplateExportParams(
+//      ApplicationUitl.getWebRootPath("templete/预算执行情况模板.xlsx"), true);
+////    TemplateExportParams params = new TemplateExportParams("E:\\workspace\\SysResourceMngNew\\target\\test-classes\\templete\\预算执行情况模板.xlsx", true);
+//    Map<String, Object> map = new HashMap<>();
+//    map.put("project",view.getProject());
+//    map.put("budget",view.getBudget());
+//    map.put("foudin",view.getFundin());
+//    map.put("fundout",view.getFundout());
+//    map.put("projectYear",view.getProjectYear());
+//    map.put("quarterNum",view.getQuarterNum());
+//    Workbook workbook = ExcelExportUtil.exportExcel(params, map);
+//    return workbook;
+//  }
   /**
    * 文件下载
    * @param projectId
@@ -192,21 +289,27 @@ public class BudgetResultService {
    */
   public Workbook exportFile(String projectId, String projectYear, String quarterNum) throws InvocationTargetException,
     IllegalAccessException {
-    ProjectResultDownloadView view = new ProjectResultDownloadView();
+
+    //TODO 校验
+    Map computeData = this.computeData(projectId,projectYear,quarterNum);
+    TemplateExportParams params = new TemplateExportParams(
+      ApplicationUitl.getWebRootPath("templete/预算执行情况模板.xlsx"), true);
+    Workbook workbook = ExcelExportUtil.exportExcel(params, computeData);
+    return workbook;
+  }
+
+
+  private  Map computeData(String projectId, String projectYear, String quarterNum) throws InvocationTargetException, IllegalAccessException {
+    projectYear = projectYear==null?"":projectYear;
+    quarterNum = quarterNum==null?"":quarterNum;
     //项目信息
     Project project = projectRepository.findById(projectId).get();
-    //TODO 校验
-
     //预算信息
     ProjectBudgetInfoView projectBudgetInfoView = budgetService.getBudgetForProject(projectId);
     //TODO 校验
-    view.setBudget(projectBudgetInfoView);
-    view.setProject(project);
-    view.setProjectYear(projectYear);
-    view.setQuarterNum(quarterNum);
     Tuser user = tUserRepository.findByUserNo(project.getProjectNo() + "-1");
     //收入信息
-    List<FundsIn> fundsIns = fundsInRepository.findByParams(user.getId(), quarterNum, projectYear);
+      List<FundsIn> fundsIns = fundsInRepository.findByParamsLike(user.getId(), quarterNum, projectYear);
     ProjectFundInInfoView projectFundInInfoView = new ProjectFundInInfoView();
     if (fundsIns != null) {
       BigDecimal totalFundsIn = new BigDecimal(0);
@@ -236,10 +339,9 @@ public class BudgetResultService {
       projectFundInInfoView.setPrecent(BigDecimalUtil.percent(totalFundsIn,projectBudgetInfoView.getTotal().getTotal()));
 
     }
-    view.setFundin(projectFundInInfoView);
 
     //支出信息
-    List<FundsOut> fundsOuts = fundsOutRepository.findByParams(user.getId(), quarterNum, projectYear);
+    List<FundsOut> fundsOuts = fundsOutRepository.findByParamsLike(user.getId(), quarterNum, projectYear);
     ProjectFundOutInfoView projectFundOutInfoView = new ProjectFundOutInfoView();
     if (fundsOuts != null) {
       FundsOut totalFundsOut = new FundsOut();
@@ -264,22 +366,20 @@ public class BudgetResultService {
       projectFundOutInfoView.setTotal(this.getResultPrecentInfoView(projectBudgetInfoView.getTotal(),totalFundsOut));
 
     }
-    view.setFundout(projectFundOutInfoView);
 
     //导出文件
-    TemplateExportParams params = new TemplateExportParams(
-      ApplicationUitl.getWebRootPath("templete/预算执行情况模板.xlsx"), true);
+
 //    TemplateExportParams params = new TemplateExportParams("E:\\workspace\\SysResourceMngNew\\target\\test-classes\\templete\\预算执行情况模板.xlsx", true);
-    Map<String, Object> map = new HashMap<>();
-    map.put("project",view.getProject());
-    map.put("budget",view.getBudget());
-    map.put("foudin",view.getFundin());
-    map.put("fundout",view.getFundout());
-    map.put("projectYear",view.getProjectYear());
-    map.put("quarterNum",view.getQuarterNum());
-    Workbook workbook = ExcelExportUtil.exportExcel(params, map);
-    return workbook;
+      Map<String, Object> map = new HashMap<>();
+      map.put("project",project);
+      map.put("budget",projectBudgetInfoView);
+      map.put("foudin",projectFundInInfoView);
+      map.put("fundout",projectFundOutInfoView);
+      map.put("projectYear",projectYear);
+      map.put("quarterNum",quarterNum);
+      return map;
   }
+
 
   /**
    * 累计各类支出的总计

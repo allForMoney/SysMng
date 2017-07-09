@@ -20,6 +20,9 @@ public interface FundsInRepository extends JpaRepository<FundsIn, String> {
   @Query("from FundsIn p where p.userId=:userId and  p.quarterNum=:quarterNum and  p.projectYear=:projectYear")
   List<FundsIn> findByParams(@Param("userId")String userId, @Param("quarterNum")String quarterNum, @Param("projectYear")String projectYear);
 
+  @Query("from FundsIn p where p.userId=:userId and  p.quarterNum like CONCAT('%',:quarterNum,'%') and p.projectYear like CONCAT('%',:projectYear,'%')")
+  List<FundsIn> findByParamsLike(@Param("userId")String userId, @Param("quarterNum")String quarterNum, @Param("projectYear")String projectYear);
+
 //  @Query("delete from FundsIn p where p.userId=:userId and  p.quarterNum=:quarterNum and  p.projectYear=:projectYear")
 //  void deleteByParams(@Param("userId")String userId, @Param("quarterNum")String quarterNum, @Param("projectYear")String projectYear);
   void deleteByUserIdAndQuarterNumAndProjectYear(String userId, String quarterNum, String projectYear);

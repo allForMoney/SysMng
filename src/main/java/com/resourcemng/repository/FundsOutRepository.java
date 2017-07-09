@@ -1,5 +1,6 @@
 package com.resourcemng.repository;
 
+import com.resourcemng.entitys.FundsIn;
 import com.resourcemng.entitys.FundsOut;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,6 +18,9 @@ import java.util.List;
 public interface FundsOutRepository extends JpaRepository<FundsOut, String> {
   @Query("from FundsOut p where p.userId=:userId and  p.quarterNum=:quarterNum and  p.projectYear=:projectYear")
   List<FundsOut> findByParams(@Param("userId")String userId, @Param("quarterNum")String quarterNum, @Param("projectYear")String projectYear);
+
+  @Query("from FundsOut p where p.userId=:userId and  p.quarterNum like CONCAT('%',:quarterNum,'%') and p.projectYear like CONCAT('%',:projectYear,'%')")
+  List<FundsOut> findByParamsLike(@Param("userId")String userId, @Param("quarterNum")String quarterNum, @Param("projectYear")String projectYear);
 
 //  @Query("delete from FundsOut p where p.userId=:userId and  p.quarterNum=:quarterNum and  p.projectYear=:projectYear")
 //  void deleteByParams(@Param("userId")String userId, @Param("quarterNum")String quarterNum, @Param("projectYear")String projectYear);
