@@ -47,7 +47,7 @@ public class LeaveMessageService {
     if (projectId == null) {
       list = leaveMessageRepository.findByType(mesType);
     } else {
-      list = leaveMessageRepository.findByMesTypeaAndProjectId(mesType,projectId);
+      list = leaveMessageRepository.findByMesTypeAndProjectId(mesType,projectId);
     }
     List<Project> projects = projectRepository.findAll();
     projects = projects == null ? new ArrayList<>() : projects;

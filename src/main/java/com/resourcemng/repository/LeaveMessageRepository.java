@@ -20,5 +20,5 @@ public interface LeaveMessageRepository extends JpaRepository<LeaveMessage, Stri
   List findByType( @Param("mesType")String mesType);
 
 
-  List findByMesTypeaAndProjectId(String mesType,String projectId);
+  List findByMesTypeAndProjectId(String mesType,String projectId);
 }
