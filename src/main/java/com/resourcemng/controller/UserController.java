@@ -59,7 +59,7 @@ public class UserController {
     return new RequestResult(ResultCode.SUCCESS, "更新成功",  service.find(userNo,pageable));
   }
   /**
-   *
+   *密码重置
    * @param id
    * @return
    * @throws Exception
