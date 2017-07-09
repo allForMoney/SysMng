@@ -83,4 +83,20 @@ public class CommonController {
     FileCopyUtils.copy(inputStream, response.getOutputStream());
 
   }
+
+
+
+  /**
+   * 导入查询
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "/import/all" ,method = RequestMethod.GET)
+  @ResponseBody
+  public Object getBudgetImportLog(String type,String projectId,String page,String size) throws Exception {
+    page = page ==null?"1":page;
+    size = size ==null?"10":size;
+    Pageable pageable = new PageRequest(Integer.parseInt(page)-1,Integer.parseInt(size));
+    return new RequestResult(ResultCode.SUCCESS, "获取成功",  service.getImportLog(type,projectId,pageable));
+  }
 }

@@ -26,7 +26,11 @@ public interface FileImportLogRepository extends JpaRepository<FileImportLog, St
 
     List<FileImportLog>  findByImportType(String importType);
 
+    Page  findByImportType(String importType,Pageable pageable);
+
     List<FileImportLog> findByProjectId(String projectId);
+
+  Page findByImportTypeAndProjectId(String importType,String projectId,Pageable pageable);
 
   @Query("from FileImportLog p where p.projectId like CONCAT('%',:projectId,'%')")
   List<FileImportLog> findByParam(@Param("projectId")String projectId);
