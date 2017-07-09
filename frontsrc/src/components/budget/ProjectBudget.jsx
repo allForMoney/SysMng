@@ -22,7 +22,7 @@ class ProjectBudget extends React.Component {
   render() {
     const { budgetProjectList, projectTotal, projectPage, projectName, loading } = this.props;
 
-    const title = `项目预算表${projectName}`;
+    const title = `项目预算表 [${projectName}]`;
 
     return (
       <FrameContent>
@@ -33,7 +33,10 @@ class ProjectBudget extends React.Component {
               onClick={
               () => this.props.dispatch({
                 type: 'baseModel/setState',
-                payload: { showMsgModal: true }
+                payload: {
+                  showMsgModal: true,
+                  msgType: 'budget'
+                }
               })
               }
             >留言</Button>

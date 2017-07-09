@@ -1,4 +1,4 @@
-import { getExpertList, addExpert, updateExpert, deleteExpert } from '../services/ExpertService';
+import { getExpertList, addExpert, drawExpert, updateExpert, deleteExpert } from '../services/ExpertService';
 import { message } from 'antd';
 
 export default {
@@ -8,10 +8,22 @@ export default {
     expertList: [],
     expertPage: 1,
     expertNum: 0,
+    drawExpertList: [],
     loading: false,
   },
 
   effects: {
+    * drawExpert({ payload }, { call, put }) {
+      const data = yield call(drawExpert, payload);
+      if (data && data.code === '1') {
+        yield put({
+          type: 'setState',
+          payload: {
+            drawExpertList: data.result,
+          }
+        });
+      }
+    },
     * getExpertList({ payload }, { call, put }) {
       const data = yield call(getExpertList, payload);
       if (data && data.code === '1') {

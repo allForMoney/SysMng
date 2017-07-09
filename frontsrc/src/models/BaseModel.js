@@ -1,5 +1,5 @@
 import { logout, login, updateConcat, getProviceInfo,
-  modifyPass,
+  modifyPass, saveMsg,
   getProjectInfoById } from '../services/BaseService';
 import { routerRedux } from 'dva/router';
 import { message, Modal } from 'antd';
@@ -11,7 +11,10 @@ export default {
     loading: false,
     userType: 'finace',  // inputer/finace/school/admin/country
     userName: '12345',
-    showMsgModal: false,
+
+    showMsgModal: false, // 展示留言弹窗
+    msgType: '', // 留言类型
+
     projectInfo: {}, // 单个项目基本信息
     projectList: [],
     projectTotal: 34,
@@ -181,6 +184,21 @@ export default {
         });
         message.info('密码修改成功');
         window.location = './index.html';
+      }
+    },
+
+    * saveMsg({ payload }, { call, put, select }) {
+      const { msgType, projectInfo, userId } = yield select(state => state.baseModel);
+
+      const data = yield call(saveMsg, {
+        contents: payload.msgValue,
+        mesType: msgType,
+        projectId: projectInfo.id,
+        submitUserId: userId
+      });
+
+      if (data && data.code === '1') {
+        message.info('留言保存成功');
       }
     }
   },

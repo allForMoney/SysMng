@@ -84,7 +84,7 @@ class FrameContent extends React.Component {
 
   saveMsg= () => {
     const { msgValue } = this.state;
-    console.log(msgValue);
+
     this.props.dispatch({
       type: 'baseModel/saveMsg',
       payload: { msgValue }
@@ -380,7 +380,7 @@ class FrameContent extends React.Component {
                   <Link to="/blank" ><Icon type="bars" />专家信用记录</Link>
                 </Menu.Item>
                 <Menu.Item key="专家抽取">
-                  <Link to="/expert/drawExpert" ><Icon type="bars" />专家抽取</Link>
+                  <Link to="/blank" ><Icon type="bars" />专家抽取</Link>
                 </Menu.Item>
               </SubMenu>
               <SubMenu key="系统设置" title={<span><Icon type="user" />系统设置</span>}>
@@ -411,7 +411,7 @@ FrameContent.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const { userType, userName, showMsgModal } = state.baseModel;
-  return { userType, userName, showMsgModal };
+  const { userType, userName, showMsgModal, msgType } = state.baseModel;
+  return { userType, userName, showMsgModal, msgType };
 }
 export default connect(mapStateToProps)(FrameContent);

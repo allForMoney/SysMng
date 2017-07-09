@@ -90,6 +90,29 @@ class Achive extends React.Component {
       <FrameContent>
         {steps === 0 &&
           <Card title="目标设定">
+            <p>
+            该信息为只读信息，如有疑义，请
+            <Button
+              onClick={
+              () => this.props.dispatch({
+                type: 'baseModel/setState',
+                payload: {
+                  showMsgModal: true,
+                  msgType: 'indicator'
+                }
+              })
+              }
+            >留言</Button>
+            。 如须变更，请点击
+            <Button
+              onClick={() => {
+                this.props.dispatch(routerRedux.push({
+                  pathname: '/budget/justify',
+                }));
+              }
+              }
+            >预算调整</Button>办理手续。
+          </p>
             <AchiveTarget
               ref={(form) => { this.targetForm = form; }}
               editable={editable}
