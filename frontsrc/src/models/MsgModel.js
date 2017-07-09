@@ -30,8 +30,10 @@ export default {
         message.info('回复成功');
       }
     },
-    * getBudgetMsgList({ payload }, { call, put }) {
-      const data = yield call(getBudgetMsgList);
+    * getBudgetMsgList({ payload }, { call, put, select }) {
+      const { projectInfo } = yield select(state => state.baseModel);
+
+      const data = yield call(getBudgetMsgList, { projectId: projectInfo.id });
       if (data && data.code === '1' && data.result) {
         yield put({
           type: 'setState',
@@ -43,8 +45,10 @@ export default {
       }
     },
 
-    * getAchiveMsgList({ payload }, { call, put }) {
-      const data = yield call(getAchiveMsgList);
+    * getAchiveMsgList({ payload }, { call, put, select }) {
+      const { projectInfo } = yield select(state => state.baseModel);
+
+      const data = yield call(getAchiveMsgList, { projectId: projectInfo.id });
       if (data && data.code === '1' && data.result) {
         yield put({
           type: 'setState',

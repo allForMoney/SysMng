@@ -70,8 +70,8 @@ class BudgetMsgList extends React.Component {
     const columns = [
       {
         title: '项目编号',
-        dataIndex: 'projectNo',
-        key: 'projectNo',
+        dataIndex: 'projectNos',
+        key: 'projectNos',
       }, {
         title: '留言时间',
         dataIndex: 'submitDate',
@@ -85,8 +85,8 @@ class BudgetMsgList extends React.Component {
         }
       }, {
         title: '留言人',
-        dataIndex: 'submitUserId',
-        key: 'submitUserId',
+        dataIndex: 'submitUserName',
+        key: 'submitUserName',
       }, {
         title: '留言内容',
         dataIndex: 'contents',
