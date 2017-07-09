@@ -15,7 +15,7 @@ export default {
   effects: {
     * drawExpert({ payload }, { call, put }) {
       const data = yield call(drawExpert, payload);
-      if (data && data.code === '1') {
+      if (data && data.code === '1' && data.result) {
         yield put({
           type: 'setState',
           payload: {
@@ -26,7 +26,7 @@ export default {
     },
     * getExpertList({ payload }, { call, put }) {
       const data = yield call(getExpertList, payload);
-      if (data && data.code === '1') {
+      if (data && data.code === '1' && data.result) {
         yield put({
           type: 'setState',
           payload: {

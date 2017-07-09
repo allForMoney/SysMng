@@ -1,5 +1,6 @@
 import { message } from 'antd';
 import { getProjectList, AddProject, deletePro, UpdateProject } from '../services/ProjectService';
+
 export default {
   namespace: 'ProjectModel',
 
@@ -16,7 +17,7 @@ export default {
     * getProjectList({ payload }, { call, put, select }) {
       const { filterParam, projectListPage } = yield select(state => state.ProjectModel);
       const data = yield call(getProjectList, { ...filterParam, page: projectListPage, size: 20 });
-      if (data.code === '1') {
+      if (data.code === '1' && data.result) {
         yield put({
           type: 'setState',
           payload: {

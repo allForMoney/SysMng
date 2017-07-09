@@ -81,7 +81,7 @@ export default {
     * getBudgetRecList({ payload }, { call, put, select }) {
       const { budgetRecordPage } = yield select(state => state.budgetModel);
       const data = yield call(getBudgetRecList, { page: budgetRecordPage });
-      if (data && data.code === '1') {
+      if (data && data.code === '1' && data.result) {
         const { content, totalPages } = data.result;
 
         yield put({
