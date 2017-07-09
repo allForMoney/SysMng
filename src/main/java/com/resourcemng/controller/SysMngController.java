@@ -38,7 +38,7 @@ public class SysMngController {
    */
     @RequestMapping(value = "/changeReportTime" ,method = RequestMethod.POST)
     @ResponseBody
-    public Object create(ReportDeadLineView reportDeadLineView) throws Exception {
+    public Object create(@RequestBody ReportDeadLineView reportDeadLineView) throws Exception {
       service.saveScheduView(reportDeadLineView);
       return new RequestResult(ResultCode.SUCCESS, "创建项目成功.",null   );
     }
