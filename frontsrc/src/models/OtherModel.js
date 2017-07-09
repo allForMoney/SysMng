@@ -49,7 +49,7 @@ export default {
 
     * getUserList({ payload }, { call, put, select }) {
       const { userRecPageNum } = yield select(state => state.OtherModel);
-      const data = yield call(getUserList, { userRecPageNum });
+      const data = yield call(getUserList, { userRecPageNum, ...payload });
       if (data && data.code === '1' && data.result) {
         yield put({
           type: 'setState',

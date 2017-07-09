@@ -17,9 +17,8 @@ export function sendSMS(params) {
   });
 }
 export function resetPwd(params) {
-  return request('/other/resetPwd', {
+  return request(`/user/resetpassword?${qs.stringify(params)}`, {
     method: 'post',
-    data: JSON.stringify(params),
   });
 }
 

@@ -12,7 +12,7 @@ class ResetUserPwd extends React.Component {
     console.log(rec);
     this.props.dispatch({
       type: 'OtherModel/resetPwd',
-      payload: rec
+      payload: { id: rec.id }
     });
   }
 
@@ -27,6 +27,22 @@ class ResetUserPwd extends React.Component {
       type: 'OtherModel/getUserList',
     });
   }
+  doSearch=(e) => {
+    e.preventDefault();
+    const values = this.props.form.getFieldsValue();
+
+    this.props.dispatch({
+      type: 'OtherModel/setState',
+      payload: {
+        userRecPageNum: 1,
+      },
+    });
+    this.props.dispatch({
+      type: 'OtherModel/getUserList',
+      payload: values
+    });
+  }
+
 
   onPageChanged = (page) => {
     this.props.dispatch({
@@ -65,7 +81,9 @@ class ResetUserPwd extends React.Component {
       userRecPageNum,
       userRecTotal,
       loading,
+      form,
     } = this.props;
+    const { getFieldDecorator } = form;
 
     const pageConfig = {
       className: 'ant-table-pagination',
@@ -78,6 +96,18 @@ class ResetUserPwd extends React.Component {
       <FrameContent>
         <Card title="用户列表">
           提示：密码重置后变为123456
+          <Form onSubmit={this.onSearchSubmit} layout="inline">
+            <Form.Item label="主持单位 ：">
+              { getFieldDecorator('userNo', {
+              })(
+                <Input size="small" />
+                )}
+            </Form.Item>
+            <Form.Item >
+              <Button size="small" type="primary" htmlType="submit" icon="search" onClick={this.doSearch}>查询</Button>
+              <Button size="small" style={{ marginLeft: 5 }} type="primary" onClick={() => this.props.form.resetFields()}><Icon type="rollback" />重置</Button>
+            </Form.Item>
+          </Form>
           <Table
             columns={columns}
             dataSource={userRecList}
