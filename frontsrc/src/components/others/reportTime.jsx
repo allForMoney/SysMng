@@ -1,4 +1,4 @@
-import { Form, Input, Button } from 'antd';
+import { Form, InputNumber, Button } from 'antd';
 import React from 'react';
 import { connect } from 'dva';
 import FrameContent from '../common/FrameContent';
@@ -31,7 +31,7 @@ function reportTime(props) {
     console.log('tij');
     validateFields((error, values) => {
       if (error) {
-        return ;
+        return;
       }
       console.log(values);
       props.dispatch({
@@ -40,7 +40,6 @@ function reportTime(props) {
       });
     });
   };
-
   return (
     <FrameContent>
       <Form>
@@ -49,9 +48,9 @@ function reportTime(props) {
           label="第一季度上报截止日期"
           hasFeedback
         >
-          {getFieldDecorator('season1', {
+          {getFieldDecorator('quarterOneSetting', {
           })(
-            <Input />
+            <InputNumber min={1} max={31} />
           )}
         </FormItem>
         <FormItem
@@ -59,9 +58,9 @@ function reportTime(props) {
           label="第二季度上报截止日期"
           hasFeedback
         >
-          {getFieldDecorator('season2', {
+          {getFieldDecorator('quarterTwoSetting', {
           })(
-            <Input />
+            <InputNumber min={1} max={31} />
           )}
         </FormItem>
         <FormItem
@@ -69,9 +68,9 @@ function reportTime(props) {
           label="第三季度上报截止日期"
           hasFeedback
         >
-          {getFieldDecorator('season3', {
+          {getFieldDecorator('quarterThreeSetting', {
           })(
-            <Input />
+            <InputNumber min={1} max={31} />
           )}
         </FormItem>
         <FormItem
@@ -79,9 +78,9 @@ function reportTime(props) {
           label="第四季度上报截止日期"
           hasFeedback
         >
-          {getFieldDecorator('season4', {
+          {getFieldDecorator('quarterFourSetting', {
           })(
-            <Input />
+            <InputNumber min={1} max={31} />
           )}
         </FormItem>
         <FormItem
