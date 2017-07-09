@@ -12,6 +12,7 @@ import com.resourcemng.repository.ProjectRepository;
 import com.resourcemng.repository.ReportDeadlineSettingRepository;
 import com.resourcemng.repository.TUserRepository;
 import com.resourcemng.task.DynamicScheduledTask;
+import com.resourcemng.task.MessageSender;
 import com.resourcemng.util.ApplicationUitl;
 import com.resourcemng.view.ReportDeadLineView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,10 @@ public class SystemService {
   ReportDeadlineSettingRepository repository;
   @Autowired
   DynamicScheduledTask dynamicScheduledTask;
-
+  @Autowired
+  ProjectRepository projectRepository;
+  @Autowired
+  MessageSender messageSender;
   public ReportDeadLineView getScheduView() {
     ReportDeadlineSetting reportDeadlineSettingOne = null;
     ReportDeadlineSetting reportDeadlineSettingTwo = null;
@@ -82,4 +86,11 @@ public class SystemService {
     repository.save(reportDeadlineSetting);
   }
 
+  public void sendMessage(String projectId, String message) {
+
+   Project project =  projectRepository.findById(projectId).get();
+    messageSender.sendSms(project.getFinaceHeaderTel(),message);
+    messageSender.sendSms(project.getProjectHeaderTel(),message);
+    messageSender.sendSms(project.getReporterTel(),message);
+  }
 }
