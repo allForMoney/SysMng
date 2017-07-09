@@ -24,7 +24,11 @@ class FrameContent extends React.Component {
 
   onMenuClicked = ({ keyPath }) => {
     const [cookie3, cookie2, cookie1] = keyPath;
-    this.setState({ cookie1, cookie2, cookie3, selectKeys: cookie3 });
+    this.setState({
+      cookie1,
+      cookie2,
+      cookie3,
+    });
   }
 
   onCreateBtnClicked = () => {
@@ -94,7 +98,8 @@ class FrameContent extends React.Component {
   }
 
   render() {
-    const { cookie1, cookie2, cookie3, msgValue,
+    const {
+    msgValue,
     selectKeys,
     openKeys,
    } = this.state;
@@ -175,7 +180,7 @@ class FrameContent extends React.Component {
                   <Link to="/budget/base" ><Icon type="bars" />项目基本情况</Link>
                 </Menu.Item>
                 <SubMenu key="projectBudget" title={<span><Icon type="user" />项目预算</span>} >
-                  <Menu.Item key="project">
+                  <Menu.Item key="project" onTitleClick={this.onMenuClicked}>
                     <Link to="/budget/project" ><Icon type="bars" />项目预算表</Link>
                   </Menu.Item>
                   <Menu.Item key="justify">
