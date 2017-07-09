@@ -1,6 +1,7 @@
 package com.resourcemng.util;
 
 import cn.afterturn.easypoi.util.PoiPublicUtil;
+import com.resourcemng.Enum.TempleteType;
 import com.resourcemng.basic.MyException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,5 +37,16 @@ public class ApplicationUitl {
       || request.getHeader("USER-AGENT").toLowerCase().indexOf("rv:11.0") > 0
       || request.getHeader("USER-AGENT").toLowerCase().indexOf("edge") > 0) ? true
       : false;
+  }
+  public static String getTempFileNameByType(String type) {
+    switch (type){
+      case TempleteType.PROJECT:
+        return "项目模板.xlsx";
+      case TempleteType.INDICATOR:
+        return "绩效目标模板.xlsx";
+      case TempleteType.BUDGET2016:
+        return "预算2016模板.xlsx";
+    }
+    return null;
   }
 }

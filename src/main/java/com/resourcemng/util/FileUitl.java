@@ -72,4 +72,9 @@ public class FileUitl {
   public void setPath(String path) {
     this.path = path;
   }
+
+  public File getTempleteFile(String fileName) {
+    String path = ApplicationUitl.getWebRootPath("downloadtemp/"+fileName);
+    return new File(path);
+  }
 }

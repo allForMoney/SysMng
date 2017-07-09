@@ -155,7 +155,7 @@ public class BudgetAdjustController {
       fileName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
     }
 
-    response.setHeader("content-disposition", "attachment;filename=" + fileName + ".pdf");
+    response.setHeader("content-disposition", "attachment;filename=" + fileName);
     FileCopyUtils.copy(inputStream, response.getOutputStream());
 
   }
