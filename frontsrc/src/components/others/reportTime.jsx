@@ -1,4 +1,4 @@
-import { Form, InputNumber, Button } from 'antd';
+import { Form, InputNumber, Card, Button } from 'antd';
 import React from 'react';
 import { connect } from 'dva';
 import FrameContent from '../common/FrameContent';
@@ -42,53 +42,55 @@ function reportTime(props) {
   };
   return (
     <FrameContent>
-      <Form>
-        <FormItem
-          {...formItemLayout}
-          label="第一季度上报截止日期"
-          hasFeedback
-        >
-          {getFieldDecorator('quarterOneSetting', {
-          })(
-            <InputNumber min={1} max={31} />
-          )}
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="第二季度上报截止日期"
-          hasFeedback
-        >
-          {getFieldDecorator('quarterTwoSetting', {
-          })(
-            <InputNumber min={1} max={31} />
-          )}
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="第三季度上报截止日期"
-          hasFeedback
-        >
-          {getFieldDecorator('quarterThreeSetting', {
-          })(
-            <InputNumber min={1} max={31} />
-          )}
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="第四季度上报截止日期"
-          hasFeedback
-        >
-          {getFieldDecorator('quarterFourSetting', {
-          })(
-            <InputNumber min={1} max={31} />
-          )}
-        </FormItem>
-        <FormItem
-          {...tailFormItemLayout}
-        >
-          <Button type="submit" onClick={handleSubmit}>保存</Button>
-        </FormItem>
-      </Form>
+      <Card title="上报时间设置">
+        <Form>
+          <FormItem
+            {...formItemLayout}
+            label="第一季度上报截止日期"
+            hasFeedback
+          >
+            {getFieldDecorator('quarterOneSetting', {
+            })(
+              <InputNumber min={1} max={31} />
+            )}
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label="第二季度上报截止日期"
+            hasFeedback
+          >
+            {getFieldDecorator('quarterTwoSetting', {
+            })(
+              <InputNumber min={1} max={31} />
+            )}
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label="第三季度上报截止日期"
+            hasFeedback
+          >
+            {getFieldDecorator('quarterThreeSetting', {
+            })(
+              <InputNumber min={1} max={31} />
+            )}
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label="第四季度上报截止日期"
+            hasFeedback
+          >
+            {getFieldDecorator('quarterFourSetting', {
+            })(
+              <InputNumber min={1} max={31} />
+            )}
+          </FormItem>
+          <FormItem
+            {...tailFormItemLayout}
+          >
+            <Button type="submit" onClick={handleSubmit}>保存</Button>
+          </FormItem>
+        </Form>
+      </Card>
     </FrameContent>
   );
 }
