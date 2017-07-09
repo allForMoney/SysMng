@@ -76,7 +76,7 @@ public class LeaveMessageController {
    * @return
    * @throws Exception
    */
-    @RequestMapping(value = "/budget/all" ,method = RequestMethod.POST)
+    @RequestMapping(value = "/budget/all" ,method = RequestMethod.GET)
     @ResponseBody
     public Object budgetAll() throws Exception {
       return new RequestResult(ResultCode.SUCCESS, "获取成功",   this.leaveMessageService.findByType(LeaveMessageType.BUDGET));
@@ -88,7 +88,7 @@ public class LeaveMessageController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/indicator/all" ,method = RequestMethod.POST)
+    @RequestMapping(value = "/indicator/all" ,method = RequestMethod.GET)
     @ResponseBody
     public Object indicatorAll() throws Exception {
       return new RequestResult(ResultCode.SUCCESS, "获取成功",   this.leaveMessageService.findByType(LeaveMessageType.INDICATOR));
