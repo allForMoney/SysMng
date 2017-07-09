@@ -4,7 +4,6 @@
  */
 import React from 'react';
 import { Form, Input, Button, Icon, Card, Table } from 'antd';
-import FrameContent from '../common/FrameContent';
 import LinkBtn from '../common/LinkBtn';
 
 
@@ -61,6 +60,7 @@ class ProjectList extends React.Component {
       projectListNum,
       projectListPage,
       actionFunc,
+      actionName,
     } = this.props;
     const { getFieldDecorator } = this.props.form;
 
@@ -81,7 +81,7 @@ class ProjectList extends React.Component {
         title: '操作',
         render: (text, rec) => (
           <span>
-            <LinkBtn onClick={actionFunc.bind(this, rec, '1')}>查看详情</LinkBtn>
+            <LinkBtn onClick={actionFunc.bind(this, rec, '1')}>{actionName || '查看详情'}</LinkBtn>
           </span>
         )
       }];

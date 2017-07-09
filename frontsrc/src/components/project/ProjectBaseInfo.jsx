@@ -17,7 +17,7 @@ import LinkBtn from '../common/LinkBtn';
 class ProjectBaseInfo extends React.Component {
   state={
     showAllUnit: false,
-    buildUnit: [1,2,3,4], // this.props.buildUnit,
+    buildUnit: [1, 2, 3, 4], // this.props.buildUnit,
     showChangeModal: false,
     promise: null,
   }
@@ -105,7 +105,10 @@ class ProjectBaseInfo extends React.Component {
               onClick={
               () => this.props.dispatch({
                 type: 'baseModel/setState',
-                payload: { showMsgModal: true }
+                payload: {
+                  showMsgModal: true,
+                  msgType: 'project'
+                }
               })
               }
             >留言</Button>
