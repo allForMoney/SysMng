@@ -43,4 +43,18 @@ public class SysMngController {
       return new RequestResult(ResultCode.SUCCESS, "创建项目成功.",null   );
     }
 
+  /**
+   * 人工发送短信接口
+   * @param projectId
+   * @param message
+   * @return
+   * @throws Exception
+   */
+    @RequestMapping(value = "/sendmessage" ,method = RequestMethod.POST)
+    @ResponseBody
+    public Object sendMessage(@RequestParam String projectId,@RequestParam String message) throws Exception {
+      service.sendMessage(projectId,message);
+      return new RequestResult(ResultCode.SUCCESS, "创建项目成功.", null  );
+    }
+
 }
