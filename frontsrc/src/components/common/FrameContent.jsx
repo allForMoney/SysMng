@@ -240,7 +240,7 @@ class FrameContent extends React.Component {
             <Menu
               mode="inline"
               defaultSelectedKeys={['项目基本信息列表']}
-              defaultOpenKeys={['数据导入']}
+              defaultOpenKeys={['数据导入', '其他功能']}
               style={{ height: '100%' }}
               onClick={this.onMenuClicked}
             >
@@ -293,7 +293,7 @@ class FrameContent extends React.Component {
             <Menu
               mode="inline"
               defaultSelectedKeys={['项目基本情况_mini']}
-              defaultOpenKeys={['预算']}
+              defaultOpenKeys={['预算', '数据分析', '绩效', '专家库', '系统设置']}
               style={{ height: '100%' }}
               onClick={this.onMenuClicked}
             >
