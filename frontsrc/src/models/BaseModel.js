@@ -14,6 +14,7 @@ export default {
 
     showMsgModal: false, // 展示留言弹窗
     msgType: '', // 留言类型
+    mesType: 1,
 
     projectInfo: {}, // 单个项目基本信息
     projectList: [],
@@ -188,11 +189,12 @@ export default {
     },
 
     * saveMsg({ payload }, { call, put, select }) {
-      const { msgType, projectInfo, userId } = yield select(state => state.baseModel);
+      const { mesType, msgType, projectInfo, userId } = yield select(state => state.baseModel);
 
       const data = yield call(saveMsg, {
         contents: payload.msgValue,
-        mesType: msgType,
+        mesType,
+        msgType,
         projectId: projectInfo.id,
         submitUserId: userId
       });

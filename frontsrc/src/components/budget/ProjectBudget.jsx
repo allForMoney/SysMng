@@ -35,7 +35,8 @@ class ProjectBudget extends React.Component {
                 type: 'baseModel/setState',
                 payload: {
                   showMsgModal: true,
-                  msgType: 'budget'
+                  msgType: 'budget',
+                  mesType: 1,
                 }
               })
               }
