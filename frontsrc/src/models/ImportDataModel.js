@@ -23,7 +23,7 @@ export default {
 
     * getProjectInfo({ payload }, { call, put }) {
       const data = yield call(getProjectInfoById, payload);
-      if (data && data.code === '1') {
+      if (data && data.code === '1' && data.result) {
         yield put({
           type: 'setState',
           payload: {
@@ -36,7 +36,7 @@ export default {
 
     * getAllBudgetRec({ payload }, { call, put }) {
       const data = yield call(getAllBudgetRec, payload);
-      if (data && data.code === '1') {
+      if (data && data.code === '1' && data.result) {
         yield put({
           type: 'setState',
           payload: {
@@ -48,7 +48,7 @@ export default {
     },
     * getAllAchiveRec({ payload }, { call, put }) {
       const data = yield call(getAllAchiveRec, payload);
-      if (data && data.code === '1') {
+      if (data && data.code === '1' && data.result) {
         yield put({
           type: 'setState',
           payload: {
