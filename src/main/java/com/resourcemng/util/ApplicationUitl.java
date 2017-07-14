@@ -16,7 +16,6 @@ import java.net.URISyntaxException;
  * Created by 燕子 on 2017/6/20.
  */
 public class ApplicationUitl {
-
   public static String getPorjectNoByReportUserNo(String userNo){
    int index = userNo.lastIndexOf('-');
    if(index<0){
@@ -26,16 +25,16 @@ public class ApplicationUitl {
     return projectNo;
   }
 
-  public static String getWebRootPath(String filePath) {
-    try {
-      String path = ApplicationUitl.class.getClassLoader().getResource("").toURI().getPath();
-      path = path.replace("WEB-INF/classes/", "");
-      path = path.replace("file:/", "");
-      return path + filePath;
-    } catch (URISyntaxException e) {
-      throw new RuntimeException(e);
-    }
-  }
+//  public static String getWebRootPath(String filePath) {
+//    try {
+//      String path = ApplicationUitl.class.getClassLoader().getResource("").toURI().getPath();
+//      path = path.replace("WEB-INF/classes/", "");
+//      path = path.replace("file:/", "");
+//      return path + filePath;
+//    } catch (URISyntaxException e) {
+//      throw new RuntimeException(e);
+//    }
+//  }
 
   public static boolean isIE(HttpServletRequest request) {
     return (request.getHeader("USER-AGENT").toLowerCase().indexOf("msie") > 0

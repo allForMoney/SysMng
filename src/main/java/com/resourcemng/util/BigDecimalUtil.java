@@ -35,24 +35,21 @@ public class BigDecimalUtil {
    * @param total
    * @return
    */
-  public static String percent(BigDecimal value,BigDecimal total){
-    if(value == null){
-      value = new BigDecimal(0);
-    }
+  public static String percent(double value,BigDecimal total){
     if(total == null){
       total = new BigDecimal(0);
     }
     BigDecimal result = null;
-    if(value.doubleValue() == total.doubleValue() && total.doubleValue() ==0){
+    if(value == total.doubleValue() && total.doubleValue() ==0){
       result =new BigDecimal(0);
     }else if(total.doubleValue() ==0){
       result =new BigDecimal(1);
-    }else if(value.doubleValue() ==0){
+    }else if(value ==0){
       result =new BigDecimal(0);
 
     }else {
       //保留两位小数
-      result = value.divide(total, 4, BigDecimal.ROUND_HALF_UP);
+      result = new BigDecimal(value).divide(total, 4, BigDecimal.ROUND_HALF_UP);
     }
     NumberFormat percent = NumberFormat.getPercentInstance();
     percent.setMaximumFractionDigits(2);

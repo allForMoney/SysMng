@@ -11,6 +11,7 @@ import com.resourcemng.handler.IndicatorBaseInfoImportHanlder;
 import com.resourcemng.handler.IndicatorImportHanlder;
 import com.resourcemng.repository.*;
 import com.resourcemng.util.ApplicationUitl;
+import com.resourcemng.util.FileUitl;
 import com.resourcemng.view.BudgetImportView;
 import com.resourcemng.view.IndicatorView;
 import org.apache.commons.beanutils.BeanUtils;
@@ -38,6 +39,8 @@ public class IndicatorService {
   IndicatorBaseRepository indicatorBaseRepository;
   @Autowired
   ProjectRepository projectRepository;
+  @Autowired
+  FileUitl fileUitl;
   public void importFormFile(String projectId, String importUser, File uploadFile) throws MyException {
     try {
       //仅仅允许导入一次啊
@@ -232,7 +235,7 @@ public class IndicatorService {
       //
 //导出文件
       TemplateExportParams params = new TemplateExportParams(
-        ApplicationUitl.getWebRootPath("templete/绩效目标模板.xlsx"), true);
+        fileUitl.getTempleteFilePath("templete/绩效目标模板.xlsx"), true);
       Map<String, Object> tempDataMap = new HashMap<>();
       tempDataMap.put("project", project);
       tempDataMap.put("indicatorDetails", indicatorView.getIndicatorDetails());

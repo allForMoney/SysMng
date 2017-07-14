@@ -27,8 +27,10 @@ public interface ProjectRepository extends JpaRepository<Project, String> {
   @Query("from Project p where p.projectNo=:projectNo")
   Project findByProjectNo( @Param("projectNo")String projectNo);
 
-//  @Query("delete from Project p where p.projectNo=:projectNo")
   void deleteByProjectNo(String projectNo);
+
+  @Query("from Project p where p.projectNo like CONCAT(:projectYear,'%')")
+  List<Project> findByYear(@Param("projectYear")String projectYear);
 
 
 }

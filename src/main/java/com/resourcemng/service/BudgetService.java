@@ -378,7 +378,7 @@ public class BudgetService {
    //
 //导出文件
     TemplateExportParams params = new TemplateExportParams(
-      ApplicationUitl.getWebRootPath("templete/预算2016模板.xlsx"), true);
+      fileUtil.getTempleteFilePath("templete/预算2016模板.xlsx"), true);
     Map<String,Object> tempDataMap = new HashMap<>();
     tempDataMap.put("project",project);
     tempDataMap.put("resultlist",budgetImportView.getBudgetImportDetaillList());

@@ -16,7 +16,8 @@ public class FileUitl {
   //文件上传路径，在配置文件中配置
   @Value("${app.file.upload-path}")
   private  String path;
-
+  @Value("${app.file.templete.root}")
+  private String templetePath;
   /**
    *
    * @param uploadFile
@@ -74,7 +75,10 @@ public class FileUitl {
   }
 
   public File getTempleteFile(String fileName) {
-    String path = ApplicationUitl.getWebRootPath("downloadtemp/"+fileName);
+    String path = this.getTempleteFilePath("downloadtemp/"+fileName);
     return new File(path);
+  }
+  public String getTempleteFilePath(String fileName) {
+    return templetePath+File.separator+fileName;
   }
 }
