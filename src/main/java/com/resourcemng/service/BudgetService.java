@@ -10,6 +10,7 @@ import com.resourcemng.Enum.ReportStatus;
 import com.resourcemng.basic.MyException;
 import com.resourcemng.entitys.*;
 import com.resourcemng.handler.BudgetImportHanlder;
+import com.resourcemng.handler.BudgetImportHanlderOld;
 import com.resourcemng.repository.*;
 import com.resourcemng.util.ApplicationUitl;
 import com.resourcemng.util.BigDecimalUtil;
@@ -20,10 +21,14 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -72,9 +77,24 @@ public class BudgetService {
       //预计算
       this.computeBudgetImport2016(projectId,list);
     }else{
-      this.importBudget2015FormFile(projectId,importUser,uploadFile,null,null);
+      List<FileImportLog>    fileImportLogs  = this.fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDateDesc(projectId,importType);
+      if(fileImportLogs != null && fileImportLogs.size()>0) {//不让重复导入？
+        throw new MyException("预算已经导入过，不能重复导入，请删除后重试");
+      }
+      FileImportLog log = new FileImportLog();
+      log.setFileName(uploadFile.getName());
+      log.setImportType(ImportFileType.BUDGET2015);
+      log.setImportUserId(importUser);
+      log.setProjectId(projectId);
+      log.setImportDate(new Date());
+      log = fileImportLogRepository.save(log);
+      //导入数据
+      List<BudgetImportDetailOld> list =this.importBudget2015FormFile(projectId,importUser,log);
+      //预计算
+      this.computeBudgetImport2015(projectId,list);
     }
   }
+
 
 
   public  List<BudgetImportDetailNew> importBudget2016FormFile(String projectId, String importUser,FileImportLog log) throws MyException {
@@ -148,54 +168,54 @@ public class BudgetService {
     universityfundsBudget.setProjectId(projectId);
  for(BudgetImportDetailNew budgetImportDetailNew:budgetImportDetailNews){
    //获取统计数据到预算统计表中
-   if ("1．素材制作".equals(budgetImportDetailNew.getUseFor())) {
+   if ("1".equals(budgetImportDetailNew.getSequenceNo())) {
      totalfundsBudget.setMaterialMake(BigDecimalUtil.getValueForString(budgetImportDetailNew.getTotalMoney()));
      countryfundsBudget.setMaterialMake(BigDecimalUtil.getValueForString(budgetImportDetailNew.getCountryTotal()));
      localfundsBudget.setMaterialMake(BigDecimalUtil.getValueForString(budgetImportDetailNew.getLocal()));
      enterprisefundsBudget.setMaterialMake(BigDecimalUtil.getValueForString(budgetImportDetailNew.getEnterprise()));
      universityfundsBudget.setMaterialMake(BigDecimalUtil.getValueForString(budgetImportDetailNew.getUniversity()));
-   } else if ("2．企业案例收集制作".equals(budgetImportDetailNew.getUseFor())) {
+   } else if ("2".equals(budgetImportDetailNew.getSequenceNo())) {
      totalfundsBudget.setCompanyCase(BigDecimalUtil.getValueForString(budgetImportDetailNew.getTotalMoney()));
      countryfundsBudget.setCompanyCase(BigDecimalUtil.getValueForString(budgetImportDetailNew.getCountryTotal()));
      localfundsBudget.setCompanyCase(BigDecimalUtil.getValueForString(budgetImportDetailNew.getLocal()));
      enterprisefundsBudget.setCompanyCase(BigDecimalUtil.getValueForString(budgetImportDetailNew.getEnterprise()));
      universityfundsBudget.setCompanyCase(BigDecimalUtil.getValueForString(budgetImportDetailNew.getUniversity()));
-   } else if ("3．课程开发".equals(budgetImportDetailNew.getUseFor())) {
+   } else if ("3".equals(budgetImportDetailNew.getSequenceNo())) {
      totalfundsBudget.setCourseDevelopment(BigDecimalUtil.getValueForString(budgetImportDetailNew.getTotalMoney()));
      countryfundsBudget.setCourseDevelopment(BigDecimalUtil.getValueForString(budgetImportDetailNew.getCountryTotal()));
      localfundsBudget.setCourseDevelopment(BigDecimalUtil.getValueForString(budgetImportDetailNew.getLocal()));
      enterprisefundsBudget.setCourseDevelopment(BigDecimalUtil.getValueForString(budgetImportDetailNew.getEnterprise()));
      universityfundsBudget.setCourseDevelopment(BigDecimalUtil.getValueForString(budgetImportDetailNew.getUniversity()));
-   } else if ("4．特殊工具软件制作".equals(budgetImportDetailNew.getUseFor())) {
+   } else if ("4".equals(budgetImportDetailNew.getSequenceNo())) {
      totalfundsBudget.setToolSoftware(BigDecimalUtil.getValueForString(budgetImportDetailNew.getTotalMoney()));
      countryfundsBudget.setToolSoftware(BigDecimalUtil.getValueForString(budgetImportDetailNew.getCountryTotal()));
      localfundsBudget.setToolSoftware(BigDecimalUtil.getValueForString(budgetImportDetailNew.getLocal()));
      enterprisefundsBudget.setToolSoftware(BigDecimalUtil.getValueForString(budgetImportDetailNew.getEnterprise()));
      universityfundsBudget.setToolSoftware(BigDecimalUtil.getValueForString(budgetImportDetailNew.getUniversity()));
-   } else if ("5．应用推广".equals(budgetImportDetailNew.getUseFor())) {
+   } else if ("5".equals(budgetImportDetailNew.getSequenceNo())) {
      totalfundsBudget.setApplicationPromote(BigDecimalUtil.getValueForString(budgetImportDetailNew.getTotalMoney()));
      countryfundsBudget.setApplicationPromote(BigDecimalUtil.getValueForString(budgetImportDetailNew.getCountryTotal()));
      localfundsBudget.setApplicationPromote(BigDecimalUtil.getValueForString(budgetImportDetailNew.getLocal()));
      enterprisefundsBudget.setApplicationPromote(BigDecimalUtil.getValueForString(budgetImportDetailNew.getEnterprise()));
      universityfundsBudget.setApplicationPromote(BigDecimalUtil.getValueForString(budgetImportDetailNew.getUniversity()));
-   } else if ("6．调研论证".equals(budgetImportDetailNew.getUseFor())) {
+   } else if ("6".equals(budgetImportDetailNew.getSequenceNo())) {
      totalfundsBudget.setResearchProve(BigDecimalUtil.getValueForString(budgetImportDetailNew.getTotalMoney()));
      countryfundsBudget.setResearchProve(BigDecimalUtil.getValueForString(budgetImportDetailNew.getCountryTotal()));
      localfundsBudget.setResearchProve(BigDecimalUtil.getValueForString(budgetImportDetailNew.getLocal()));
      enterprisefundsBudget.setResearchProve(BigDecimalUtil.getValueForString(budgetImportDetailNew.getEnterprise()));
      universityfundsBudget.setResearchProve(BigDecimalUtil.getValueForString(budgetImportDetailNew.getUniversity()));
-   } else if ("7．其他".equals(budgetImportDetailNew.getUseFor())) {
+   } else if ("7".equals(budgetImportDetailNew.getSequenceNo())) {
      totalfundsBudget.setOtherFee(BigDecimalUtil.getValueForString(budgetImportDetailNew.getTotalMoney()));
      countryfundsBudget.setOtherFee(BigDecimalUtil.getValueForString(budgetImportDetailNew.getCountryTotal()));
      localfundsBudget.setOtherFee(BigDecimalUtil.getValueForString(budgetImportDetailNew.getLocal()));
      enterprisefundsBudget.setOtherFee(BigDecimalUtil.getValueForString(budgetImportDetailNew.getEnterprise()));
      universityfundsBudget.setOtherFee(BigDecimalUtil.getValueForString(budgetImportDetailNew.getUniversity()));
-   } else if ("6.2专家论证".equals(budgetImportDetailNew.getUseFor())) {
-     totalfundsBudget.setExpertConsult(BigDecimalUtil.getValueForString(budgetImportDetailNew.getTotalMoney()));
-     countryfundsBudget.setExpertConsult(BigDecimalUtil.getValueForString(budgetImportDetailNew.getCountryTotal()));
-     localfundsBudget.setExpertConsult(BigDecimalUtil.getValueForString(budgetImportDetailNew.getLocal()));
-     enterprisefundsBudget.setExpertConsult(BigDecimalUtil.getValueForString(budgetImportDetailNew.getEnterprise()));
-     universityfundsBudget.setExpertConsult(BigDecimalUtil.getValueForString(budgetImportDetailNew.getUniversity()));
+//   } else if ("6.2专家论证".equals(budgetImportDetailNew.getUseFor())) {
+//     totalfundsBudget.setExpertConsult(BigDecimalUtil.getValueForString(budgetImportDetailNew.getTotalMoney()));
+//     countryfundsBudget.setExpertConsult(BigDecimalUtil.getValueForString(budgetImportDetailNew.getCountryTotal()));
+//     localfundsBudget.setExpertConsult(BigDecimalUtil.getValueForString(budgetImportDetailNew.getLocal()));
+//     enterprisefundsBudget.setExpertConsult(BigDecimalUtil.getValueForString(budgetImportDetailNew.getEnterprise()));
+//     universityfundsBudget.setExpertConsult(BigDecimalUtil.getValueForString(budgetImportDetailNew.getUniversity()));
 
    }
  }
@@ -209,8 +229,141 @@ public class BudgetService {
 
 
 
-  public void importBudget2015FormFile(String projectId, String importUser,  File uploadFile,File requestFile,File descriptionFile) throws MyException {
-    //TODO
+  public List<BudgetImportDetailOld> importBudget2015FormFile(String projectId, String importUser,FileImportLog log) throws MyException {
+    try {
+      ImportParams params = new ImportParams();
+      //设置标题行
+      params.setTitleRows(5);
+      params.setHeadRows(5);
+      //设置读取的有效行数
+//      params.setReadRows(28);
+      Map<Integer, String> map = new HashMap<Integer, String>();
+      for (int i = 0; i < 19; i++) {//此处先按顺序给标题，在handler中转换标题
+        map.put(i, Integer.toString(i));
+
+      }
+      params.setTitlemap(map);
+      //转换标题
+      params.setDataHanlder(new BudgetImportHanlderOld());
+      long start = new Date().getTime();
+      File file = fileUtil.getFile(log.getFileName());
+      List<Map<String, Object>> list = ExcelImportUtil.importExcel(file, Map.class, params);
+
+      List<BudgetImportDetailOld> budgetImportDetailOlds = new ArrayList<>();
+      for (Map obj : list) {
+        BudgetImportDetailOld budgetImportDetailOld = new BudgetImportDetailOld();
+        if(StringUtils.isEmpty(obj.get("useFor"))){//没有用途的数据忽略
+          continue;
+        }
+        BeanUtils.populate(budgetImportDetailOld, obj);
+        //设置关联ID
+        budgetImportDetailOld.setFileImportId(log.getId());
+//        //设置预算年份
+//        budgetImportDetailOld.setBudgetYear("2016");
+        budgetImportDetailOlds.add(budgetImportDetailOld);
+
+
+      }
+      this.budgetImportRepository.saveAll(budgetImportDetailOlds);
+      return budgetImportDetailOlds;
+    }catch (Exception e){
+      throw new MyException(e);
+    }
+  }
+
+  /**
+   * 根据数据与计算
+   * @param projectId
+   * @param budgetImportDetailOlds
+   */
+  public void computeBudgetImport2015(String projectId, List<BudgetImportDetailOld> budgetImportDetailOlds) {
+      if(budgetImportDetailOlds==null){
+        return;
+      }
+    List<BudgetImportDetailOld> list = budgetImportDetailOlds.stream().filter(detail->(!StringUtils.isEmpty(detail.getSequenceNo()))).collect(Collectors.toList());
+    //保存统计信息
+    FundsBudget totalfundsBudget = new FundsBudget();
+    totalfundsBudget.setPid(FoundSourceType.TOTAL);
+    totalfundsBudget.setSubmitTime(new Date());
+    totalfundsBudget.setProjectId(projectId);
+    FundsBudget countryfundsBudget = new FundsBudget();
+    countryfundsBudget.setPid(FoundSourceType.COUNTRY);
+    countryfundsBudget.setSubmitTime(new Date());
+    countryfundsBudget.setProjectId(projectId);
+    FundsBudget localfundsBudget = new FundsBudget();
+    localfundsBudget.setPid(FoundSourceType.LOCAL);
+    localfundsBudget.setSubmitTime(new Date());
+    localfundsBudget.setProjectId(projectId);
+    FundsBudget enterprisefundsBudget = new FundsBudget();
+    enterprisefundsBudget.setPid(FoundSourceType.ENTERPRICE);
+    enterprisefundsBudget.setSubmitTime(new Date());
+    enterprisefundsBudget.setProjectId(projectId);
+    FundsBudget universityfundsBudget = new FundsBudget();
+    universityfundsBudget.setPid(FoundSourceType.UNIVERSITY);
+    universityfundsBudget.setSubmitTime(new Date());
+    universityfundsBudget.setProjectId(projectId);
+    for(BudgetImportDetailOld budgetImportDetailOld:list){
+      double localValue = Arrays.asList(budgetImportDetailOld.getLocalFirstYear(),budgetImportDetailOld.getLocalSecondYear(),budgetImportDetailOld.getLocalThreeYear()).stream().mapToDouble(v->Double.parseDouble(v)).sum();
+      double enterpriceValue = Arrays.asList(budgetImportDetailOld.getEnterpriseFirstYear(),budgetImportDetailOld.getEnterpriseSecondYear(),budgetImportDetailOld.getEnterpriseThreeYear()).stream().mapToDouble(v->Double.parseDouble(v)).sum();
+      double universityValue = Arrays.asList(budgetImportDetailOld.getUniversityFirstYear(),budgetImportDetailOld.getUniversitySecondYear(),budgetImportDetailOld.getUniversityThreeYear()).stream().mapToDouble(v->Double.parseDouble(v)).sum();
+
+      //获取统计数据到预算统计表中
+      if ("1".equals(budgetImportDetailOld.getSequenceNo())) {
+        totalfundsBudget.setMaterialMake(BigDecimalUtil.getValueForString(budgetImportDetailOld.getTotalMoney()));
+        countryfundsBudget.setMaterialMake(BigDecimalUtil.getValueForString(budgetImportDetailOld.getCountryTotal()));
+       localfundsBudget.setMaterialMake(new BigDecimal(localValue));
+        enterprisefundsBudget.setMaterialMake(new BigDecimal(enterpriceValue));
+        universityfundsBudget.setMaterialMake(new BigDecimal(universityValue));
+      } else if ("2".equals(budgetImportDetailOld.getSequenceNo())) {
+        totalfundsBudget.setCompanyCase(BigDecimalUtil.getValueForString(budgetImportDetailOld.getTotalMoney()));
+        countryfundsBudget.setCompanyCase(BigDecimalUtil.getValueForString(budgetImportDetailOld.getCountryTotal()));
+        localfundsBudget.setCompanyCase(new BigDecimal(localValue));;
+        enterprisefundsBudget.setCompanyCase(new BigDecimal(enterpriceValue));
+        universityfundsBudget.setCompanyCase(new BigDecimal(universityValue));
+      } else if ("3".equals(budgetImportDetailOld.getSequenceNo())) {
+        totalfundsBudget.setCourseDevelopment(BigDecimalUtil.getValueForString(budgetImportDetailOld.getTotalMoney()));
+        countryfundsBudget.setCourseDevelopment(BigDecimalUtil.getValueForString(budgetImportDetailOld.getCountryTotal()));
+        localfundsBudget.setCourseDevelopment(new BigDecimal(localValue));;
+        enterprisefundsBudget.setCourseDevelopment(new BigDecimal(enterpriceValue));
+        universityfundsBudget.setCourseDevelopment(new BigDecimal(universityValue));
+      } else if ("4".equals(budgetImportDetailOld.getSequenceNo())) {
+        totalfundsBudget.setToolSoftware(BigDecimalUtil.getValueForString(budgetImportDetailOld.getTotalMoney()));
+        countryfundsBudget.setToolSoftware(BigDecimalUtil.getValueForString(budgetImportDetailOld.getCountryTotal()));
+        localfundsBudget.setToolSoftware(new BigDecimal(localValue));;
+        enterprisefundsBudget.setToolSoftware(new BigDecimal(enterpriceValue));
+        universityfundsBudget.setToolSoftware(new BigDecimal(universityValue));
+      } else if ("5".equals(budgetImportDetailOld.getSequenceNo())) {
+        totalfundsBudget.setApplicationPromote(BigDecimalUtil.getValueForString(budgetImportDetailOld.getTotalMoney()));
+        countryfundsBudget.setApplicationPromote(BigDecimalUtil.getValueForString(budgetImportDetailOld.getCountryTotal()));
+        localfundsBudget.setApplicationPromote(new BigDecimal(localValue));;
+        enterprisefundsBudget.setApplicationPromote(new BigDecimal(enterpriceValue));
+        universityfundsBudget.setApplicationPromote(new BigDecimal(universityValue));
+      } else if ("6".equals(budgetImportDetailOld.getSequenceNo())) {
+        totalfundsBudget.setResearchProve(BigDecimalUtil.getValueForString(budgetImportDetailOld.getTotalMoney()));
+        countryfundsBudget.setResearchProve(BigDecimalUtil.getValueForString(budgetImportDetailOld.getCountryTotal()));
+        localfundsBudget.setResearchProve(new BigDecimal(localValue));;
+        enterprisefundsBudget.setResearchProve(new BigDecimal(enterpriceValue));
+        universityfundsBudget.setResearchProve(new BigDecimal(universityValue));
+      } else if ("7".equals(budgetImportDetailOld.getSequenceNo())) {
+        totalfundsBudget.setOtherFee(BigDecimalUtil.getValueForString(budgetImportDetailOld.getTotalMoney()));
+        countryfundsBudget.setOtherFee(BigDecimalUtil.getValueForString(budgetImportDetailOld.getCountryTotal()));
+        localfundsBudget.setOtherFee(new BigDecimal(localValue));;
+        enterprisefundsBudget.setOtherFee(new BigDecimal(enterpriceValue));
+        universityfundsBudget.setOtherFee(new BigDecimal(universityValue));
+      } else if ("8".equals(budgetImportDetailOld.getSequenceNo())) {
+        totalfundsBudget.setExpertConsult(BigDecimalUtil.getValueForString(budgetImportDetailOld.getTotalMoney()));
+        countryfundsBudget.setExpertConsult(BigDecimalUtil.getValueForString(budgetImportDetailOld.getCountryTotal()));
+        localfundsBudget.setExpertConsult(new BigDecimal(localValue));;
+        enterprisefundsBudget.setExpertConsult(new BigDecimal(enterpriceValue));
+        universityfundsBudget.setExpertConsult(new BigDecimal(universityValue));
+
+      }
+    }
+    this.fundsBudgetRepository.save(totalfundsBudget);
+    this.fundsBudgetRepository.save(countryfundsBudget);
+    this.fundsBudgetRepository.save(localfundsBudget);
+    this.fundsBudgetRepository.save(enterprisefundsBudget);
+    this.fundsBudgetRepository.save(universityfundsBudget);
 
   }
 
@@ -226,6 +379,15 @@ public class BudgetService {
 
   public Object update(BudgetImportDetailNew budgetImportDetailNew) {
     return this.budgetImport2016Repository.save(budgetImportDetailNew);
+  }
+
+  /**
+   *
+   * @param budgetImportDetailOld
+   * @return
+   */
+  public Object update2015(BudgetImportDetailOld budgetImportDetailOld) {
+    return this.budgetImportRepository.save(budgetImportDetailOld);
   }
 
   public Object getImportByProject(String projectId) {
@@ -304,10 +466,15 @@ public class BudgetService {
       }
 
     }
-    if(fileImportLog ==null){
+    if(fileImportLog ==null){//没有预算调整，获取预算导入的数据
       allLogs  = this.fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDateDesc(projetId,ImportFileType.BUDGET2016);
-      if(allLogs !=null &&  allLogs.size()>0){
+      if(allLogs !=null &&  allLogs.size()>0){//先获取2016导入数据
         fileImportLog = allLogs.get(0);
+      }else{
+        allLogs  = this.fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDateDesc(projetId,ImportFileType.BUDGET2015);
+        if(allLogs !=null &&  allLogs.size()>0){
+          fileImportLog = allLogs.get(0);
+        }
       }
     }
     if(fileImportLog ==null){

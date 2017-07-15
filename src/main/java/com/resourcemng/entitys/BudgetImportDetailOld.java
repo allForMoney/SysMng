@@ -31,7 +31,7 @@ public class BudgetImportDetailOld implements Serializable {
   private String universitySecondYear;
   private String universityThreeYear;
   private String fileImportId;
-
+  private String originalId;
   @Id
   @GeneratedValue(generator = "uuid")
   @GenericGenerator(name = "uuid", strategy = "uuid")
@@ -232,6 +232,16 @@ public class BudgetImportDetailOld implements Serializable {
 
   public void setFileImportId(String fileImportId) {
     this.fileImportId = fileImportId;
+  }
+
+  @Basic
+  @Column(name = "ORIGINALID_ID", length = 50)
+  public String getOriginalId() {
+    return originalId;
+  }
+
+  public void setOriginalId(String originalId) {
+    this.originalId = originalId;
   }
 
   @Override

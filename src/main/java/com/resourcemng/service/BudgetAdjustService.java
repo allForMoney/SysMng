@@ -34,6 +34,8 @@ public class BudgetAdjustService {
   @Autowired
   BudgetImport2016Repository budgetImport2016Repository;
   @Autowired
+  BudgetImportRepository budgetImportRepository;
+  @Autowired
   ProjectRepository projectRepository;
   /**
    * 预算调整
@@ -56,22 +58,27 @@ public class BudgetAdjustService {
     if(fileImportLogs == null || fileImportLogs.size()==0){
       throw new MyException("预算还没有导入，不能调整，请导入预算");
     }
-    if(ImportFileType.BUDGET_ADJUST_2016.equals(adjustType)){
-//导入记录
-      FileImportLog log = new FileImportLog();
-      log.setFileName(adjustFile.getName());
-      log.setDesFile(descriptionFile.getName());
-      log.setRequestFile(requestFile.getName());
-      log.setImportType(adjustType);
-      log.setImportUserId(importUser);
-      log.setProjectId(projectId);
-      log.setImportDate(new Date());
-      log = fileImportLogRepository.save(log);
+
+    //导入记录
+    FileImportLog log = new FileImportLog();
+    log.setFileName(adjustFile.getName());
+    log.setDesFile(descriptionFile.getName());
+    log.setRequestFile(requestFile.getName());
+    log.setImportType(adjustType);
+    log.setImportUserId(importUser);
+    log.setProjectId(projectId);
+    log.setImportDate(new Date());
+    log = fileImportLogRepository.save(log);
+
+
     //调整审核记录
-      BudgetAuditLog auditLog = new BudgetAuditLog();
-      auditLog.setReportTime(new Date());
-      auditLog.setAdjustId(log.getId());
-      budgetAuditLogRepository.save(auditLog);
+    BudgetAuditLog auditLog = new BudgetAuditLog();
+    auditLog.setReportTime(new Date());
+    auditLog.setAdjustId(log.getId());
+    budgetAuditLogRepository.save(auditLog);
+
+    if(ImportFileType.BUDGET_ADJUST_2016.equals(adjustType)){
+
       //存储调整数据
       budgetService.importBudget2016FormFile (projectId, importUser, log);
       //导入数据
@@ -80,8 +87,11 @@ public class BudgetAdjustService {
 //      budgetService.computeBudgetImport2016(projectId,list);
       return log;
     }else{
-      //TODO
-      return null;
+      //存储调整数据
+      budgetService.importBudget2015FormFile (projectId, importUser, log);
+      //导入数据
+      List<BudgetImportDetailOld> list =budgetService.importBudget2015FormFile(projectId,importUser,log);
+      return log;
     }
 
 
@@ -136,7 +146,8 @@ public class BudgetAdjustService {
           budgetService.computeBudgetImport2016(projectId,budgetImportDetailNews);
 
         }else{//2015预算调整审核
-          //TODO
+          List<BudgetImportDetailOld> budgetImportDetailNews = budgetImportRepository.findByBudgetImportId(fileImportLog.getId());
+          budgetService.computeBudgetImport2015(projectId,budgetImportDetailNews);
         }
         break;
       default:

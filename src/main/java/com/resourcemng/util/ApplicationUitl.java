@@ -50,6 +50,8 @@ public class ApplicationUitl {
         return "绩效目标模板.xlsx";
       case TempleteType.BUDGET2016:
         return "预算2016模板.xlsx";
+      case TempleteType.BUDGET2015:
+        return "预算2015.xlsx";
     }
     return null;
   }
