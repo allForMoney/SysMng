@@ -9,8 +9,6 @@ import {
   Card,
   Select,
   Form,
-  Upload,
-  Icon,
 message,
 } from 'antd';
 
@@ -103,11 +101,16 @@ class BudgetJustify extends React.Component {
     xhr.addEventListener('error', () => message.warn('文件上传失败'), false);// 发送文件和表单自定义参数
     xhr.addEventListener('load', (evt) => {
       const rep = JSON.parse(evt.target.response);
+      console.log(rep);
       if (rep.code === '1') {
         this.props.dispatch({
           type: 'BudgetJustifyModel/setState',
           payload: rep.result
         });
+      } else if (rep.code === '0') {
+        message.error(rep.msg);
+      } else if (rep.status === 500) {
+        message.error(rep.message);
       }
     }, false);
     xhr.open('POST', uploadURl);
@@ -142,7 +145,6 @@ class BudgetJustify extends React.Component {
     };
 
     const { cancelVisible, passVisible } = this.getCheckVisible(userType, auditStatus);
-
 
     return (
       <FrameContent>

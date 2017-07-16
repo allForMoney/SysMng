@@ -9,6 +9,7 @@ import moment from 'moment';
 import FrameContent from '../common/FrameContent';
 import LinkBtn from '../common/LinkBtn';
 import ProjectBudgetTable from './ProjectBudgetTable';
+import ProjectBudgetTable16 from './ProjectBudgetTable16';
 
 class BudgetJustifyRec extends React.Component {
   componentDidMount() {
@@ -78,6 +79,7 @@ class BudgetJustifyRec extends React.Component {
       loading,
       showJustifyDetail,
       budgetJustifyPage,
+      importType,
       budgetJustifyNum,
       budgetJustifyCompareList,
       budgetJustifyComparePage,
@@ -181,8 +183,19 @@ class BudgetJustifyRec extends React.Component {
     return (
       <FrameContent>
         <Card title="预算修改申请情况一览表">
-          {showJustifyDetail &&
+          {showJustifyDetail && importType === 'yusuan2' &&
             <ProjectBudgetTable
+              tableTitle={'预算变化内容'}
+              totalNum={budgetJustifyCompareyNum}
+              onPageChange={this.onJustifyListDetailChange}
+              currentPage={budgetJustifyComparePage}
+              dataList={budgetJustifyCompareList}
+              loading={loading}
+              compare
+            />
+          }
+          {showJustifyDetail && importType === 'adjust2016' &&
+            <ProjectBudgetTable16
               tableTitle={'预算变化内容'}
               totalNum={budgetJustifyCompareyNum}
               onPageChange={this.onJustifyListDetailChange}
@@ -224,9 +237,11 @@ function mapStateToProps(state) {
       budgetJustifyCompareList,
       budgetJustifyComparePage,
       budgetJustifyCompareyNum,
+      importType,
      } = state.BudgetJustifyModel;
   return {
     loading,
+    importType,
     projectNo,
     projectInfo,
     budgetJustifyList,

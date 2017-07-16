@@ -1,5 +1,5 @@
 import fetch from 'dva/fetch';
-
+import { message } from 'antd';
 /**
  * Requests a URL, returning a promise.
  *
@@ -9,14 +9,13 @@ import fetch from 'dva/fetch';
  */
 export default async function request(url, options) {
   if (options && options.method) {
-    options.headers = { 
-      "Content-Type": "application/json; charset=UTF-8"
+    options.headers = {
+      'Content-Type': 'application/json; charset=UTF-8'
     },
-    options.body = options.data
+    options.body = options.data;
   }
   const response = await fetch(url, options);
 
   const data = await response.json();
-  
   return data;
 }

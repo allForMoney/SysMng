@@ -107,26 +107,26 @@ class BudgetSeason extends React.Component {
     let cancelVisible = false;
     let passVisible = false;
     if (userType === 'finace') {
-      if (auditStatus === 0) {
+      if (auditStatus === '0') {
         passVisible = true;
       }
-      if (auditStatus === 1) {
+      if (auditStatus === '1') {
         cancelVisible = true;
       }
     }
     if (userType === 'school') {
-      if (auditStatus === 1) {
+      if (auditStatus === '1') {
         passVisible = true;
       }
-      if (auditStatus === 3) {
+      if (auditStatus === '3') {
         cancelVisible = true;
       }
     }
     if (userType === 'country') {
-      if (auditStatus === 3) {
+      if (auditStatus === '3') {
         passVisible = true;
       }
-      if (auditStatus === 5) {
+      if (auditStatus === '5') {
         cancelVisible = true;
       }
     }

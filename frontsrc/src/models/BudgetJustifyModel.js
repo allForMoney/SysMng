@@ -95,7 +95,8 @@ export default {
           type: 'setState',
           payload: {
             showJustifyDetail: true,
-            budgetJustifyCompareList: data.result,
+            budgetJustifyCompareList: data.result.compareList,
+            importType: data.result.importType,
           }
         });
       }
