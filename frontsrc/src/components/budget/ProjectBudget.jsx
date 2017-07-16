@@ -10,6 +10,7 @@ import {
 import { routerRedux } from 'dva/router';
 import FrameContent from '../common/FrameContent';
 import ProjectBudgetTable from './ProjectBudgetTable';
+import ProjectBudgetTable16 from './ProjectBudgetTable16';
 
 class ProjectBudget extends React.Component {
   componentDidMount = () => {
@@ -20,7 +21,7 @@ class ProjectBudget extends React.Component {
   pageChangeHandler = () => {
   }
   render() {
-    const { budgetProjectList, projectTotal, projectPage, projectName, loading } = this.props;
+    const { budgetProjectList, projectTotal, projectPage, projectName, loading, importType } = this.props;
 
     const title = `项目预算表 [${projectName}]`;
 
@@ -51,6 +52,17 @@ class ProjectBudget extends React.Component {
               }
             >预算调整</Button>办理手续。
           </p>
+          {importType === 'yusuan2016' &&
+          <ProjectBudgetTable16
+            tableTitle={'项目预算表'}
+            totalNum={projectTotal}
+            onPageChange={this.pageChangeHandler}
+            currentPage={projectPage}
+            dataList={budgetProjectList}
+            loading={loading}
+          />
+          }
+          {importType === 'yusuan' &&
           <ProjectBudgetTable
             tableTitle={'项目预算表'}
             totalNum={projectTotal}
@@ -59,6 +71,7 @@ class ProjectBudget extends React.Component {
             dataList={budgetProjectList}
             loading={loading}
           />
+          }
         </Card>
       </FrameContent>
     );
@@ -67,11 +80,12 @@ class ProjectBudget extends React.Component {
 
 function mapStateToProps(state) {
   const { projectList, projectTotal, projectPage, projectName, projectNo, projectId } = state.baseModel;
-  const { budgetProjectList } = state.budgetModel;
+  const { budgetProjectList, importType } = state.budgetModel;
   return {
     loading: state.loading.models.baseModel,
     projectList,
     projectTotal,
+    importType,
     projectPage,
     projectName,
     projectId,

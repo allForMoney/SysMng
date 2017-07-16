@@ -25,6 +25,7 @@ export default {
     budgetRecordPage: 1,
     budgetRecordNum: 45,
     budgetProjectList: [],
+    importType: '',
 
     showSeasonExport: false,
   },
@@ -39,6 +40,7 @@ export default {
           type: 'setState',
           payload: {
             budgetProjectList: data.result.budgetImportDetaillList,
+            importType: data.result.importType,
           }
         });
       }
