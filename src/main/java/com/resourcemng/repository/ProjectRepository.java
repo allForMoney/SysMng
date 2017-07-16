@@ -32,5 +32,7 @@ public interface ProjectRepository extends JpaRepository<Project, String> {
   @Query("from Project p where p.projectNo like CONCAT(:projectYear,'%')")
   List<Project> findByYear(@Param("projectYear")String projectYear);
 
+  List<Project> findByCreateYear(String createYear);
+
 
 }

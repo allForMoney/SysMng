@@ -99,4 +99,17 @@ public class CommonController {
     Pageable pageable = new PageRequest(Integer.parseInt(page)-1,Integer.parseInt(size));
     return new RequestResult(ResultCode.SUCCESS, "获取成功",  service.getImportLog(type,projectId,pageable));
   }
+  /**
+   * 获取所有的预算导入记录，包含2015和2016
+   * @return
+   * @throws Exception
+   */
+  @RequestMapping(value = "/import/allbudget" ,method = RequestMethod.GET)
+  @ResponseBody
+  public Object getBudgetImportLog(String projectId,String page,String size) throws Exception {
+    page = page ==null?"1":page;
+    size = size ==null?"10":size;
+    Pageable pageable = new PageRequest(Integer.parseInt(page)-1,Integer.parseInt(size));
+    return new RequestResult(ResultCode.SUCCESS, "获取成功",  service.getBudgetImportLog(projectId,pageable));
+  }
 }

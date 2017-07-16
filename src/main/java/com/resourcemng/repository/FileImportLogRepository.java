@@ -35,6 +35,12 @@ public interface FileImportLogRepository extends JpaRepository<FileImportLog, St
   @Query("from FileImportLog p where p.projectId like CONCAT('%',:projectId,'%')")
   List<FileImportLog> findByParam(@Param("projectId")String projectId);
 
+  @Query("from FileImportLog p where p.importType='yusuan' or p.importType='yusuan2016' order by importDate asc")
+  Page  findBudgetImport(Pageable pageable);
+
+  @Query("from FileImportLog p where  p.projectId like CONCAT('%',:projectId,'%') and p.importType='yusuan' or p.importType='yusuan2016' order by importDate asc")
+  Page  findBudgetImportByProjectId(@Param("projectId")String projectId, Pageable pageable);
+
 //  @Query("from FileImportLog p where p.projectId=:projectId LEFT JOIN BudgetAuditLog log on log.adjustId = p.id and log.status=5")
 //  List<FileImportLog>  findAuditAdjustLog(@Param("projectId")String projectId);
 

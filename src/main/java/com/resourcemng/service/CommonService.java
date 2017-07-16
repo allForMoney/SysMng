@@ -50,6 +50,25 @@ public class CommonService  /*implements  UserDetailsService*/{
     } else {
       pageResult = fileImportLogRepository.findByImportTypeAndProjectId(importType,projectId,pageable);
     }
+    return getImportDetail(pageResult);
+
+  }
+  public Object getBudgetImportLog(String projectId,Pageable pageable) throws InvocationTargetException, IllegalAccessException {
+
+
+    Page pageResult = null;
+    if (projectId == null) {
+      pageResult = fileImportLogRepository.findBudgetImport(pageable);
+    } else {
+      pageResult = fileImportLogRepository.findBudgetImportByProjectId(projectId,pageable);
+    }
+    return getImportDetail(pageResult);
+
+  }
+
+
+  private Page getImportDetail(Page pageResult) throws InvocationTargetException, IllegalAccessException {
+    List<FileImportLog> list = null;
     list = pageResult.getContent();
     List<Project> projects = projectRepository.findAll();
     projects = projects == null ? new ArrayList<>() : projects;
@@ -76,7 +95,6 @@ public class CommonService  /*implements  UserDetailsService*/{
       result.add(view);
     }
     return new PageImpl(result,pageResult.getPageable(),pageResult.getTotalElements());
-
   }
 }
 
