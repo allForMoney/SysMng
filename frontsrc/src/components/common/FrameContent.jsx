@@ -252,7 +252,7 @@ class FrameContent extends React.Component {
                   <Link to="/import/importProjet" ><Icon type="bars" />项目基本信息导入</Link>
                 </Menu.Item>
                 <Menu.Item key="预算导入（2015年前）">
-                  <Link to="/blank" ><Icon type="bars" />预算导入（2015年前）</Link>
+                  <Link to="/import/budget15" ><Icon type="bars" />预算导入（2015年前）</Link>
                 </Menu.Item>
                 <Menu.Item key="预算导入（2016年后）">
                   <Link to="/import/budget16" ><Icon type="bars" />预算导入（2016年后）</Link>

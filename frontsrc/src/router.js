@@ -17,6 +17,7 @@ import AchiveAllList from './components/achive/AchiveAllList';
 import AchiveMsgList from './components/achive/AchiveMsgList';
 
 import ImportBudget16 from './components/import/ImportBudget16';
+import ImportBudget15 from './components/import/ImportBudget15';
 import ImportAchive from './components/import/ImportAchive';
 import ImportProjet from './components/import/ImportProjet';
 import BudgetImportRecord from './routes/BudgetImportRecord';
@@ -55,6 +56,7 @@ function RouterConfig({ history }) {
       <Route path="/achive/msgAll" component={AchiveMsgList} />
 
       <Route path="/import/budget16" component={ImportBudget16} />
+      <Route path="/import/budget15" component={ImportBudget15} />
       <Route path="/import/importAchive" component={ImportAchive} />
       <Route path="/import/importProjet" component={ImportProjet} />
       <Route path="/import/budgetImportRec" component={BudgetImportRecord} />
