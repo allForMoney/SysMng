@@ -547,11 +547,11 @@ public class BudgetService {
     TemplateExportParams params =null;
 //导出文件
     if(ImportFileType.BUDGET2016.equals(budgetImportView.getImportType()) || ImportFileType.BUDGET_ADJUST_2016.equals(budgetImportView.getImportType()) )  {
-       params = new TemplateExportParams(
-        fileUtil.getTempleteFilePath("templete/预算2015模板.xlsx"), true);
-    }else{
       params = new TemplateExportParams(
         fileUtil.getTempleteFilePath("templete/预算2016模板.xlsx"), true);
+    }else{
+      params = new TemplateExportParams(
+        fileUtil.getTempleteFilePath("templete/预算2015模板.xlsx"), true);
     }
     Map<String,Object> tempDataMap = new HashMap<>();
     tempDataMap.put("project",project);
