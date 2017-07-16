@@ -19,6 +19,7 @@ app.model(require('./models/MsgModel'));
 app.model(require('./models/OtherModel'));
 app.model(require('./models/ProjectModel'));
 app.model(require('./models/AchiveModel'));
+app.model(require('./models/DataAnalyModel'));
 
 // 4. Router
 app.router(require('./router'));

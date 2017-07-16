@@ -8,7 +8,7 @@ import FrameContent from '../common/FrameContent';
 
 const Option = Select.Option;
 
-class dataAnaList extends React.Component {
+class DataAnaListYear extends React.Component {
   state = {
 
   }
@@ -20,7 +20,7 @@ class dataAnaList extends React.Component {
       },
     });
     this.props.dispatch({
-      type: 'dataAnalysisModel/getDataAnaList',
+      type: 'dataAnalysisModel/getDataAnaListYear',
     });
   }
 
@@ -32,7 +32,7 @@ class dataAnaList extends React.Component {
       },
     });
     this.props.dispatch({
-      type: 'dataAnalysisModel/getDataAnaList',
+      type: 'dataAnalysisModel/getDataAnaListYear',
     });
   }
 
@@ -45,8 +45,14 @@ class dataAnaList extends React.Component {
       },
     });
     this.props.dispatch({
-      type: 'dataAnalysisModel/getDataAnaList',
+      type: 'dataAnalysisModel/getDataAnaListYear',
     });
+  }
+  // 导出
+  expertExcel=() => {
+    const { year } = this.props;
+    const url = `/dataanalyse/byyear/download?year=${year}`;
+    window.open(url);
   }
 
   render() {
@@ -71,19 +77,19 @@ class dataAnaList extends React.Component {
         title: '项目预算',
         children: [{
           title: '总额',
-          dataIndex: 'schoolName',
+          dataIndex: 'budgetTotal',
         }, {
           title: '部本专项资金',
-          dataIndex: 'schoolName',
+          dataIndex: 'budgetCountry',
         }, {
           title: '举办方或地方财政投入资金 ',
-          dataIndex: 'schoolName',
+          dataIndex: 'budgetLocal',
         }, {
           title: '行业企业支持资金 ',
-          dataIndex: 'schoolName',
+          dataIndex: 'budgetEnterprise',
         }, {
           title: '相关院校自筹资金',
-          dataIndex: 'schoolName',
+          dataIndex: 'budgetUniversity',
         }]
       }, {
         title: '项目预算执行情况',
@@ -91,90 +97,90 @@ class dataAnaList extends React.Component {
           title: '实际投入（元',
           children: [{
             title: '总额',
-            dataIndex: 'schoolName'
+            dataIndex: 'fundsInTotal'
           }, {
             title: '到位率',
-            dataIndex: 'schoolName',
+            dataIndex: 'totalInPercent',
           }, {
             title: '部本专项资金',
             children: [{
               title: '总额',
-              dataIndex: 'schoolName'
+              dataIndex: 'fundsInCountry'
             }, {
               title: '到位率',
-              dataIndex: 'schoolName',
+              dataIndex: 'countryInPercent',
             }],
           }, {
             title: '举办方或地方财政投入资金',
             children: [{
               title: '总额',
-              dataIndex: 'schoolName'
+              dataIndex: 'fundsInLocal'
             }, {
               title: '到位率',
-              dataIndex: 'schoolName',
+              dataIndex: 'localInPercent',
             }],
           }, {
             title: '行业企业支持资金',
             children: [{
               title: '总额',
-              dataIndex: 'schoolName'
+              dataIndex: 'fundsInEnterprise'
             }, {
               title: '到位率',
-              dataIndex: 'schoolName',
+              dataIndex: 'enterpriseInPercent',
             }],
           }, {
             title: '相关院校自筹资金',
             children: [{
               title: '总额',
-              dataIndex: 'schoolName'
+              dataIndex: 'fundsInUniversity'
             }, {
               title: '到位率',
-              dataIndex: 'schoolName',
+              dataIndex: 'universityInPercent',
             }],
           }],
         }, {
           title: '实际支出（元）',
           children: [{
             title: '总额',
-            dataIndex: 'schoolName'
+            dataIndex: 'fundsOutTotal'
           }, {
             title: '到位率',
-            dataIndex: 'schoolName',
+            dataIndex: 'totalOutPercent',
           }, {
             title: '部本专项资金',
             children: [{
               title: '总额',
-              dataIndex: 'schoolName'
+              dataIndex: 'fundsOutCountry'
             }, {
               title: '到位率',
-              dataIndex: 'schoolName',
+              dataIndex: 'countryOutPercent',
             }],
           }, {
             title: '举办方或地方财政投入资金',
             children: [{
               title: '总额',
-              dataIndex: 'schoolName'
+              dataIndex: 'fundsOutLocal'
             }, {
               title: '到位率',
-              dataIndex: 'schoolName',
+              dataIndex: 'localOutPercent',
             }],
           }, {
             title: '行业企业支持资金',
             children: [{
               title: '总额',
-              dataIndex: 'schoolName'
+              dataIndex: 'fundsOutEnterprise'
             }, {
               title: '到位率',
-              dataIndex: 'schoolName',
+              dataIndex: 'enterpriseOutPercent',
             }],
           }, {
             title: '相关院校自筹资金',
             children: [{
               title: '总额',
-              dataIndex: 'schoolName'
+              dataIndex: 'fundsOutUniversity'
             }, {
               title: '到位率',
-              dataIndex: 'schoolName',
+              dataIndex: 'universityOutPercent',
             }],
           }],
         }]
@@ -192,18 +198,21 @@ class dataAnaList extends React.Component {
     return (
       <FrameContent>
         <Card title="预算执行情况一览表">
+          年度
           <Select defaultValue="2017" style={{ width: 120 }} onChange={this.handleChange}>
             <Option value="2017">2017</Option>
             <Option value="2016">2016</Option>
             <Option value="2015" >2015</Option>
             <Option value="2014">2014</Option>
           </Select>
+          <Button onClick={this.expertExcel}>导出Excel</Button>
           <Table
             columns={columns}
             dataSource={analySisList}
             loading={loading}
             rowKey={record => record.name}
             pagination={pageConfig}
+            style={{ marginTop: 15 }}
           />
         </Card>
       </FrameContent>
@@ -216,14 +225,16 @@ function mapStateToProps(state) {
     analySisList,
     analySisPage,
     analySisNum,
+    year,
     loading,
   } = state.dataAnalysisModel;
   return {
     analySisList,
     analySisPage,
+    year,
     analySisNum,
     loading,
   };
 }
 
-export default connect(mapStateToProps)(dataAnaList);
+export default connect(mapStateToProps)(DataAnaListYear);

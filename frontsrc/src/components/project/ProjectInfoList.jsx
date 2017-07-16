@@ -78,7 +78,10 @@ class ProjectInfoList extends React.Component {
       modalTitle: '修改',
       selectObj
     });
-    this.addForm.setFieldsValue(selectObj);
+    console.log(selectObj);
+    setTimeout(() => {
+      this.addForm.setFieldsValue(selectObj);
+    }, 100);
   }
 
   deletePro = () => {

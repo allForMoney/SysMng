@@ -325,10 +325,10 @@ class FrameContent extends React.Component {
               </SubMenu>
               <SubMenu key="数据分析" title={<span><Icon type="user" />数据分析</span>}>
                 <Menu.Item key="预算执行分析">
-                  <Link to="/blank" ><Icon type="bars" />预算执行分析</Link>
+                  <Link to="/dataAna/year" ><Icon type="bars" />预算执行分析</Link>
                 </Menu.Item>
                 <Menu.Item key="预算与投入">
-                  <Link to="/blank" ><Icon type="bars" />预算与投入</Link>
+                  <Link to="/dataAna/budgetyear" ><Icon type="bars" />预算与投入</Link>
                 </Menu.Item>
                 <Menu.Item key="专业预算与投入">
                   <Link to="/blank" ><Icon type="bars" />专业预算与投入</Link>

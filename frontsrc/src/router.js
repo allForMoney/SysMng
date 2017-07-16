@@ -34,6 +34,8 @@ import BudgetResult_Country from './components/budget/BudgetResult_Country';
 // 专家相关
 import ExpertList from './components/expert/ExpertList';
 import DrawExpert from './components/expert/DrawExpert';
+import DataAnaListYear from './components/dataAnalysis/DataAnaListYear';
+import DataAnaListBudgetYear from './components/dataAnalysis/DataAnaListBudgetYear';
 
 function RouterConfig({ history }) {
   return (
@@ -71,6 +73,8 @@ function RouterConfig({ history }) {
 
       <Route path="/expert/list" component={ExpertList} />
       <Route path="/expert/drawExpert" component={DrawExpert} />
+      <Route path="/dataAna/year" component={DataAnaListYear} />
+      <Route path="/dataAna/budgetyear" component={DataAnaListBudgetYear} />
 
     </Router>
   );
