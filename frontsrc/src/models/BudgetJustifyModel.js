@@ -24,6 +24,8 @@ export default {
     budgetJustifyCompareyNum: 0,
     /** 调整的id */
     compareId: '',
+    importType: '',
+
 
     /** 预算调整已经上传过的地址 */
     desFile: '', // 说明文件
