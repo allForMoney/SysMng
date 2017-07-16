@@ -42,7 +42,7 @@ class ImportBudget15 extends React.Component {
     console.log(projectNo);
     this.props.dispatch({
       type: 'ImportData/getProjectInfo',
-      payload: { projectNo },
+      payload: { projectNo, attr: 'showUpload15' },
     });
   }
 
@@ -73,9 +73,9 @@ class ImportBudget15 extends React.Component {
           console.log(info.file, info.fileList);
         }
         if (info.file.status === 'done') {
-          message.success(`${info.file.name} file uploaded successfully`);
+          message.success(`${info.file.name} 上传成功`);
         } else if (info.file.status === 'error') {
-          message.error(`${info.file.name} file upload failed.`);
+          message.error(`${info.file.name} 上传失败.`);
         }
       },
     };
@@ -84,7 +84,8 @@ class ImportBudget15 extends React.Component {
       <FrameContent>
         <Card title="预算导入(15年前)">
           <Row className={styles.baseRow}>
-          说明：先输入项目编号，点查询，查询出来项目信息后，再选择文件并上传导入。 <a href="/common/templete/download?type=BUDGET2015">导入模板下载</a>
+          说明：先输入项目编号，点查询，查询出来项目信息后，再选择文件并上传导入。
+          <a href="/common/templete/download?type=BUDGET2015" target="_blank">导入模板下载</a>
           </Row>
           <Row className={styles.baseRow}>
             <Col span={4}>要导入预算的项目编号</Col>
