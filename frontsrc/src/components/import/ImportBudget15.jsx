@@ -20,7 +20,7 @@ import FrameContent from '../common/FrameContent';
 import ProjectInfo from './ProjectInfo';
 import styles from '../../index.less';
 
-class ImportBudget16 extends React.Component {
+class ImportBudget15 extends React.Component {
   componentDidMount = () => {
     this.props.dispatch({
       type: 'ImportData/setState',
@@ -52,7 +52,7 @@ class ImportBudget16 extends React.Component {
 
   render() {
     const {
-      showUpload16,
+      showUpload15,
       projectInfo,
       userId,
     } = this.props;
@@ -60,7 +60,7 @@ class ImportBudget16 extends React.Component {
       projectNo,
      } = this.state;
 
-    const action = `/budget/import/${projectInfo.id}?importUser=${userId}&importType=yusuan2016`;
+    const action = `/budget/import/${projectInfo.id}?importUser=${userId}&importType=yusuan`;
 
     const uploadProps = {
       name: 'file',
@@ -82,9 +82,9 @@ class ImportBudget16 extends React.Component {
 
     return (
       <FrameContent>
-        <Card title="预算导入(16年后)">
+        <Card title="预算导入(15年前)">
           <Row className={styles.baseRow}>
-          说明：先输入项目编号，点查询，查询出来项目信息后，再选择文件并上传导入。 <a href="/common/templete/download?type=BUDGET2016">导入模板下载</a>
+          说明：先输入项目编号，点查询，查询出来项目信息后，再选择文件并上传导入。 <a href="/common/templete/download?type=BUDGET2015">导入模板下载</a>
           </Row>
           <Row className={styles.baseRow}>
             <Col span={4}>要导入预算的项目编号</Col>
@@ -100,7 +100,7 @@ class ImportBudget16 extends React.Component {
               <ProjectInfo ref={this.saveForm} {...projectInfo} />
             </Card>
           </Row>
-          {showUpload16 &&
+          {showUpload15 &&
           <Row className="">
             <Upload {...uploadProps}>
               <Button>
@@ -125,7 +125,7 @@ function mapStateToProps(state) {
    } = state.baseModel;
   const {
     projectInfo,
-    showUpload16,
+    showUpload15,
     loading,
    } = state.ImportData;
 
@@ -136,9 +136,9 @@ function mapStateToProps(state) {
     projectId,
     projectName,
     projectInfo,
-    showUpload16,
+    showUpload15,
     loading,
   };
 }
 
-export default connect(mapStateToProps)(ImportBudget16);
+export default connect(mapStateToProps)(ImportBudget15);

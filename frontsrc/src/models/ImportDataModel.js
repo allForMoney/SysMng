@@ -27,6 +27,7 @@ export default {
     allImportPage: 1,
     allImportNum: 0,
     showUpload16: false,
+    showUpload15: false,
   },
   effects: {
 
