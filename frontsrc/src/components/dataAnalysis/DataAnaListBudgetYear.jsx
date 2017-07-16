@@ -20,7 +20,7 @@ class DataAnaListBudgetYear extends React.Component {
       },
     });
     this.props.dispatch({
-      type: 'dataAnalysisModel/getDataAnaListYear',
+      type: 'dataAnalysisModel/getDataAnaListBudgetYear',
     });
   }
 
@@ -32,7 +32,7 @@ class DataAnaListBudgetYear extends React.Component {
       },
     });
     this.props.dispatch({
-      type: 'dataAnalysisModel/getDataAnaListYear',
+      type: 'dataAnalysisModel/getDataAnaListBudgetYear',
     });
   }
 
@@ -45,7 +45,7 @@ class DataAnaListBudgetYear extends React.Component {
       },
     });
     this.props.dispatch({
-      type: 'dataAnalysisModel/getDataAnaListYear',
+      type: 'dataAnalysisModel/getDataAnaListBudgetYear',
     });
   }
   // 导出
