@@ -32,15 +32,24 @@ public interface FileImportLogRepository extends JpaRepository<FileImportLog, St
 
   Page findByImportTypeAndProjectId(String importType,String projectId,Pageable pageable);
 
+  @Query("from FileImportLog p where  p.projectId in (:projectIds) and p.importType='yusuan2' or p.importType='adjust2016' order by importDate desc")
+  List<FileImportLog> findBudgetAdjustByProjectIds(@Param("projectIds")List<String> projectIds);
+
+
   @Query("from FileImportLog p where p.projectId like CONCAT('%',:projectId,'%')")
   List<FileImportLog> findByParam(@Param("projectId")String projectId);
 
-  @Query("from FileImportLog p where p.importType='yusuan' or p.importType='yusuan2016' order by importDate asc")
+  @Query("from FileImportLog p where p.importType='yusuan' or p.importType='yusuan2016' order by importDate desc")
   Page  findBudgetImport(Pageable pageable);
 
-  @Query("from FileImportLog p where  p.projectId like CONCAT('%',:projectId,'%') and p.importType='yusuan' or p.importType='yusuan2016' order by importDate asc")
+  @Query("from FileImportLog p where  p.projectId like CONCAT('%',:projectId,'%') and p.importType='yusuan' or p.importType='yusuan2016' order by importDate desc")
   Page  findBudgetImportByProjectId(@Param("projectId")String projectId, Pageable pageable);
 
+  @Query("from FileImportLog p where  p.projectId like CONCAT('%',:projectId,'%') and p.importType='yusuan2' or p.importType='adjust2016' order by importDate desc")
+  List<FileImportLog>   findBudgetAdjustImportByProjectId(@Param("projectId")String projectId);
+
+  @Query("from FileImportLog p where  p.projectId like CONCAT('%',:projectId,'%') and p.importType='yusuan' or p.importType='yusuan2016' order by importDate desc")
+  List<FileImportLog>   findBudgetImportByProjectId(@Param("projectId")String projectId);
 //  @Query("from FileImportLog p where p.projectId=:projectId LEFT JOIN BudgetAuditLog log on log.adjustId = p.id and log.status=5")
 //  List<FileImportLog>  findAuditAdjustLog(@Param("projectId")String projectId);
 

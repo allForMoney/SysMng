@@ -4,8 +4,10 @@ import com.resourcemng.Enum.*;
 import com.resourcemng.basic.MyException;
 import com.resourcemng.entitys.*;
 import com.resourcemng.repository.*;
+import com.resourcemng.view.BudgetAdjustCompareOld;
 import com.resourcemng.view.BudgetAdjustCompareView;
 import com.resourcemng.view.BudgetAdjustView;
+import com.resourcemng.view.BudgetCompareView;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -175,10 +177,11 @@ public class BudgetAdjustService {
       projectMap.put(project.getId(),project);
     }
 
-    List<FileImportLog> budgetAdjustsImportLog = fileImportLogRepository.findByProjectIdInAndImportTypeOrderByImportDateDesc(projectIds,ImportFileType.BUDGET_ADJUST_2016);
-    if(budgetAdjustsImportLog == null){
-      budgetAdjustsImportLog = fileImportLogRepository.findByProjectIdInAndImportTypeOrderByImportDateDesc(projectIds,ImportFileType.BUDGET_ADJUST);
-    }
+//    List<FileImportLog> budgetAdjustsImportLog = fileImportLogRepository.findByProjectIdInAndImportTypeOrderByImportDateDesc(projectIds,ImportFileType.BUDGET_ADJUST_2016);
+//    if(budgetAdjustsImportLog == null){
+//      budgetAdjustsImportLog = fileImportLogRepository.findByProjectIdInAndImportTypeOrderByImportDateDesc(projectIds,ImportFileType.BUDGET_ADJUST);
+//    }
+    List<FileImportLog> budgetAdjustsImportLog = fileImportLogRepository.findBudgetAdjustByProjectIds(projectIds);
     if(budgetAdjustsImportLog == null){
       return null;
     }
@@ -217,15 +220,18 @@ public class BudgetAdjustService {
    * @param id
    * @return
    */
-  public Object getCompareInfo(String id) {
+  public Object getCompareInfo(String id) throws InvocationTargetException, IllegalAccessException {
     BudgetAuditLog log = budgetAuditLogRepository.findByAdjustId(id);
+
     String importId = log.getAdjustId();
     FileImportLog fileImportLog = fileImportLogRepository.findById(importId).get();
+    BudgetCompareView budgetCompareView = new BudgetCompareView();
+    BeanUtils.copyProperties(budgetCompareView,fileImportLog);
     if(ImportFileType.BUDGET_ADJUST_2016.equals(fileImportLog.getImportType())) {//2016
 
       List<BudgetImportDetailNew> budgetImportDetailNews = budgetImport2016Repository.findByBudgetImportId(fileImportLog.getId());
       if (budgetImportDetailNews == null) {
-        return null;
+        return budgetCompareView;
       }
 
       List<BudgetAdjustCompareView> compareList = new ArrayList<BudgetAdjustCompareView>();
@@ -238,11 +244,27 @@ public class BudgetAdjustService {
           budgetAdjustCompareView.setAfterAdjust(budgetImportDetailNew);
         compareList.add(budgetAdjustCompareView);
       }
-      //返回比较数据
-      return compareList;
+      //比较数据
+      budgetCompareView.setCompareList(compareList);
     }else{
-        return null;
+      List<BudgetImportDetailOld> budgetImportDetails= budgetImportRepository.findByBudgetImportId(fileImportLog.getId());
+      if (budgetImportDetails == null) {
+        return budgetCompareView;
+      }
+
+      List<BudgetAdjustCompareOld> compareList = new ArrayList<BudgetAdjustCompareOld>();
+      for (BudgetImportDetailOld budgetImportDetail : budgetImportDetails) {
+        BudgetAdjustCompareOld budgetAdjustCompareView = new BudgetAdjustCompareOld();
+        if(budgetImportDetail.getOriginalId()!=null) {
+          BudgetImportDetailOld oldRecord = budgetImportRepository.findById(budgetImportDetail.getOriginalId()).get();
+          budgetAdjustCompareView.setBeforeAdjust(oldRecord);
+        }
+        budgetAdjustCompareView.setAfterAdjust(budgetImportDetail);
+        compareList.add(budgetAdjustCompareView);
+      }
+      budgetCompareView.setCompareList(compareList);
     }
+    return budgetCompareView;
   }
 
   public Object getById(String adjustId) {

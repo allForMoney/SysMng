@@ -436,16 +436,18 @@ public class BudgetService {
     //先看看有没有已经审核通过的调整记录
       //TODO 预算如果导入多次怎么办,取最新的？
 
-    List<FileImportLog> allLogs = new ArrayList<>();
-
-    List<FileImportLog>   logs2016  = this.fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDateDesc(projetId,ImportFileType.BUDGET_ADJUST_2016);
-    List<FileImportLog>   logs2015  = this.fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDateDesc(projetId,ImportFileType.BUDGET_ADJUST);
-    if(logs2016 !=null) {
-      allLogs.addAll(logs2016);
-    }
-    if(logs2015 !=null) {
-      allLogs.addAll(logs2015);
-    }
+//    List<FileImportLog> allLogs = new ArrayList<>();
+    //获取调整记录
+//    List<FileImportLog>   logs2016  = this.fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDateDesc(projetId,ImportFileType.BUDGET_ADJUST_2016);
+//    List<FileImportLog>   logs2015  = this.fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDateDesc(projetId,ImportFileType.BUDGET_ADJUST);
+//    if(logs2016 !=null) {
+//      allLogs.addAll(logs2016);
+//    }
+//    if(logs2015 !=null) {
+//      allLogs.addAll(logs2015);
+//    }
+    //预算调整记录
+    List<FileImportLog>  allLogs = fileImportLogRepository.findBudgetAdjustImportByProjectId(projetId);
 
     FileImportLog fileImportLog =null;
     if(allLogs !=null &&  allLogs.size()>0){
@@ -467,15 +469,19 @@ public class BudgetService {
 
     }
     if(fileImportLog ==null){//没有预算调整，获取预算导入的数据
-      allLogs  = this.fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDateDesc(projetId,ImportFileType.BUDGET2016);
-      if(allLogs !=null &&  allLogs.size()>0){//先获取2016导入数据
-        fileImportLog = allLogs.get(0);
-      }else{
-        allLogs  = this.fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDateDesc(projetId,ImportFileType.BUDGET2015);
-        if(allLogs !=null &&  allLogs.size()>0){
+//      allLogs  = this.fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDateDesc(projetId,ImportFileType.BUDGET2016);
+//      if(allLogs !=null &&  allLogs.size()>0){//先获取2016导入数据
+//        fileImportLog = allLogs.get(0);
+//      }else{
+//        allLogs  = this.fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDateDesc(projetId,ImportFileType.BUDGET2015);
+//        if(allLogs !=null &&  allLogs.size()>0){
+//          fileImportLog = allLogs.get(0);
+//        }
+//      }
+      allLogs = fileImportLogRepository.findBudgetImportByProjectId(projetId);
+      if(allLogs !=null &&  allLogs.size()>0){//获取最新的
           fileImportLog = allLogs.get(0);
         }
-      }
     }
     if(fileImportLog ==null){
       return null;
@@ -543,9 +549,15 @@ public class BudgetService {
     BudgetImportView budgetImportView = getByProject(projectId);
    Project project =  this.projectRepository.findById(projectId).get();
    //
+    TemplateExportParams params =null;
 //导出文件
-    TemplateExportParams params = new TemplateExportParams(
-      fileUtil.getTempleteFilePath("templete/预算2016模板.xlsx"), true);
+    if(ImportFileType.BUDGET2016.equals(budgetImportView.getImportType()) || ImportFileType.BUDGET_ADJUST_2016.equals(budgetImportView.getImportType()) )  {
+       params = new TemplateExportParams(
+        fileUtil.getTempleteFilePath("templete/预算2015模板.xlsx"), true);
+    }else{
+      params = new TemplateExportParams(
+        fileUtil.getTempleteFilePath("templete/预算2016模板.xlsx"), true);
+    }
     Map<String,Object> tempDataMap = new HashMap<>();
     tempDataMap.put("project",project);
     tempDataMap.put("resultlist",budgetImportView.getBudgetImportDetaillList());
