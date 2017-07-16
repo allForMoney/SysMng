@@ -73,6 +73,20 @@ class BudgetJustifyRec extends React.Component {
     });
   }
 
+  passCheck= (rec, flag) => { // flag=true,通过审核
+    const {
+      userType,
+  } = this.props;
+    this.props.dispatch({
+      type: 'BudgetJustifyModel/changeCheckStatus',
+      payload: {
+        id: rec.adjustId,
+        auditType: userType,
+        auditContent: flag,
+      }
+    });
+  }
+
   render() {
     const {
       budgetJustifyList,
@@ -169,7 +183,20 @@ class BudgetJustifyRec extends React.Component {
     }, {
       title: '操作',
       key: 'operat',
-      render: rec => <LinkBtn onClick={this.showJustifyCompare.bind(this, rec)}>查看</LinkBtn>
+      render: (rec) => {
+        const menu = [];
+        const { userType } = this.props;
+        if (userType === 'country') {
+          menu.push(
+            <LinkBtn onClick={this.passCheck.bind(this, rec, '1')}>通过审核</LinkBtn>
+          );
+          menu.push(' ');
+        }
+        menu.push(
+          <LinkBtn onClick={this.showJustifyCompare.bind(this, rec)}>查看</LinkBtn>
+        );
+        return menu;
+      }
     }];
 
     const recPageConfig = {
@@ -227,6 +254,7 @@ function mapStateToProps(state) {
   const {
     projectInfo,
     projectNo,
+    userType,
    } = state.baseModel;
   const {
       loading,
@@ -241,6 +269,7 @@ function mapStateToProps(state) {
      } = state.BudgetJustifyModel;
   return {
     loading,
+    userType,
     importType,
     projectNo,
     projectInfo,

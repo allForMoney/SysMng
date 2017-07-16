@@ -3,7 +3,7 @@ import {
   getBudgetSeasonList,
   getOutcomeBudget,
   updateSeasonBudget,
-  changeCheckStatus,
+  changeSeasonCheckStatus,
   getBudgetRecList,
   getBudgetProjectList
 } from '../services/BudgetService';
@@ -123,7 +123,7 @@ export default {
 
     /** 切换审核状态 */
     * changeCheckStatus({ payload }, { call }) {
-      const data = yield call(changeCheckStatus, payload);
+      const data = yield call(changeSeasonCheckStatus, payload);
       if (data && data.code === '1') {
         message.info('审核成功');
       }

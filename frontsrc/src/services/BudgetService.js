@@ -40,3 +40,9 @@ export function changeCheckStatus(params) {
     method: 'post',
   });
 }
+
+export function changeSeasonCheckStatus(params) {
+  return request(`/budget/report/quarterly/audit?${qs.stringify(params)}`, {
+    method: 'post',
+  });
+}
