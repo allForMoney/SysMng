@@ -77,8 +77,8 @@ public class BudgetResultService {
       log.setYear(view.getProjectYear());
       log.setQuarter(view.getQuarterNum());
       log.setReportTime(new Date());
+      reportAuditLogRepository.save(log);
     }
-    reportAuditLogRepository.save(log);
     //提交保存季报收入
     List<FundsIn> fundsIns = view.getFundsIns();
     for(FundsIn fundsIn:fundsIns){

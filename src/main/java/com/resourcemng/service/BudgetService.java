@@ -59,12 +59,11 @@ public class BudgetService {
    * @throws IllegalAccessException
    */
   public void importBudgetFormFile(String projectId, String importUser,String importType, File uploadFile) throws MyException {
-
+    List<FileImportLog>    fileImportLogs  = this.fileImportLogRepository.findBudgetImportByProjectId(projectId);
+    if(fileImportLogs != null && fileImportLogs.size()>0) {//不让重复导入？
+      throw new MyException("预算已经导入过，不能重复导入，请删除后重试");
+    }
     if(ImportFileType.BUDGET2016.equals(importType)){
-      List<FileImportLog>    fileImportLogs  = this.fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDateDesc(projectId,importType);
-      if(fileImportLogs != null && fileImportLogs.size()>0) {//不让重复导入？
-        throw new MyException("预算已经导入过，不能重复导入，请删除后重试");
-      }
       FileImportLog log = new FileImportLog();
       log.setFileName(uploadFile.getName());
       log.setImportType(ImportFileType.BUDGET2016);
@@ -77,10 +76,6 @@ public class BudgetService {
       //预计算
       this.computeBudgetImport2016(projectId,list);
     }else{
-      List<FileImportLog>    fileImportLogs  = this.fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDateDesc(projectId,importType);
-      if(fileImportLogs != null && fileImportLogs.size()>0) {//不让重复导入？
-        throw new MyException("预算已经导入过，不能重复导入，请删除后重试");
-      }
       FileImportLog log = new FileImportLog();
       log.setFileName(uploadFile.getName());
       log.setImportType(ImportFileType.BUDGET2015);
@@ -552,11 +547,11 @@ public class BudgetService {
     TemplateExportParams params =null;
 //导出文件
     if(ImportFileType.BUDGET2016.equals(budgetImportView.getImportType()) || ImportFileType.BUDGET_ADJUST_2016.equals(budgetImportView.getImportType()) )  {
-       params = new TemplateExportParams(
-        fileUtil.getTempleteFilePath("templete/预算2015模板.xlsx"), true);
-    }else{
       params = new TemplateExportParams(
         fileUtil.getTempleteFilePath("templete/预算2016模板.xlsx"), true);
+    }else{
+      params = new TemplateExportParams(
+        fileUtil.getTempleteFilePath("templete/预算2015模板.xlsx"), true);
     }
     Map<String,Object> tempDataMap = new HashMap<>();
     tempDataMap.put("project",project);

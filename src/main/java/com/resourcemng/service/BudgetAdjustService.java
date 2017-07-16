@@ -58,7 +58,7 @@ public class BudgetAdjustService {
 
     }
     if(fileImportLogs == null || fileImportLogs.size()==0){
-      throw new MyException("预算还没有导入，不能调整，请导入预算");
+      throw new MyException("预算还没有导入，不能调整，请导入预算.");
     }
 
     //导入记录
