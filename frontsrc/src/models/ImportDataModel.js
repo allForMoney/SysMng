@@ -38,7 +38,7 @@ export default {
           type: 'setState',
           payload: {
             projectInfo: data.result,
-            showUpload16: true,
+            [payload.attr]: true,
           }
         });
       }

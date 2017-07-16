@@ -83,7 +83,8 @@ class ImportAchive extends React.Component {
       <FrameContent>
         <Card title="绩效导入">
           <Row className={styles.baseRow}>
-          说明：先输入项目编号，点查询，查询出来项目信息后，再选择文件并上传导入。 <a href="/common/templete/download?type=JXMB">导入模板下载</a>
+          说明：先输入项目编号，点查询，查询出来项目信息后，再选择文件并上传导入。
+          <a href="/common/templete/download?type=JXMB" target="_blank">导入模板下载</a>
           </Row>
           <Row className={styles.baseRow}>
             <Col span={4}>要导入绩效的项目编号</Col>
