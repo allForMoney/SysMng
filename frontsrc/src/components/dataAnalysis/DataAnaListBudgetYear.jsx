@@ -198,7 +198,7 @@ class DataAnaListBudgetYear extends React.Component {
     return (
       <FrameContent>
         <Card title="预算执行情况一览表">
-          年度
+          立项年度
           <Select defaultValue="2017" style={{ width: 120 }} onChange={this.handleChange}>
             <Option value="2017">2017</Option>
             <Option value="2016">2016</Option>

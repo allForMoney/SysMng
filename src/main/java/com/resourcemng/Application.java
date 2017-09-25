@@ -15,6 +15,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.servlet.MultipartConfigElement;
+import java.util.logging.Logger;
 
 @SpringBootApplication
 //@ComponentScan
@@ -22,6 +23,7 @@ import javax.servlet.MultipartConfigElement;
 @EnableScheduling
 @EnableTransactionManagement
 public class Application extends SpringBootServletInitializer {
+  private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(Application.class);
 
   @Bean
   public MultipartConfigElement multipartConfigElement() {
@@ -36,6 +38,11 @@ public class Application extends SpringBootServletInitializer {
   }
 
   public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+  try {
+    SpringApplication.run(Application.class, args);
+  }catch(Exception e) {
+    logger.error(e);
+  }
+
     }
 }
