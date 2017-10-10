@@ -44,7 +44,7 @@ public class DataAnalyseService {
 
   public List<ProjectBudgetView> byYear(String year,String projectYear) throws InvocationTargetException, IllegalAccessException {
     projectYear = projectYear==null?"":projectYear;
-   List<Project> projects =  projectRepository.findByCreateYear(projectYear);
+   List<Project> projects =  projectRepository.findByCreateYearLike(projectYear);
    List<ProjectBudgetView> list = new ArrayList<>();
    //数据总计
     ProjectBudgetView total = new ProjectBudgetView();
@@ -99,7 +99,9 @@ public class DataAnalyseService {
 
   private void computeTotal(String year,ProjectBudgetView view,List<ProjectBudgetView> list){
     view.setProjectNo("合计");
-    view.setMajorName(year+"立项");
+    if(!StringUtils.isEmpty(year)) {
+      view.setMajorName(year + "立项");
+    }
     //预算
     view.setBudgetEnterprise(new BigDecimal(list.stream().mapToDouble(p -> {
       return Optional.ofNullable(p.getBudgetEnterprise()).map(t->t.doubleValue()).orElse(0.0);}).sum()));
