@@ -5,6 +5,7 @@ import {
    Modal, Form, Input,
    InputNumber,
 } from 'antd';
+import styles from './BudgetSeasonIncome.less';
 
 const FormItem = Form.Item;
 
@@ -97,7 +98,7 @@ class BudgetSeasonOutcome extends React.Component {
           Object.assign(item, values);
         }
       });
-      
+
       this.props.dispatch({
         type: 'budgetModel/setState',
         payload: {
@@ -115,14 +116,14 @@ class BudgetSeasonOutcome extends React.Component {
     return totalMoney;
   }
 
-  getItemSingleTotalMoney = (attr, [ item1, item2, item3, item4], flag) => {
+  getItemSingleTotalMoney = (attr, [item1, item2, item3, item4], flag) => {
     let totalMoney = (item1[attr] + item2[attr] + item3[attr] + item4[attr]);
     if (flag) {
-      totalMoney = totalMoney- item1[attr];
+      totalMoney -= item1[attr];
     }
     return totalMoney;
   }
-  
+
   getDetailSource = (item) => {
     const totalMoney = this.getItemTotalMoney(item);
     return [{
@@ -141,7 +142,7 @@ class BudgetSeasonOutcome extends React.Component {
   }
 
   generateDataSource= (sourceData) => {
-    const [ item1, item2, item3, item4 ] = sourceData;
+    const [item1, item2, item3, item4] = sourceData;
     const item1Total = this.getItemTotalMoney(item1);
     const item2Total = this.getItemTotalMoney(item2);
     const item3Total = this.getItemTotalMoney(item3);
@@ -156,14 +157,14 @@ class BudgetSeasonOutcome extends React.Component {
         moneySource: '合计',
         project: '金额(元)',
         totalMoney: sumMoney,
-        materialMake: this.getItemSingleTotalMoney('materialMake',sourceData),
-        companyCase: this.getItemSingleTotalMoney('companyCase',sourceData),
-        courseDevelopment: this.getItemSingleTotalMoney('courseDevelopment',sourceData),
-        specialTool: this.getItemSingleTotalMoney('specialTool',sourceData),
-        applicationPromete: this.getItemSingleTotalMoney('applicationPromete',sourceData),
-        researchProve: this.getItemSingleTotalMoney('researchProve',sourceData),
-        expertConsult: this.getItemSingleTotalMoney('expertConsult',sourceData),
-        otherFee: this.getItemSingleTotalMoney('otherFee',sourceData),
+        materialMake: this.getItemSingleTotalMoney('materialMake', sourceData),
+        companyCase: this.getItemSingleTotalMoney('companyCase', sourceData),
+        courseDevelopment: this.getItemSingleTotalMoney('courseDevelopment', sourceData),
+        specialTool: this.getItemSingleTotalMoney('specialTool', sourceData),
+        applicationPromete: this.getItemSingleTotalMoney('applicationPromete', sourceData),
+        researchProve: this.getItemSingleTotalMoney('researchProve', sourceData),
+        expertConsult: this.getItemSingleTotalMoney('expertConsult', sourceData),
+        otherFee: this.getItemSingleTotalMoney('otherFee', sourceData),
       }, {
         column1: '合计',
         moneySource: '合计',
@@ -186,14 +187,14 @@ class BudgetSeasonOutcome extends React.Component {
         moneySource: '小计',
         project: '金额(元)',
         totalMoney: sumMoney2,
-        materialMake: this.getItemSingleTotalMoney('materialMake',sourceData,true),
-        companyCase: this.getItemSingleTotalMoney('companyCase',sourceData,true),
-        courseDevelopment: this.getItemSingleTotalMoney('courseDevelopment',sourceData,true),
-        specialTool: this.getItemSingleTotalMoney('specialTool',sourceData,true),
-        applicationPromete: this.getItemSingleTotalMoney('applicationPromete',sourceData,true),
-        researchProve: this.getItemSingleTotalMoney('researchProve',sourceData,true),
-        expertConsult: this.getItemSingleTotalMoney('expertConsult',sourceData,true),
-        otherFee: this.getItemSingleTotalMoney('otherFee',sourceData,true),
+        materialMake: this.getItemSingleTotalMoney('materialMake', sourceData, true),
+        companyCase: this.getItemSingleTotalMoney('companyCase', sourceData, true),
+        courseDevelopment: this.getItemSingleTotalMoney('courseDevelopment', sourceData, true),
+        specialTool: this.getItemSingleTotalMoney('specialTool', sourceData, true),
+        applicationPromete: this.getItemSingleTotalMoney('applicationPromete', sourceData, true),
+        researchProve: this.getItemSingleTotalMoney('researchProve', sourceData, true),
+        expertConsult: this.getItemSingleTotalMoney('expertConsult', sourceData, true),
+        otherFee: this.getItemSingleTotalMoney('otherFee', sourceData, true),
       }, {
         column1: '项目筹措资金',
         moneySource: '小计',
@@ -281,40 +282,88 @@ class BudgetSeasonOutcome extends React.Component {
         title: '素材制作',
         dataIndex: 'materialMake',
         key: 'materialMake',
+        render: (value, row, index) => {
+          if ([2, 6, 8, 10].includes(index)) {
+            return (<p className={styles.editable}>{value}</p>);
+          }
+          return value;
+        }
       }, {
         title: '企业案例收集制作',
         dataIndex: 'companyCase',
         key: 'companyCase',
+        render: (value, row, index) => {
+          if ([2, 6, 8, 10].includes(index)) {
+            return (<p className={styles.editable}>{value}</p>);
+          }
+          return value;
+        }
       }, {
         title: '课程开发',
         dataIndex: 'courseDevelopment',
         key: 'courseDevelopment',
+        render: (value, row, index) => {
+          if ([2, 6, 8, 10].includes(index)) {
+            return (<p className={styles.editable}>{value}</p>);
+          }
+          return value;
+        }
       }, {
         title: '特殊工具软件制作',
         dataIndex: 'specialTool',
         key: 'specialTool',
+        render: (value, row, index) => {
+          if ([2, 6, 8, 10].includes(index)) {
+            return (<p className={styles.editable}>{value}</p>);
+          }
+          return value;
+        }
       }, {
         title: '应用推广',
         dataIndex: 'applicationPromete',
         key: 'applicationPromete',
+        render: (value, row, index) => {
+          if ([2, 6, 8, 10].includes(index)) {
+            return (<p className={styles.editable}>{value}</p>);
+          }
+          return value;
+        }
       }, {
         title: '调研论证',
         dataIndex: 'researchProve',
         key: 'researchProve',
+        render: (value, row, index) => {
+          if ([2, 6, 8, 10].includes(index)) {
+            return (<p className={styles.editable}>{value}</p>);
+          }
+          return value;
+        }
       }, {
         title: '专家咨询',
         dataIndex: 'expertConsult',
         key: 'expertConsult',
+        render: (value, row, index) => {
+          if ([2, 6, 8, 10].includes(index)) {
+            return (<p className={styles.editable}>{value}</p>);
+          }
+          return value;
+        }
       }, {
         title: '其他',
         dataIndex: 'otherFee',
         key: 'otherFee',
+        render: (value, row, index) => {
+          if ([2, 6, 8, 10].includes(index)) {
+            return (<p className={styles.editable}>{value}</p>);
+          }
+          return value;
+        }
       }
     ];
 
     const { modalVisible } = this.state;
     const formItemLayout = {
-      labelCol: { span: 6 },
+      labelCol: { span: 10 },
       wrapperCol: { span: 14 },
     };
 
@@ -377,7 +426,7 @@ class BudgetSeasonOutcome extends React.Component {
                 rules: [filterRules],
               })(<InputNumber />)}
             </FormItem>
-            <FormItem label="其他" {...formItemLayout} style={{display:'none'}}>
+            <FormItem label="其他" {...formItemLayout} style={{ display: 'none' }}>
               {getFieldDecorator('pid', {
                 rules: [filterRules],
               })(<InputNumber />)}
@@ -387,6 +436,7 @@ class BudgetSeasonOutcome extends React.Component {
         <Table
           columns={columns}
           size="small"
+          bordered
           dataSource={dataSource}
           rowKey={record => record.id}
           onRowClick={this.onRowClicked}

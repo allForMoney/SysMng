@@ -123,6 +123,7 @@ class ProjectList extends React.Component {
         <Table
           columns={columns}
           dataSource={projectList}
+          bordered
           loading={loading}
           rowKey={record => record.name}
           pagination={pageConfig}

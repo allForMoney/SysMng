@@ -32,6 +32,11 @@
     "eslint-plugin-react": "^6.9.0",
     "redbox-react": "^1.3.2"
   },
+  "theme": {
+    "body-background": "whitesmoke",
+    "component-background": "whitesmoke",
+    "font-size-base": "16px"
+  },
   "scripts": {
     "start": "dora --verbose --plugins \"proxy?watchDirs=./mock,webpack,webpack-hmr\"",
     "build": "atool-build",

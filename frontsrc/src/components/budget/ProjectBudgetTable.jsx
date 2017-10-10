@@ -150,6 +150,7 @@ function ProjectBudgetTable(props) {
       size="small"
       scroll={{ x: true, y: 300 }}
       columns={columns}
+      bordered
       dataSource={dataList}
       loading={loading}
       rowKey={record => record.id}

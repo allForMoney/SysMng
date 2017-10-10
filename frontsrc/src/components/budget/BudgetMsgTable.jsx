@@ -97,6 +97,7 @@ class BudgetMsgTable extends React.Component {
       <FrameContent>
         <Table
           title={() => '留言处理情况'}
+          bordered
           columns={columns}
           dataSource={budgetMsgList}
           loading={loading}

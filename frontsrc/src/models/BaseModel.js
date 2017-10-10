@@ -9,7 +9,7 @@ export default {
 
   state: {
     loading: false,
-    userType: 'finace',  // inputer/finace/school/admin/country
+    userType: 'inputer',  // inputer/finace/school/admin/country
     userName: '12345',
 
     showMsgModal: false, // 展示留言弹窗

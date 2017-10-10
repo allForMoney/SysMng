@@ -190,6 +190,7 @@ class BudgetJustifyCheck extends React.Component {
           columns={columns}
           dataSource={budgetJustifyList}
           loading={loading}
+          bordered
           rowKey={record => record.adjustId}
           pagination={recPageConfig}
         />

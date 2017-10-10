@@ -150,7 +150,7 @@ class FrameContent extends React.Component {
             onChange={e => this.setState({ msgValue: e.target.value })}
           />
         </Modal>
-        <Header className="header">
+        <Header className={styles.header}>
           <div className={styles.logo}>
             职业教育国家级专业教学资源库预算绩效管理系统
           </div>
@@ -400,8 +400,8 @@ class FrameContent extends React.Component {
             </Menu>
             }
           </Sider>
-          <Layout style={{ padding: '0 24px 24px' }}>
-            <Content style={{ background: '#fff', padding: 24, margin: 0, minHeight: 280 }}>
+          <Layout style={{ padding: '0 10px 10px' }}>
+            <Content style={{ padding: 5, minHeight: 280 }}>
               {this.props.children}
             </Content>
           </Layout>

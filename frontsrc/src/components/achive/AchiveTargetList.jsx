@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Table,
   Card,
-   Modal, Form, Input,Row,Col,
+   Modal, Form, Input, Row, Col,
 } from 'antd';
 import AchiveTarget from './AchiveTarget';
 
@@ -46,7 +46,7 @@ class AchiveTargetList extends React.Component {
       this.onCancel();
     });
   }
-  
+
   render() {
     const { getFieldDecorator } = this.props.form;
 
@@ -116,7 +116,7 @@ class AchiveTargetList extends React.Component {
               })(<Input />)}
             </FormItem>
             <Row>
-              <Col span={3} style={{lineHeight: 13 }}>计划指标值</Col>
+              <Col span={3} style={{ lineHeight: 13 }}>计划指标值</Col>
               <Col span={20}>
                 <Row>
                   <FormItem label="总体值" {...formItemLayout2}>
@@ -145,6 +145,7 @@ class AchiveTargetList extends React.Component {
         </Modal>
         <Table
           title={() => '绩效指标'}
+          bordered
           columns={columns}
           dataSource={dataSource}
           rowKey={record => record.id}

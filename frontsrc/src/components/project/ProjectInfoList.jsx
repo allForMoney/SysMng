@@ -264,6 +264,7 @@ class ProjectInfoList extends React.Component {
           <Table
             rowSelection={rowSelection}
             columns={columns}
+            bordered
             dataSource={projectList}
             loading={loading}
             rowKey={record => record.name}

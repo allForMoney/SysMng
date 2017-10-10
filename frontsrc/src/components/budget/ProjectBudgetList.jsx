@@ -39,6 +39,7 @@ function ProjectBudgetList({ dispatch, list: dataSource, loading, total, page: c
         <Table
           columns={columns}
           dataSource={dataSource}
+          bordered
           loading={loading}
           rowKey={record => record.id}
           pagination={false}

@@ -8,6 +8,8 @@ import {
    InputNumber
 } from 'antd';
 
+import styles from './BudgetSeasonIncome.less';
+
 const FormItem = Form.Item;
 
 class BudgetSeasonIncome extends React.Component {
@@ -39,7 +41,7 @@ class BudgetSeasonIncome extends React.Component {
     this.props.form.resetFields();
     this.setState({ modalVisible: false });
   }
-  
+
   onRowClicked= (record, index) => {
     if (!this.props.editable) {
       return;
@@ -47,7 +49,6 @@ class BudgetSeasonIncome extends React.Component {
     if (![2, 6, 8, 10].includes(index)) {
       return;
     }
-    console.log(record);
     const { setFieldsValue } = this.props.form;
     setFieldsValue(record);
     this.setState({ modalVisible: true, currentEditIndex: index });
@@ -56,7 +57,7 @@ class BudgetSeasonIncome extends React.Component {
   saveBudgetInCome= () => {
     const { sourceData } = this.state;
     const { buggetInComeList } = this.props;
-    this.props.form.validateFields((err,values) => {
+    this.props.form.validateFields((err, values) => {
       if (err) {
         return;
       }
@@ -81,23 +82,21 @@ class BudgetSeasonIncome extends React.Component {
     });
   }
 
-  getDetailSource = (item) => {
-    return [{
-      column1: '项目筹措资金',
-      moneySource: item.moneySource,
-      project: '金额(元)',
-      pid: item.pid,
-      amountMoney: item.amountMoney,
-    }, {
-      column1: '项目筹措资金',
-      moneySource: item.moneySource,
-      project: '到位率',
-      amountMoney: 0,
-    }];
-  }
+  getDetailSource = item => [{
+    column1: '项目筹措资金',
+    moneySource: item.moneySource,
+    project: '金额(元)',
+    pid: item.pid,
+    amountMoney: item.amountMoney,
+  }, {
+    column1: '项目筹措资金',
+    moneySource: item.moneySource,
+    project: '到位率',
+    amountMoney: 0,
+  }]
 
   generateDataSource= (sourceData) => {
-    const [ item1, item2, item3, item4 ] = sourceData;
+    const [item1, item2, item3, item4] = sourceData;
     const sumMoney = item1.amountMoney + item2.amountMoney + item3.amountMoney + item4.amountMoney;
     const sumMoney2 = item2.amountMoney + item3.amountMoney + item4.amountMoney;
     let dataSource = [
@@ -208,11 +207,17 @@ class BudgetSeasonIncome extends React.Component {
       title: '总额/到位率',
       dataIndex: 'amountMoney',
       key: 'amountMoney',
+      render: (value, row, index) => {
+        if ([2, 6, 8, 10].includes(index)) {
+          return (<p className={styles.editable}>{value}</p>);
+        }
+        return value;
+      }
     }];
 
     const { modalVisible } = this.state;
     const formItemLayout = {
-      labelCol: { span: 6 },
+      labelCol: { span: 10 },
       wrapperCol: { span: 14 },
     };
 
@@ -240,7 +245,7 @@ class BudgetSeasonIncome extends React.Component {
                 rules: [filterRules],
               })(<InputNumber />)}
             </FormItem>
-            <FormItem label="金额" {...formItemLayout} style={{display:'none'}}>
+            <FormItem label="金额" {...formItemLayout} style={{ display: 'none' }}>
               {getFieldDecorator('pid', {
                 rules: [filterRules],
               })(<InputNumber />)}
@@ -249,6 +254,7 @@ class BudgetSeasonIncome extends React.Component {
         </Modal>
         <Table
           columns={columns}
+          bordered
           size="small"
           dataSource={dataSource}
           rowKey={record => record.id}

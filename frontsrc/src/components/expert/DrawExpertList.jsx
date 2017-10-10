@@ -87,6 +87,7 @@ class DrawExpertList extends React.Component {
         <Table
           columns={columns}
           dataSource={drawExpertList}
+          bordered
           loading={loading}
           rowKey={record => record.name}
         />

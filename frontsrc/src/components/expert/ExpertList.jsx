@@ -250,6 +250,7 @@ class ExpertList extends React.Component {
           <Table
             columns={columns}
             dataSource={expertList}
+            bordered
             loading={loading}
           />
         </Card>

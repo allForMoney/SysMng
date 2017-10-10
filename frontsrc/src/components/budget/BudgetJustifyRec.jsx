@@ -237,6 +237,7 @@ class BudgetJustifyRec extends React.Component {
             <Table
               title={() => '预算修改申请情况一览表'}
               size="small"
+              bordered
               columns={columns}
               dataSource={budgetJustifyList}
               loading={loading}

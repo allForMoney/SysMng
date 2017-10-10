@@ -111,6 +111,7 @@ class ResetUserPwd extends React.Component {
           <Table
             columns={columns}
             dataSource={userRecList}
+            bordered
             loading={loading}
             rowKey={record => record.name}
             pagination={pageConfig}

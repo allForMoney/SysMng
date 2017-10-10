@@ -210,6 +210,7 @@ class DataAnaListYear extends React.Component {
             columns={columns}
             dataSource={analySisList}
             loading={loading}
+            bordered
             rowKey={record => record.name}
             pagination={pageConfig}
             style={{ marginTop: 15 }}

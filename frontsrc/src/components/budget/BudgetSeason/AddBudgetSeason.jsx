@@ -16,8 +16,7 @@ const Option = Select.Option;
 
 class BudgetSeason extends React.Component {
   state= {
-    editable: this.props.userType === 'inputer', // 是否可编辑
-    showCheckBtn: this.props.userType === 'finace' || this.props.userType === 'school', // 是否展示审批菜单
+    editable: true, // 是否可编辑
   }
   componentDidMount() {
     this.props.dispatch({
@@ -159,7 +158,7 @@ class BudgetSeason extends React.Component {
       SeasonSelection.push(<Option key={i}>{`第${i}季度`}</Option>);
     }
 
-    const { editable } = this.state;
+    const editable = this.props.userType === 'inputer';
     const { cancelVisible, passVisible } = this.getCheckVisible(userType, auditStatus);
 
     return (

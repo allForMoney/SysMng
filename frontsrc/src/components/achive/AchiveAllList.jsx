@@ -110,6 +110,7 @@ class AchiveAllList extends React.Component {
           </Form>
           <Table
             columns={columns}
+            bordered
             dataSource={achiveAllList}
             loading={loading}
             rowKey={record => record.name}

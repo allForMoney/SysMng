@@ -147,6 +147,7 @@ class BudgetMsgList extends React.Component {
           </Modal>
           <Table
             size="small"
+            bordered
             columns={columns}
             dataSource={budgetMsgList}
             loading={loading}

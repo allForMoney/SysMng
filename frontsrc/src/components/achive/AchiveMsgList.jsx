@@ -147,6 +147,7 @@ class AchiveMsgList extends React.Component {
           </Modal>
           <Table
             size="small"
+            bordered
             columns={columns}
             dataSource={budgetAchiveList}
             loading={loading}

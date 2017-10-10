@@ -209,6 +209,7 @@ class DataAnaListBudgetYear extends React.Component {
           <Table
             columns={columns}
             dataSource={analySisList}
+            bordered
             loading={loading}
             rowKey={record => record.name}
             pagination={pageConfig}
