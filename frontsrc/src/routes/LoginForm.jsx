@@ -60,7 +60,7 @@ class LoginForm extends React.Component {
           })(
             <Select
               showSearch
-              placeholder="Select a person"
+              placeholder="选择年度"
               optionFilterProp="children"
               onChange={this.onYearChanged}
               value={selectedYear}
@@ -73,14 +73,14 @@ class LoginForm extends React.Component {
           {getFieldDecorator('username', {
             rules: [{ required: true, message: '请输入您的账号' }],
           })(
-            <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="Username" />
+            <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="用户名" />
           )}
         </FormItem>
         <FormItem label="密码" {...formWraper}>
           {getFieldDecorator('password', {
             rules: [{ required: true, message: '请输入您的密码' }],
           })(
-            <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="Password" />
+            <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="密码" />
           )}
         </FormItem>
         <FormItem wrapperCol={{ span: 12, offset: 6 }}>
