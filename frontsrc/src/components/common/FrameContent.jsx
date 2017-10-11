@@ -239,7 +239,6 @@ class FrameContent extends React.Component {
             { isAdmin &&
             <Menu
               mode="inline"
-              defaultSelectedKeys={['项目基本信息列表']}
               defaultOpenKeys={['数据导入', '其他功能']}
               style={{ height: '100%' }}
               onClick={this.onMenuClicked}

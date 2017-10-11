@@ -16,11 +16,6 @@ export default {
     achiveRecPageNum: 0,
     achiveRecPageTotal: 0,
     achiveRecPageSize: 20,
-  // public static String BUDGET2016 = "yusuan2016";
-  // public static String BUDGET2015 = "yusuan";
-  // public static String BUDGET_ADJUST = "yusuan2";
-  // public static String BUDGET_ADJUST_2016 = "adjust2016";
-  // public static String TARGET = "jixiao";
 
     allImportData: [],
     importFileType: '',
@@ -28,6 +23,7 @@ export default {
     allImportNum: 0,
     showUpload16: false,
     showUpload15: false,
+    showUploadAchive: false,
   },
   effects: {
 

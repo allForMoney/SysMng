@@ -54,13 +54,17 @@ class AchiveTargetList extends React.Component {
       title: '一级指标',
       dataIndex: 'indicatorOneLevel',
       key: 'indicatorOneLevel',
+      width: 100
+
     }, {
       title: '二级指标',
       dataIndex: 'indicatorTowLevel',
+      width: 100,
       key: 'indicatorTowLevel',
     }, {
       title: '三级指标',
       dataIndex: 'indicatorThreeLevel',
+      width: 100,
       key: 'indicatorThreeLevel',
     }, {
       title: '计划指标值',

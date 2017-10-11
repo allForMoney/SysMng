@@ -40,7 +40,7 @@ class ImportAchive extends React.Component {
     console.log(projectNo);
     this.props.dispatch({
       type: 'ImportData/getProjectInfo',
-      payload: { projectNo },
+      payload: { projectNo, attr: 'showUploadAchive' },
     });
   }
 
@@ -50,7 +50,7 @@ class ImportAchive extends React.Component {
 
   render() {
     const {
-      showUpload16,
+      showUploadAchive,
       projectInfo,
       userId,
     } = this.props;
@@ -100,7 +100,7 @@ class ImportAchive extends React.Component {
               <ProjectInfo ref={this.saveForm} {...projectInfo} />
             </Card>
           </Row>
-          {showUpload16 &&
+          {showUploadAchive &&
           <Row className="">
             <Upload {...uploadProps}>
               <Button>
@@ -124,7 +124,7 @@ function mapStateToProps(state) {
     userId,
    } = state.baseModel;
   const {
-    showUpload16,
+    showUploadAchive,
     projectInfo,
     loading,
    } = state.ImportData;
@@ -135,7 +135,7 @@ function mapStateToProps(state) {
     projectId,
     projectName,
     projectInfo,
-    showUpload16,
+    showUploadAchive,
     userId,
     loading,
   };
