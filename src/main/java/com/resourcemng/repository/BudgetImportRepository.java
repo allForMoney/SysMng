@@ -19,4 +19,8 @@ public interface BudgetImportRepository extends JpaRepository<BudgetImportDetail
 
   @Query("from BudgetImportDetailOld p where p.fileImportId=:fileImportId")
   List<BudgetImportDetailOld> findByBudgetImportId(@Param("fileImportId") String fileImportId);
+  @Query("delete from BudgetImportDetailOld p where p.fileImportId=:fileImportId")
+  void deleteByBudgetImportId(@Param("fileImportId")String fileImportId);
+
+
 }

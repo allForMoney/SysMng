@@ -367,7 +367,12 @@ public class BudgetService {
    * @param importId
    */
   public void delete(String importId) {
-    this.budgetImport2016Repository.deleteByBudgetImportId(importId);
+    FileImportLog importLog = this.fileImportLogRepository.findById(importId).get();
+    if(ImportFileType.BUDGET2016.equals(importLog.getImportType())){
+      this.budgetImport2016Repository.deleteByBudgetImportId(importId);
+    }else{
+      this.budgetImportRepository.deleteByBudgetImportId(importId);
+    }
     this.fileImportLogRepository.deleteById(importId);
 
   }

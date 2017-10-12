@@ -4,7 +4,7 @@ import com.resourcemng.basic.MyException;
 import com.resourcemng.basic.RequestResult;
 import com.resourcemng.basic.ResultCode;
 import com.resourcemng.entitys.Tuser;
-import com.resourcemng.service.UserService;
+import com.resourcemng.service.TUserService;
 import com.resourcemng.util.MD5;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class UserController {
 
     @Autowired
-  UserService service;
+    TUserService service;
 
   /**
    * 用户NO

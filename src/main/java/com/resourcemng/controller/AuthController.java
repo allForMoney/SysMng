@@ -7,7 +7,7 @@ import com.resourcemng.basic.ResultCode;
 import com.resourcemng.entitys.Project;
 import com.resourcemng.entitys.Tuser;
 import com.resourcemng.service.ProjectService;
-import com.resourcemng.service.UserService;
+import com.resourcemng.service.TUserService;
 import com.resourcemng.util.ApplicationUitl;
 import com.resourcemng.util.MD5;
 import com.resourcemng.view.LoginUserView;
@@ -28,7 +28,7 @@ import java.util.Map;
 @Controller
 public class AuthController {
   @Autowired
-  UserService service;
+  TUserService service;
   @Autowired
   ProjectService projectService;
   String SESSION_KEY = "user";

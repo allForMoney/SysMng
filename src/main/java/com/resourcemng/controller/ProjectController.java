@@ -61,9 +61,11 @@ public class ProjectController {
         File uploadFile = fileUitl.saveUploadFile(file);
         service.importPorjectByFile(uploadFile);
         return new RequestResult(ResultCode.SUCCESS, "上传成功", null);
+      }catch (MyException e){
+        throw e;
       }catch (Exception e){
         throw new MyException(e);
-      }
+    }
     } else {
       return new RequestResult(ResultCode.FAILED, "上传失败，因为文件是空的.",   null);
     }

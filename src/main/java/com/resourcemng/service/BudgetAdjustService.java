@@ -267,8 +267,14 @@ public class BudgetAdjustService {
     return budgetCompareView;
   }
 
+  /**
+   *
+   * @param adjustId
+   * @return
+   */
   public Object getById(String adjustId) {
     FileImportLog fileImportLog = fileImportLogRepository.findById(adjustId).get();
     return fileImportLog;
   }
+
 }
