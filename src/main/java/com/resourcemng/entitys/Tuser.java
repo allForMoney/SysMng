@@ -1,11 +1,9 @@
 package com.resourcemng.entitys;
 
-import org.apache.tomcat.util.security.MD5Encoder;
-import org.apache.xmlbeans.impl.util.Base64;
 import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
 
 /**
  * Created by Administrator on 2017-6-23.

@@ -26,6 +26,8 @@ public interface FileImportLogRepository extends JpaRepository<FileImportLog, St
 
     List<FileImportLog>  findByImportType(String importType);
 
+    void  deleteByProjectId(String projectId);
+
     Page  findByImportType(String importType,Pageable pageable);
 
     List<FileImportLog> findByProjectId(String projectId);
