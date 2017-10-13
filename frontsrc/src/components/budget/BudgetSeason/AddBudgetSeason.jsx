@@ -162,10 +162,10 @@ class BudgetSeason extends React.Component {
     const { cancelVisible, passVisible } = this.getCheckVisible(userType, auditStatus);
 
     return (
-      <FrameContent>
-        <Card title={`预算执行季报[编号: ${projectInfo.projectNo},名称:${projectInfo.majorName}]`}>
-          { editBudgetSteps === 0 &&
-            <Row className="">
+
+      <Card title={`预算执行季报[编号: ${projectInfo.projectNo},名称:${projectInfo.majorName}]`}>
+        { editBudgetSteps === 0 &&
+        <Row className="">
               年度
               <Select
                 placeholder="选择年度"
@@ -183,8 +183,8 @@ class BudgetSeason extends React.Component {
               >
                 {SeasonSelection}
               </Select>
-              {projectYear && quarterNum &&
-                <div>
+          {projectYear && quarterNum &&
+          <div>
                   <BudgetSeasonIncome
                     editable={editable}
                     dispatch={dispatch}
@@ -195,27 +195,27 @@ class BudgetSeason extends React.Component {
                   </Col>
                 </div>
               }
-            </Row>
+        </Row>
           }
-          { editBudgetSteps === 1 &&
-            <div className="">
-                {cancelVisible &&
-                  <Button className={styles.btnClass} type="primary" onClick={this.doCheck.bind(this, '0')}>返回上一级</Button>
+        { editBudgetSteps === 1 &&
+        <div className="">
+          {cancelVisible &&
+          <Button className={styles.btnClass} type="primary" onClick={this.doCheck.bind(this, '0')}>返回上一级</Button>
                 }
-                {passVisible &&
-                  <Button className={styles.btnClass} type="primary" onClick={this.doCheck.bind(this, '1')}>通过审核</Button>
+          {passVisible &&
+          <Button className={styles.btnClass} type="primary" onClick={this.doCheck.bind(this, '1')}>通过审核</Button>
                 }
-                {showSeasonExport &&
-                  <Button className={styles.btnClass} type="primary" onClick={this.doExport}>导出Excel文件</Button>
+          {showSeasonExport &&
+          <Button className={styles.btnClass} type="primary" onClick={this.doExport}>导出Excel文件</Button>
                 }
 
-              <BudgetSeasonOutcome
-                editable={editable}
-                buggetOutComeList={buggetOutComeList}
-                dispatch={dispatch}
-              />
-              <Col className={styles.btnContainer}>
-                <Button
+          <BudgetSeasonOutcome
+            editable={editable}
+            buggetOutComeList={buggetOutComeList}
+            dispatch={dispatch}
+          />
+          <Col className={styles.btnContainer}>
+            <Button
                   className={styles.btnClass}
                   type="primary"
                   onClick={() => {
@@ -230,14 +230,14 @@ class BudgetSeason extends React.Component {
                 >
                   返回
                 </Button>
-                {editable &&
+            {editable &&
                   <Button className={styles.btnClass} type="primary" onClick={this.submit}>保存</Button>
                 }
-              </Col>
-            </div>
+          </Col>
+        </div>
           }
-        </Card>
-      </FrameContent>
+      </Card>
+
     );
   }
 }

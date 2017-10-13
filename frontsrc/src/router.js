@@ -36,47 +36,49 @@ import ExpertList from './components/expert/ExpertList';
 import DrawExpert from './components/expert/DrawExpert';
 import DataAnaListYear from './components/dataAnalysis/DataAnaListYear';
 import DataAnaListBudgetYear from './components/dataAnalysis/DataAnaListBudgetYear';
+import FrameContent from './components/common/FrameContent';
 
 function RouterConfig({ history }) {
   return (
-    <Router history={history}>
-      <Route path="/login" component={LoginForm} />
-      <Route path="/blank" component={Blank} />
-      <Route path="/budget/base" component={ProjectBaseInfo} />
-      <Route path="/budget/project" component={ProjectBudget} />
-      <Route path="/budget/justify" component={BudgetJustify} />
-      <Route path="/budget/justifyRec" component={BudgetJustifyRec} />
-      <Route path="/budget/addbudgetseason" component={AddBudgetSeason} />
-      <Route path="/budget/budgetSeasonList" component={BudgetSeaonList} />
-      <Route path="/budget/msg" component={BudgetMsgTable} />
-      <Route path="/budget/msgList" component={BudgetMsgList} />
-      <Route path="/budget/projectSeaonBudget" component={BudgetSeason_Country} />
-      <Route path="/budget/projectBudgetResult" component={BudgetResult_Country} />
+    <FrameContent history={history}>
+      <Router history={history}>
+        <Route path="/login" component={LoginForm} />
+        <Route path="/blank" component={Blank} />
+        <Route path="/budget/base" component={ProjectBaseInfo} />
+        <Route path="/budget/project" component={ProjectBudget} />
+        <Route path="/budget/justify" component={BudgetJustify} />
+        <Route path="/budget/justifyRec" component={BudgetJustifyRec} />
+        <Route path="/budget/addbudgetseason" component={AddBudgetSeason} />
+        <Route path="/budget/budgetSeasonList" component={BudgetSeaonList} />
+        <Route path="/budget/msg" component={BudgetMsgTable} />
+        <Route path="/budget/msgList" component={BudgetMsgList} />
+        <Route path="/budget/projectSeaonBudget" component={BudgetSeason_Country} />
+        <Route path="/budget/projectBudgetResult" component={BudgetResult_Country} />
 
-      <Route path="/achive/add" component={Achive} />
-      <Route path="/achive/allList" component={AchiveAllList} />
-      <Route path="/achive/msgAll" component={AchiveMsgList} />
+        <Route path="/achive/add" component={Achive} />
+        <Route path="/achive/allList" component={AchiveAllList} />
+        <Route path="/achive/msgAll" component={AchiveMsgList} />
 
-      <Route path="/import/budget16" component={ImportBudget16} />
-      <Route path="/import/budget15" component={ImportBudget15} />
-      <Route path="/import/importAchive" component={ImportAchive} />
-      <Route path="/import/importProjet" component={ImportProjet} />
-      <Route path="/import/budgetImportRec" component={BudgetImportRecord} />
-      <Route path="/import/achiveImportRec" component={AchivemportRecord} />
-      <Route path="/base/projectList" component={ProjectInfoList} />
+        <Route path="/import/budget16" component={ImportBudget16} />
+        <Route path="/import/budget15" component={ImportBudget15} />
+        <Route path="/import/importAchive" component={ImportAchive} />
+        <Route path="/import/importProjet" component={ImportProjet} />
+        <Route path="/import/budgetImportRec" component={BudgetImportRecord} />
+        <Route path="/import/achiveImportRec" component={AchivemportRecord} />
+        <Route path="/base/projectList" component={ProjectInfoList} />
 
-      <Route path="/sys/concat" component={ModifyConcat} />
-      <Route path="/sys/advice" component={Advice} />
-      <Route path="/sys/reportTime" component={reportTime} />
-      <Route path="/sys/sendSMS" component={SendSMS} />
-      <Route path="/sys/resetPwd" component={ResetUserPwd} />
+        <Route path="/sys/concat" component={ModifyConcat} />
+        <Route path="/sys/advice" component={Advice} />
+        <Route path="/sys/reportTime" component={reportTime} />
+        <Route path="/sys/sendSMS" component={SendSMS} />
+        <Route path="/sys/resetPwd" component={ResetUserPwd} />
 
-      <Route path="/expert/list" component={ExpertList} />
-      <Route path="/expert/drawExpert" component={DrawExpert} />
-      <Route path="/dataAna/year" component={DataAnaListYear} />
-      <Route path="/dataAna/budgetyear" component={DataAnaListBudgetYear} />
-
-    </Router>
+        <Route path="/expert/list" component={ExpertList} />
+        <Route path="/expert/drawExpert" component={DrawExpert} />
+        <Route path="/dataAna/year" component={DataAnaListYear} />
+        <Route path="/dataAna/budgetyear" component={DataAnaListBudgetYear} />
+      </Router>
+    </FrameContent>
   );
 }
 

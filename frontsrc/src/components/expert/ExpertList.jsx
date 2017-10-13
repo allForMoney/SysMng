@@ -165,96 +165,96 @@ class ExpertList extends React.Component {
       required: true, message: '不可为空',
     }];
     return (
-      <FrameContent>
-        <Card>
-          <Modal
-            title={modalTitle}
-            visible={editModalVisible}
-            onOk={this.handleOk}
-            onCancel={this.handleCancel}
-          >
-            <Form>
-              <Form.Item label="编号 ：" {...formItemLayout}>
-                { getFieldDecorator('code', {
-                  rules: requireRules,
-                })(
-                  <Input />
+
+      <Card>
+        <Modal
+          title={modalTitle}
+          visible={editModalVisible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+        >
+          <Form>
+            <Form.Item label="编号 ：" {...formItemLayout}>
+              { getFieldDecorator('code', {
+                rules: requireRules,
+              })(
+                <Input />
                 )}
-              </Form.Item>
-              <Form.Item label="姓名 ：" {...formItemLayout}>
-                { getFieldDecorator('name', {
-                  rules: requireRules,
-                })(
-                  <Input />
+            </Form.Item>
+            <Form.Item label="姓名 ：" {...formItemLayout}>
+              { getFieldDecorator('name', {
+                rules: requireRules,
+              })(
+                <Input />
                 )}
-              </Form.Item>
-              <Form.Item label="性别 ：" {...formItemLayout}>
-                { getFieldDecorator('gender', {
-                  rules: requireRules,
-                })(
-                  <Select defaultValue="女" style={{ width: 120 }}>
-                    <Option value="男">男</Option>
-                    <Option value="女">女</Option>
-                  </Select>
+            </Form.Item>
+            <Form.Item label="性别 ：" {...formItemLayout}>
+              { getFieldDecorator('gender', {
+                rules: requireRules,
+              })(
+                <Select defaultValue="女" style={{ width: 120 }}>
+                  <Option value="男">男</Option>
+                  <Option value="女">女</Option>
+                </Select>
                 )}
-              </Form.Item>
-              <Form.Item label="身份证号 ：" {...formItemLayout}>
-                { getFieldDecorator('cid', {
-                  rules: requireRules,
-                })(
-                  <Input />
+            </Form.Item>
+            <Form.Item label="身份证号 ：" {...formItemLayout}>
+              { getFieldDecorator('cid', {
+                rules: requireRules,
+              })(
+                <Input />
                 )}
-              </Form.Item>
-              <Form.Item label="联系电话 ：" {...formItemLayout}>
-                { getFieldDecorator('telephoneNumber', {
-                  rules: requireRules,
-                })(
-                  <Input />
+            </Form.Item>
+            <Form.Item label="联系电话 ：" {...formItemLayout}>
+              { getFieldDecorator('telephoneNumber', {
+                rules: requireRules,
+              })(
+                <Input />
                 )}
-              </Form.Item>
-              <Form.Item label="职称 ：" {...formItemLayout}>
-                { getFieldDecorator('professionalTitle', {
-                  rules: requireRules,
-                })(
-                  <Input />
+            </Form.Item>
+            <Form.Item label="职称 ：" {...formItemLayout}>
+              { getFieldDecorator('professionalTitle', {
+                rules: requireRules,
+              })(
+                <Input />
                 )}
-              </Form.Item>
-              <Form.Item label="学历 ：" {...formItemLayout}>
-                { getFieldDecorator('eduLevel', {
-                  rules: requireRules,
-                })(
-                  <Input />
+            </Form.Item>
+            <Form.Item label="学历 ：" {...formItemLayout}>
+              { getFieldDecorator('eduLevel', {
+                rules: requireRules,
+              })(
+                <Input />
                 )}
-              </Form.Item>
-              <Form.Item label="回避单位 ：" {...formItemLayout}>
-                { getFieldDecorator('avoidUnit', {
-                  rules: requireRules,
-                })(
-                  <Input />
+            </Form.Item>
+            <Form.Item label="回避单位 ：" {...formItemLayout}>
+              { getFieldDecorator('avoidUnit', {
+                rules: requireRules,
+              })(
+                <Input />
                 )}
-              </Form.Item>
-              <Form.Item label="研究领域 ：" {...formItemLayout}>
-                { getFieldDecorator('researchField', {
-                  rules: requireRules,
-                })(
-                  <Input />
+            </Form.Item>
+            <Form.Item label="研究领域 ：" {...formItemLayout}>
+              { getFieldDecorator('researchField', {
+                rules: requireRules,
+              })(
+                <Input />
                 )}
-              </Form.Item>
-            </Form>
-          </Modal>
-          <Row>
-            <Col>
-              <Button onClick={this.addExpert}><Icon type="plus-circle-o" />添加专家</Button>
-            </Col>
-          </Row>
-          <Table
-            columns={columns}
-            dataSource={expertList}
-            bordered
-            loading={loading}
-          />
-        </Card>
-      </FrameContent>
+            </Form.Item>
+          </Form>
+        </Modal>
+        <Row>
+          <Col>
+            <Button onClick={this.addExpert}><Icon type="plus-circle-o" />添加专家</Button>
+          </Col>
+        </Row>
+        <Table
+          columns={columns}
+          dataSource={expertList}
+          bordered
+          loading={loading}
+        />
+      </Card>
+
     );
   }
 }

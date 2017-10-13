@@ -1,3 +1,4 @@
+import { browserHistory } from 'dva/router';
 import { Layout, Menu, Breadcrumb,
   Input,
   Icon, message, Button, Modal } from 'antd';
@@ -6,7 +7,6 @@ import { connect } from 'dva';
 import { Link } from 'dva/router';
 import styles from './FrameContent.less';
 import ModifyPass from '../sysConfig/ModifyPass';
-import { routerRedux } from 'dva/router';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -22,13 +22,14 @@ class FrameContent extends React.Component {
     openKeys: [],
   }
 
-  onMenuClicked = ({ keyPath }) => {
-    const [cookie3, cookie2, cookie1] = keyPath;
-    this.setState({
-      cookie1,
-      cookie2,
-      cookie3,
-    });
+  onMenuClicked = ({ key }) => {
+    if (key === 'logoOut') {
+      this.logoOut();
+    } else if (key === 'modifyPass') {
+      this.modifyPass();
+    } else {
+      this.props.history.push(key);
+    }
   }
 
   onCreateBtnClicked = () => {
@@ -100,8 +101,6 @@ class FrameContent extends React.Component {
   render() {
     const {
     msgValue,
-    selectKeys,
-    openKeys,
    } = this.state;
     const { userType, userName, showMsgModal } = this.props;
 
@@ -156,7 +155,7 @@ class FrameContent extends React.Component {
           </div>
           <div style={{ float: 'right' }} >
             <span>用户名：{userName} 身份： {identity}</span>
-            <Button type="primary" size="small" onClick={this.logoOut} style={{ marginLeft: 10 }}>退出登录</Button>
+            <Button type="primary" size="small" style={{ marginLeft: 10 }} onClick={this.logoOut}>退出登录</Button>
           </div>
           <ModifyPass
             visible={this.state.showModiPass}
@@ -170,68 +169,69 @@ class FrameContent extends React.Component {
           <Sider width={250} style={{ background: '#fff', overflow: 'auto' }}>
             {isSchool &&
             <Menu
+              defaultSelectedKeys={['/base/projectList']}
               mode="inline"
               defaultOpenKeys={['budget', 'projectBudget', '绩效', '系统设置']}
               style={{ height: '80%' }}
               onClick={this.onMenuClicked}
             >
               <SubMenu key="budget" title={<span><Icon type="user" />预算</span>}>
-                <Menu.Item key="base">
-                  <Link to="/budget/base" ><Icon type="bars" />项目基本情况</Link>
+                <Menu.Item key="/dgebut/base">
+                  <Icon type="bars" />项目基本情况
                 </Menu.Item>
                 <SubMenu key="projectBudget" title={<span><Icon type="user" />项目预算</span>} >
-                  <Menu.Item key="project" onTitleClick={this.onMenuClicked}>
-                    <Link to="/budget/project" ><Icon type="bars" />项目预算表</Link>
+                  <Menu.Item key="/budget/project" >
+                    <Icon type="bars" />项目预算表
                   </Menu.Item>
-                  <Menu.Item key="justify">
-                    <Link to="/budget/justify" ><Icon type="bars" />项目预算调整</Link>
+                  <Menu.Item key="/budget/justify">
+                    <Icon type="bars" />项目预算调整
                   </Menu.Item>
-                  <Menu.Item key="justifyRec">
-                    <Link to="/budget/justifyRec" ><Icon type="bars" />预算调整记录</Link>
+                  <Menu.Item key="/budget/justifyRec">
+                    <Icon type="bars" />预算调整记录
                   </Menu.Item>
                 </SubMenu>
-                <Menu.Item key="预算执行季报">
-                  <Link to="/budget/addbudgetseason" ><Icon type="bars" />预算执行季报</Link>
+                <Menu.Item key="/budget/addbudgetseason">
+                  <Icon type="bars" />预算执行季报
                 </Menu.Item>
-                <Menu.Item key="预算执行季报查询">
-                  <Link to="/budget/budgetSeasonList" ><Icon type="bars" />预算执行季报查询</Link>
+                <Menu.Item key="/budget/budgetSeasonList">
+                  <Icon type="bars" />预算执行季报查询
                 </Menu.Item>
-                <Menu.Item key="支出预算处理结果">
-                  <Link to="/blank" ><Icon type="bars" />支出预算处理结果</Link>
+                <Menu.Item key="/blank">
+                  <Icon type="bars" />支出预算处理结果
                 </Menu.Item>
-                <Menu.Item key="预算留言处理情况">
-                  <Link to="/budget/msg" ><Icon type="bars" />预算留言处理情况</Link>
+                <Menu.Item key="/budget/msg">
+                  <Icon type="bars" />预算留言处理情况
                 </Menu.Item>
               </SubMenu>
               <SubMenu key="绩效" title={<span><Icon type="user" />绩效</span>}>
-                <Menu.Item key="绩效目标设定">
-                  <Link to="/achive/add" ><Icon type="bars" />绩效目标设定</Link>
+                <Menu.Item key="/achive/add">
+                  <Icon type="bars" />绩效目标设定
                 </Menu.Item>
-                <Menu.Item key="项目支出绩效目标自评表">
-                  <Link to="/blank" ><Icon type="bars" />项目支出绩效目标自评表</Link>
+                <Menu.Item key="/blank">
+                  <Icon type="bars" />项目支出绩效目标自评表
                 </Menu.Item>
-                <Menu.Item key="绩效运行存在问题纠正情况">
-                  <Link to="/blank" ><Icon type="bars" />绩效运行存在问题纠正情况</Link>
+                <Menu.Item key="/blank">
+                  <Icon type="bars" />绩效运行存在问题纠正情况
                 </Menu.Item>
-                <Menu.Item key="年度绩效自评报告">
-                  <Link to="/blank" ><Icon type="bars" />年度绩效自评报告</Link>
+                <Menu.Item key="/blank">
+                  <Icon type="bars" />年度绩效自评报告
                 </Menu.Item>
-                <Menu.Item key="绩效留言处理情况">
-                  <Link to="/blank" ><Icon type="bars" />绩效留言处理情况</Link>
+                <Menu.Item key="/blank">
+                  <Icon type="bars" />绩效留言处理情况
                 </Menu.Item>
               </SubMenu>
               <SubMenu key="系统设置" title={<span><Icon type="user" />系统设置</span>}>
-                <Menu.Item key="修改联系方式">
-                  <Link to="/sys/concat" ><Icon type="bars" />修改联系方式</Link>
+                <Menu.Item key="/sys/concat">
+                  <Icon type="bars" />修改联系方式
                 </Menu.Item>
-                <Menu.Item key="系统使用建议">
-                  <Link to="/sys/advice" ><Icon type="bars" />系统使用建议</Link>
+                <Menu.Item key="/sys/advice">
+                  <Icon type="bars" />系统使用建议
                 </Menu.Item>
-                <Menu.Item key="修改密码">
-                  <Link onClick={this.modifyPass}><Icon type="bars" />修改密码</Link>
+                <Menu.Item key="modifyPass" >
+                  <Icon type="bars" />修改密码
                 </Menu.Item>
-                <Menu.Item key="退出登录">
-                  <Link onClick={this.logoOut} ><Icon type="bars" />退出登录</Link>
+                <Menu.Item key="logoOut" >
+                  <Icon type="bars" />退出登录
                 </Menu.Item>
               </SubMenu>
             </Menu>
@@ -239,51 +239,52 @@ class FrameContent extends React.Component {
             { isAdmin &&
             <Menu
               mode="inline"
+              defaultSelectedKeys={['/base/projectList']}
               defaultOpenKeys={['数据导入', '其他功能']}
               style={{ height: '100%' }}
               onClick={this.onMenuClicked}
             >
               <SubMenu key="数据导入" title={<span><Icon type="user" />数据导入</span>}>
-                <Menu.Item key="项目基本信息列表">
-                  <Link to="/base/projectList" ><Icon type="bars" />项目基本信息列表</Link>
+                <Menu.Item key="/base/projectList">
+                  <Icon type="bars" />项目基本信息列表
                 </Menu.Item>
-                <Menu.Item key="项目基本信息导入">
-                  <Link to="/import/importProjet" ><Icon type="bars" />项目基本信息导入</Link>
+                <Menu.Item key="/import/importProjet">
+                  <Icon type="bars" />项目基本信息导入
                 </Menu.Item>
-                <Menu.Item key="预算导入（2015年前）">
-                  <Link to="/import/budget15" ><Icon type="bars" />预算导入（2015年前）</Link>
+                <Menu.Item key="/import/budget15">
+                  <Icon type="bars" />预算导入（2015年前）
                 </Menu.Item>
-                <Menu.Item key="预算导入（2016年后）">
-                  <Link to="/import/budget16" ><Icon type="bars" />预算导入（2016年后）</Link>
+                <Menu.Item key="/import/budget16">
+                  <Icon type="bars" />预算导入（2016年后）
                 </Menu.Item>
-                <Menu.Item key="项目预算导入查询">
-                  <Link to="/import/budgetImportRec" ><Icon type="bars" />项目预算导入查询</Link>
+                <Menu.Item key="/import/budgetImportRec">
+                  <Icon type="bars" />项目预算导入查询
                 </Menu.Item>
-                <Menu.Item key="绩效目标导入">
-                  <Link to="/import/importAchive" ><Icon type="bars" />绩效目标导入</Link>
+                <Menu.Item key="/import/importAchive">
+                  <Icon type="bars" />绩效目标导入
                 </Menu.Item>
-                <Menu.Item key="绩效目标导入查询">
-                  <Link to="/import/achiveImportRec" ><Icon type="bars" />绩效目标导入查询</Link>
+                <Menu.Item key="/import/achiveImportRec">
+                  <Icon type="bars" />绩效目标导入查询
                 </Menu.Item>
               </SubMenu>
               <SubMenu key="其他功能" title={<span><Icon type="user" />其他功能</span>}>
-                <Menu.Item key="上报时间设置">
-                  <Link to="/sys/reportTime" ><Icon type="bars" />上报时间设置</Link>
+                <Menu.Item key="/sys/reportTime">
+                  <Icon type="bars" />上报时间设置
                 </Menu.Item>
-                <Menu.Item key="发送短信通知">
-                  <Link to="/sys/sendSMS" ><Icon type="bars" />发送短信通知</Link>
+                <Menu.Item key="/sys/sendSMS">
+                  <Icon type="bars" />发送短信通知
                 </Menu.Item>
-                <Menu.Item key="系统使用建议">
-                  <Link to="/sys/advice" ><Icon type="bars" />系统使用建议</Link>
+                <Menu.Item key="/sys/advice">
+                  <Icon type="bars" />系统使用建议
                 </Menu.Item>
-                <Menu.Item key="用户密码重置">
-                  <Link to="/sys/resetPwd" ><Icon type="bars" />用户密码重置</Link>
+                <Menu.Item key="/sys/resetPwd">
+                  <Icon type="bars" />用户密码重置
                 </Menu.Item>
-                <Menu.Item key="修改密码">
-                  <Link onClick={this.modifyPass}><Icon type="bars" />修改密码</Link>
+                <Menu.Item key="modifyPass" >
+                  <Icon type="bars" />修改密码
                 </Menu.Item>
-                <Menu.Item key="退出登录">
-                  <Link onClick={this.logoOut} ><Icon type="bars" />退出登录</Link>
+                <Menu.Item key="logoOut" >
+                  <Icon type="bars" />退出登录
                 </Menu.Item>
               </SubMenu>
             </Menu>
@@ -291,109 +292,109 @@ class FrameContent extends React.Component {
             { isMinistry &&
             <Menu
               mode="inline"
-              defaultSelectedKeys={['项目基本情况_mini']}
+              defaultSelectedKeys={['/base/projectList']}
               defaultOpenKeys={['预算', '数据分析', '绩效', '专家库', '系统设置']}
               style={{ height: '100%' }}
               onClick={this.onMenuClicked}
             >
               <SubMenu key="预算" title={<span><Icon type="user" />预算</span>}>
-                <Menu.Item key="项目基本情况_mini">
-                  <Link to="/base/projectList" ><Icon type="bars" />项目基本情况</Link>
+                <Menu.Item key="/base/projectList">
+                  <Icon type="bars" />项目基本情况
                 </Menu.Item>
-                <Menu.Item key="项目预算">
-                  <Link to="/import/budgetImportRec" ><Icon type="bars" />项目预算</Link>
+                <Menu.Item key="/import/budgetImportRec">
+                  <Icon type="bars" />项目预算
                 </Menu.Item>
-                <Menu.Item key="预算执行情况季报">
-                  <Link to="/budget/projectSeaonBudget" ><Icon type="bars" />预算执行情况季报</Link>
+                <Menu.Item key="/budget/projectSeaonBudget">
+                  <Icon type="bars" />预算执行情况季报
                 </Menu.Item>
-                <Menu.Item key="项目预算调整">
-                  <Link to="/budget/justifyRec" ><Icon type="bars" />项目预算调整</Link>
+                <Menu.Item key="/budget/justifyRec">
+                  <Icon type="bars" />项目预算调整
                 </Menu.Item>
-                <Menu.Item key="预算执行结果">
-                  <Link to="/budget/projectBudgetResult" ><Icon type="bars" />预算执行结果</Link>
+                <Menu.Item key="/budget/projectBudgetResult">
+                  <Icon type="bars" />预算执行结果
                 </Menu.Item>
-                <Menu.Item key="预算留言处理">
-                  <Link to="/budget/msgList" ><Icon type="bars" />预算留言处理</Link>
+                <Menu.Item key="/budget/msgList">
+                  <Icon type="bars" />预算留言处理
                 </Menu.Item>
-                <Menu.Item key="有关批复">
-                  <Link to="/blank" ><Icon type="bars" />有关批复</Link>
+                <Menu.Item key="/blank">
+                  <Icon type="bars" />有关批复
                 </Menu.Item>
-                <Menu.Item key="领导批示处理结果">
-                  <Link to="/blank" ><Icon type="bars" />领导批示处理结果</Link>
+                <Menu.Item key="/blank">
+                  <Icon type="bars" />领导批示处理结果
                 </Menu.Item>
               </SubMenu>
               <SubMenu key="数据分析" title={<span><Icon type="user" />数据分析</span>}>
-                <Menu.Item key="预算执行分析">
-                  <Link to="/dataAna/year" ><Icon type="bars" />预算执行分析</Link>
+                <Menu.Item key="/dataAna/year">
+                  <Icon type="bars" />预算执行分析
                 </Menu.Item>
-                <Menu.Item key="预算与投入">
-                  <Link to="/dataAna/budgetyear" ><Icon type="bars" />预算与投入</Link>
+                <Menu.Item key="/dataAna/budgetyear">
+                  <Icon type="bars" />预算与投入
                 </Menu.Item>
-                <Menu.Item key="专业预算与投入">
-                  <Link to="/blank" ><Icon type="bars" />专业预算与投入</Link>
+                <Menu.Item key="/blank">
+                  <Icon type="bars" />专业预算与投入
                 </Menu.Item>
-                <Menu.Item key="预算与支出">
-                  <Link to="/blank" ><Icon type="bars" />预算与支出</Link>
+                <Menu.Item key="/blank">
+                  <Icon type="bars" />预算与支出
                 </Menu.Item>
-                <Menu.Item key="专业预算与支出">
-                  <Link to="/blank" ><Icon type="bars" />专业预算与支出</Link>
+                <Menu.Item key="/blank">
+                  <Icon type="bars" />专业预算与支出
                 </Menu.Item>
-                <Menu.Item key="报表数据分析">
-                  <Link to="/blank" ><Icon type="bars" />报表数据分析</Link>
+                <Menu.Item key="/blank">
+                  <Icon type="bars" />报表数据分析
                 </Menu.Item>
               </SubMenu>
               <SubMenu key="绩效" title={<span><Icon type="user" />绩效</span>}>
                 <SubMenu key="绩效目标" title={<span><Icon type="user" />绩效目标</span>} >
-                  <Menu.Item key="查询">
-                    <Link to="/achive/allList" ><Icon type="bars" />查询</Link>
+                  <Menu.Item key="/achive/allList">
+                    <Icon type="bars" />查询
                   </Menu.Item>
-                  <Menu.Item key="绩效留言处理">
-                    <Link to="/achive/msgAll" ><Icon type="bars" />绩效留言处理</Link>
+                  <Menu.Item key="/achive/msgAll">
+                    <Icon type="bars" />绩效留言处理
                   </Menu.Item>
-                  <Menu.Item key="变更处理">
-                    <Link to="/blank" ><Icon type="bars" />变更处理</Link>
+                  <Menu.Item key="/blank">
+                    <Icon type="bars" />变更处理
                   </Menu.Item>
                 </SubMenu>
                 <SubMenu key="绩效监控" title={<span><Icon type="user" />绩效监控</span>} >
-                  <Menu.Item key="绩效目标比对">
-                    <Link to="/blank" ><Icon type="bars" />绩效目标比对</Link>
+                  <Menu.Item key="/blank">
+                    <Icon type="bars" />绩效目标比对
                   </Menu.Item>
-                  <Menu.Item key="绩效运行中发生的问题">
-                    <Link to="/blank" ><Icon type="bars" />绩效运行中发生的问题</Link>
+                  <Menu.Item key="/blank">
+                    <Icon type="bars" />绩效运行中发生的问题
                   </Menu.Item>
                 </SubMenu>
                 <SubMenu key="绩效评价" title={<span><Icon type="user" />绩效评价</span>} >
-                  <Menu.Item key="第一年度绩效评价">
-                    <Link to="/blank" ><Icon type="bars" />第一年度绩效评价</Link>
+                  <Menu.Item key="/blank">
+                    <Icon type="bars" />第一年度绩效评价
                   </Menu.Item>
-                  <Menu.Item key="第二年度前半年绩效评价">
-                    <Link to="/blank" ><Icon type="bars" />第二年度前半年绩效评价</Link>
+                  <Menu.Item key="/blank">
+                    <Icon type="bars" />第二年度前半年绩效评价
                   </Menu.Item>
-                  <Menu.Item key="项目终了绩效评价">
-                    <Link to="/blank" ><Icon type="bars" />项目终了绩效评价</Link>
+                  <Menu.Item key="/blank">
+                    <Icon type="bars" />项目终了绩效评价
                   </Menu.Item>
                 </SubMenu>
-                <Menu.Item key="特别情况处理">
-                  <Link to="/blank" ><Icon type="bars" />特别情况处理</Link>
+                <Menu.Item key="/blank">
+                  <Icon type="bars" />特别情况处理
                 </Menu.Item>
               </SubMenu>
               <SubMenu key="专家库" title={<span><Icon type="user" />专家库</span>}>
-                <Menu.Item key="专家信息管理">
-                  <Link to="/expert/list" ><Icon type="bars" />专家信息管理</Link>
+                <Menu.Item key="/expert/list">
+                  <Icon type="bars" />专家信息管理
                 </Menu.Item>
-                <Menu.Item key="专家信用记录">
-                  <Link to="/blank" ><Icon type="bars" />专家信用记录</Link>
+                <Menu.Item key="/blank">
+                  <Icon type="bars" />专家信用记录
                 </Menu.Item>
-                <Menu.Item key="专家抽取">
-                  <Link to="/blank" ><Icon type="bars" />专家抽取</Link>
+                <Menu.Item key="/blank">
+                  <Icon type="bars" />专家抽取
                 </Menu.Item>
               </SubMenu>
               <SubMenu key="系统设置" title={<span><Icon type="user" />系统设置</span>}>
-                <Menu.Item key="修改密码">
-                  <Link onClick={this.modifyPass}><Icon type="bars" />修改密码</Link>
+                <Menu.Item key="modifyPass" >
+                  <Icon type="bars" />修改密码
                 </Menu.Item>
-                <Menu.Item key="退出登录">
-                  <Link onClick={this.logoOut} ><Icon type="bars" />退出登录</Link>
+                <Menu.Item key="logoOut" >
+                  <Icon type="bars" />退出登录
                 </Menu.Item>
               </SubMenu>
             </Menu>

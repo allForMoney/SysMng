@@ -208,31 +208,30 @@ class BudgetJustifyRec extends React.Component {
     };
 
     return (
-      <FrameContent>
-        <Card title="预算修改申请情况一览表">
-          {showJustifyDetail && importType === 'yusuan2' &&
-            <ProjectBudgetTable
-              tableTitle={'预算变化内容'}
-              totalNum={budgetJustifyCompareyNum}
-              onPageChange={this.onJustifyListDetailChange}
-              currentPage={budgetJustifyComparePage}
-              dataList={budgetJustifyCompareList}
-              loading={loading}
-              compare
-            />
+      <Card title="预算修改申请情况一览表">
+        {showJustifyDetail && importType === 'yusuan2' &&
+        <ProjectBudgetTable
+          tableTitle={'预算变化内容'}
+          totalNum={budgetJustifyCompareyNum}
+          onPageChange={this.onJustifyListDetailChange}
+          currentPage={budgetJustifyComparePage}
+          dataList={budgetJustifyCompareList}
+          loading={loading}
+          compare
+        />
           }
-          {showJustifyDetail && importType === 'adjust2016' &&
-            <ProjectBudgetTable16
-              tableTitle={'预算变化内容'}
-              totalNum={budgetJustifyCompareyNum}
-              onPageChange={this.onJustifyListDetailChange}
-              currentPage={budgetJustifyComparePage}
-              dataList={budgetJustifyCompareList}
-              loading={loading}
-              compare
-            />
+        {showJustifyDetail && importType === 'adjust2016' &&
+        <ProjectBudgetTable16
+          tableTitle={'预算变化内容'}
+          totalNum={budgetJustifyCompareyNum}
+          onPageChange={this.onJustifyListDetailChange}
+          currentPage={budgetJustifyComparePage}
+          dataList={budgetJustifyCompareList}
+          loading={loading}
+          compare
+        />
           }
-          {
+        {
             !showJustifyDetail &&
             <Table
               title={() => '预算修改申请情况一览表'}
@@ -245,8 +244,8 @@ class BudgetJustifyRec extends React.Component {
               pagination={recPageConfig}
             />
           }
-        </Card>
-      </FrameContent>
+      </Card>
+
     );
   }
 }

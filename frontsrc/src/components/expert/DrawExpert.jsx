@@ -42,19 +42,19 @@ class DrawExpert extends React.Component {
       dispatch,
     } = this.props;
     return (
-      <FrameContent>
-        <Card title="预算执行情况季报">
-          <ProjectList
-            loading={loading}
-            projectList={projectList}
-            projectListNum={projectListNum}
-            projectListPage={projectListPage}
-            actionFunc={this.drawExpert}
-            dispatch={dispatch}
-            actionName={'抽取专家'}
-          />
-        </Card>
-      </FrameContent>
+
+      <Card title="预算执行情况季报">
+        <ProjectList
+          loading={loading}
+          projectList={projectList}
+          projectListNum={projectListNum}
+          projectListPage={projectListPage}
+          actionFunc={this.drawExpert}
+          dispatch={dispatch}
+          actionName={'抽取专家'}
+        />
+      </Card>
+
     );
   }
 

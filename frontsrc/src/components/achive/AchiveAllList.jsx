@@ -82,42 +82,41 @@ class AchiveAllList extends React.Component {
       }];
 
     return (
-      <FrameContent>
-        <Card title="绩效目标列表">
-          <Form onSubmit={this.onSearchSubmit} layout="inline">
-            <Form.Item label="项目编号 ：">
-              { getFieldDecorator('projectNo', {
-              })(
-                <Input size="small" width="100" />
+      <Card title="绩效目标列表">
+        <Form onSubmit={this.onSearchSubmit} layout="inline">
+          <Form.Item label="项目编号 ：">
+            { getFieldDecorator('projectNo', {
+            })(
+              <Input size="small" width="100" />
               )}
-            </Form.Item>
-            <Form.Item label="专业名称 ：">
-              { getFieldDecorator('majorName', {
-              })(
-                <Input size="small" />
+          </Form.Item>
+          <Form.Item label="专业名称 ：">
+            { getFieldDecorator('majorName', {
+            })(
+              <Input size="small" />
               )}
-            </Form.Item>
-            <Form.Item label="主持单位 ：">
-              { getFieldDecorator('schoolName', {
-              })(
-                <Input size="small" />
+          </Form.Item>
+          <Form.Item label="主持单位 ：">
+            { getFieldDecorator('schoolName', {
+            })(
+              <Input size="small" />
               )}
-            </Form.Item>
-            <Form.Item >
-              <Button size="small" type="primary" icon="search" onClick={this.doSearch}>查询</Button>
-              <Button size="small" style={{ marginLeft: 5 }} type="primary" onClick={() => this.props.form.resetFields()}><Icon type="rollback" />重置</Button>
-            </Form.Item>
-          </Form>
-          <Table
-            columns={columns}
-            bordered
-            dataSource={achiveAllList}
-            loading={loading}
-            rowKey={record => record.name}
-            pagination={pageConfig}
-          />
-        </Card>
-      </FrameContent>
+          </Form.Item>
+          <Form.Item >
+            <Button size="small" type="primary" icon="search" onClick={this.doSearch}>查询</Button>
+            <Button size="small" style={{ marginLeft: 5 }} type="primary" onClick={() => this.props.form.resetFields()}><Icon type="rollback" />重置</Button>
+          </Form.Item>
+        </Form>
+        <Table
+          columns={columns}
+          bordered
+          dataSource={achiveAllList}
+          loading={loading}
+          rowKey={record => record.name}
+          pagination={pageConfig}
+        />
+      </Card>
+
     );
   }
 }

@@ -37,18 +37,18 @@ class BudgetSeason_Country extends React.Component {
       dispatch,
     } = this.props;
     return (
-      <FrameContent>
-        <Card title="预算执行情况季报">
-          <ProjectList
-            loading={loading}
-            projectList={projectList}
-            projectListNum={projectListNum}
-            projectListPage={projectListPage}
-            actionFunc={this.showSeasonDetail}
-            dispatch={dispatch}
-          />
-        </Card>
-      </FrameContent>
+
+      <Card title="预算执行情况季报">
+        <ProjectList
+          loading={loading}
+          projectList={projectList}
+          projectListNum={projectListNum}
+          projectListPage={projectListPage}
+          actionFunc={this.showSeasonDetail}
+          dispatch={dispatch}
+        />
+      </Card>
+
     );
   }
 

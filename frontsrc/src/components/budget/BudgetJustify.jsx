@@ -147,7 +147,7 @@ class BudgetJustify extends React.Component {
     const { cancelVisible, passVisible } = this.getCheckVisible(userType, auditStatus);
 
     return (
-      <FrameContent>
+      <div>
         {userType === 'inputer' &&
           <Card title="预算调整申请">
             <p>使用说明：先下载当前预算表格，在其中做出修改后，再上传。</p>
@@ -200,7 +200,7 @@ class BudgetJustify extends React.Component {
           userType !== 'inputer' &&
           <BudgetJustifyCheck />
         }
-      </FrameContent>
+      </div>
     );
   }
 }

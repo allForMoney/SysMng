@@ -88,7 +88,7 @@ class Achive extends React.Component {
       editable,
      } = this.state;
     return (
-      <FrameContent>
+      <div>
         {steps === 0 &&
           <Card title="目标设定">
             <p>
@@ -152,7 +152,7 @@ class Achive extends React.Component {
             </Col>
           </div>
         }
-      </FrameContent>
+      </div>
     );
   }
 }

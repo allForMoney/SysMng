@@ -67,11 +67,11 @@ class ModifyConcat extends React.Component {
       message: '不可为空'
     };
     return (
-      <FrameContent>
-        <Form onSubmit={this.handleSubmit}>
-          <Row>
-            <Col span={10}>
-              <FormItem
+
+      <Form onSubmit={this.handleSubmit}>
+        <Row>
+          <Col span={10}>
+            <FormItem
                 {...formItemLayout}
                 label="项目名称"
                 hasFeedback
@@ -80,9 +80,9 @@ class ModifyConcat extends React.Component {
                   initialValue: majorName,
                 })(<Input disabled type="text" />)}
               </FormItem>
-            </Col>
-            <Col span={10}>
-              <FormItem
+          </Col>
+          <Col span={10}>
+            <FormItem
                 {...formItemLayout}
                 label="法定代表人"
                 hasFeedback
@@ -91,11 +91,11 @@ class ModifyConcat extends React.Component {
                   initialValue: schoolHead,
                 })(<Input disabled type="text" />)}
               </FormItem>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={10}>
-              <FormItem
+          </Col>
+        </Row>
+        <Row>
+          <Col span={10}>
+            <FormItem
                 {...formItemLayout}
                 label="项目负责人"
                 hasFeedback
@@ -104,9 +104,9 @@ class ModifyConcat extends React.Component {
                   initialValue: projectHeader,
                 })(<Input disabled type="text" />)}
               </FormItem>
-            </Col>
-            <Col span={10}>
-              <FormItem
+          </Col>
+          <Col span={10}>
+            <FormItem
                 {...formItemLayout}
                 label="联系电话"
                 hasFeedback
@@ -116,11 +116,11 @@ class ModifyConcat extends React.Component {
                   initialValue: projectHeaderTel,
                 })(<Input type="text" />)}
               </FormItem>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={10}>
-              <FormItem
+          </Col>
+        </Row>
+        <Row>
+          <Col span={10}>
+            <FormItem
                 {...formItemLayout}
                 label="财务部门负责人"
                 hasFeedback
@@ -129,9 +129,9 @@ class ModifyConcat extends React.Component {
                   initialValue: finaceHeader,
                 })(<Input disabled type="text" />)}
               </FormItem>
-            </Col>
-            <Col span={10}>
-              <FormItem
+          </Col>
+          <Col span={10}>
+            <FormItem
                 {...formItemLayout}
                 label="联系电话"
                 hasFeedback
@@ -141,11 +141,11 @@ class ModifyConcat extends React.Component {
                   initialValue: finaceHeaderTel,
                 })(<Input type="text" />)}
               </FormItem>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={10}>
-              <FormItem
+          </Col>
+        </Row>
+        <Row>
+          <Col span={10}>
+            <FormItem
                 {...formItemLayout}
                 label="填报人"
                 hasFeedback
@@ -154,9 +154,9 @@ class ModifyConcat extends React.Component {
                   initialValue: reporter,
                 })(<Input disabled type="text" />)}
               </FormItem>
-            </Col>
-            <Col span={10}>
-              <FormItem
+          </Col>
+          <Col span={10}>
+            <FormItem
                 {...formItemLayout}
                 label="联系电话"
                 hasFeedback
@@ -166,13 +166,13 @@ class ModifyConcat extends React.Component {
                   initialValue: reporterTel,
                 })(<Input type="text" />)}
               </FormItem>
-            </Col>
-          </Row>
-          <FormItem {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit" size="large">保存</Button>
-          </FormItem>
-        </Form>
-      </FrameContent>
+          </Col>
+        </Row>
+        <FormItem {...tailFormItemLayout}>
+          <Button type="primary" htmlType="submit" size="large">保存</Button>
+        </FormItem>
+      </Form>
+
     );
   }
 }

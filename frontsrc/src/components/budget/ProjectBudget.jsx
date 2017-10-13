@@ -26,9 +26,9 @@ class ProjectBudget extends React.Component {
     const title = `项目预算表 [${projectName}]`;
 
     return (
-      <FrameContent>
-        <Card title={title}>
-          <p>
+
+      <Card title={title}>
+        <p>
             该信息为只读信息，如有疑义，请
             <Button
               onClick={
@@ -52,7 +52,7 @@ class ProjectBudget extends React.Component {
               }
             >预算调整</Button>办理手续。
           </p>
-          {importType === 'yusuan2016' &&
+        {importType === 'yusuan2016' &&
           <ProjectBudgetTable16
             tableTitle={'项目预算表'}
             totalNum={projectTotal}
@@ -62,7 +62,7 @@ class ProjectBudget extends React.Component {
             loading={loading}
           />
           }
-          {importType === 'yusuan' &&
+        {importType === 'yusuan' &&
           <ProjectBudgetTable
             tableTitle={'项目预算表'}
             totalNum={projectTotal}
@@ -72,8 +72,8 @@ class ProjectBudget extends React.Component {
             loading={loading}
           />
           }
-        </Card>
-      </FrameContent>
+      </Card>
+
     );
   }
 }

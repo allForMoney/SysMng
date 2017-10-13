@@ -130,17 +130,17 @@ class BudgetSeaonList extends React.Component {
     }];
 
     return (
-      <FrameContent>
-        <Table
-          title={() => `预算执行季报查询【编号：${projectInfo.projectNo}，名称：${projectInfo.majorName}】`}
-          columns={columns}
-          bordered
-          dataSource={budgetRecordList}
-          loading={loading}
-          rowKey={record => record.id}
-          pagination={pageConfig}
-        />
-      </FrameContent>
+
+      <Table
+        title={() => `预算执行季报查询【编号：${projectInfo.projectNo}，名称：${projectInfo.majorName}】`}
+        columns={columns}
+        bordered
+        dataSource={budgetRecordList}
+        loading={loading}
+        rowKey={record => record.id}
+        pagination={pageConfig}
+      />
+
     );
   }
 }

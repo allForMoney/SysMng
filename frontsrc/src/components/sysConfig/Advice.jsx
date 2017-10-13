@@ -51,8 +51,8 @@ class Advice extends React.Component {
     };
 
     return (
-      <FrameContent>
-        <Form onSubmit={this.handleSubmit}>
+
+      <Form onSubmit={this.handleSubmit}>
           <Row>
            请在此输入对系统的建议
           </Row>
@@ -69,7 +69,7 @@ class Advice extends React.Component {
             <Button type="primary" htmlType="submit" size="large">保存</Button>
           </FormItem>
         </Form>
-      </FrameContent>
+
     );
   }
 }

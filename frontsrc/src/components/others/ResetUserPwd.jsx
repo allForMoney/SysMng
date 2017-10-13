@@ -93,8 +93,8 @@ class ResetUserPwd extends React.Component {
       onChange: this.onPageChanged,
     };
     return (
-      <FrameContent>
-        <Card title="用户列表">
+
+      <Card title="用户列表">
           提示：密码重置后变为123456
           <Form onSubmit={this.onSearchSubmit} layout="inline">
             <Form.Item label="主持单位 ：">
@@ -108,16 +108,16 @@ class ResetUserPwd extends React.Component {
               <Button size="small" style={{ marginLeft: 5 }} type="primary" onClick={() => this.props.form.resetFields()}><Icon type="rollback" />重置</Button>
             </Form.Item>
           </Form>
-          <Table
-            columns={columns}
-            dataSource={userRecList}
-            bordered
-            loading={loading}
-            rowKey={record => record.name}
-            pagination={pageConfig}
-          />
-        </Card>
-      </FrameContent>
+        <Table
+          columns={columns}
+          dataSource={userRecList}
+          bordered
+          loading={loading}
+          rowKey={record => record.name}
+          pagination={pageConfig}
+        />
+      </Card>
+
     );
   }
 }

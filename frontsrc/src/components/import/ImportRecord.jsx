@@ -83,18 +83,18 @@ class ImportRecord extends React.Component {
     };
 
     return (
-      <FrameContent>
-        <Card title={tableTitel}>
-          <Table
-            columns={columns}
-            dataSource={dataSouce}
-            loading={loading}
-            bordered
-            rowKey={record => record.name}
-            pagination={pageConfig}
-          />
-        </Card>
-      </FrameContent>
+
+      <Card title={tableTitel}>
+        <Table
+          columns={columns}
+          dataSource={dataSouce}
+          loading={loading}
+          bordered
+          rowKey={record => record.name}
+          pagination={pageConfig}
+        />
+      </Card>
+
     );
   }
 }

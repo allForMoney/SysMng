@@ -129,32 +129,31 @@ class BudgetMsgList extends React.Component {
     const { showMsgModal, msgValue } = this.state;
 
     return (
-      <FrameContent>
-        <Card title="预算留言处理">
-          <Modal
-            title="留言信息"
-            visible={showMsgModal}
-            onOk={this.saveMsg}
-            onCancel={this.cancelMsg}
-          >
-            <Input
-              type="textarea"
-              rows={8}
-              placeholder="你的留言"
-              value={msgValue}
-              onChange={e => this.setState({ msgValue: e.target.value })}
-            />
-          </Modal>
-          <Table
-            size="small"
-            bordered
-            columns={columns}
-            dataSource={budgetMsgList}
-            loading={loading}
-            pagination={recPageConfig}
+      <Card title="预算留言处理">
+        <Modal
+          title="留言信息"
+          visible={showMsgModal}
+          onOk={this.saveMsg}
+          onCancel={this.cancelMsg}
+        >
+          <Input
+            type="textarea"
+            rows={8}
+            placeholder="你的留言"
+            value={msgValue}
+            onChange={e => this.setState({ msgValue: e.target.value })}
           />
-        </Card>
-      </FrameContent>
+        </Modal>
+        <Table
+          size="small"
+          bordered
+          columns={columns}
+          dataSource={budgetMsgList}
+          loading={loading}
+          pagination={recPageConfig}
+        />
+      </Card>
+
     );
   }
 }

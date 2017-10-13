@@ -196,8 +196,8 @@ class DataAnaListBudgetYear extends React.Component {
     };
 
     return (
-      <FrameContent>
-        <Card title="预算执行情况一览表">
+
+      <Card title="预算执行情况一览表">
           立项年度
           <Select defaultValue="2017" style={{ width: 120 }} onChange={this.handleChange}>
             <Option value="2017">2017</Option>
@@ -205,18 +205,18 @@ class DataAnaListBudgetYear extends React.Component {
             <Option value="2015" >2015</Option>
             <Option value="2014">2014</Option>
           </Select>
-          <Button onClick={this.expertExcel}>导出Excel</Button>
-          <Table
-            columns={columns}
-            dataSource={analySisList}
-            bordered
-            loading={loading}
-            rowKey={record => record.name}
-            pagination={pageConfig}
-            style={{ marginTop: 15 }}
-          />
-        </Card>
-      </FrameContent>
+        <Button onClick={this.expertExcel}>导出Excel</Button>
+        <Table
+          columns={columns}
+          dataSource={analySisList}
+          bordered
+          loading={loading}
+          rowKey={record => record.name}
+          pagination={pageConfig}
+          style={{ marginTop: 15 }}
+        />
+      </Card>
+
     );
   }
 }

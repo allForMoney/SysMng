@@ -80,27 +80,27 @@ class ImportAchive extends React.Component {
     };
 
     return (
-      <FrameContent>
-        <Card title="绩效导入">
-          <Row className={styles.baseRow}>
+
+      <Card title="绩效导入">
+        <Row className={styles.baseRow}>
           说明：先输入项目编号，点查询，查询出来项目信息后，再选择文件并上传导入。
           <a href="/common/templete/download?type=JXMB" target="_blank">导入模板下载</a>
-          </Row>
-          <Row className={styles.baseRow}>
-            <Col span={4}>要导入绩效的项目编号</Col>
-            <Col span={6}>
-              <Input value={projectNo} onChange={this.onProjectValueChanged} />
-            </Col>
-            <Col span={2}>
-              <Button style={{ marginLeft: 10 }} type="primary" icon="search" onClick={this.doSeachPro}>查询</Button>
-            </Col>
-          </Row>
-          <Row className={styles.baseRow}>
-            <Card title="项目基本情况">
-              <ProjectInfo ref={this.saveForm} {...projectInfo} />
-            </Card>
-          </Row>
-          {showUploadAchive &&
+        </Row>
+        <Row className={styles.baseRow}>
+          <Col span={4}>要导入绩效的项目编号</Col>
+          <Col span={6}>
+            <Input value={projectNo} onChange={this.onProjectValueChanged} />
+          </Col>
+          <Col span={2}>
+            <Button style={{ marginLeft: 10 }} type="primary" icon="search" onClick={this.doSeachPro}>查询</Button>
+          </Col>
+        </Row>
+        <Row className={styles.baseRow}>
+          <Card title="项目基本情况">
+            <ProjectInfo ref={this.saveForm} {...projectInfo} />
+          </Card>
+        </Row>
+        {showUploadAchive &&
           <Row className="">
             <Upload {...uploadProps}>
               <Button>
@@ -109,8 +109,8 @@ class ImportAchive extends React.Component {
             </Upload>
           </Row>
         }
-        </Card>
-      </FrameContent>
+      </Card>
+
     );
   }
 }

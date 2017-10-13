@@ -55,61 +55,61 @@ class reportTime extends React.Component {
   quarterFourSetting,
     } = this.props.reportTimeObj;
     return (
-      <FrameContent>
-        <Card title="上报时间设置">
-          <Form>
-            <FormItem
-              {...formItemLayout}
-              label="第一季度上报截止日期"
-              hasFeedback
-            >
-              {getFieldDecorator('quarterOneSetting', {
-                initialValue: quarterOneSetting
-              })(
-                <InputNumber min={1} max={31} />
+
+      <Card title="上报时间设置">
+        <Form>
+          <FormItem
+            {...formItemLayout}
+            label="第一季度上报截止日期"
+            hasFeedback
+          >
+            {getFieldDecorator('quarterOneSetting', {
+              initialValue: quarterOneSetting
+            })(
+              <InputNumber min={1} max={31} />
               )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="第二季度上报截止日期"
-              hasFeedback
-            >
-              {getFieldDecorator('quarterTwoSetting', {
-                initialValue: quarterTwoSetting
-              })(
-                <InputNumber min={1} max={31} />
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label="第二季度上报截止日期"
+            hasFeedback
+          >
+            {getFieldDecorator('quarterTwoSetting', {
+              initialValue: quarterTwoSetting
+            })(
+              <InputNumber min={1} max={31} />
               )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="第三季度上报截止日期"
-              hasFeedback
-            >
-              {getFieldDecorator('quarterThreeSetting', {
-                initialValue: quarterThreeSetting
-              })(
-                <InputNumber min={1} max={31} />
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label="第三季度上报截止日期"
+            hasFeedback
+          >
+            {getFieldDecorator('quarterThreeSetting', {
+              initialValue: quarterThreeSetting
+            })(
+              <InputNumber min={1} max={31} />
               )}
-            </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="第四季度上报截止日期"
-              hasFeedback
-            >
-              {getFieldDecorator('quarterFourSetting', {
-                initialValue: quarterFourSetting
-              })(
-                <InputNumber min={1} max={31} />
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label="第四季度上报截止日期"
+            hasFeedback
+          >
+            {getFieldDecorator('quarterFourSetting', {
+              initialValue: quarterFourSetting
+            })(
+              <InputNumber min={1} max={31} />
               )}
-            </FormItem>
-            <FormItem
-              {...tailFormItemLayout}
-            >
-              <Button type="submit" onClick={this.handleSubmit}>保存</Button>
-            </FormItem>
-          </Form>
-        </Card>
-      </FrameContent>
+          </FormItem>
+          <FormItem
+            {...tailFormItemLayout}
+          >
+            <Button type="submit" onClick={this.handleSubmit}>保存</Button>
+          </FormItem>
+        </Form>
+      </Card>
+
     );
   }
 }

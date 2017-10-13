@@ -94,17 +94,17 @@ class BudgetMsgTable extends React.Component {
     };
 
     return (
-      <FrameContent>
-        <Table
-          title={() => '留言处理情况'}
-          bordered
-          columns={columns}
-          dataSource={budgetMsgList}
-          loading={loading}
-          rowKey={record => record.id}
-          pagination={pageConfig}
-        />
-      </FrameContent>
+
+      <Table
+        title={() => '留言处理情况'}
+        bordered
+        columns={columns}
+        dataSource={budgetMsgList}
+        loading={loading}
+        rowKey={record => record.id}
+        pagination={pageConfig}
+      />
+
     );
   }
 }

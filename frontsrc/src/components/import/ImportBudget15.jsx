@@ -81,8 +81,7 @@ class ImportBudget15 extends React.Component {
     };
 
     return (
-      <FrameContent>
-        <Card title="预算导入(15年前)">
+      <Card title="预算导入(15年前)">
           <Row className={styles.baseRow}>
           说明：先输入项目编号，点查询，查询出来项目信息后，再选择文件并上传导入。
           <a href="/common/templete/download?type=BUDGET2015" target="_blank">导入模板下载</a>
@@ -111,7 +110,6 @@ class ImportBudget15 extends React.Component {
           </Row>
         }
         </Card>
-      </FrameContent>
     );
   }
 }

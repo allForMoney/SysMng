@@ -34,25 +34,25 @@ function ProjectBudgetList({ dispatch, list: dataSource, loading, total, page: c
   ];
 
   return (
-    <FrameContent>
-      <div>
-        <Table
-          columns={columns}
-          dataSource={dataSource}
-          bordered
-          loading={loading}
-          rowKey={record => record.id}
-          pagination={false}
-        />
-        <Pagination
-          className="ant-table-pagination"
-          total={total}
-          current={current}
-          pageSize={20}
-          onChange={pageChangeHandler}
-        />
-      </div>
-    </FrameContent>
+
+    <div>
+      <Table
+        columns={columns}
+        dataSource={dataSource}
+        bordered
+        loading={loading}
+        rowKey={record => record.id}
+        pagination={false}
+      />
+      <Pagination
+        className="ant-table-pagination"
+        total={total}
+        current={current}
+        pageSize={20}
+        onChange={pageChangeHandler}
+      />
+    </div>
+
   );
 }
 function mapStateToProps(state) {

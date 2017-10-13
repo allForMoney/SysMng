@@ -50,7 +50,7 @@ class SendSMS extends React.Component {
       projectNo,
      } = this.state;
     return (
-      <FrameContent>
+      <div>
         <Row className={styles.baseRow}>
           说明：先输入项目编号，点查询，查询出来项目信息后，再输入短信内容发送短信。
         </Row>
@@ -69,12 +69,12 @@ class SendSMS extends React.Component {
           </Card>
         </Row>
         {showSMSText &&
-          <SMSForm
-            ref={(form) => { this.smsForm = form; }}
-            onSendSMS={this.sendSMS}
-          />
+        <SMSForm
+          ref={(form) => { this.smsForm = form; }}
+          onSendSMS={this.sendSMS}
+        />
         }
-      </FrameContent>
+      </div>
     );
   }
 }
