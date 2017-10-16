@@ -73,7 +73,11 @@ class ImportBudget15 extends React.Component {
           console.log(info.file, info.fileList);
         }
         if (info.file.status === 'done') {
-          message.success(`${info.file.name} 上传成功`);
+          if (info.file.response.code == '1') {
+            message.success(`${info.file.name} 上传成功`);
+          } else {
+            message.error(`${info.file.name} 上传失败，失败原因：`+info.file.response.msg);
+          }
         } else if (info.file.status === 'error') {
           message.error(`${info.file.name} 上传失败，失败原因：${info.file.response.message}`);
         }
