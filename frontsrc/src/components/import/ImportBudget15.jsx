@@ -75,32 +75,32 @@ class ImportBudget15 extends React.Component {
         if (info.file.status === 'done') {
           message.success(`${info.file.name} 上传成功`);
         } else if (info.file.status === 'error') {
-          message.error(`${info.file.name} 上传失败，失败原因：`+info.file.response.message);
+          message.error(`${info.file.name} 上传失败，失败原因：${info.file.response.message}`);
         }
       },
     };
 
     return (
       <Card title="预算导入(15年前)">
-          <Row className={styles.baseRow}>
+        <Row className={styles.baseRow}>
           说明：先输入项目编号，点查询，查询出来项目信息后，再选择文件并上传导入。
           <a href="/common/templete/download?type=BUDGET2015" target="_blank">导入模板下载</a>
-          </Row>
-          <Row className={styles.baseRow}>
-            <Col span={4}>要导入预算的项目编号</Col>
-            <Col span={6}>
-              <Input value={projectNo} onChange={this.onProjectValueChanged} />
-            </Col>
-            <Col span={2}>
-              <Button style={{ marginLeft: 10 }} type="primary" icon="search" onClick={this.doSeachPro}>查询</Button>
-            </Col>
-          </Row>
-          <Row className={styles.baseRow}>
-            <Card title="项目基本情况">
-              <ProjectInfo ref={this.saveForm} {...projectInfo} />
-            </Card>
-          </Row>
-          {showUpload15 &&
+        </Row>
+        <Row className={styles.baseRow}>
+          <Col span={4}>要导入预算的项目编号</Col>
+          <Col span={6}>
+            <Input value={projectNo} onChange={this.onProjectValueChanged} />
+          </Col>
+          <Col span={2}>
+            <Button style={{ marginLeft: 10 }} type="primary" icon="search" onClick={this.doSeachPro}>查询</Button>
+          </Col>
+        </Row>
+        <Row className={styles.baseRow}>
+          <Card title="项目基本情况">
+            <ProjectInfo ref={this.saveForm} {...projectInfo} />
+          </Card>
+        </Row>
+        {showUpload15 &&
           <Row className="">
             <Upload {...uploadProps}>
               <Button>
@@ -109,7 +109,7 @@ class ImportBudget15 extends React.Component {
             </Upload>
           </Row>
         }
-        </Card>
+      </Card>
     );
   }
 }

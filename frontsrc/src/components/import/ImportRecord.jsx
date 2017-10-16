@@ -89,6 +89,8 @@ class ImportRecord extends React.Component {
           columns={columns}
           dataSource={dataSouce}
           loading={loading}
+          scroll={{ x: '140', y: 300 }}
+
           bordered
           rowKey={record => record.name}
           pagination={pageConfig}

@@ -251,6 +251,8 @@ class ExpertList extends React.Component {
           columns={columns}
           dataSource={expertList}
           bordered
+          scroll={{ x: '140', y: 300 }}
+
           loading={loading}
         />
       </Card>

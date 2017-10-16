@@ -148,6 +148,7 @@ class AchiveMsgList extends React.Component {
           size="small"
           bordered
           columns={columns}
+          scroll={{ x: '130%' }}
           dataSource={budgetAchiveList}
           loading={loading}
           pagination={recPageConfig}

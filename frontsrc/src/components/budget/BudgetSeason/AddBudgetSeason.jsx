@@ -185,15 +185,15 @@ class BudgetSeason extends React.Component {
               </Select>
           {projectYear && quarterNum &&
           <div>
-                  <BudgetSeasonIncome
-                    editable={editable}
-                    dispatch={dispatch}
-                    buggetInComeList={buggetInComeList}
-                  />
-                  <Col className={styles.btnContainer}>
-                    <Button className={styles.btnClass} type="primary" onClick={this.goNext}>下一步</Button>
-                  </Col>
-                </div>
+            <BudgetSeasonIncome
+              editable={editable}
+              dispatch={dispatch}
+              buggetInComeList={buggetInComeList}
+            />
+            <Col className={styles.btnContainer}>
+              <Button className={styles.btnClass} type="primary" onClick={this.goNext}>下一步</Button>
+            </Col>
+          </div>
               }
         </Row>
           }
@@ -211,27 +211,28 @@ class BudgetSeason extends React.Component {
 
           <BudgetSeasonOutcome
             editable={editable}
+            showExpert={projectYear < 2016}
             buggetOutComeList={buggetOutComeList}
             dispatch={dispatch}
           />
           <Col className={styles.btnContainer}>
             <Button
-                  className={styles.btnClass}
-                  type="primary"
-                  onClick={() => {
-                    this.props.dispatch({
-                      type: 'budgetModel/setState',
-                      payload: {
-                        editBudgetSteps: 0
-                      }
-                    });
+              className={styles.btnClass}
+              type="primary"
+              onClick={() => {
+                this.props.dispatch({
+                  type: 'budgetModel/setState',
+                  payload: {
+                    editBudgetSteps: 0
                   }
+                });
+              }
                   }
-                >
+            >
                   返回
                 </Button>
             {editable &&
-                  <Button className={styles.btnClass} type="primary" onClick={this.submit}>保存</Button>
+            <Button className={styles.btnClass} type="primary" onClick={this.submit}>保存</Button>
                 }
           </Col>
         </div>

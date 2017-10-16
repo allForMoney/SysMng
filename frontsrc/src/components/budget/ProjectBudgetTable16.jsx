@@ -75,7 +75,7 @@ function ProjectBudgetTable(props) {
       dataIndex: 'totalMoney',
       key: 'totalMoney',
     }, {
-      title: '支出',
+      title: '收入',
       children: [{
         title: '申请部本专项',
         children: [{
@@ -147,7 +147,7 @@ function ProjectBudgetTable(props) {
       title={() => title}
       size="small"
       bordered
-      scroll={{ x: true, y: 300 }}
+      scroll={{ x: '200%', y: 300 }}
       columns={columns}
       dataSource={dataList}
       loading={loading}

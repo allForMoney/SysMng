@@ -135,6 +135,8 @@ class BudgetSeaonList extends React.Component {
         title={() => `预算执行季报查询【编号：${projectInfo.projectNo}，名称：${projectInfo.majorName}】`}
         columns={columns}
         bordered
+        scroll={{ x: '140', y: 300 }}
+
         dataSource={budgetRecordList}
         loading={loading}
         rowKey={record => record.id}

@@ -176,7 +176,7 @@ class FrameContent extends React.Component {
               onClick={this.onMenuClicked}
             >
               <SubMenu key="budget" title={<span><Icon type="user" />预算</span>}>
-                <Menu.Item key="/dgebut/base">
+                <Menu.Item key="/budget/base">
                   <Icon type="bars" />项目基本情况
                 </Menu.Item>
                 <SubMenu key="projectBudget" title={<span><Icon type="user" />项目预算</span>} >

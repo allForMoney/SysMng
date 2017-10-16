@@ -210,6 +210,8 @@ class DataAnaListBudgetYear extends React.Component {
           columns={columns}
           dataSource={analySisList}
           bordered
+          scroll={{ x: '140', y: 300 }}
+
           loading={loading}
           rowKey={record => record.name}
           pagination={pageConfig}

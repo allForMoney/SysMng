@@ -205,17 +205,18 @@ class DataAnaListYear extends React.Component {
             <Option value="2015" >2015</Option>
             <Option value="2014">2014</Option>
           </Select>
-          <Button onClick={this.expertExcel}>导出Excel</Button>
-          <Table
-            columns={columns}
-            dataSource={analySisList}
-            loading={loading}
-            bordered
-            rowKey={record => record.name}
-            pagination={pageConfig}
-            style={{ marginTop: 15 }}
-          />
-        </Card>
+        <Button onClick={this.expertExcel}>导出Excel</Button>
+        <Table
+          columns={columns}
+          dataSource={analySisList}
+          loading={loading}
+          scroll={{ x: '140', y: 300 }}
+          bordered
+          rowKey={record => record.name}
+          pagination={pageConfig}
+          style={{ marginTop: 15 }}
+        />
+      </Card>
 
     );
   }

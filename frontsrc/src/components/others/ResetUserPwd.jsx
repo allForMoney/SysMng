@@ -113,6 +113,8 @@ class ResetUserPwd extends React.Component {
           dataSource={userRecList}
           bordered
           loading={loading}
+          scroll={{ x: '140', y: 300 }}
+
           rowKey={record => record.name}
           pagination={pageConfig}
         />

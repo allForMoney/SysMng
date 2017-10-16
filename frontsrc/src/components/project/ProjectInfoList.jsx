@@ -266,6 +266,8 @@ class ProjectInfoList extends React.Component {
           columns={columns}
           bordered
           dataSource={projectList}
+          scroll={{ x: '140', y: 300 }}
+
           loading={loading}
           rowKey={record => record.name}
           pagination={pageConfig}

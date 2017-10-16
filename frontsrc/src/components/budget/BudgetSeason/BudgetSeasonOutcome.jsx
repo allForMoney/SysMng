@@ -210,7 +210,7 @@ class BudgetSeasonOutcome extends React.Component {
   }
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { buggetOutComeList } = this.props;
+    const { buggetOutComeList, showExpert } = this.props;
     let sourceData = this.state.sourceData;
     if (buggetOutComeList.length > 0) {
       sourceData = buggetOutComeList;
@@ -339,16 +339,6 @@ class BudgetSeasonOutcome extends React.Component {
           return value;
         }
       }, {
-        title: '专家咨询',
-        dataIndex: 'expertConsult',
-        key: 'expertConsult',
-        render: (value, row, index) => {
-          if ([2, 6, 8, 10].includes(index)) {
-            return (<p className={styles.editable}>{value}</p>);
-          }
-          return value;
-        }
-      }, {
         title: '其他',
         dataIndex: 'otherFee',
         key: 'otherFee',
@@ -360,6 +350,20 @@ class BudgetSeasonOutcome extends React.Component {
         }
       }
     ];
+
+    if (showExpert) {
+      columns.push({
+        title: '专家咨询',
+        dataIndex: 'expertConsult',
+        key: 'expertConsult',
+        render: (value, row, index) => {
+          if ([2, 6, 8, 10].includes(index)) {
+            return (<p className={styles.editable}>{value}</p>);
+          }
+          return value;
+        }
+      });
+    }
 
     const { modalVisible } = this.state;
     const formItemLayout = {
@@ -378,6 +382,7 @@ class BudgetSeasonOutcome extends React.Component {
           visible={modalVisible}
           title="修改支出预算信息"
           okText="保存"
+          width={450}
           onCancel={this.onCancel}
           onOk={this.saveBudgetOutCome}
         >
@@ -438,6 +443,7 @@ class BudgetSeasonOutcome extends React.Component {
           size="small"
           bordered
           dataSource={dataSource}
+          scroll={{ x: '140%' }}
           rowKey={record => record.id}
           onRowClick={this.onRowClicked}
           pagination={false}
