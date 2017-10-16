@@ -33,7 +33,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/dataanalyse")
-public class DataAnalyseController {
+public class DataAnalyseController  extends BaseController{
   protected static final String HSSF         = ".xls";
   protected static final String XSSF         = ".xlsx";
 

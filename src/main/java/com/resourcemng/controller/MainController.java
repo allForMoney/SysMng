@@ -13,7 +13,7 @@ import java.util.Map;
  * @author Benjamin Winterberg
  */
 @Controller
-public class MainController {
+public class MainController  extends BaseController {
 
     @Autowired
     public MainController(ProjectService service) {

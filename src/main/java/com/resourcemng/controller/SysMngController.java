@@ -26,7 +26,7 @@ import java.util.Arrays;
  */
 @Controller
 @RequestMapping("/system")
-public class SysMngController {
+public class SysMngController  extends BaseController{
   @Autowired
   SystemService service;
 

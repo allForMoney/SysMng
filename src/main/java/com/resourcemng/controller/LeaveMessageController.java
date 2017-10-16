@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller
 @RequestMapping("/leavemessage")
-public class LeaveMessageController {
+public class LeaveMessageController  extends BaseController {
   @Autowired
   LeaveMessageService leaveMessageService;
   //文件上传保存路径

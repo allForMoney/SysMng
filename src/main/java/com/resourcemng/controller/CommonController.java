@@ -33,7 +33,7 @@ import java.util.Arrays;
  */
 @Controller
 @RequestMapping("/common")
-public class CommonController {
+public class CommonController  extends BaseController{
   @Autowired
   CommonService service;
   @Autowired

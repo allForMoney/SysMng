@@ -23,7 +23,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/experts")
-public class ExpertController {
+public class ExpertController  extends BaseController{
 @Autowired
   ExpertServiceService service;
   /**

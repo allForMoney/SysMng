@@ -31,7 +31,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/indicator")
-public class IndicatorController {
+public class IndicatorController  extends BaseController {
   protected static final String HSSF         = ".xls";
   protected static final String XSSF         = ".xlsx";
   @Autowired

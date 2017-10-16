@@ -28,7 +28,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/budget/report")
-public class BudgetResultController {
+public class BudgetResultController  extends BaseController{
   protected static final String HSSF         = ".xls";
   protected static final String XSSF         = ".xlsx";
 

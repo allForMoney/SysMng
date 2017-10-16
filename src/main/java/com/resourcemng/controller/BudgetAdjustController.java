@@ -32,7 +32,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/budgetadjust")
-public class BudgetAdjustController {
+public class BudgetAdjustController  extends BaseController{
   @Autowired
   BudgetAdjustService service;
   @Autowired

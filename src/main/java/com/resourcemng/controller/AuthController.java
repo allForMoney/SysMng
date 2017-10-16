@@ -26,7 +26,7 @@ import java.util.Map;
  * @author
  */
 @Controller
-public class AuthController {
+public class AuthController extends BaseController{
   @Autowired
   TUserService service;
   @Autowired

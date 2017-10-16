@@ -24,7 +24,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/project")
-public class ProjectController {
+public class ProjectController extends BaseController{
   @Autowired
   ProjectService service;
   @Autowired

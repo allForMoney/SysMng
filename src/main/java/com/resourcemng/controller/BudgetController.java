@@ -32,7 +32,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/budget")
-public class BudgetController {
+public class BudgetController  extends BaseController{
   protected static final String HSSF         = ".xls";
   protected static final String XSSF         = ".xlsx";
   @Autowired
