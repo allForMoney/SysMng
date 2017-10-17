@@ -148,17 +148,16 @@ class ProjectInfoList extends React.Component {
       projectListPage,
     } = this.props;
     const { getFieldDecorator } = this.props.form;
-
     const columns =
       [{
         title: '项目编号',
-        width: 100,
+        width: 150,
         dataIndex: 'projectNo',
         key: 'projectNo',
       }, {
         title: '专业名称',
         dataIndex: 'majorName',
-        width: 100,
+        width: 200,
         key: 'majorName',
       }, {
         title: '立项年度',
@@ -167,12 +166,12 @@ class ProjectInfoList extends React.Component {
         key: 'createYear',
       }, {
         title: '学校名称',
-        width: 100,
+        width: 200,
         dataIndex: 'schoolName',
         key: 'schoolName',
       }, {
         title: '学校领导',
-        width: 100,
+        width: 200,
         dataIndex: 'schoolHead',
         key: 'schoolHead',
       }, {
@@ -182,12 +181,12 @@ class ProjectInfoList extends React.Component {
         key: 'finaceHeader',
       }, {
         title: '财务负责人电话',
-        width: 100,
+        width: 200,
         dataIndex: 'finaceHeaderTel',
         key: 'finaceHeaderTel',
       }, {
         title: '财务负责人QQ',
-        width: 100,
+        width: 150,
         dataIndex: 'finaceHeaderQq',
         key: 'finaceHeaderQq',
       }, {
@@ -197,7 +196,7 @@ class ProjectInfoList extends React.Component {
         key: 'projectHeader',
       }, {
         title: '项目负责人电话',
-        width: 100,
+        width: 200,
         dataIndex: 'projectHeaderTel',
         key: 'projectHeaderTel',
       }, {
@@ -208,30 +207,29 @@ class ProjectInfoList extends React.Component {
       }, {
         title: '填报人电话',
         dataIndex: 'reporterTel',
-        width: 100,
+        width: 200,
         key: 'reporterTel',
       }, {
         title: '填报人qq',
-        width: 100,
+        width: 150,
         dataIndex: 'reporterQq',
         key: 'reporterQq',
       }, {
         title: '备注',
-        width: 100,
+        width: 200,
         dataIndex: 'note',
         key: 'note',
       }, {
         title: '联合主持单位',
-        width: 100,
+        width: 150,
         dataIndex: 'unionSchool',
         key: 'unionSchool',
       }, {
         title: '参与建设单位3',
-        width: 100,
+        width: 1000,
         dataIndex: 'partnerSchool',
         key: 'partnerSchool',
       }];
-
     const pageConfig = {
       className: 'ant-table-pagination',
       total: projectListNum,
@@ -248,66 +246,71 @@ class ProjectInfoList extends React.Component {
         this.setState({ selectedRows, selectedRowKeys: Keys });
       },
     };
+
     return (
-
-      <Card title="项目基础数据管理">
-        <Modal
-          title={modalTitle}
-          visible={modelVisible}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
-        >
-          <AddProjectForm ref={this.addFormRdf} priviceList={priviceList} />
-        </Modal>
-        <Form onSubmit={this.onSearchSubmit} layout="inline">
-          <Form.Item label="项目编号 ：">
-            { getFieldDecorator('projectNo', {
-            })(
-              <Input size="small" width="100" />
-              )}
-          </Form.Item>
-          <Form.Item label="专业名称 ：">
-            { getFieldDecorator('majorName', {
-            })(
-              <Input size="small" />
-              )}
-          </Form.Item>
-          <Form.Item label="主持单位 ：">
-            { getFieldDecorator('schoolName', {
-            })(
-              <Input size="small" />
-              )}
-          </Form.Item>
-          <Form.Item >
-            <Button size="small" type="primary" htmlType="submit" icon="search" onClick={this.doSearch}>查询</Button>
-            <Button size="small" style={{ marginLeft: 5 }} type="primary" onClick={() => this.props.form.resetFields()}><Icon type="rollback" />重置</Button>
-            {userType === 'admin' &&
-              <span className="">
-                <Button size="small" style={{ marginLeft: 5 }} type="primary" onClick={this.addNew}><Icon type="plus" />添加</Button>
-                <Button size="small" style={{ marginLeft: 5 }} type="primary" onClick={this.editProject}><Icon type="edit" />编辑</Button>
-                <Popconfirm title="确认删除选中的数据吗?" onConfirm={this.deletePro} okText="是" cancelText="否">
-                  <Button size="small" style={{ marginLeft: 5 }} type="primary"><Icon type="close" />删除</Button>
-                </Popconfirm>
-                <Button size="small" style={{ marginLeft: 5 }} type="primary" onClick={this.importPro}>导入</Button>
-              </span>
-              }
-          </Form.Item>
-        </Form>
-        <Table
-          rowSelection={rowSelection}
-          columns={columns}
-          bordered
-          dataSource={projectList}
-          scroll={{ x: '140% %' }}
-          loading={loading}
-          rowKey={record => record.name}
-          pagination={pageConfig}
-        />
-      </Card>
-
+      <div style = {{height: '100%',padding:'0px'}}>
+        <Card title="项目基础数据管理" >
+          <Modal
+            title={modalTitle}
+            visible={modelVisible}
+            onOk={this.handleOk}
+            onCancel={this.handleCancel}
+          >
+            <AddProjectForm ref={this.addFormRdf} priviceList={priviceList} />
+          </Modal>
+          <Form onSubmit={this.onSearchSubmit} layout="inline">
+            <Form.Item label="项目编号 ：">
+              { getFieldDecorator('projectNo', {
+              })(
+                <Input size="small" width="100" />
+                )}
+            </Form.Item>
+            <Form.Item label="专业名称 ：">
+              { getFieldDecorator('majorName', {
+              })(
+                <Input size="small" />
+                )}
+            </Form.Item>
+            <Form.Item label="主持单位 ：">
+              { getFieldDecorator('schoolName', {
+              })(
+                <Input size="small" />
+                )}
+            </Form.Item>
+            <Form.Item >
+              <Button size="default" type="primary" htmlType="submit" icon="search" onClick={this.doSearch}>查询</Button>
+              <Button size="default" style={{ marginLeft: 5 }} type="primary" onClick={() => this.props.form.resetFields()}><Icon type="rollback" />重置</Button>
+              {userType === 'admin' &&
+                <span className="">
+                  <Button size="default" style={{ marginLeft: 5 }} type="primary" onClick={this.addNew}><Icon type="plus" />添加</Button>
+                  <Button size="default" style={{ marginLeft: 5 }} type="primary" onClick={this.editProject}><Icon type="edit" />编辑</Button>
+                  <Popconfirm title="确认删除选中的数据吗?" onConfirm={this.deletePro} okText="是" cancelText="否">
+                    <Button size="default" style={{ marginLeft: 5 }}className={styles.removeBtn} type="danger"><Icon type="close" />删除</Button>
+                  </Popconfirm>
+                  <Button size="default" style={{ marginLeft: 5 }} type="primary" onClick={this.importPro}>导入</Button>
+                </span>
+                }
+            </Form.Item>
+          </Form>
+        </Card>
+        <div style = {{overflow: 'auto'}}>
+          <Table
+            rowSelection={rowSelection}
+            columns={columns}
+            size="small"
+            bordered
+            dataSource={projectList}
+            scroll={{ x: '2500' }}
+            loading={loading}
+            rowKey={record => record.name}
+            pagination={false}
+          />
+        </div>
+      </div>
     );
   }
 }
+
 
 function mapStateToProps(state) {
   const { userType, userName, priviceList } = state.baseModel;

@@ -17,6 +17,7 @@ import LinkBtn from '../common/LinkBtn';
 class ProjectBaseInfo extends React.Component {
   state={
     showAllUnit: false,
+    showUnionUnit: false,
     buildUnit: [1, 2, 3, 4], // this.props.buildUnit,
     showChangeModal: false,
     promise: null,
@@ -30,8 +31,13 @@ class ProjectBaseInfo extends React.Component {
     this.setState({ showAllUnit: true });
   }
 
+
   hideMorebuild = () => {
     this.setState({ showAllUnit: false });
+  }
+
+  changeMoreUnionDis = () => {
+    this.setState({ showUnionUnit: this.state.showUnionUnit });
   }
 
   getUnitTags= () => {
@@ -39,12 +45,31 @@ class ProjectBaseInfo extends React.Component {
     const { showAllUnit } = this.state;
     let tags = [];
     if (!partnerSchool) {
-      return;
+      return tags;
     }
     if (showAllUnit) {
-      tags = partnerSchool.split(',').map(item => <Tag>{item}</Tag>);
+      tags = partnerSchool.split('|').map(item => <Tag>{item}</Tag>);
     } else {
-      tags = partnerSchool.split(',').map((item, index) => {
+      tags = partnerSchool.split('|').map((item, index) => {
+        if (index < 3) {
+          return <Tag>{item}</Tag>;
+        }
+      }
+     );
+    }
+    return tags;
+  }
+  getUnionUnitTgs= () => {
+    const { unionSchool } = this.props.projectInfo;
+    const { showUnionUnit } = this.state;
+    let tags = [];
+    if (!unionSchool) {
+      return tags;
+    }
+    if (showUnionUnit) {
+      tags = unionSchool.split('|').map(item => <Tag>{item}</Tag>);
+    } else {
+      tags = unionSchool.split('|').map((item, index) => {
         if (index < 3) {
           return <Tag>{item}</Tag>;
         }
@@ -75,13 +100,14 @@ class ProjectBaseInfo extends React.Component {
     } = projectInfo;
     const {
       showAllUnit,
+      showUnionUnit,
       showChangeModal,
      } = this.state;
 
     const buildUnitTags = this.getUnitTags();
+    const buildUnionUnitTags = this.getUnionUnitTgs();
 
     return (
-
       <Card title={`[编号: ${projectNo}, 名称: ${majorName}]`}>
         <Modal
           title="变更申请"
@@ -99,7 +125,7 @@ class ProjectBaseInfo extends React.Component {
               </Button>
           </Upload>
         </Modal>
-        <Card>
+        <div>
             该信息为只读信息，如有疑义，请
             <Button
               onClick={
@@ -115,23 +141,29 @@ class ProjectBaseInfo extends React.Component {
             >留言</Button>
             。 如须变更，请点击
             <Button onClick={() => this.setState({ showChangeModal: true })}>变更申请</Button>办理手续。
-          </Card>
-        <Card title="第一主持单位">
+          </div>
+        <Card title="第一主持单位" bodyStyle = {{padding:"12px 32px"}}>
           {schoolName}
         </Card>
-        <Card title="联合主持单位">
-          {unionSchool && '无'}
+        <Card title="联合主持单位" bodyStyle = {{padding:"12px 32px"}}>
+          { buildUnionUnitTags }
+          {!showUnionUnit &&(buildUnionUnitTags.length>3)&&
+          <LinkBtn onClick={this.changeMoreUnionDis}>更多</LinkBtn>
+          }
+          {showUnionUnit &&
+          <LinkBtn onClick={this.changeMoreUnionDis}>收起</LinkBtn>
+          }
         </Card>
-        <Card title="参与建设单位">
+        <Card title="参与建设单位" bodyStyle = {{padding:"12px 32px"}}>
           { buildUnitTags }
-          {!showAllUnit &&
+          {!showAllUnit &&(buildUnitTags.length>3)&&
             <LinkBtn onClick={this.showMorebuild}>更多</LinkBtn>
             }
           {showAllUnit &&
             <LinkBtn onClick={this.hideMorebuild}>收起</LinkBtn>
             }
         </Card>
-        <Card title="第一主持单位">
+        <Card title="第一主持单位"  bodyStyle = {{padding:"12px 32px"}}>
           <Row>
             <Col offset={1} span={4}>法定代表人</Col>
             <Col span={4}>{schoolHead}</Col>

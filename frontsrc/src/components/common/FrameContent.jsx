@@ -132,9 +132,8 @@ class FrameContent extends React.Component {
         identity = '填报人';
         break;
     }
-
     return (
-      <Layout>
+      <Layout style={{ height: '100%' }}>
         <Modal
           title="留言信息"
           visible={showMsgModal}
@@ -165,7 +164,7 @@ class FrameContent extends React.Component {
             onCreate={this.onCreateBtnClicked}
           />
         </Header>
-        <Layout style={{ height: '100vh' }}>
+        <Layout style={{ height: 'calc (100% - 64px)' }}>
           <Sider width={250} style={{ background: '#fff', overflow: 'auto' }}>
             {isSchool &&
             <Menu
@@ -401,7 +400,7 @@ class FrameContent extends React.Component {
             }
           </Sider>
           <Layout style={{ padding: '0 10px 10px' }}>
-            <Content style={{ padding: 5, minHeight: 280 }}>
+            <Content style={{ padding: 5, height: '100%' }}>
               {this.props.children}
             </Content>
           </Layout>
