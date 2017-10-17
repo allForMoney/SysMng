@@ -106,9 +106,12 @@ class ProjectBaseInfo extends React.Component {
 
     const buildUnitTags = this.getUnitTags();
     const buildUnionUnitTags = this.getUnionUnitTgs();
+    //加粗字体颜色
+    const borderColor = "#1DA57A";
 
+    let title = <div style = {{color :borderColor}}>{`[编号: ${projectNo}, 名称: ${majorName}]`} </div>;
     return (
-      <Card title={`[编号: ${projectNo}, 名称: ${majorName}]`}>
+      <Card title={title}>
         <Modal
           title="变更申请"
           visible={showChangeModal}
@@ -142,10 +145,10 @@ class ProjectBaseInfo extends React.Component {
             。 如须变更，请点击
             <Button onClick={() => this.setState({ showChangeModal: true })}>变更申请</Button>办理手续。
           </div>
-        <Card title="第一主持单位" bodyStyle = {{padding:"12px 32px"}}>
+        <Card title={<div style = {{color :borderColor}}>第一主持单位</div>} bodyStyle = {{padding:"12px 32px"}}>
           {schoolName}
         </Card>
-        <Card title="联合主持单位" bodyStyle = {{padding:"12px 32px"}}>
+        <Card title={<div style = {{color :borderColor}}>联合主持单位</div>} bodyStyle = {{padding:"12px 32px"}}>
           { buildUnionUnitTags }
           {!showUnionUnit &&(buildUnionUnitTags.length>3)&&
           <LinkBtn onClick={this.changeMoreUnionDis}>更多</LinkBtn>
@@ -154,7 +157,7 @@ class ProjectBaseInfo extends React.Component {
           <LinkBtn onClick={this.changeMoreUnionDis}>收起</LinkBtn>
           }
         </Card>
-        <Card title="参与建设单位" bodyStyle = {{padding:"12px 32px"}}>
+        <Card title={<div style = {{color :borderColor}}>参与建设单位</div>} bodyStyle = {{padding:"12px 32px"}}>
           { buildUnitTags }
           {!showAllUnit &&(buildUnitTags.length>3)&&
             <LinkBtn onClick={this.showMorebuild}>更多</LinkBtn>
@@ -163,7 +166,7 @@ class ProjectBaseInfo extends React.Component {
             <LinkBtn onClick={this.hideMorebuild}>收起</LinkBtn>
             }
         </Card>
-        <Card title="第一主持单位"  bodyStyle = {{padding:"12px 32px"}}>
+        <Card title={<div style = {{color :borderColor}}>第一主持单位</div>}  bodyStyle = {{padding:"12px 32px"}}>
           <Row>
             <Col offset={1} span={4}>法定代表人</Col>
             <Col span={4}>{schoolHead}</Col>

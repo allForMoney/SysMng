@@ -72,12 +72,12 @@ module.exports = function(webpackConfig, env) {
   });
 
 
-  // if (!isDev) {
-  //   webpackConfig.externals = {
-  //     react: 'React',
-  //     'react-dom': 'ReactDOM',
-  //   };
-  // }
+  if (!isDev) {
+    webpackConfig.externals = {
+      react: 'React',
+      'react-dom': 'ReactDOM',
+    };
+  }
 
   webpackConfig.externals = webpackConfig.externals || {};
 
@@ -96,7 +96,7 @@ module.exports = function(webpackConfig, env) {
 
   webpackConfig.entry = Object.assign({}, webpackConfig.entry, newEntries);
 
-  webpackConfig.output.path = path.join(__dirname, '../src/main/resources/static');
+  // webpackConfig.output.path = path.join(__dirname, '../src/main/resources/static');
 
   return webpackConfig;
 };
