@@ -125,7 +125,6 @@ class ProjectList extends React.Component {
           dataSource={projectList}
           bordered
           loading={loading}
-          scroll={{ x: '140', y: 300 }}
           rowKey={record => record.name}
           pagination={pageConfig}
         />

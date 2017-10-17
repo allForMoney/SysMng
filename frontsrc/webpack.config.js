@@ -19,9 +19,7 @@ module.exports = function(webpackConfig, env) {
   }
 
   // Don't extract common.js and common.css
-  webpackConfig.plugins = webpackConfig.plugins.filter((plugin) => {
-    return !(plugin instanceof webpack.optimize.CommonsChunkPlugin);
-  });
+  webpackConfig.plugins = webpackConfig.plugins.filter((plugin) => !(plugin instanceof webpack.optimize.CommonsChunkPlugin));
 
   webpackConfig.babel.plugins.push(['import', {
     libraryName: 'antd',
@@ -98,7 +96,7 @@ module.exports = function(webpackConfig, env) {
 
   webpackConfig.entry = Object.assign({}, webpackConfig.entry, newEntries);
 
-   webpackConfig.output.path = path.join(__dirname, '../src/main/resources/static');
+  webpackConfig.output.path = path.join(__dirname, '../src/main/resources/static');
 
   return webpackConfig;
 };

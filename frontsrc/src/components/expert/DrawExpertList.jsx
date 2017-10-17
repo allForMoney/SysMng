@@ -88,7 +88,7 @@ class DrawExpertList extends React.Component {
           columns={columns}
           dataSource={drawExpertList}
           bordered
-          scroll={{ x: '140', y: 300 }}
+          scroll={{ x: '140% ', y: 300 }}
 
           loading={loading}
           rowKey={record => record.name}

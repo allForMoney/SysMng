@@ -191,7 +191,7 @@ class BudgetJustifyCheck extends React.Component {
           dataSource={budgetJustifyList}
           loading={loading}
           bordered
-          scroll={{ x: '140', y: 300 }}
+          scroll={{ x: '140% %', y: 300 }}
           rowKey={record => record.adjustId}
           pagination={recPageConfig}
         />

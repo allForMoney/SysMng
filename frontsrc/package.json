@@ -2,7 +2,7 @@
   "private": true,
   "name": "zhijiao-sys",
   "dependencies": {
-    "antd": "2.10.0",
+    "antd": "2.13.4",
     "classnames": "^2.2.5",
     "cx": "^17.7.2",
     "debug": "~2.6.3",

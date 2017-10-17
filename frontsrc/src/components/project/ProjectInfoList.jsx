@@ -152,52 +152,84 @@ class ProjectInfoList extends React.Component {
     const columns =
       [{
         title: '项目编号',
+        width: 100,
         dataIndex: 'projectNo',
+        key: 'projectNo',
       }, {
         title: '专业名称',
         dataIndex: 'majorName',
+        width: 100,
+        key: 'majorName',
       }, {
         title: '立项年度',
+        width: 100,
         dataIndex: 'createYear',
+        key: 'createYear',
       }, {
         title: '学校名称',
+        width: 100,
         dataIndex: 'schoolName',
+        key: 'schoolName',
       }, {
         title: '学校领导',
+        width: 100,
         dataIndex: 'schoolHead',
+        key: 'schoolHead',
       }, {
         title: '财务部门负责人',
+        width: 100,
         dataIndex: 'finaceHeader',
+        key: 'finaceHeader',
       }, {
         title: '财务负责人电话',
+        width: 100,
         dataIndex: 'finaceHeaderTel',
+        key: 'finaceHeaderTel',
       }, {
         title: '财务负责人QQ',
+        width: 100,
         dataIndex: 'finaceHeaderQq',
+        key: 'finaceHeaderQq',
       }, {
         title: '项目负责人',
+        width: 100,
         dataIndex: 'projectHeader',
+        key: 'projectHeader',
       }, {
         title: '项目负责人电话',
+        width: 100,
         dataIndex: 'projectHeaderTel',
+        key: 'projectHeaderTel',
       }, {
         title: '填报人',
+        width: 100,
         dataIndex: 'reporter',
+        dataIkeyndex: 'reporter',
       }, {
         title: '填报人电话',
         dataIndex: 'reporterTel',
+        width: 100,
+        key: 'reporterTel',
       }, {
         title: '填报人qq',
+        width: 100,
         dataIndex: 'reporterQq',
+        key: 'reporterQq',
       }, {
         title: '备注',
+        width: 100,
         dataIndex: 'note',
+        key: 'note',
       }, {
         title: '联合主持单位',
+        width: 100,
         dataIndex: 'unionSchool',
+        key: 'unionSchool',
       }, {
-        title: '参与建设单位',
+        title: '参与建设单位3',
+        width: 100,
         dataIndex: 'partnerSchool',
+        key: 'partnerSchool',
       }];
 
     const pageConfig = {
@@ -266,8 +298,7 @@ class ProjectInfoList extends React.Component {
           columns={columns}
           bordered
           dataSource={projectList}
-          scroll={{ x: '140', y: 300 }}
-
+          scroll={{ x: '140% %' }}
           loading={loading}
           rowKey={record => record.name}
           pagination={pageConfig}

@@ -210,7 +210,7 @@ class DataAnaListYear extends React.Component {
           columns={columns}
           dataSource={analySisList}
           loading={loading}
-          scroll={{ x: '140', y: 300 }}
+          scroll={{ x: '140% ', y: 300 }}
           bordered
           rowKey={record => record.name}
           pagination={pageConfig}

@@ -155,7 +155,6 @@ class AchiveTargetList extends React.Component {
           rowKey={record => record.id}
           onRowClick={this.onRowClicked}
           pagination={false}
-          scroll={{ x: '140', y: 300 }}
         />
       </Card>
     );
