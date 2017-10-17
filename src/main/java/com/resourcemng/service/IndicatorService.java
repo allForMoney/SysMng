@@ -156,7 +156,7 @@ public class IndicatorService {
     IndicatorView view  = new IndicatorView ();
     //仅仅允许导入一次啊
     List<FileImportLog>   logs = fileImportLogRepository.findByProjectIdAndImportTypeOrderByImportDateDesc(projectId,ImportFileType.TARGET);
-    if(logs == null){
+    if(logs == null || logs.size()<1){
       throw new MyException("没有记录，请联系管理员导入指标数据。");
     }
     FileImportLog fileImportLog = logs.get(0);
